@@ -1422,7 +1422,7 @@ class DrupalKernel implements DrupalKernelInterface, TerminableInterface {
     $filenames = [];
     foreach ($this->moduleList as $module => $weight) {
       if ($data = $this->moduleData($module)) {
-        $filenames[$module] = $data->getPathname();
+        $filenames[$module] = $this->root . '/' . $data->getPathname();
       }
     }
     return $filenames;
