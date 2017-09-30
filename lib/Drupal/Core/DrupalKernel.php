@@ -578,7 +578,7 @@ class DrupalKernel implements DrupalKernelInterface, TerminableInterface {
       'app' => [],
       'site' => [],
     ];
-    $this->serviceYamls['app']['core'] = 'core/core.services.yml';
+    $this->serviceYamls['app']['core'] = $this->root . '/core/core.services.yml';
     $this->serviceProviderClasses['app']['core'] = 'Drupal\Core\CoreServiceProvider';
 
     // Retrieve enabled modules and register their namespaces.
@@ -1422,7 +1422,7 @@ class DrupalKernel implements DrupalKernelInterface, TerminableInterface {
     $filenames = [];
     foreach ($this->moduleList as $module => $weight) {
       if ($data = $this->moduleData($module)) {
-        $filenames[$module] = $data->getPathname();
+        $filenames[$module] = $this->root . '/' . $data->getPathname();
       }
     }
     return $filenames;
