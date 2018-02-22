@@ -57,23 +57,27 @@ class TagsTest extends UnitTestCase {
   }
 
   /**
-   * Xyz
+   * Test converting a string to tags.
    *
    * @param string $string
+   *   String to explode.
    * @param array $tagsExpected
+   *   Expected result after explosion, or best effort if errors found.
    * @param bool $hasError
+   *   Whether errors are logged.
    *
    * @dataProvider providerTestExplode
    */
-  public function testExplodeXXX($string, $tagsExpected, $hasError) {
-    $result = Tags::explode($string);
-    $tags = $result['tags'];
-    $errors = $result['errors'];
-
+  public function testExplode($string, $tagsExpected, $hasError) {
+    $tags = Tags::explode($string, $errors);
     $this->assertEquals($tagsExpected, $tags);
     $this->assertEquals($hasError, count($errors) > 0);
   }
 
+  /**
+   * Provides test data for testExplode().
+   * @return array
+   */
   public function providerTestExplode() {
     $tests = [];
 
@@ -153,8 +157,8 @@ class TagsTest extends UnitTestCase {
       FALSE,
     ];
     $tests['quoted, unexpected quote'] = [
-      '"Jimmy "The Boss" Smith, Mr"',
-      ['Jimmy '],
+      '"Hello "Foo bar" World, baz"',
+      ['Hello '],
       TRUE,
     ];
     $tests['quoted, missing comma, unquoted'] = [
@@ -168,36 +172,36 @@ class TagsTest extends UnitTestCase {
       TRUE,
     ];
     $tests['unquoted, unexpected quote, word'] = [
-      'Jimmy "The Boss" Smith, Mr',
+      'Hello "Foo bar" World, baz',
       [],
       TRUE,
     ];
     $tests['Quoted with no contents, missing comma'] = [
-      '""Jimmy "The Boss" Smith, Mr"',
+      '""Hello "Foo bar" World, baz"',
       [],
       TRUE,
     ];
     $tests['unquoted, unquoted, trailing escaped'] = [
-      'Jimmy The Boss Smith, Mr""',
-      ['Jimmy The Boss Smith', 'Mr"'],
+      'Hello Foo bar World, baz""',
+      ['Hello Foo bar World', 'baz"'],
       FALSE,
     ];
     $tests['unquoted, word within escaped, quoted, empty tag, unexpected character'] = [
-      'Jimmy ""The Boss"" Smith, ""Mr""',
-      ['Jimmy "The Boss" Smith'],
+      'Hello ""Foo bar"" World, ""baz""',
+      ['Hello "Foo bar" World'],
       TRUE,
     ];
     $tests['unquoted word within escaped, unquoted'] = [
-      'Jimmy ""The Boss"" Smith, Mr',
-      ['Jimmy "The Boss" Smith', 'Mr'],
+      'Hello ""Foo bar"" World, baz',
+      ['Hello "Foo bar" World', 'baz'],
       FALSE,
     ];
     $tests['quoted, words, escaped words, word'] = [
-      '"Jimmy ""The Boss"" Smith, Mr"',
-      ['Jimmy "The Boss" Smith, Mr'],
+      '"Hello ""Foo bar"" World, baz"',
+      ['Hello "Foo bar" World, baz'],
       FALSE,
     ];
-    // Ensures the two quotes don't get escaped, rather create empty tag.
+    // Two quotes should not get escaped, creates empty tag.
     $tests['quoted, empty, unquoted'] = [
       '"",hello',
       ['hello'],
@@ -207,6 +211,11 @@ class TagsTest extends UnitTestCase {
       '"""',
       [],
       TRUE,
+    ];
+    $tests['quoted, starts with quoted'] = [
+      '"""Hello"',
+      ['"Hello'],
+      FALSE,
     ];
     $tests['quoted, escaped, missing comma'] = [
       '""""Hello""""',
@@ -248,14 +257,14 @@ class TagsTest extends UnitTestCase {
       ['hello', 'world'],
       FALSE,
     ];
-    $tests['Outerquotes, no whitespace, multiword, escaped quotes, escaped quotes on end'] = [
-      '"Legendary Drupal mascot of doom: ""Druplicon"""',
-      ['Legendary Drupal mascot of doom: "Druplicon"'],
+    $tests['quoted, escaped quotes, escaped quotes on end'] = [
+      '"Hello world ""Foo bar"""',
+      ['Hello world "Foo bar"'],
       FALSE,
     ];
-    $tests['Outerquotes, no whitespace, multiword, inner commas'] = [
-      '"Drupal, although it rhymes with sloopal, is as awesome as a troopal!"',
-      ['Drupal, although it rhymes with sloopal, is as awesome as a troopal!'],
+    $tests['quoted, inner commas'] = [
+      '"Hello, foo bar, World"',
+      ['Hello, foo bar, World'],
       FALSE,
     ];
 
