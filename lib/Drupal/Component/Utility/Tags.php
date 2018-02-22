@@ -60,7 +60,7 @@ class Tags {
           break;
         }
         else {
-          $errors[] = new TranslatableMarkup('Unexpected text after "@tag". Expected comma or end of text. Found @unexpected.', [
+          $errors[] = new TranslatableMarkup('Unexpected text after "@tag". Expected comma or end of text. Found "@unexpected".', [
             '@tag' => $tag,
             '@unexpected' => substr($string, 0, 10),
           ]);
@@ -73,12 +73,17 @@ class Tags {
         $tag = substr($string, 0, $end_position);
         $string = substr($string, $end_position + 1);
         // Determine if there are any single quote characters.
-        preg_match('/[^"](?:"")*(")(?:[^"]|$)/', $tag, $matches);
+        preg_match('/[^"](?:"")*(")(?:[^"]|$)/', $tag, $matches, PREG_OFFSET_CAPTURE);
         if (!count($matches)) {
           $tags[] = trim($tag);
         }
         else {
-          $errors[] = new TranslatableMarkup('Unexpected quote character found');
+          $sample_end = $matches[1][1];
+          $sample_start = ($sample_end - 10) >= 0 ? $sample_end - 10 : 0;
+          $string_to_quote = substr($tag, $sample_start, $sample_end);
+          $errors[] = new TranslatableMarkup('Unexpected quote character found after "@tag"', [
+            '@tag' => $string_to_quote,
+          ]);
           break;
         }
       }
