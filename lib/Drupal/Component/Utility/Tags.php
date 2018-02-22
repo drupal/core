@@ -79,7 +79,7 @@ class Tags {
         }
         else {
           $sample_end = $matches[1][1];
-          $sample_start = ($sample_end - 10) >= 0 ? $sample_end - 10 : 0;
+          $sample_start = max($sample_end - 10, 0);
           $string_to_quote = substr($tag, $sample_start, $sample_end);
           $errors[] = new TranslatableMarkup('Unexpected quote character found after "@tag"', [
             '@tag' => $string_to_quote,
