@@ -2,3 +2,4 @@ Cache rebuild ignores multisite directories: https://www.drupal.org/files/issues
 Taxonomy Term field with Rendered Entity formatter breaks migration: https://www.drupal.org/files/issues/2018-08-21/drupal-map_taxonomy_term_formatter_rendered_entity-2993927-1.patch
 Add the migration from D7 Picture to Responsive Image: https://www.drupal.org/files/issues/2018-08-17/drupal-responsive_image_migration-2993367-2.patch
 Issue #1178342: Allow contributed modules to alter the format_date() function result: https://www.drupal.org/files/issues/2018-08-28/drupal-format_date_alter-1178342-156-8.6.x.patch
+Map menus when migrating content type settings: https://www.drupal.org/files/issues/2018-09-11/drupal-map_menus_migrate_content_types-2998875-1.patch
