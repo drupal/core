@@ -177,7 +177,7 @@ class BookTest extends BrowserTestBase {
     $this->checkBookNode($other_book, [$node], FALSE, FALSE, $node, []);
     $this->checkBookNode($node, NULL, $other_book, $other_book, FALSE, [$other_book]);
 
-    // Test that we can save a book programmatically.
+    // Test that we can save a book programatically.
     $this->drupalLogin($this->bookAuthor);
     $book = $this->createBookNode('new');
     $book->save();
@@ -282,7 +282,7 @@ class BookTest extends BrowserTestBase {
       $nodes[$child] = $this->createBookNode($book->id(), $nodes[$parent]->id());
     }
     $this->drupalGet($nodes[0]->toUrl('edit-form'));
-    // Since Node 0 has children 2 levels deep, nodes 10 and 11 should not
+    // Snice Node 0 has children 2 levels deep, nodes 10 and 11 should not
     // appear in the selector.
     $this->assertNoOption('edit-book-pid', $nodes[10]->id());
     $this->assertNoOption('edit-book-pid', $nodes[11]->id());

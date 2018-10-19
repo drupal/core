@@ -36,7 +36,7 @@ class PluralFormula implements PluralFormulaInterface {
    *   ],
    * ]
    * @endcode
-   * @var array
+   * @var []
    */
   protected $formulae;
 

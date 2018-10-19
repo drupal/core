@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.card
+    - field.field.node.recipe.field_author
     - field.field.node.recipe.field_cooking_time
     - field.field.node.recipe.field_difficulty
     - field.field.node.recipe.field_image
@@ -42,6 +43,7 @@ content:
     region: content
 hidden:
   content_moderation_control: true
+  field_author: true
   field_cooking_time: true
   field_ingredients: true
   field_number_of_servings: true

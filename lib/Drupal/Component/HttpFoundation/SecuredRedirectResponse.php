@@ -36,7 +36,7 @@ abstract class SecuredRedirectResponse extends RedirectResponse {
    * Copies over the values from the given response.
    *
    * @param \Symfony\Component\HttpFoundation\RedirectResponse $response
-   *   The redirect response object.
+   *   The redirect reponse object.
    */
   protected function fromResponse(RedirectResponse $response) {
     $this->setProtocolVersion($response->getProtocolVersion());

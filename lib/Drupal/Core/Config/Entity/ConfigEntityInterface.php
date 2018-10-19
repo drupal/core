@@ -189,7 +189,7 @@ interface ConfigEntityInterface extends EntityInterface, ThirdPartySettingsInter
    * For example, a default view might not be installable if the base table
    * doesn't exist.
    *
-   * @return bool
+   * @retun bool
    *   TRUE if the entity is installable, FALSE otherwise.
    */
   public function isInstallable();

@@ -1,9 +1,8 @@
 global:
   version: VERSION
   css:
-    base:
-      css/base.css: {}
     component:
+      css/base.css: {}
       css/components/blocks/banner/banner.css: {}
       css/components/blocks/branding/branding.css: {}
       css/components/blocks/disclaimer/disclaimer.css: {}
@@ -15,6 +14,7 @@ global:
       css/components/forms/contact.css: {}
       css/components/content/node.css: {}
       css/components/content/full/node-full.css: {}
+      css/components/content-types/article/article.css: {}
       css/components/content-types/recipe/recipe.css: {}
       css/components/fields/field.css: {}
       css/components/fields/ingredients.css: {}

@@ -2,7 +2,7 @@
 
 namespace Drupal\Tests\rdf\Kernel\Field;
 
-use Drupal\Tests\field\Traits\EntityReferenceTestTrait;
+use Drupal\field\Tests\EntityReference\EntityReferenceTestTrait;
 use Drupal\user\Entity\Role;
 use Drupal\user\RoleInterface;
 

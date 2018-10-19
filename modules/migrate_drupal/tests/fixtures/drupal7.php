@@ -2548,7 +2548,7 @@ $connection->insert('comment')
   'name' => 'admin',
   'mail' => '',
   'homepage' => '',
-  'language' => 'en',
+  'language' => 'und',
 ))
 ->values(array(
   'cid' => '2',
@@ -2565,22 +2565,6 @@ $connection->insert('comment')
   'mail' => '',
   'homepage' => '',
   'language' => 'en',
-))
-->values(array(
-  'cid' => '3',
-  'pid' => '0',
-  'nid' => '3',
-  'uid' => '1',
-  'subject' => 'Comment to IS translation',
-  'hostname' => '46.132.185.242',
-  'created' => '1533031490',
-  'changed' => '1533031490',
-  'status' => '1',
-  'thread' => '01/',
-  'name' => 'admin',
-  'mail' => '',
-  'homepage' => '',
-  'language' => 'is',
 ))
 ->execute();
 
@@ -3131,37 +3115,13 @@ $connection->insert('entity_translation')
   'entity_type' => 'comment',
   'entity_id' => '1',
   'revision_id' => '1',
-  'language' => 'en',
+  'language' => 'und',
   'source' => '',
   'uid' => '1',
   'status' => '1',
   'translate' => '0',
   'created' => '1421727536',
   'changed' => '1421727536',
-))
-->values(array(
-  'entity_type' => 'comment',
-  'entity_id' => '1',
-  'revision_id' => '1',
-  'language' => 'fr',
-  'source' => 'en',
-  'uid' => '1',
-  'status' => '0',
-  'translate' => '0',
-  'created' => '1531837764',
-  'changed' => '1531837764',
-))
-->values(array(
-  'entity_type' => 'comment',
-  'entity_id' => '1',
-  'revision_id' => '1',
-  'language' => 'is',
-  'source' => 'en',
-  'uid' => '2',
-  'status' => '1',
-  'translate' => '1',
-  'created' => '1531838064',
-  'changed' => '1531838064',
 ))
 ->values(array(
   'entity_type' => 'node',
@@ -3198,42 +3158,6 @@ $connection->insert('entity_translation')
   'translate' => '0',
   'created' => '1529615813',
   'changed' => '1529615813',
-))
-->values(array(
-  'entity_type' => 'taxonomy_term',
-  'entity_id' => '4',
-  'revision_id' => '4',
-  'language' => 'en',
-  'source' => '',
-  'uid' => '1',
-  'status' => '1',
-  'translate' => '0',
-  'created' => '1531922259',
-  'changed' => '1531922259',
-))
-->values(array(
-  'entity_type' => 'taxonomy_term',
-  'entity_id' => '4',
-  'revision_id' => '4',
-  'language' => 'fr',
-  'source' => 'en',
-  'uid' => '2',
-  'status' => '1',
-  'translate' => '1',
-  'created' => '1531922267',
-  'changed' => '1531922268',
-))
-->values(array(
-  'entity_type' => 'taxonomy_term',
-  'entity_id' => '4',
-  'revision_id' => '4',
-  'language' => 'is',
-  'source' => 'en',
-  'uid' => '1',
-  'status' => '0',
-  'translate' => '0',
-  'created' => '1531922278',
-  'changed' => '1531922279',
 ))
 ->values(array(
   'entity_type' => 'user',
@@ -4749,15 +4673,6 @@ $connection->insert('field_config_instance')
   'data' => 'a:6:{s:8:"required";b:0;s:5:"label";s:11:"Description";s:11:"description";s:0:"";s:8:"settings";a:5:{s:15:"text_processing";i:1;s:10:"hide_label";a:2:{s:4:"page";b:0;s:6:"entity";b:0;}s:15:"display_summary";i:0;s:18:"user_register_form";b:0;s:23:"entity_translation_sync";b:0;}s:6:"widget";a:4:{s:6:"weight";i:-5;s:4:"type";s:26:"text_textarea_with_summary";s:8:"settings";a:2:{s:4:"rows";i:20;s:12:"summary_rows";i:5;}s:6:"module";s:4:"text";}s:7:"display";a:1:{s:7:"default";a:4:{s:4:"type";s:6:"hidden";s:5:"label";s:5:"above";s:8:"settings";a:0:{}s:6:"weight";i:15;}}}',
   'deleted' => '0',
 ))
-->values(array(
-  'id' => '71',
-  'field_id' => '41',
-  'field_name' => 'subject_field',
-  'entity_type' => 'comment',
-  'bundle' => 'comment_node_test_content_type',
-  'data' => 'a:6:{s:5:"label";s:7:"Subject";s:11:"description";s:0:"";s:8:"required";b:1;s:8:"settings";a:4:{s:15:"text_processing";i:0;s:10:"hide_label";a:2:{s:4:"page";b:0;s:6:"entity";b:0;}s:18:"user_register_form";b:0;s:23:"entity_translation_sync";b:0;}s:6:"widget";a:4:{s:6:"weight";i:-5;s:4:"type";s:14:"text_textfield";s:8:"settings";a:1:{s:4:"size";i:60;}s:6:"module";s:4:"text";}s:7:"display";a:1:{s:7:"default";a:4:{s:4:"type";s:6:"hidden";s:5:"label";s:5:"above";s:8:"settings";a:0:{}s:6:"weight";i:1;}}}',
-  'deleted' => '0',
-))
 ->execute();
 
 $connection->schema()->createTable('field_data_body', array(
@@ -4968,17 +4883,6 @@ $connection->insert('field_data_comment_body')
   'comment_body_value' => 'TNG is better than DS9.',
   'comment_body_format' => 'filtered_html',
 ))
-->values(array(
-  'entity_type' => 'comment',
-  'bundle' => 'comment_node_article',
-  'deleted' => '0',
-  'entity_id' => '3',
-  'revision_id' => '3',
-  'language' => 'und',
-  'delta' => '0',
-  'comment_body_value' => 'This is a comment to an Icelandic translation.',
-  'comment_body_format' => 'filtered_html',
-))
 ->execute();
 
 $connection->schema()->createTable('field_data_description_field', array(
@@ -5119,33 +5023,9 @@ $connection->insert('field_data_description_field')
   'revision_id' => '4',
   'language' => 'en',
   'delta' => '0',
-  'description_field_value' => 'The third term in plain old English.',
+  'description_field_value' => 'The third term.',
   'description_field_summary' => '',
   'description_field_format' => 'full_html',
-))
-->values(array(
-  'entity_type' => 'taxonomy_term',
-  'bundle' => 'test_vocabulary',
-  'deleted' => '0',
-  'entity_id' => '4',
-  'revision_id' => '4',
-  'language' => 'fr',
-  'delta' => '0',
-  'description_field_value' => 'The third term en français s\'il vous plaît.',
-  'description_field_summary' => '',
-  'description_field_format' => 'filtered_html',
-))
-->values(array(
-  'entity_type' => 'taxonomy_term',
-  'bundle' => 'test_vocabulary',
-  'deleted' => '0',
-  'entity_id' => '4',
-  'revision_id' => '4',
-  'language' => 'is',
-  'delta' => '0',
-  'description_field_value' => 'The third term á íslensku.',
-  'description_field_summary' => '',
-  'description_field_format' => 'plain_text',
 ))
 ->execute();
 
@@ -6242,29 +6122,9 @@ $connection->insert('field_data_field_integer')
   'deleted' => '0',
   'entity_id' => '1',
   'revision_id' => '1',
-  'language' => 'en',
+  'language' => 'und',
   'delta' => '0',
   'field_integer_value' => '1000000',
-))
-->values(array(
-  'entity_type' => 'comment',
-  'bundle' => 'comment_node_test_content_type',
-  'deleted' => '0',
-  'entity_id' => '1',
-  'revision_id' => '1',
-  'language' => 'fr',
-  'delta' => '0',
-  'field_integer_value' => '2000000',
-))
-->values(array(
-  'entity_type' => 'comment',
-  'bundle' => 'comment_node_test_content_type',
-  'deleted' => '0',
-  'entity_id' => '1',
-  'revision_id' => '1',
-  'language' => 'is',
-  'delta' => '0',
-  'field_integer_value' => '3000000',
 ))
 ->values(array(
   'entity_type' => 'node',
@@ -6335,26 +6195,6 @@ $connection->insert('field_data_field_integer')
   'language' => 'en',
   'delta' => '0',
   'field_integer_value' => '6',
-))
-->values(array(
-  'entity_type' => 'taxonomy_term',
-  'bundle' => 'test_vocabulary',
-  'deleted' => '0',
-  'entity_id' => '4',
-  'revision_id' => '4',
-  'language' => 'fr',
-  'delta' => '0',
-  'field_integer_value' => '5',
-))
-->values(array(
-  'entity_type' => 'taxonomy_term',
-  'bundle' => 'test_vocabulary',
-  'deleted' => '0',
-  'entity_id' => '4',
-  'revision_id' => '4',
-  'language' => 'is',
-  'delta' => '0',
-  'field_integer_value' => '4',
 ))
 ->execute();
 
@@ -8781,29 +8621,7 @@ $connection->insert('field_data_name_field')
   'revision_id' => '4',
   'language' => 'en',
   'delta' => '0',
-  'name_field_value' => 'Term3 in plain old English',
-  'name_field_format' => NULL,
-))
-->values(array(
-  'entity_type' => 'taxonomy_term',
-  'bundle' => 'test_vocabulary',
-  'deleted' => '0',
-  'entity_id' => '4',
-  'revision_id' => '4',
-  'language' => 'fr',
-  'delta' => '0',
-  'name_field_value' => 'Term3 en français s\'il vous plaît',
-  'name_field_format' => NULL,
-))
-->values(array(
-  'entity_type' => 'taxonomy_term',
-  'bundle' => 'test_vocabulary',
-  'deleted' => '0',
-  'entity_id' => '4',
-  'revision_id' => '4',
-  'language' => 'is',
-  'delta' => '0',
-  'name_field_value' => 'Term3 á íslensku',
+  'name_field_value' => 'Term3',
   'name_field_format' => NULL,
 ))
 ->execute();
@@ -8910,39 +8728,6 @@ $connection->insert('field_data_subject_field')
 ))
 ->values(array(
   'entity_type' => 'comment',
-  'bundle' => 'comment_node_test_content_type',
-  'deleted' => '0',
-  'entity_id' => '1',
-  'revision_id' => '1',
-  'language' => 'en',
-  'delta' => '0',
-  'subject_field_value' => 'Subject field in English',
-  'subject_field_format' => NULL,
-))
-->values(array(
-  'entity_type' => 'comment',
-  'bundle' => 'comment_node_test_content_type',
-  'deleted' => '0',
-  'entity_id' => '1',
-  'revision_id' => '1',
-  'language' => 'fr',
-  'delta' => '0',
-  'subject_field_value' => 'Subject field in French',
-  'subject_field_format' => NULL,
-))
-->values(array(
-  'entity_type' => 'comment',
-  'bundle' => 'comment_node_test_content_type',
-  'deleted' => '0',
-  'entity_id' => '1',
-  'revision_id' => '1',
-  'language' => 'is',
-  'delta' => '0',
-  'subject_field_value' => 'Subject field in Icelandic',
-  'subject_field_format' => NULL,
-))
-->values(array(
-  'entity_type' => 'comment',
   'bundle' => 'comment_node_article',
   'deleted' => '0',
   'entity_id' => '2',
@@ -8950,17 +8735,6 @@ $connection->insert('field_data_subject_field')
   'language' => 'en',
   'delta' => '0',
   'subject_field_value' => 'TNG for the win!',
-  'subject_field_format' => NULL,
-))
-->values(array(
-  'entity_type' => 'comment',
-  'bundle' => 'comment_node_article',
-  'deleted' => '0',
-  'entity_id' => '3',
-  'revision_id' => '3',
-  'language' => 'is',
-  'delta' => '0',
-  'subject_field_value' => 'Comment to IS translation',
   'subject_field_format' => NULL,
 ))
 ->execute();
@@ -9428,17 +9202,6 @@ $connection->insert('field_revision_comment_body')
   'comment_body_value' => 'TNG is better than DS9.',
   'comment_body_format' => 'filtered_html',
 ))
-->values(array(
-  'entity_type' => 'comment',
-  'bundle' => 'comment_node_article',
-  'deleted' => '0',
-  'entity_id' => '3',
-  'revision_id' => '3',
-  'language' => 'und',
-  'delta' => '0',
-  'comment_body_value' => 'This is a comment to an Icelandic translation.',
-  'comment_body_format' => 'filtered_html',
-))
 ->execute();
 
 $connection->schema()->createTable('field_revision_description_field', array(
@@ -9580,32 +9343,8 @@ $connection->insert('field_revision_description_field')
   'revision_id' => '4',
   'language' => 'en',
   'delta' => '0',
-  'description_field_value' => 'The third term in plain old English.',
-  'description_field_summary' => '',
-  'description_field_format' => 'full_html',
-))
-->values(array(
-  'entity_type' => 'taxonomy_term',
-  'bundle' => 'test_vocabulary',
-  'deleted' => '0',
-  'entity_id' => '4',
-  'revision_id' => '4',
-  'language' => 'fr',
-  'delta' => '0',
-  'description_field_value' => 'The third term en français s\'il vous plaît.',
-  'description_field_summary' => '',
-  'description_field_format' => 'full_html',
-))
-->values(array(
-  'entity_type' => 'taxonomy_term',
-  'bundle' => 'test_vocabulary',
-  'deleted' => '0',
-  'entity_id' => '4',
-  'revision_id' => '4',
-  'language' => 'is',
-  'delta' => '0',
-  'description_field_value' => 'The third term á íslensku.',
-  'description_field_summary' => '',
+  'description_field_value' => 'The third term.',
+  'description_field_summary' => NULL,
   'description_field_format' => 'full_html',
 ))
 ->execute();
@@ -10715,29 +10454,9 @@ $connection->insert('field_revision_field_integer')
   'deleted' => '0',
   'entity_id' => '1',
   'revision_id' => '1',
-  'language' => 'en',
+  'language' => 'und',
   'delta' => '0',
   'field_integer_value' => '1000000',
-))
-->values(array(
-  'entity_type' => 'comment',
-  'bundle' => 'comment_node_test_content_type',
-  'deleted' => '0',
-  'entity_id' => '1',
-  'revision_id' => '1',
-  'language' => 'fr',
-  'delta' => '0',
-  'field_integer_value' => '2000000',
-))
-->values(array(
-  'entity_type' => 'comment',
-  'bundle' => 'comment_node_test_content_type',
-  'deleted' => '0',
-  'entity_id' => '1',
-  'revision_id' => '1',
-  'language' => 'is',
-  'delta' => '0',
-  'field_integer_value' => '3000000',
 ))
 ->values(array(
   'entity_type' => 'node',
@@ -10788,26 +10507,6 @@ $connection->insert('field_revision_field_integer')
   'language' => 'en',
   'delta' => '0',
   'field_integer_value' => '6',
-))
-->values(array(
-  'entity_type' => 'taxonomy_term',
-  'bundle' => 'test_vocabulary',
-  'deleted' => '0',
-  'entity_id' => '4',
-  'revision_id' => '4',
-  'language' => 'fr',
-  'delta' => '0',
-  'field_integer_value' => '5',
-))
-->values(array(
-  'entity_type' => 'taxonomy_term',
-  'bundle' => 'test_vocabulary',
-  'deleted' => '0',
-  'entity_id' => '4',
-  'revision_id' => '4',
-  'language' => 'is',
-  'delta' => '0',
-  'field_integer_value' => '4',
 ))
 ->execute();
 
@@ -13267,29 +12966,7 @@ $connection->insert('field_revision_name_field')
   'revision_id' => '4',
   'language' => 'en',
   'delta' => '0',
-  'name_field_value' => 'Term3 in plain old English',
-  'name_field_format' => NULL,
-))
-->values(array(
-  'entity_type' => 'taxonomy_term',
-  'bundle' => 'test_vocabulary',
-  'deleted' => '0',
-  'entity_id' => '4',
-  'revision_id' => '4',
-  'language' => 'fr',
-  'delta' => '0',
-  'name_field_value' => 'Term3 en français s\'il vous plaît',
-  'name_field_format' => NULL,
-))
-->values(array(
-  'entity_type' => 'taxonomy_term',
-  'bundle' => 'test_vocabulary',
-  'deleted' => '0',
-  'entity_id' => '4',
-  'revision_id' => '4',
-  'language' => 'is',
-  'delta' => '0',
-  'name_field_value' => 'Term3 á íslensku',
+  'name_field_value' => 'Term3',
   'name_field_format' => NULL,
 ))
 ->execute();
@@ -13397,39 +13074,6 @@ $connection->insert('field_revision_subject_field')
 ))
 ->values(array(
   'entity_type' => 'comment',
-  'bundle' => 'comment_node_test_content_type',
-  'deleted' => '0',
-  'entity_id' => '1',
-  'revision_id' => '1',
-  'language' => 'en',
-  'delta' => '0',
-  'subject_field_value' => 'Subject field in English',
-  'subject_field_format' => NULL,
-))
-->values(array(
-  'entity_type' => 'comment',
-  'bundle' => 'comment_node_test_content_type',
-  'deleted' => '0',
-  'entity_id' => '1',
-  'revision_id' => '1',
-  'language' => 'fr',
-  'delta' => '0',
-  'subject_field_value' => 'Subject field in French',
-  'subject_field_format' => NULL,
-))
-->values(array(
-  'entity_type' => 'comment',
-  'bundle' => 'comment_node_test_content_type',
-  'deleted' => '0',
-  'entity_id' => '1',
-  'revision_id' => '1',
-  'language' => 'is',
-  'delta' => '0',
-  'subject_field_value' => 'Subject field in Icelandic',
-  'subject_field_format' => NULL,
-))
-->values(array(
-  'entity_type' => 'comment',
   'bundle' => 'comment_node_article',
   'deleted' => '0',
   'entity_id' => '2',
@@ -13437,17 +13081,6 @@ $connection->insert('field_revision_subject_field')
   'language' => 'en',
   'delta' => '0',
   'subject_field_value' => 'TNG for the win!',
-  'subject_field_format' => NULL,
-))
-->values(array(
-  'entity_type' => 'comment',
-  'bundle' => 'comment_node_article',
-  'deleted' => '0',
-  'entity_id' => '3',
-  'revision_id' => '3',
-  'language' => 'is',
-  'delta' => '0',
-  'subject_field_value' => 'Comment to IS translation',
   'subject_field_format' => NULL,
 ))
 ->execute();
@@ -36937,11 +36570,11 @@ $connection->insert('node_comment_statistics')
 ))
 ->values(array(
   'nid' => '3',
-  'cid' => '3',
-  'last_comment_timestamp' => '1533031490',
-  'last_comment_name' => '',
+  'cid' => '0',
+  'last_comment_timestamp' => '1471428152',
+  'last_comment_name' => NULL,
   'last_comment_uid' => '1',
-  'comment_count' => '1',
+  'comment_count' => '0',
 ))
 ->values(array(
   'nid' => '4',

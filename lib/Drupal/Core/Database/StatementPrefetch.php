@@ -20,7 +20,7 @@ class StatementPrefetch implements \Iterator, StatementInterface {
   /**
    * Driver-specific options. Can be used by child classes.
    *
-   * @var array
+   * @var Array
    */
   protected $driverOptions;
 
@@ -41,14 +41,14 @@ class StatementPrefetch implements \Iterator, StatementInterface {
   /**
    * Main data store.
    *
-   * @var array
+   * @var Array
    */
   protected $data = [];
 
   /**
    * The current row, retrieved in \PDO::FETCH_ASSOC format.
    *
-   * @var array
+   * @var Array
    */
   protected $currentRow = NULL;
 
@@ -62,7 +62,7 @@ class StatementPrefetch implements \Iterator, StatementInterface {
   /**
    * The list of column names in this result set.
    *
-   * @var array
+   * @var Array
    */
   protected $columnNames = NULL;
 
@@ -91,7 +91,7 @@ class StatementPrefetch implements \Iterator, StatementInterface {
   /**
    * Holds supplementary current fetch options (which will be used by the next fetch).
    *
-   * @var array
+   * @var Array
    */
   protected $fetchOptions = [
     'class' => 'stdClass',
@@ -110,7 +110,7 @@ class StatementPrefetch implements \Iterator, StatementInterface {
   /**
    * Holds supplementary default fetch options.
    *
-   * @var array
+   * @var Array
    */
   protected $defaultFetchOptions = [
     'class' => 'stdClass',

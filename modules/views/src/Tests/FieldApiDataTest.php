@@ -263,7 +263,7 @@ class FieldApiDataTest extends FieldTestBase {
   }
 
   /**
-   * Tests filtering entries with different translatability.
+   * Tests filtering entries with different translatabilty.
    */
   public function testEntityFieldFilter() {
     $map = [

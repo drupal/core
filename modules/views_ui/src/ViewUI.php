@@ -51,7 +51,7 @@ class ViewUI implements ViewEntityInterface {
    * \Drupal\Core\TempStore\SharedTempStore::getMetadata(). Which can be a stdClass or
    * NULL.
    *
-   * @var object
+   * @var stdClass
    */
   public $lock;
 

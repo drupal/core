@@ -28,7 +28,6 @@ use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
 use Drupal\node\NodeTypeInterface;
-use Drupal\user\UserInterface;
 
 /**
  * Denotes that the node is not published.
@@ -714,7 +713,7 @@ function node_ranking() {
 /**
  * Implements hook_user_cancel().
  */
-function node_user_cancel($edit, UserInterface $account, $method) {
+function node_user_cancel($edit, $account, $method) {
   switch ($method) {
     case 'user_cancel_block_unpublish':
       // Unpublish nodes (current revisions).

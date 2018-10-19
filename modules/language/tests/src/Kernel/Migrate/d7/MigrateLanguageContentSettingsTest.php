@@ -25,7 +25,6 @@ class MigrateLanguageContentSettingsTest extends MigrateDrupal7TestBase {
     parent::setUp();
 
     $this->installConfig(['node']);
-    $this->installEntitySchema('node');
     $this->executeMigrations(['d7_node_type', 'd7_language_content_settings']);
   }
 

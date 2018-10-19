@@ -5,7 +5,7 @@ namespace Drupal\workspaces;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
-use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\views\Form\ViewsExposedForm;
 use Drupal\workspaces\Form\WorkspaceFormInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -16,6 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @internal
  */
 class FormOperations implements ContainerInjectionInterface {
+
+  use StringTranslationTrait;
 
   /**
    * The workspace manager service.
@@ -102,16 +104,16 @@ class FormOperations implements ContainerInjectionInterface {
     }
 
     if (isset($element['#validate'])) {
-      $element['#validate'][] = [get_called_class(), 'validateDefaultWorkspace'];
+      $element['#validate'][] = [$this, 'validateDefaultWorkspace'];
     }
   }
 
   /**
    * Validation handler which sets a validation error for all unsupported forms.
    */
-  public static function validateDefaultWorkspace(array &$form, FormStateInterface $form_state) {
+  public function validateDefaultWorkspace(array &$form, FormStateInterface $form_state) {
     if ($form_state->get('workspace_safe') !== TRUE) {
-      $form_state->setError($form, new TranslatableMarkup('This form can only be submitted in the default workspace.'));
+      $form_state->setError($form, $this->t('This form can only be submitted in the default workspace.'));
     }
   }
 

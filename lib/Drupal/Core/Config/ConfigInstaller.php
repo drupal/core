@@ -160,10 +160,7 @@ class ConfigInstaller implements ConfigInstallerInterface {
    */
   public function installOptionalConfig(StorageInterface $storage = NULL, $dependency = []) {
     $profile = $this->drupalGetProfile();
-    $enabled_extensions = $this->getEnabledExtensions();
-    $existing_config = $this->getActiveStorages()->listAll();
-
-    // Create the storages to read configuration from.
+    $optional_profile_config = [];
     if (!$storage) {
       // Search the install profile's optional configuration too.
       $storage = new ExtensionInstallStorage($this->getActiveStorages(StorageInterface::DEFAULT_COLLECTION), InstallStorage::CONFIG_OPTIONAL_DIRECTORY, StorageInterface::DEFAULT_COLLECTION, TRUE, $this->installProfile);
@@ -174,6 +171,7 @@ class ConfigInstaller implements ConfigInstallerInterface {
       // Creates a profile storage to search for overrides.
       $profile_install_path = $this->drupalGetPath('module', $profile) . '/' . InstallStorage::CONFIG_OPTIONAL_DIRECTORY;
       $profile_storage = new FileStorage($profile_install_path, StorageInterface::DEFAULT_COLLECTION);
+      $optional_profile_config = $profile_storage->listAll();
     }
     else {
       // Profile has not been set yet. For example during the first steps of the
@@ -181,17 +179,10 @@ class ConfigInstaller implements ConfigInstallerInterface {
       $profile_storage = NULL;
     }
 
-    // Build the list of possible configuration to create.
-    $list = $storage->listAll();
-    if ($profile_storage && !empty($dependency)) {
-      // Only add the optional profile configuration into the list if we are
-      // have a dependency to check. This ensures that optional profile
-      // configuration is not unexpectedly re-created after being deleted.
-      $list = array_unique(array_merge($list, $profile_storage->listAll()));
-    }
+    $enabled_extensions = $this->getEnabledExtensions();
+    $existing_config = $this->getActiveStorages()->listAll();
 
-    // Filter the list of configuration to only include configuration that
-    // should be created.
+    $list = array_unique(array_merge($storage->listAll(), $optional_profile_config));
     $list = array_filter($list, function ($config_name) use ($existing_config) {
       // Only list configuration that:
       // - does not already exist
@@ -235,8 +226,6 @@ class ConfigInstaller implements ConfigInstallerInterface {
         unset($all_config[$config_name]);
       }
     }
-
-    // Create the optional configuration if there is any left after filtering.
     if (!empty($config_to_create)) {
       $this->createConfiguration(StorageInterface::DEFAULT_COLLECTION, $config_to_create, TRUE);
     }

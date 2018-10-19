@@ -7,7 +7,6 @@ use Drupal\Core\Config\PreExistingConfigException;
 use Drupal\Core\Config\UnmetDependenciesException;
 use Drupal\Core\Access\AccessManagerInterface;
 use Drupal\Core\Extension\Extension;
-use Drupal\Core\Extension\InfoParserException;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Extension\ModuleInstallerInterface;
 use Drupal\Core\Form\FormBase;
@@ -144,14 +143,8 @@ class ModulesListForm extends FormBase {
     ];
 
     // Sort all modules by their names.
-    try {
-      $modules = system_rebuild_module_data();
-      uasort($modules, 'system_sort_modules_by_info_name');
-    }
-    catch (InfoParserException $e) {
-      $this->messenger()->addError($this->t('Modules could not be listed due to an error: %error', ['%error' => $e->getMessage()]));
-      $modules = [];
-    }
+    $modules = system_rebuild_module_data();
+    uasort($modules, 'system_sort_modules_by_info_name');
 
     // Iterate over each of the modules.
     $form['modules']['#tree'] = TRUE;

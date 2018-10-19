@@ -28,7 +28,7 @@
    * @type {Drupal~behavior}
    *
    * @prop {Drupal~behaviorAttach} attach
-   *   Attaches the behavior for drupalAnnounce.
+   *   Attaches the behavior for drupalAnnouce.
    */
   Drupal.behaviors.drupalAnnounce = {
     attach(context) {

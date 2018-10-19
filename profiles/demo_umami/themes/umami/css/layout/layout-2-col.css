@@ -13,7 +13,7 @@
   }
 
   .two-columns .main .layout-content {
-    flex: 1 1 75%;
+    flex: 0 0 75%;
   }
 
   .layout-sidebar {

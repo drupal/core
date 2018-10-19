@@ -25,13 +25,6 @@ class CKEditorIntegrationTest extends WebDriverTestBase {
   protected $account;
 
   /**
-   * The FilterFormat config entity used for testing.
-   *
-   * @var \Drupal\filter\FilterFormatInterface
-   */
-  protected $filterFormat;
-
-  /**
    * {@inheritdoc}
    */
   public static $modules = ['node', 'ckeditor', 'filter'];
@@ -43,12 +36,12 @@ class CKEditorIntegrationTest extends WebDriverTestBase {
     parent::setUp();
 
     // Create a text format and associate CKEditor.
-    $this->filterFormat = FilterFormat::create([
+    $filtered_html_format = FilterFormat::create([
       'format' => 'filtered_html',
       'name' => 'Filtered HTML',
       'weight' => 0,
     ]);
-    $this->filterFormat->save();
+    $filtered_html_format->save();
 
     Editor::create([
       'format' => 'filtered_html',
@@ -124,57 +117,6 @@ class CKEditorIntegrationTest extends WebDriverTestBase {
 
     // Check that going back in the history worked.
     self::assertEquals($before_url, $after_url, 'History back works.');
-  }
-
-  /**
-   * Tests if the Image button appears and works as expected.
-   */
-  public function testDrupalImageDialog() {
-    $session = $this->getSession();
-    $web_assert = $this->assertSession();
-
-    $this->drupalGet('node/add/page');
-    $session->getPage();
-
-    // Asserts the Image button is present in the toolbar.
-    $web_assert->elementExists('css', '#cke_edit-body-0-value .cke_button__drupalimage');
-
-    // Asserts the image dialog opens when clicking the Image button.
-    $this->click('.cke_button__drupalimage');
-    $this->assertNotEmpty($web_assert->waitForElement('css', '.ui-dialog'));
-
-    $web_assert->elementContains('css', '.ui-dialog .ui-dialog-titlebar', 'Insert Image');
-  }
-
-  /**
-   * Tests if the Drupal Image Caption plugin appears and works as expected.
-   */
-  public function testDrupalImageCaptionDialog() {
-    $web_assert = $this->assertSession();
-
-    // Disable the caption filter.
-    $this->filterFormat->setFilterConfig('filter_caption', [
-      'status' => FALSE,
-    ]);
-    $this->filterFormat->save();
-
-    // If the caption filter is disabled, its checkbox should be absent.
-    $this->drupalGet('node/add/page');
-    $this->click('.cke_button__drupalimage');
-    $this->assertNotEmpty($web_assert->waitForElement('css', '.ui-dialog'));
-    $web_assert->elementNotExists('css', '.ui-dialog input[name="attributes[hasCaption]"]');
-
-    // Enable the caption filter again.
-    $this->filterFormat->setFilterConfig('filter_caption', [
-      'status' => TRUE,
-    ]);
-    $this->filterFormat->save();
-
-    // If the caption filter is enabled,  its checkbox should be present.
-    $this->drupalGet('node/add/page');
-    $this->click('.cke_button__drupalimage');
-    $this->assertNotEmpty($web_assert->waitForElement('css', '.ui-dialog'));
-    $web_assert->elementExists('css', '.ui-dialog input[name="attributes[hasCaption]"]');
   }
 
 }

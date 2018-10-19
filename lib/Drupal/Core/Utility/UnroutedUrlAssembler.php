@@ -78,6 +78,7 @@ class UnroutedUrlAssembler implements UnroutedUrlAssemblerInterface {
     $options += ['query' => []];
 
     $options['query'] = NestedArray::mergeDeep($parsed['query'], $options['query']);
+    ksort($options['query']);
 
     if ($parsed['fragment'] && !$options['fragment']) {
       $options['fragment'] = '#' . $parsed['fragment'];

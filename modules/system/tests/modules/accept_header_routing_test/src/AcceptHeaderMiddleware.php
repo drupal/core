@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
- * Example implementation of "accept header"-based content negotiation.
+ * Example implementation of accept header based content negotation.
  */
 class AcceptHeaderMiddleware implements HttpKernelInterface {
 

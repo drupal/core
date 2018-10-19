@@ -6,12 +6,6 @@ migration_tags:
 source:
   plugin: d7_rdf_mapping
 process:
-  id:
-    plugin: concat
-    source:
-      - type
-      - bundle
-    delimiter: .
   targetEntityType: type
   bundle: bundle
   types: types
@@ -21,12 +15,7 @@ process:
     process:
       properties: predicates
       datatype: datatype
-      datatype_callback/callable:
-        plugin: static_map
-        source: callback
-        bypass: true
-        map:
-          date_iso8601: Drupal\rdf\CommonDataConverter::dateIso8601Value
+      datatype_callback/callable: callback
       mapping_type: type
 destination:
   plugin: entity:rdf_mapping

@@ -35,7 +35,7 @@ class CancelUser extends ActionBase implements ContainerFactoryPluginInterface {
   protected $currentUser;
 
   /**
-   * Constructs a CancelUser object.
+   * Constructs a DeleteNode object.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.

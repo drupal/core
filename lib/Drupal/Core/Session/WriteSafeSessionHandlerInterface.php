@@ -14,7 +14,8 @@ interface WriteSafeSessionHandlerInterface {
    * only capable of forcibly disabling that session data is written to storage.
    *
    * @param bool $flag
-   *   TRUE if the session is allowed to be written, FALSE otherwise.
+   *   TRUE if the session the session is allowed to be written, FALSE
+   *   otherwise.
    */
   public function setSessionWritable($flag);
 
@@ -22,7 +23,8 @@ interface WriteSafeSessionHandlerInterface {
    * Returns whether or not a session may be written to storage.
    *
    * @return bool
-   *   TRUE if the session is allowed to be written, FALSE otherwise.
+   *   TRUE if the session the session is allowed to be written, FALSE
+   *   otherwise.
    */
   public function isSessionWritable();
 

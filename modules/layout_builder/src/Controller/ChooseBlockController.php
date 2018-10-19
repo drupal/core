@@ -5,7 +5,6 @@ namespace Drupal\layout_builder\Controller;
 use Drupal\Core\Ajax\AjaxHelperTrait;
 use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\layout_builder\Context\LayoutBuilderContextTrait;
 use Drupal\layout_builder\SectionStorageInterface;
@@ -20,7 +19,6 @@ class ChooseBlockController implements ContainerInjectionInterface {
 
   use AjaxHelperTrait;
   use LayoutBuilderContextTrait;
-  use StringTranslationTrait;
 
   /**
    * The block manager.
@@ -62,7 +60,6 @@ class ChooseBlockController implements ContainerInjectionInterface {
    *   A render array.
    */
   public function build(SectionStorageInterface $section_storage, $delta, $region) {
-    $build['#title'] = $this->t('Choose a block');
     $build['#type'] = 'container';
     $build['#attributes']['class'][] = 'block-categories';
 

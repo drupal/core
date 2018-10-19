@@ -97,7 +97,7 @@ class RouteProviderTest extends KernelTestBase {
   public function register(ContainerBuilder $container) {
     parent::register($container);
 
-    // Read the incoming path alias for these tests.
+    // Readd the incoming path alias for these tests.
     if ($container->hasDefinition('path_processor_alias')) {
       $definition = $container->getDefinition('path_processor_alias');
       $definition->addTag('path_processor_inbound');

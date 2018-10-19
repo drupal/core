@@ -11,10 +11,7 @@
     "no-duplicate-selectors": null,
     "no-unknown-animations": true,
     "media-feature-name-no-unknown": [true, {
-      "ignoreMediaFeatureNames": [
-        "prefers-reduced-motion",
-        "min--moz-device-pixel-ratio"
-      ]
+      "ignoreMediaFeatureNames": ["prefers-reduced-motion"]
     }],
     "number-leading-zero": "always",
     "plugin/no-browser-hacks": [true, {

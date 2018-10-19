@@ -68,7 +68,7 @@
      * Reacts on a change in the editor element.
      *
      * @param {HTMLElement} element
-     *   The element where the change occurred.
+     *   The element where the change occured.
      * @param {function} callback
      *   Callback called with the value of the editor.
      *

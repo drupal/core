@@ -197,7 +197,7 @@ class UpdateRegistry {
   }
 
   /**
-   * Registers that update functions were executed.
+   * Registers that update fucntions got executed.
    *
    * @param string[] $function_names
    *   The executed update functions.

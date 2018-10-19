@@ -13,9 +13,7 @@ use Drupal\Core\Access\AccessManagerInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\Core\Cache\CacheBackendInterface;
-use Drupal\Core\Cache\Context\CacheContextsManager;
 use Drupal\Core\Controller\ControllerResolver;
-use Drupal\Core\DependencyInjection\Container;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Menu\LocalActionManager;
@@ -25,7 +23,6 @@ use Drupal\Core\Routing\RouteProviderInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\Tests\UnitTestCase;
-use Prophecy\Argument;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
@@ -116,15 +113,7 @@ class LocalActionManagerTest extends UnitTestCase {
     $this->moduleHandler = $this->getMock('Drupal\Core\Extension\ModuleHandlerInterface');
     $this->cacheBackend = $this->getMock('Drupal\Core\Cache\CacheBackendInterface');
 
-    $cache_contexts_manager = $this->prophesize(CacheContextsManager::class);
-    $cache_contexts_manager->assertValidTokens(Argument::any())
-      ->willReturn(TRUE);
-
-    $container = new Container();
-    $container->set('cache_contexts_manager', $cache_contexts_manager->reveal());
-    \Drupal::setContainer($container);
-
-    $access_result = (new AccessResultForbidden())->cachePerPermissions();
+    $access_result = new AccessResultForbidden();
     $this->accessManager = $this->getMock('Drupal\Core\Access\AccessManagerInterface');
     $this->accessManager->expects($this->any())
       ->method('checkNamedRoute')
@@ -197,14 +186,6 @@ class LocalActionManagerTest extends UnitTestCase {
   }
 
   public function getActionsForRouteProvider() {
-    $cache_contexts_manager = $this->prophesize(CacheContextsManager::class);
-    $cache_contexts_manager->assertValidTokens(Argument::any())
-      ->willReturn(TRUE);
-
-    $container = new Container();
-    $container->set('cache_contexts_manager', $cache_contexts_manager->reveal());
-    \Drupal::setContainer($container);
-
     // Single available and single expected plugins.
     $data[] = [
       'test_route',
@@ -220,9 +201,7 @@ class LocalActionManagerTest extends UnitTestCase {
       ],
       [
         '#cache' => [
-          'tags' => [],
-          'contexts' => ['route', 'user.permissions'],
-          'max-age' => 0,
+          'contexts' => ['route'],
         ],
         'plugin_id_1' => [
           '#theme' => 'menu_local_action',
@@ -231,8 +210,13 @@ class LocalActionManagerTest extends UnitTestCase {
             'url' => Url::fromRoute('test_route_2'),
             'localized_options' => '',
           ],
-          '#access' => AccessResult::forbidden()->cachePerPermissions(),
+          '#access' => AccessResult::forbidden(),
           '#weight' => 0,
+          '#cache' => [
+            'contexts' => [],
+            'tags' => [],
+            'max-age' => 0,
+          ],
         ],
       ],
     ];
@@ -259,9 +243,7 @@ class LocalActionManagerTest extends UnitTestCase {
       ],
       [
         '#cache' => [
-          'tags' => [],
-          'contexts' => ['route', 'user.permissions'],
-          'max-age' => 0,
+          'contexts' => ['route'],
         ],
         'plugin_id_1' => [
           '#theme' => 'menu_local_action',
@@ -270,8 +252,13 @@ class LocalActionManagerTest extends UnitTestCase {
             'url' => Url::fromRoute('test_route_2'),
             'localized_options' => '',
           ],
-          '#access' => AccessResult::forbidden()->cachePerPermissions(),
+          '#access' => AccessResult::forbidden(),
           '#weight' => 0,
+          '#cache' => [
+            'contexts' => [],
+            'tags' => [],
+            'max-age' => 0,
+          ],
         ],
       ],
     ];
@@ -299,9 +286,7 @@ class LocalActionManagerTest extends UnitTestCase {
       ],
       [
         '#cache' => [
-          'contexts' => ['route', 'user.permissions'],
-          'tags' => [],
-          'max-age' => 0,
+          'contexts' => ['route'],
         ],
         'plugin_id_1' => [
           '#theme' => 'menu_local_action',
@@ -310,8 +295,13 @@ class LocalActionManagerTest extends UnitTestCase {
             'url' => Url::fromRoute('test_route_2'),
             'localized_options' => '',
           ],
-          '#access' => AccessResult::forbidden()->cachePerPermissions(),
+          '#access' => AccessResult::forbidden(),
           '#weight' => 1,
+          '#cache' => [
+            'contexts' => [],
+            'tags' => [],
+            'max-age' => 0,
+          ],
         ],
         'plugin_id_2' => [
           '#theme' => 'menu_local_action',
@@ -320,8 +310,13 @@ class LocalActionManagerTest extends UnitTestCase {
             'url' => Url::fromRoute('test_route_3'),
             'localized_options' => '',
           ],
-          '#access' => AccessResult::forbidden()->cachePerPermissions(),
+          '#access' => AccessResult::forbidden(),
           '#weight' => 0,
+          '#cache' => [
+            'contexts' => [],
+            'tags' => [],
+            'max-age' => 0,
+          ],
         ],
       ],
     ];
@@ -351,9 +346,7 @@ class LocalActionManagerTest extends UnitTestCase {
       ],
       [
         '#cache' => [
-          'contexts' => ['route', 'user.permissions'],
-          'tags' => [],
-          'max-age' => 0,
+          'contexts' => ['route'],
         ],
         'plugin_id_1' => [
           '#theme' => 'menu_local_action',
@@ -362,8 +355,13 @@ class LocalActionManagerTest extends UnitTestCase {
             'url' => Url::fromRoute('test_route_2', ['test1']),
             'localized_options' => '',
           ],
-          '#access' => AccessResult::forbidden()->cachePerPermissions(),
+          '#access' => AccessResult::forbidden(),
           '#weight' => 1,
+          '#cache' => [
+            'contexts' => [],
+            'tags' => [],
+            'max-age' => 0,
+          ],
         ],
         'plugin_id_2' => [
           '#theme' => 'menu_local_action',
@@ -372,8 +370,13 @@ class LocalActionManagerTest extends UnitTestCase {
             'url' => Url::fromRoute('test_route_2', ['test2']),
             'localized_options' => '',
           ],
-          '#access' => AccessResult::forbidden()->cachePerPermissions(),
+          '#access' => AccessResult::forbidden(),
           '#weight' => 0,
+          '#cache' => [
+            'contexts' => [],
+            'tags' => [],
+            'max-age' => 0,
+          ],
         ],
       ],
     ];

@@ -17,16 +17,7 @@ process:
     plugin: migration_lookup
     migration: d7_comment
     source: pid
-  entity_id:
-    -
-      plugin: migration_lookup
-      migration:
-        - d7_node
-        - d7_node_translation
-      source: nid
-    -
-      plugin: skip_on_empty
-      method: row
+  entity_id: nid
   entity_type: 'constants/entity_type'
   comment_type:
     -
@@ -36,7 +27,6 @@ process:
     -
       plugin: skip_on_empty
       method: row
-  langcode: language
   field_name: '@comment_type'
   subject: subject
   uid: uid
@@ -55,5 +45,3 @@ migration_dependencies:
   required:
     - d7_node
     - d7_comment_type
-  optional:
-    - d7_node_translation

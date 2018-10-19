@@ -215,7 +215,6 @@
      */
     disableFields(event) {
       const $clickedButton = $(this);
-      $clickedButton.trigger('formUpdated');
 
       // Check if we're working with an "Upload" button.
       let $enabledFields = [];

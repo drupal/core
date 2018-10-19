@@ -34,7 +34,6 @@ process:
     source: '@parent_id'
   forum_container: is_container
   changed: timestamp
-  langcode: language
 destination:
   plugin: entity:taxonomy_term
 migration_dependencies:

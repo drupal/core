@@ -191,21 +191,11 @@ class LayoutBuilderTest extends BrowserTestBase {
 
     // Reverting the override returns it to the defaults.
     $this->clickLink('Layout');
-    $assert_session->linkExists('Add Block');
-    $this->clickLink('Add Block');
-    $assert_session->linkExists('ID');
-    $this->clickLink('ID');
-    $page->pressButton('Add Block');
-    // The title field is present.
-    $assert_session->elementExists('css', '.field--name-nid');
-    $assert_session->pageTextContains('ID');
-    $assert_session->pageTextContains('1');
     $assert_session->linkExists('Revert to defaults');
     $this->clickLink('Revert to defaults');
     $page->pressButton('Revert');
     $assert_session->pageTextContains('The layout has been reverted back to defaults.');
     $assert_session->elementExists('css', '.field--name-title');
-    $assert_session->elementNotExists('css', '.field--name-nid');
     $assert_session->pageTextContains('The first node body');
     $assert_session->pageTextContains('Powered by Drupal');
     $assert_session->pageTextContains('Placeholder for the "Extra label" field');
@@ -233,33 +223,6 @@ class LayoutBuilderTest extends BrowserTestBase {
     $this->drupalGet("$field_ui_prefix/display-layout/default");
     $assert_session->pageTextNotContains('My text field');
     $assert_session->elementNotExists('css', '.field--name-field-my-text');
-  }
-
-  /**
-   * Tests that a non-default view mode works as expected.
-   */
-  public function testNonDefaultViewMode() {
-    $assert_session = $this->assertSession();
-    $page = $this->getSession()->getPage();
-
-    $this->drupalLogin($this->drupalCreateUser([
-      'configure any layout',
-      'administer node display',
-    ]));
-
-    $field_ui_prefix = 'admin/structure/types/manage/bundle_with_section_field';
-    // Allow overrides for the layout.
-    $this->drupalGet("$field_ui_prefix/display/default");
-    $page->checkField('layout[enabled]');
-    $page->pressButton('Save');
-    $page->checkField('layout[allow_custom]');
-    $page->pressButton('Save');
-
-    $this->clickLink('Teaser');
-    // Enabling Layout Builder for the default mode does not affect the teaser.
-    $assert_session->addressEquals("$field_ui_prefix/display/teaser");
-    $assert_session->elementNotExists('css', '#layout-builder__layout');
-    $assert_session->checkboxNotChecked('layout[enabled]');
   }
 
   /**

@@ -91,14 +91,15 @@ class Media extends EditorialContentEntityBase implements MediaInterface {
    * {@inheritdoc}
    */
   public function getName() {
-    $name = $this->getEntityKey('label');
+    $name = $this->get('name');
 
-    if (empty($name)) {
+    if ($name->isEmpty()) {
       $media_source = $this->getSource();
       return $media_source->getMetadata($this, $media_source->getPluginDefinition()['default_name_metadata_attribute']);
     }
-
-    return $name;
+    else {
+      return $name->value;
+    }
   }
 
   /**

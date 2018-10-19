@@ -202,6 +202,7 @@ class InstallHelper implements ContainerInjectionInterface {
         // Set article author.
         if (!empty($data['author'])) {
           $values['uid'] = $this->getUser($data['author']);
+          $values['field_author'] = $values['uid'];
         }
         // Set node alias if exists.
         if (!empty($data['slug'])) {

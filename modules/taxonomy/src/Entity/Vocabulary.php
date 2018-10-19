@@ -87,7 +87,7 @@ class Vocabulary extends ConfigEntityBundleBase implements VocabularyInterface {
    * Possible values:
    * - VocabularyInterface::HIERARCHY_DISABLED: No parents.
    * - VocabularyInterface::HIERARCHY_SINGLE: Single parent.
-   * - VocabularyInterface::HIERARCHY_MULTIPLE: Multiple parents.
+   * - VocabularyInterface::HIERARCHY_MULTIPL: Multiple parents.
    *
    * @var int
    */

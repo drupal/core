@@ -43,7 +43,7 @@ class HandlerStackConfigurator {
   protected $container;
 
   /**
-   * Constructs a new HandlerStackConfigurator object.
+   * Contructs a new HandlerStackConfigurator object.
    *
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
    *   The service container.

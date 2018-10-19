@@ -28,7 +28,7 @@ abstract class TestBase {
   use TestSetupTrait;
   use RandomGeneratorTrait;
   use GeneratePermutationsTrait;
-  // For backwards compatibility switch the visibility of the methods to public.
+  // For backwards compatibility switch the visbility of the methods to public.
   use ConfigTestTrait {
     configImporter as public;
     copyConfig as public;
@@ -51,7 +51,7 @@ abstract class TestBase {
   /**
    * Current results of this test case.
    *
-   * @var array
+   * @var Array
    */
   public $results = [
     '#pass' => 0,
@@ -63,7 +63,7 @@ abstract class TestBase {
   /**
    * Assertions thrown in that test case.
    *
-   * @var array
+   * @var Array
    */
   protected $assertions = [];
 
