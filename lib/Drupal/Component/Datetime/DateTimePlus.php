@@ -695,6 +695,15 @@ class DateTimePlus {
         $dateTimeObject->setTimezone(new \DateTimeZone($settings['timezone']));
       }
       $value = $dateTimeObject->format($format);
+
+      // Provide hook_format_date_alter().
+      $context = $settings + [
+        'format' => $format,
+      ];
+
+      if (\Drupal::hasService('module_handler')) {
+        \Drupal::moduleHandler()->alter('format_date', $value, $context);
+      }
     }
     catch (\Exception $e) {
       $this->errors[] = $e->getMessage();
