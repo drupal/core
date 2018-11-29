@@ -141,7 +141,6 @@ class FilterFormat extends ConfigEntityBase implements FilterFormatInterface, En
   public function filters($instance_id = NULL) {
     if (!isset($this->filterCollection)) {
       $this->filterCollection = new FilterPluginCollection(\Drupal::service('plugin.manager.filter'), $this->filters);
-      $this->filterCollection->sort();
     }
     if (isset($instance_id)) {
       return $this->filterCollection->get($instance_id);
@@ -201,9 +200,6 @@ class FilterFormat extends ConfigEntityBase implements FilterFormatInterface, En
    * {@inheritdoc}
    */
   public function preSave(EntityStorageInterface $storage) {
-    // Ensure the filters have been sorted before saving.
-    $this->filters()->sort();
-
     parent::preSave($storage);
 
     $this->name = trim($this->label());
