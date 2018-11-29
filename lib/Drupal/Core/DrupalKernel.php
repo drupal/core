@@ -744,7 +744,7 @@ class DrupalKernel implements DrupalKernelInterface, TerminableInterface {
   protected function moduleData($module) {
     if (!$this->moduleData) {
       // First, find profiles.
-      $listing = new ExtensionDiscovery($this->root);
+      $listing = new ExtensionDiscovery($this->root, TRUE, NULL, $this->getSitePath());
       $listing->setProfileDirectories([]);
       $all_profiles = $listing->scan('profile');
       $profiles = array_intersect_key($all_profiles, $this->moduleList);
