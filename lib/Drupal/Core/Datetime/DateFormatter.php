@@ -137,6 +137,9 @@ class DateFormatter implements DateFormatterInterface {
 
     // Call $date->format().
     $settings = [
+      'timestamp' => $timestamp,
+      'type' => $type,
+      'timezone' => $timezone,
       'langcode' => $langcode,
     ];
     return $date->format($format, $settings);
