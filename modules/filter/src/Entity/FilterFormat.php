@@ -456,7 +456,12 @@ class FilterFormat extends ConfigEntityBase implements FilterFormatInterface, En
     $this->filterCollection->sort();
     $sorted_filters = [];
     foreach ($this->filterCollection->getInstanceIds() as $sorted_id) {
-      $sorted_filters[$sorted_id] = $this->filters[$sorted_id];
+      // When new modules are installed, new filter plugins may be available but
+      // may not be saved to the filter format yet. Only sort filters that are
+      // actually set on this format.
+      if (isset($this->filters[$sorted_id])) {
+        $sorted_filters[$sorted_id] = $this->filters[$sorted_id];
+      }
     }
     $this->filters = $sorted_filters;
   }
