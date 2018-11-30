@@ -11,6 +11,7 @@ use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\OpCodeCache;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Extension\ExtensionDiscovery;
+use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Site\Settings;
 
 /**
@@ -990,6 +991,12 @@ function drupal_check_profile($profile) {
     }
   }
 
+  // Add the profile requirements.
+  $function = $profile . '_requirements';
+  if (function_exists($function)) {
+    $requirements = array_merge($requirements, $function('install'));
+  }
+
   return $requirements;
 }
 
@@ -1112,6 +1119,16 @@ function install_profile_info($profile, $langcode = 'en') {
     $profile_path = drupal_get_path('profile', $profile);
     $info = \Drupal::service('info_parser')->parse("$profile_path/$profile.info.yml");
     $info += $defaults;
+
+    // Convert dependencies in [project:module] format.
+    $info['dependencies'] = array_map(function ($dependency) {
+      return ModuleHandler::parseDependency($dependency)['name'];
+    }, $info['dependencies']);
+
+    // Convert install key in [project:module] format.
+    $info['install'] = array_map(function ($dependency) {
+      return ModuleHandler::parseDependency($dependency)['name'];
+    }, $info['install']);
 
     // drupal_required_modules() includes the current profile as a dependency.
     // Remove that dependency, since a module cannot depend on itself.

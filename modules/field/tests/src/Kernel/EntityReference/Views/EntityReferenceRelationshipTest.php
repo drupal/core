@@ -4,9 +4,9 @@ namespace Drupal\Tests\field\Kernel\EntityReference\Views;
 
 use Drupal\entity_test\Entity\EntityTestMulChanged;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\field\Tests\EntityReference\EntityReferenceTestTrait;
 use Drupal\entity_test\Entity\EntityTest;
 use Drupal\entity_test\Entity\EntityTestMul;
+use Drupal\Tests\field\Traits\EntityReferenceTestTrait;
 use Drupal\Tests\views\Kernel\ViewsKernelTestBase;
 use Drupal\views\Tests\ViewTestData;
 use Drupal\views\Views;
@@ -331,6 +331,15 @@ class EntityReferenceRelationshipTest extends ViewsKernelTestBase {
     // Fourth result has no reference from EntityTestMul hence the output for
     // should be empty.
     $this->assertEqual('', $view->getStyle()->getField(3, 'name_2'));
+
+    $fields = $view->field;
+    // Check getValue for reference with a value. The first 3 rows reference
+    // EntityTestMul, so have value 'name1'.
+    $this->assertEquals('name1', $fields['name_2']->getValue($view->result[0]));
+    $this->assertEquals('name1', $fields['name_2']->getValue($view->result[1]));
+    $this->assertEquals('name1', $fields['name_2']->getValue($view->result[2]));
+    // Ensure getValue works on empty references.
+    $this->assertNull($fields['name_2']->getValue($view->result[3]));
   }
 
 }

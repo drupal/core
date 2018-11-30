@@ -124,7 +124,7 @@ abstract class BrowserTestBase extends TestCase {
   /*
    * Mink class for the default driver to use.
    *
-   * Shoud be a fully qualified class name that implements
+   * Should be a fully-qualified class name that implements
    * Behat\Mink\Driver\DriverInterface.
    *
    * Value can be overridden using the environment variable MINK_DRIVER_CLASS.
@@ -238,6 +238,12 @@ abstract class BrowserTestBase extends TestCase {
       'hidden_field_selector' => new HiddenFieldSelector(),
     ]);
     $session = new Session($driver, $selectors_handler);
+    $cookies = $this->extractCookiesFromRequest(\Drupal::request());
+    foreach ($cookies as $cookie_name => $values) {
+      foreach ($values as $value) {
+        $session->setCookie($cookie_name, $value);
+      }
+    }
     $this->mink = new Mink();
     $this->mink->registerSession('default', $session);
     $this->mink->setDefaultSessionName('default');
@@ -388,14 +394,7 @@ abstract class BrowserTestBase extends TestCase {
     $this->installDrupal();
 
     // Setup Mink.
-    $session = $this->initMink();
-
-    $cookies = $this->extractCookiesFromRequest(\Drupal::request());
-    foreach ($cookies as $cookie_name => $values) {
-      foreach ($values as $value) {
-        $session->setCookie($cookie_name, $value);
-      }
-    }
+    $this->initMink();
 
     // Set up the browser test output file.
     $this->initBrowserOutputFile();

@@ -20,6 +20,7 @@ class MigrateUpgrade7NoMultilingualTest extends MigrateUpgradeExecuteTestBase {
     'file',
     'language',
     'content_translation',
+    'config_translation',
     'migrate_drupal_ui',
     'telephone',
     'aggregator',
@@ -61,7 +62,7 @@ class MigrateUpgrade7NoMultilingualTest extends MigrateUpgradeExecuteTestBase {
       'configurable_language' => 4,
       'contact_form' => 3,
       'editor' => 2,
-      'field_config' => 67,
+      'field_config' => 68,
       'field_storage_config' => 50,
       'file' => 3,
       'filter_format' => 7,
@@ -207,7 +208,7 @@ class MigrateUpgrade7NoMultilingualTest extends MigrateUpgradeExecuteTestBase {
     }
     $edits = $this->translatePostValues($edit);
     $this->drupalPostForm(NULL, $edits, t('Review upgrade'));
-    $session->pageTextContains("Install migrate_drupal_multilingual to run migration 'd7_node_entity_translation:article'.");
+    $session->pageTextContains("Install migrate_drupal_multilingual to run migration 'd7_system_maintenance_translation'.");
   }
 
 }
