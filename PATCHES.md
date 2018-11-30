@@ -3,3 +3,4 @@
 * [Issue #2993367 patch 2: Add the migration from D7 Picture to Responsive Image](https://www.drupal.org/files/issues/2018-08-17/drupal-responsive_image_migration-2993367-2.patch)
 * [Issue #1178342 patch 156: Allow contributed modules to alter the format_date() function result](https://www.drupal.org/files/issues/2018-08-28/drupal-format_date_alter-1178342-156-8.6.x.patch)
 * [Issue #2998875 patch 1: Map menus when migrating content type settings](https://www.drupal.org/files/issues/2018-09-11/drupal-map_menus_migrate_content_types-2998875-1.patch)
+* [Issue #3017054 patch 10: Remove filter format sorting to simplify config exports](https://www.drupal.org/files/issues/2018-11-30/3017054-10-remove-filters-sort.patch)
