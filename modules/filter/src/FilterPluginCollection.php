@@ -90,14 +90,8 @@ class FilterPluginCollection extends DefaultLazyPluginCollection {
   public function sortHelper($aID, $bID) {
     $a = $this->get($aID);
     $b = $this->get($bID);
-    if ($a->status != $b->status) {
-      return !empty($a->status) ? -1 : 1;
-    }
     if ($a->weight != $b->weight) {
       return $a->weight < $b->weight ? -1 : 1;
-    }
-    if ($a->provider != $b->provider) {
-      return strnatcasecmp($a->provider, $b->provider);
     }
     return parent::sortHelper($aID, $bID);
   }
