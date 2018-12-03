@@ -82,7 +82,7 @@ class Drupal {
   /**
    * The current system version.
    */
-  const VERSION = '8.6.2';
+  const VERSION = '8.6.3';
 
   /**
    * Core API compatibility.
@@ -229,7 +229,7 @@ class Drupal {
   }
 
   /**
-   * Retrives the request stack.
+   * Retrieves the request stack.
    *
    * @return \Symfony\Component\HttpFoundation\RequestStack
    *   The request stack

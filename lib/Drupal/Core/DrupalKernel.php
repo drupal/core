@@ -298,12 +298,16 @@ class DrupalKernel implements DrupalKernelInterface, TerminableInterface {
   }
 
   /**
-   * Determine the application root directory based on assumptions.
+   * Determine the application root directory based on this file's location.
    *
    * @return string
    *   The application root.
    */
   protected static function guessApplicationRoot() {
+    // Determine the application root by:
+    // - Removing the namespace directories from the path.
+    // - Getting the path to the directory two levels up from the path
+    //   determined in the previous step.
     return dirname(dirname(substr(__DIR__, 0, -strlen(__NAMESPACE__))));
   }
 
@@ -1091,7 +1095,7 @@ class DrupalKernel implements DrupalKernelInterface, TerminableInterface {
         // misses.
         $old_loader = $this->classLoader;
         $this->classLoader = $loader;
-        // Our class loaders are preprended to ensure they come first like the
+        // Our class loaders are prepended to ensure they come first like the
         // class loader they are replacing.
         $old_loader->register(TRUE);
         $loader->register(TRUE);

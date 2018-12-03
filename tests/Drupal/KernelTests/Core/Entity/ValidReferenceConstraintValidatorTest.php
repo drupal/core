@@ -6,9 +6,9 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\entity_test\Entity\EntityTest;
 use Drupal\field\Entity\FieldConfig;
-use Drupal\field\Tests\EntityReference\EntityReferenceTestTrait;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
+use Drupal\Tests\field\Traits\EntityReferenceTestTrait;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
@@ -201,7 +201,7 @@ class ValidReferenceConstraintValidatorTest extends EntityKernelTestBase {
     $violations = $referencing_entity->field_test->validate();
     $this->assertCount(0, $violations);
 
-    // Remove one of the referencable bundles and check that a pre-existing node
+    // Remove one of the referenceable bundles and check that a pre-existing node
     // of that bundle can not be referenced anymore.
     $field = FieldConfig::loadByName('entity_test', 'entity_test', 'field_test');
     $field->setSetting('handler_settings', ['target_bundles' => ['article']]);

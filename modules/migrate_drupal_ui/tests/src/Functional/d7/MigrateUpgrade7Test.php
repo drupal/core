@@ -23,12 +23,14 @@ class MigrateUpgrade7Test extends MigrateUpgradeExecuteTestBase {
   public static $modules = [
     'file',
     'language',
+    'config_translation',
     'content_translation',
     'migrate_drupal_ui',
     'telephone',
     'aggregator',
     'book',
     'forum',
+    'rdf',
     'statistics',
     'migration_provider_test',
     // Required for translation migrations.
@@ -60,7 +62,7 @@ class MigrateUpgrade7Test extends MigrateUpgradeExecuteTestBase {
       'block' => 25,
       'block_content' => 1,
       'block_content_type' => 1,
-      'comment' => 2,
+      'comment' => 3,
       // The 'standard' profile provides the 'comment' comment type, and the
       // migration creates 6 comment types, one per node type.
       'comment_type' => 7,
@@ -86,7 +88,7 @@ class MigrateUpgrade7Test extends MigrateUpgradeExecuteTestBase {
       'menu' => 6,
       'taxonomy_term' => 18,
       'taxonomy_vocabulary' => 4,
-      'tour' => 4,
+      'tour' => 5,
       'user' => 4,
       'user_role' => 3,
       'menu_link_content' => 12,
@@ -106,7 +108,7 @@ class MigrateUpgrade7Test extends MigrateUpgradeExecuteTestBase {
   protected function getEntityCountsIncremental() {
     $counts = $this->getEntityCounts();
     $counts['block_content'] = 2;
-    $counts['comment'] = 3;
+    $counts['comment'] = 4;
     $counts['file'] = 4;
     $counts['menu_link_content'] = 13;
     $counts['node'] = 6;
@@ -135,6 +137,7 @@ class MigrateUpgrade7Test extends MigrateUpgradeExecuteTestBase {
       'file',
       'filter',
       'forum',
+      'i18n_variable',
       'image',
       'language',
       'link',
@@ -176,6 +179,10 @@ class MigrateUpgrade7Test extends MigrateUpgradeExecuteTestBase {
    */
   protected function getMissingPaths() {
     return [
+      'i18n',
+      'variable',
+      'variable_realm',
+      'variable_store',
       // These modules are in the missing path list because they are installed
       // on the source site but they are not installed on the destination site.
       'syslog',

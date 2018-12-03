@@ -572,14 +572,14 @@ function drupal_get_user_timezone() {
  * @param $message
  *   The error message.
  * @param $filename
- *   The filename that the error was raised in.
+ *   (optional) The filename that the error was raised in.
  * @param $line
- *   The line number the error was raised at.
+ *   (optional) The line number the error was raised at.
  * @param $context
- *   An array that points to the active symbol table at the point the error
- *   occurred.
+ *   (optional) An array that points to the active symbol table at the point the
+ *   error occurred.
  */
-function _drupal_error_handler($error_level, $message, $filename, $line, $context) {
+function _drupal_error_handler($error_level, $message, $filename = NULL, $line = NULL, $context = NULL) {
   require_once __DIR__ . '/errors.inc';
   _drupal_error_handler_real($error_level, $message, $filename, $line, $context);
 }
@@ -1033,8 +1033,12 @@ function _drupal_shutdown_function() {
   chdir(DRUPAL_ROOT);
 
   try {
-    foreach ($callbacks as &$callback) {
+    reset($callbacks);
+    // Do not use foreach() here because it is possible that the callback will
+    // add to the $callbacks array via drupal_register_shutdown_function().
+    while ($callback = current($callbacks)) {
       call_user_func_array($callback['callback'], $callback['arguments']);
+      next($callbacks);
     }
   }
   // PHP 7 introduces Throwable, which covers both Error and
