@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Install hooks for filter.module.
+ */
+
+use Drupal\filter\Entity\FilterFormat;
+
+/**
+ * Update all input formats to sort their filters by weight.
+ */
+function filter_update_8101() {
+  /** @var \Drupal\filter\Entity\FilterFormat $filter */
+  foreach (FilterFormat::loadMultiple() as $filter) {
+    $filter->save();
+  }
+}

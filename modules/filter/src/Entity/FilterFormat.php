@@ -204,6 +204,7 @@ class FilterFormat extends ConfigEntityBase implements FilterFormatInterface, En
    */
   public function preSave(EntityStorageInterface $storage) {
     parent::preSave($storage);
+    $this->sortFilters();
 
     $this->name = trim($this->label());
   }
