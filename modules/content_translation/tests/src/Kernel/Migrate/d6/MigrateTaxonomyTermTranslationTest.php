@@ -108,7 +108,12 @@ class MigrateTaxonomyTermTranslationTest extends MigrateDrupal6TestBase {
 
     $this->assertArrayHasKey($tid, $this->treeData[$vid], "Term $tid exists in taxonomy tree");
     $term = $this->treeData[$vid][$tid];
-    $this->assertEquals($parent_ids, array_filter($term->parents), "Term $tid has correct parents in taxonomy tree");
+    // PostgreSQL, MySQL and SQLite may not return the parent terms in the same
+    // order so sort before testing.
+    sort($parent_ids);
+    $actual_terms = array_filter($term->parents);
+    sort($actual_terms);
+    $this->assertEquals($parent_ids, $actual_terms, "Term $tid has correct parents in taxonomy tree");
   }
 
   /**

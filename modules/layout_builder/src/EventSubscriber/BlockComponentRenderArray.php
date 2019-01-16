@@ -5,6 +5,8 @@ namespace Drupal\layout_builder\EventSubscriber;
 use Drupal\block_content\Access\RefinableDependentAccessInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockPluginInterface;
+use Drupal\Core\Render\Element;
+use Drupal\Core\Render\PreviewFallbackInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\layout_builder\Access\LayoutPreviewAccessAllowed;
 use Drupal\layout_builder\Event\SectionComponentBuildRenderArrayEvent;
@@ -88,6 +90,14 @@ class BlockComponentRenderArray implements EventSubscriberInterface {
     if ($access->isAllowed()) {
       $event->addCacheableDependency($block);
 
+      $content = $block->build();
+      $is_content_empty = Element::isEmpty($content);
+      $is_placeholder_ready = $event->inPreview() && $block instanceof PreviewFallbackInterface;
+      // If the content is empty and no placeholder is available, return.
+      if ($is_content_empty && !$is_placeholder_ready) {
+        return;
+      }
+
       $build = [
         // @todo Move this to BlockBase in https://www.drupal.org/node/2931040.
         '#theme' => 'block',
@@ -96,8 +106,11 @@ class BlockComponentRenderArray implements EventSubscriberInterface {
         '#base_plugin_id' => $block->getBaseId(),
         '#derivative_plugin_id' => $block->getDerivativeId(),
         '#weight' => $event->getComponent()->getWeight(),
-        'content' => $block->build(),
+        'content' => $content,
       ];
+      if ($is_content_empty && $is_placeholder_ready) {
+        $build['content']['#markup'] = $block->getPreviewFallbackString();
+      }
       $event->setBuild($build);
     }
   }
