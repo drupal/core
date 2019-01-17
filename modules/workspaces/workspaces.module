@@ -57,6 +57,15 @@ function workspaces_form_alter(&$form, FormStateInterface $form_state, $form_id)
 }
 
 /**
+ * Implements hook_field_info_alter().
+ */
+function workspaces_field_info_alter(&$definitions) {
+  \Drupal::service('class_resolver')
+    ->getInstanceFromDefinition(EntityTypeInfo::class)
+    ->fieldInfoAlter($definitions);
+}
+
+/**
  * Implements hook_entity_load().
  */
 function workspaces_entity_load(array &$entities, $entity_type_id) {
@@ -154,15 +163,15 @@ function workspaces_toolbar() {
 
   $current_user = \Drupal::currentUser();
   if (!$current_user->hasPermission('administer workspaces')
-    || !$current_user->hasPermission('view own workspace')
-    || !$current_user->hasPermission('view any workspace')) {
+    && !$current_user->hasPermission('view own workspace')
+    && !$current_user->hasPermission('view any workspace')) {
     return $items;
   }
 
   /** @var \Drupal\workspaces\WorkspaceInterface $active_workspace */
   $active_workspace = \Drupal::service('workspaces.manager')->getActiveWorkspace();
 
-  $items['workspace'] = [
+  $items['workspace'] += [
     '#type' => 'toolbar_item',
     'tab' => [
       '#type' => 'link',
@@ -180,6 +189,7 @@ function workspaces_toolbar() {
           ],
         ]),
       ],
+      '#cache' => ['tags' => $active_workspace->getCacheTags()],
     ],
     '#wrapper_attributes' => [
       'class' => ['workspaces-toolbar-tab'],

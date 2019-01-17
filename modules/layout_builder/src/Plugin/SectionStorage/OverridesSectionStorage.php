@@ -30,7 +30,14 @@ use Symfony\Component\Routing\RouteCollection;
  *   experimental modules and development releases of contributed modules.
  *   See https://www.drupal.org/core/experimental for more information.
  */
-class OverridesSectionStorage extends SectionStorageBase implements ContainerFactoryPluginInterface, OverridesSectionStorageInterface {
+class OverridesSectionStorage extends SectionStorageBase implements ContainerFactoryPluginInterface, OverridesSectionStorageInterface, SectionStorageLocalTaskProviderInterface {
+
+  /**
+   * The field name used by this storage.
+   *
+   * @var string
+   */
+  const FIELD_NAME = 'layout_builder__layout';
 
   /**
    * The entity type manager.
@@ -127,8 +134,8 @@ class OverridesSectionStorage extends SectionStorageBase implements ContainerFac
     if (strpos($id, '.') !== FALSE) {
       list($entity_type_id, $entity_id) = explode('.', $id, 2);
       $entity = $this->entityTypeManager->getStorage($entity_type_id)->load($entity_id);
-      if ($entity instanceof FieldableEntityInterface && $entity->hasField('layout_builder__layout')) {
-        return $entity->get('layout_builder__layout');
+      if ($entity instanceof FieldableEntityInterface && $entity->hasField(static::FIELD_NAME)) {
+        return $entity->get(static::FIELD_NAME);
       }
     }
     throw new \InvalidArgumentException(sprintf('The "%s" ID for the "%s" section storage type is invalid', $id, $this->getStorageType()));
@@ -155,6 +162,45 @@ class OverridesSectionStorage extends SectionStorageBase implements ContainerFac
       $template = $entity_type->getLinkTemplate('canonical') . '/layout';
       $this->buildLayoutRoutes($collection, $this->getPluginDefinition(), $template, $defaults, $requirements, $options, $entity_type_id);
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildLocalTasks($base_plugin_definition) {
+    $local_tasks = [];
+    foreach ($this->getEntityTypes() as $entity_type_id => $entity_type) {
+      $local_tasks["layout_builder.overrides.$entity_type_id.view"] = $base_plugin_definition + [
+        'route_name' => "layout_builder.overrides.$entity_type_id.view",
+        'weight' => 15,
+        'title' => $this->t('Layout'),
+        'base_route' => "entity.$entity_type_id.canonical",
+        'cache_contexts' => ['layout_builder_is_active:' . $entity_type_id],
+      ];
+      $local_tasks["layout_builder.overrides.$entity_type_id.save"] = $base_plugin_definition + [
+        'route_name' => "layout_builder.overrides.$entity_type_id.save",
+        'title' => $this->t('Save Layout'),
+        'parent_id' => "layout_builder_ui:layout_builder.overrides.$entity_type_id.view",
+        'cache_contexts' => ['layout_builder_is_active:' . $entity_type_id],
+      ];
+      $local_tasks["layout_builder.overrides.$entity_type_id.cancel"] = $base_plugin_definition + [
+        'route_name' => "layout_builder.overrides.$entity_type_id.cancel",
+        'title' => $this->t('Cancel Layout'),
+        'parent_id' => "layout_builder_ui:layout_builder.overrides.$entity_type_id.view",
+        'weight' => 5,
+        'cache_contexts' => ['layout_builder_is_active:' . $entity_type_id],
+      ];
+      // @todo This link should be conditionally displayed, see
+      //   https://www.drupal.org/node/2917777.
+      $local_tasks["layout_builder.overrides.$entity_type_id.revert"] = $base_plugin_definition + [
+        'route_name' => "layout_builder.overrides.$entity_type_id.revert",
+        'title' => $this->t('Revert to defaults'),
+        'parent_id' => "layout_builder_ui:layout_builder.overrides.$entity_type_id.view",
+        'weight' => 10,
+        'cache_contexts' => ['layout_builder_is_active:' . $entity_type_id],
+      ];
+    }
+    return $local_tasks;
   }
 
   /**

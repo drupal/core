@@ -14,7 +14,6 @@ use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\views\Tests\ViewResultAssertionTrait;
 use Drupal\views\Views;
-use Drupal\workspaces\Entity\Workspace;
 
 /**
  * Tests a complete deployment scenario across different workspaces.
@@ -28,6 +27,7 @@ class WorkspaceIntegrationTest extends KernelTestBase {
   use NodeCreationTrait;
   use UserCreationTrait;
   use ViewResultAssertionTrait;
+  use WorkspaceTestTrait;
 
   /**
    * The entity type manager.
@@ -35,13 +35,6 @@ class WorkspaceIntegrationTest extends KernelTestBase {
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
-
-  /**
-   * An array of test workspaces, keyed by workspace ID.
-   *
-   * @var \Drupal\workspaces\WorkspaceInterface[]
-   */
-  protected $workspaces = [];
 
   /**
    * Creation timestamp that should be incremented for each new entity.
@@ -91,34 +84,6 @@ class WorkspaceIntegrationTest extends KernelTestBase {
     $this->createdTimestamp = \Drupal::time()->getRequestTime();
     $this->createNode(['title' => 'live - 1 - r1 - published', 'created' => $this->createdTimestamp++, 'status' => TRUE]);
     $this->createNode(['title' => 'live - 2 - r2 - unpublished', 'created' => $this->createdTimestamp++, 'status' => FALSE]);
-  }
-
-  /**
-   * Enables the Workspaces module and creates two workspaces.
-   */
-  protected function initializeWorkspacesModule() {
-    // Enable the Workspaces module here instead of the static::$modules array
-    // so we can test it with default content.
-    $this->enableModules(['workspaces']);
-    $this->container = \Drupal::getContainer();
-    $this->entityTypeManager = \Drupal::entityTypeManager();
-
-    $this->installEntitySchema('workspace');
-    $this->installEntitySchema('workspace_association');
-
-    // Create two workspaces by default, 'live' and 'stage'.
-    $this->workspaces['live'] = Workspace::create(['id' => 'live']);
-    $this->workspaces['live']->save();
-    $this->workspaces['stage'] = Workspace::create(['id' => 'stage']);
-    $this->workspaces['stage']->save();
-
-    $permissions = [
-      'administer nodes',
-      'create workspace',
-      'edit any workspace',
-      'view any workspace',
-    ];
-    $this->setCurrentUser($this->createUser($permissions));
   }
 
   /**
@@ -493,6 +458,57 @@ class WorkspaceIntegrationTest extends KernelTestBase {
   }
 
   /**
+   * @covers \Drupal\workspaces\WorkspaceManager::executeInWorkspace
+   */
+  public function testExecuteInWorkspaceContext() {
+    $this->initializeWorkspacesModule();
+
+    // Create an entity in the default workspace.
+    $this->switchToWorkspace('live');
+    $node = $this->createNode([
+      'title' => 'live node 1',
+    ]);
+    $node->save();
+
+    // Switch to the 'stage' workspace and change some values for the referenced
+    // entities.
+    $this->switchToWorkspace('stage');
+    $node->title->value = 'stage node 1';
+    $node->save();
+
+    // Switch back to the default workspace and run the baseline assertions.
+    $this->switchToWorkspace('live');
+    $storage = $this->entityTypeManager->getStorage('node');
+
+    $this->assertEquals('live', $this->workspaceManager->getActiveWorkspace()->id());
+
+    $live_node = $storage->loadUnchanged($node->id());
+    $this->assertEquals('live node 1', $live_node->title->value);
+
+    $result = $storage->getQuery()
+      ->condition('title', 'live node 1')
+      ->execute();
+    $this->assertEquals([$live_node->getRevisionId() => $node->id()], $result);
+
+    // Try the same assertions in the context of the 'stage' workspace.
+    $this->workspaceManager->executeInWorkspace('stage', function () use ($node, $storage) {
+      $this->assertEquals('stage', $this->workspaceManager->getActiveWorkspace()->id());
+
+      $stage_node = $storage->loadUnchanged($node->id());
+      $this->assertEquals('stage node 1', $stage_node->title->value);
+
+      $result = $storage->getQuery()
+        ->condition('title', 'stage node 1')
+        ->execute();
+      $this->assertEquals([$stage_node->getRevisionId() => $stage_node->id()], $result);
+    });
+
+    // Check that the 'stage' workspace was not persisted by the workspace
+    // manager.
+    $this->assertEquals('live', $this->workspaceManager->getActiveWorkspace()->id());
+  }
+
+  /**
    * Checks entity load, entity queries and views results for a test scenario.
    *
    * @param array $expected
@@ -679,18 +695,6 @@ class WorkspaceIntegrationTest extends KernelTestBase {
       $tracked_revision_ids = isset($tracked_entities[$entity_type_id]) ? $tracked_entities[$entity_type_id] : [];
       $this->assertEquals($expected_tracked_revision_ids, array_keys($tracked_revision_ids));
     }
-  }
-
-  /**
-   * Sets a given workspace as active.
-   *
-   * @param string $workspace_id
-   *   The ID of the workspace to switch to.
-   */
-  protected function switchToWorkspace($workspace_id) {
-    // Switch the test runner's context to the specified workspace.
-    $workspace = $this->entityTypeManager->getStorage('workspace')->load($workspace_id);
-    \Drupal::service('workspaces.manager')->setActiveWorkspace($workspace);
   }
 
   /**
