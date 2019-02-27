@@ -90,6 +90,18 @@ class File extends DrupalSqlBase {
     // the source_base_path in order to make them all relative.
     $path = str_replace($this->configuration['constants']['source_base_path'], NULL, $path);
     $row->setSourceProperty('filepath', $path);
+
+    // File entity module uses file_managed.filename as the entity title,
+    // while Drupal 8 expects this to be an actual file name. Therefore, if the
+    // value at file_managed.filename is not at the end of file_managed.uri,
+    // then extract the filename from the uri field. Otherwise the file will
+    // migrate but form validation won't pass when editing it.
+    $filename = $row->getSourceProperty('filename');
+    $uri = $row->getSourceProperty('uri');
+    if ($filename != basename($uri)) {
+      $row->setSourceProperty('filename', basename($uri));
+    }
+
     return parent::prepareRow($row);
   }
 

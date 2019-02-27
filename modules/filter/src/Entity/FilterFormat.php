@@ -141,7 +141,7 @@ class FilterFormat extends ConfigEntityBase implements FilterFormatInterface, En
   public function filters($instance_id = NULL) {
     if (!isset($this->filterCollection)) {
       $this->filterCollection = new FilterPluginCollection(\Drupal::service('plugin.manager.filter'), $this->filters);
-      $this->filterCollection->sort();
+      $this->sortFilters();
     }
     if (isset($instance_id)) {
       return $this->filterCollection->get($instance_id);
@@ -163,6 +163,8 @@ class FilterFormat extends ConfigEntityBase implements FilterFormatInterface, En
     $this->filters[$instance_id] = $configuration;
     if (isset($this->filterCollection)) {
       $this->filterCollection->setInstanceConfiguration($instance_id, $configuration);
+
+      $this->sortFilters();
     }
     return $this;
   }
@@ -201,10 +203,8 @@ class FilterFormat extends ConfigEntityBase implements FilterFormatInterface, En
    * {@inheritdoc}
    */
   public function preSave(EntityStorageInterface $storage) {
-    // Ensure the filters have been sorted before saving.
-    $this->filters()->sort();
-
     parent::preSave($storage);
+    $this->sortFilters();
 
     $this->name = trim($this->label());
   }
@@ -437,6 +437,34 @@ class FilterFormat extends ConfigEntityBase implements FilterFormatInterface, En
     if (isset($this->filters[$instance->getPluginId()])) {
       parent::calculatePluginDependencies($instance);
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function get($property_name) {
+    if ($property_name == 'filters') {
+      $this->filters();
+      return $this->filters;
+    }
+    return parent::get($property_name);
+  }
+
+  /**
+   * Sort filters in the underlying filter collection and the filters property.
+   */
+  protected function sortFilters(): void {
+    $this->filterCollection->sort();
+    $sorted_filters = [];
+    foreach ($this->filterCollection->getInstanceIds() as $sorted_id) {
+      // When new modules are installed, new filter plugins may be available but
+      // may not be saved to the filter format yet. Only sort filters that are
+      // actually set on this format.
+      if (isset($this->filters[$sorted_id])) {
+        $sorted_filters[$sorted_id] = $this->filters[$sorted_id];
+      }
+    }
+    $this->filters = $sorted_filters;
   }
 
 }
