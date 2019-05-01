@@ -14,7 +14,7 @@ dependencies:
 id: umami_banner_recipes
 theme: umami
 region: banner_top
-weight: -10
+weight: -8
 provider: null
 plugin: 'block_content:4c7d58a3-a45d-412d-9068-259c57e40541'
 settings:
@@ -28,6 +28,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: "/recipes\r\n<front>"
+    pages: "/recipes\r\n"
     negate: false
     context_mapping: {  }

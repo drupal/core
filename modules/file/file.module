@@ -1022,7 +1022,13 @@ function _file_save_upload_single(\SplFileInfo $file_info, $form_field_name, $va
   if (substr($destination, -1) != '/') {
     $destination .= '/';
   }
-  $file->destination = file_destination($destination . $file->getFilename(), $replace);
+  try {
+    $file->destination = file_destination($destination . $file->getFilename(), $replace);
+  }
+  catch (\RuntimeException $e) {
+    \Drupal::messenger()->addError(t('The file %filename could not be uploaded because the name is invalid.', ['%filename' => $file->getFilename()]));
+    return FALSE;
+  }
   // If file_destination() returns FALSE then $replace === FILE_EXISTS_ERROR and
   // there's an existing file so we need to bail.
   if ($file->destination === FALSE) {
@@ -1075,6 +1081,10 @@ function _file_save_upload_single(\SplFileInfo $file_info, $form_field_name, $va
       $file->setOriginalId($existing->id());
     }
   }
+
+  // Update the filename with any changes as a result of security or renaming
+  // due to an existing file.
+  $file->setFilename(\Drupal::service('file_system')->basename($file->destination));
 
   // If we made it this far it's safe to record this file in the database.
   $file->save();
