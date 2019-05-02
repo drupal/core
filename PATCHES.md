@@ -5,3 +5,4 @@
 * [Issue #2998875 patch 1: Map menus when migrating content type settings](https://www.drupal.org/files/issues/2018-09-11/drupal-map_menus_migrate_content_types-2998875-1.patch)
 * [Issue #3017054 patch 10: Remove filter format sorting to simplify config exports](https://www.drupal.org/files/issues/2018-12-03/3017054-14-force-filters-sort.patch)
 * [Issue #3022910 patch 2: Prevent migrated files from having an incorrect value at file_managed.filename](https://www.drupal.org/files/issues/2018-12-28/drupal-file_entity_filename-3022910-1.patch)
+* [Issue #3042223 patch 2: Map text_plain field formatter to string](https://www.drupal.org/files/issues/2019-03-21/drupal-map-text_plain-formatter-3042223-2.patch)
