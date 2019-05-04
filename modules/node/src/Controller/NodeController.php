@@ -179,13 +179,9 @@ class NodeController extends ControllerBase implements ContainerInjectionInterfa
     $languages = $node->getTranslationLanguages();
     $has_translations = (count($languages) > 1);
     $node_storage = $this->entityTypeManager()->getStorage('node');
-    $type = $node->getType();
 
     $build['#title'] = $has_translations ? $this->t('@langname revisions for %title', ['@langname' => $langname, '%title' => $node->label()]) : $this->t('Revisions for %title', ['%title' => $node->label()]);
     $header = [$this->t('Revision'), $this->t('Operations')];
-
-    $revert_permission = (($account->hasPermission("revert $type revisions") || $account->hasPermission('revert all revisions') || $account->hasPermission('administer nodes')) && $node->access('update'));
-    $delete_permission = (($account->hasPermission("delete $type revisions") || $account->hasPermission('delete all revisions') || $account->hasPermission('administer nodes')) && $node->access('delete'));
 
     $rows = [];
     $default_revision = $node->getRevisionId();
@@ -250,19 +246,21 @@ class NodeController extends ControllerBase implements ContainerInjectionInterfa
         }
         else {
           $links = [];
-          if ($revert_permission) {
+          $revertLink = $has_translations ?
+            Url::fromRoute('node.revision_revert_translation_confirm', ['node' => $node->id(), 'node_revision' => $vid, 'langcode' => $langcode]) :
+            Url::fromRoute('node.revision_revert_confirm', ['node' => $node->id(), 'node_revision' => $vid]);
+          if ($revertLink->access($account)) {
             $links['revert'] = [
               'title' => $vid < $node->getRevisionId() ? $this->t('Revert') : $this->t('Set as current revision'),
-              'url' => $has_translations ?
-                Url::fromRoute('node.revision_revert_translation_confirm', ['node' => $node->id(), 'node_revision' => $vid, 'langcode' => $langcode]) :
-                Url::fromRoute('node.revision_revert_confirm', ['node' => $node->id(), 'node_revision' => $vid]),
+              'url' => $revertLink,
             ];
           }
 
-          if ($delete_permission) {
+          $deleteLink = Url::fromRoute('node.revision_delete_confirm', ['node' => $node->id(), 'node_revision' => $vid]);
+          if ($deleteLink->access($account)) {
             $links['delete'] = [
               'title' => $this->t('Delete'),
-              'url' => Url::fromRoute('node.revision_delete_confirm', ['node' => $node->id(), 'node_revision' => $vid]),
+              'url' => $deleteLink,
             ];
           }
 

@@ -4,6 +4,7 @@ namespace Drupal\node;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityHandlerInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -28,16 +29,26 @@ class NodeAccessControlHandler extends EntityAccessControlHandler implements Nod
   protected $grantStorage;
 
   /**
+   * Node entity storage.
+   *
+   * @var \Drupal\node\NodeStorageInterface
+   */
+  protected $nodeStorage;
+
+  /**
    * Constructs a NodeAccessControlHandler object.
    *
    * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
    *   The entity type definition.
    * @param \Drupal\node\NodeGrantDatabaseStorageInterface $grant_storage
    *   The node grant storage.
+   * @param \Drupal\Core\Entity\EntityStorageInterface|null $nodeStorage
+   *   Node entity storage.
    */
-  public function __construct(EntityTypeInterface $entity_type, NodeGrantDatabaseStorageInterface $grant_storage) {
+  public function __construct(EntityTypeInterface $entity_type, NodeGrantDatabaseStorageInterface $grant_storage, EntityStorageInterface $nodeStorage = NULL) {
     parent::__construct($entity_type);
     $this->grantStorage = $grant_storage;
+    $this->nodeStorage = isset($nodeStorage) ? $nodeStorage : \Drupal::entityTypeManager()->getStorage('node');
   }
 
   /**
@@ -46,7 +57,8 @@ class NodeAccessControlHandler extends EntityAccessControlHandler implements Nod
   public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
     return new static(
       $entity_type,
-      $container->get('node.grant_storage')
+      $container->get('node.grant_storage'),
+      $container->get('entity_type.manager')->getStorage('node')
     );
   }
 
@@ -101,6 +113,58 @@ class NodeAccessControlHandler extends EntityAccessControlHandler implements Nod
     // Check if authors can view their own unpublished nodes.
     if ($operation === 'view' && !$status && $account->hasPermission('view own unpublished content') && $account->isAuthenticated() && $account->id() == $uid) {
       return AccessResult::allowed()->cachePerPermissions()->cachePerUser()->addCacheableDependency($node);
+    }
+
+    // Revision operations.
+    // Map of operations to fallback operation and permission operation.
+    $revisionPermissionOperations = [
+      'view all revisions' => 'view',
+      'view revision' => 'view',
+      'revert' => 'revert',
+      'delete revision' => 'delete',
+    ];
+    if (isset($revisionPermissionOperations[$operation])) {
+      $revisionPermissionOperation = $revisionPermissionOperations[$operation];
+      $bundle = $node->bundle();
+      // If user doesn't have any of these then quit.
+      if (!$account->hasPermission("$revisionPermissionOperation all revisions") && !$account->hasPermission("$revisionPermissionOperation $bundle revisions") && !$account->hasPermission('administer nodes')) {
+        return AccessResult::neutral();
+      }
+
+      // If the revisions checkbox is selected for the content type, display the
+      // revisions tab.
+      if ($operation === 'view all revisions' && $node->type->entity->shouldCreateNewRevision()) {
+        return AccessResult::allowed();
+      }
+
+      $fallBackOperations = [
+        'view all revisions' => 'view',
+        'view revision' => 'view',
+        'revert' => 'update',
+        'delete revision' => 'delete',
+      ];
+      $fallBackOperation = $fallBackOperations[$operation];
+
+      // There should be at least two revisions. If the vid of the given node
+      // and the vid of the default revision differ, then we already have two
+      // different revisions so there is no need for a separate database
+      // check. Also, if you try to revert to or delete the default revision,
+      // that's not good.
+      if ($node->isDefaultRevision() && ($this->nodeStorage->countDefaultLanguageRevisions($node) == 1 || $fallBackOperation === 'update' || $fallBackOperation === 'delete')) {
+        return AccessResult::neutral();
+      }
+      elseif ($account->hasPermission('administer nodes')) {
+        return AccessResult::allowed();
+      }
+      else {
+        // First check the access to the default revision and finally, if the
+        // node passed in is not the default revision then check access to
+        // that, too.
+        return AccessResult::allowedIf(
+          $this->access($this->nodeStorage->load($node->id()), $fallBackOperation, $account) &&
+          ($node->isDefaultRevision() || $this->access($node, $fallBackOperation, $account))
+        );
+      }
     }
 
     // Evaluate node grants.
