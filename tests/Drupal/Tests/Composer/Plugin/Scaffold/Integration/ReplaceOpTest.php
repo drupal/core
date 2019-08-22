@@ -1,14 +1,14 @@
 <?php
 
-namespace Drupal\Tests\Component\Scaffold\Integration;
+namespace Drupal\Tests\Composer\Plugin\Scaffold\Integration;
 
-use Drupal\Component\Scaffold\Operations\ReplaceOp;
-use Drupal\Component\Scaffold\ScaffoldOptions;
-use Drupal\Tests\Component\Scaffold\Fixtures;
+use Drupal\Composer\Plugin\Scaffold\Operations\ReplaceOp;
+use Drupal\Composer\Plugin\Scaffold\ScaffoldOptions;
+use Drupal\Tests\Composer\Plugin\Scaffold\Fixtures;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Drupal\Component\Scaffold\Operations\ReplaceOp
+ * @coversDefaultClass \Drupal\Composer\Plugin\Scaffold\Operations\ReplaceOp
  *
  * @group Scaffold
  */

@@ -1,15 +1,15 @@
 <?php
 
-namespace Drupal\Tests\Component\Scaffold\Integration;
+namespace Drupal\Tests\Composer\Plugin\Scaffold\Integration;
 
 use PHPUnit\Framework\TestCase;
-use Drupal\Tests\Component\Scaffold\Fixtures;
-use Drupal\Component\Scaffold\Operations\ConjunctionOp;
-use Drupal\Component\Scaffold\Operations\SkipOp;
-use Drupal\Component\Scaffold\Operations\ScaffoldFileCollection;
+use Drupal\Tests\Composer\Plugin\Scaffold\Fixtures;
+use Drupal\Composer\Plugin\Scaffold\Operations\ConjunctionOp;
+use Drupal\Composer\Plugin\Scaffold\Operations\SkipOp;
+use Drupal\Composer\Plugin\Scaffold\Operations\ScaffoldFileCollection;
 
 /**
- * @coversDefaultClass \Drupal\Component\Scaffold\Operations\ScaffoldFileCollection
+ * @coversDefaultClass \Drupal\Composer\Plugin\Scaffold\Operations\ScaffoldFileCollection
  *
  * @group Scaffold
  */

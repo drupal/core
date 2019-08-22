@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\Component\Scaffold;
+namespace Drupal\Tests\Composer\Plugin\Scaffold;
 
 use Symfony\Component\Process\Process;
 

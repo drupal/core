@@ -1,14 +1,14 @@
 <?php
 
-namespace Drupal\Tests\Component\Scaffold\Integration;
+namespace Drupal\Tests\Composer\Plugin\Scaffold\Integration;
 
-use Drupal\Component\Scaffold\Operations\AppendOp;
-use Drupal\Component\Scaffold\ScaffoldOptions;
-use Drupal\Tests\Component\Scaffold\Fixtures;
+use Drupal\Composer\Plugin\Scaffold\Operations\AppendOp;
+use Drupal\Composer\Plugin\Scaffold\ScaffoldOptions;
+use Drupal\Tests\Composer\Plugin\Scaffold\Fixtures;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Drupal\Component\Scaffold\Operations\AppendOp
+ * @coversDefaultClass \Drupal\Composer\Plugin\Scaffold\Operations\AppendOp
  *
  * @group Scaffold
  */

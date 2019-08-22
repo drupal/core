@@ -1,11 +1,11 @@
 <?php
 
-namespace Drupal\Tests\Component\Scaffold\Functional;
+namespace Drupal\Tests\Composer\Plugin\Scaffold\Functional;
 
 use Composer\Util\Filesystem;
-use Drupal\Tests\Component\Scaffold\AssertUtilsTrait;
-use Drupal\Tests\Component\Scaffold\Fixtures;
-use Drupal\Tests\Component\Scaffold\ScaffoldTestResult;
+use Drupal\Tests\Composer\Plugin\Scaffold\AssertUtilsTrait;
+use Drupal\Tests\Composer\Plugin\Scaffold\Fixtures;
+use Drupal\Tests\Composer\Plugin\Scaffold\ScaffoldTestResult;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -46,7 +46,7 @@ class ScaffoldTest extends TestCase {
   /**
    * The Fixtures object.
    *
-   * @var \Drupal\Tests\Component\Scaffold\Fixtures
+   * @var \Drupal\Tests\Composer\Plugin\Scaffold\Fixtures
    */
   protected $fixtures;
 

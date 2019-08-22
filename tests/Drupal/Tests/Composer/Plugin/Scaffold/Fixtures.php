@@ -1,16 +1,16 @@
 <?php
 
-namespace Drupal\Tests\Component\Scaffold;
+namespace Drupal\Tests\Composer\Plugin\Scaffold;
 
 use Composer\Console\Application;
 use Composer\Factory;
 use Composer\IO\BufferIO;
 use Composer\Util\Filesystem;
-use Drupal\Component\Scaffold\Handler;
-use Drupal\Component\Scaffold\Interpolator;
-use Drupal\Component\Scaffold\Operations\AppendOp;
-use Drupal\Component\Scaffold\Operations\ReplaceOp;
-use Drupal\Component\Scaffold\ScaffoldFilePath;
+use Drupal\Composer\Plugin\Scaffold\Handler;
+use Drupal\Composer\Plugin\Scaffold\Interpolator;
+use Drupal\Composer\Plugin\Scaffold\Operations\AppendOp;
+use Drupal\Composer\Plugin\Scaffold\Operations\ReplaceOp;
+use Drupal\Composer\Plugin\Scaffold\ScaffoldFilePath;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
@@ -93,7 +93,7 @@ class Fixtures {
    *   Path to the root of this project.
    */
   public function projectRoot() {
-    return realpath(__DIR__) . '/../../../../../../core/lib/Drupal/Component/Scaffold';
+    return realpath(__DIR__) . '/../../../../../../../composer/Plugin/Scaffold';
   }
 
   /**
@@ -151,10 +151,10 @@ class Fixtures {
    * @param string $source
    *   The name of the asset; path is "assets/$source".
    *
-   * @return \Drupal\Component\Scaffold\ScaffoldFilePath
+   * @return \Drupal\Composer\Plugin\Scaffold\ScaffoldFilePath
    *   The full and relative path to the desired asset
    *
-   * @see \Drupal\Component\Scaffold\ScaffoldFilePath::sourcePath()
+   * @see \Drupal\Composer\Plugin\Scaffold\ScaffoldFilePath::sourcePath()
    */
   public function sourcePath($project_name, $source) {
     $package_name = "fixtures/{$project_name}";
@@ -168,10 +168,10 @@ class Fixtures {
    *
    * Use in place of ManageOptions::getLocationReplacements().
    *
-   * @return \Drupal\Component\Scaffold\Interpolator
+   * @return \Drupal\Composer\Plugin\Scaffold\Interpolator
    *   An interpolator with location replacements, including 'web-root'.
    *
-   * @see \Drupal\Component\Scaffold\ManageOptions::getLocationReplacements()
+   * @see \Drupal\Composer\Plugin\Scaffold\ManageOptions::getLocationReplacements()
    */
   public function getLocationReplacements() {
     $destinationTmpDir = $this->mkTmpDir('location-replacements');
@@ -189,7 +189,7 @@ class Fixtures {
    * @param string $source
    *   The name of the asset; path is "assets/$source".
    *
-   * @return \Drupal\Component\Scaffold\Operations\ReplaceOp
+   * @return \Drupal\Composer\Plugin\Scaffold\Operations\ReplaceOp
    *   A replace operation object.
    */
   public function replaceOp($project_name, $source) {
@@ -206,7 +206,7 @@ class Fixtures {
    * @param string $source
    *   The name of the asset; path is "assets/$source".
    *
-   * @return \Drupal\Component\Scaffold\Operations\AppendOp
+   * @return \Drupal\Composer\Plugin\Scaffold\Operations\AppendOp
    *   An append operation object.
    */
   public function appendOp($project_name, $source) {
@@ -223,17 +223,17 @@ class Fixtures {
    *   Destination path; should be in the form '[web-root]/robots.txt', where
    *   '[web-root]' is always literally '[web-root]', with any arbitrarily
    *   desired filename following.
-   * @param \Drupal\Component\Scaffold\Interpolator $interpolator
+   * @param \Drupal\Composer\Plugin\Scaffold\Interpolator $interpolator
    *   Location replacements. Obtain via Fixtures::getLocationReplacements()
    *   when creating multiple scaffold destinations.
    * @param string $package_name
    *   (optional) The name of the fixture package that this path came from.
    *   Taken from interpolator if not provided.
    *
-   * @return \Drupal\Component\Scaffold\ScaffoldFilePath
+   * @return \Drupal\Composer\Plugin\Scaffold\ScaffoldFilePath
    *   A destination scaffold file backed by temporary storage.
    *
-   * @see \Drupal\Component\Scaffold\ScaffoldFilePath::destinationPath()
+   * @see \Drupal\Composer\Plugin\Scaffold\ScaffoldFilePath::destinationPath()
    */
   public function destinationPath($destination, Interpolator $interpolator = NULL, $package_name = NULL) {
     $interpolator = $interpolator ?: $this->getLocationReplacements();
