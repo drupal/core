@@ -4,6 +4,10 @@ namespace Drupal\Component\FileSecurity;
 
 /**
  * Provides file security functions.
+ *
+ * IMPORTANT: This file is duplicated at /composer/Plugin/VendorHardening.
+ * If any change is made here, the same change should be made in the duplicate.
+ * See https://www.drupal.org/project/drupal/issues/3079481
  */
 class FileSecurity {
 
