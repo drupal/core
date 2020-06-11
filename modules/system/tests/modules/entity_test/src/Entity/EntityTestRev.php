@@ -23,6 +23,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "route_provider" = {
  *       "html" = "Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider",
+ *       "revision" = "Drupal\Core\Entity\Routing\RevisionHtmlRouteProvider",
  *     },
  *   },
  *   base_table = "entity_test_rev",
@@ -44,6 +45,8 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *     "delete-multiple-form" = "/entity_test_rev/delete_multiple",
  *     "edit-form" = "/entity_test_rev/manage/{entity_test_rev}/edit",
  *     "revision" = "/entity_test_rev/{entity_test_rev}/revision/{entity_test_rev_revision}/view",
+ *     "revision-revert-form" = "/entity_test_rev/{entity_test_rev}/revision/{entity_test_rev_revision}/revert",
+ *     "version-history" = "/entity_test_rev/{entity_test_rev}/revisions",
  *   }
  * )
  */

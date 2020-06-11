@@ -44,6 +44,12 @@ class SystemLocalTasksTest extends LocalTaskIntegrationTestBase {
       ->with('bartik')
       ->willReturn(TRUE);
     $this->container->set('theme_handler', $this->themeHandler);
+
+    $entityTypeManager = $this->getMock('Drupal\Core\Entity\EntityTypeManagerInterface');
+    $entityTypeManager->expects($this->any())
+      ->method('getDefinitions')
+      ->willReturn([]);
+    $this->container->set('entity_type.manager', $entityTypeManager);
   }
 
   /**

@@ -166,7 +166,7 @@ abstract class EntityBase implements EntityInterface {
 
     // Links pointing to the current revision point to the actual entity. So
     // instead of using the 'revision' link, use the 'canonical' link.
-    if ($rel === 'revision' && $this instanceof RevisionableInterface && $this->isDefaultRevision()) {
+    if (in_array($rel, ['revision', 'revision-revert-form'], TRUE) && $this instanceof RevisionableInterface) {
       $rel = 'canonical';
     }
 

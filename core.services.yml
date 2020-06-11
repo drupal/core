@@ -1178,6 +1178,11 @@ services:
     arguments: ['@entity_type.manager', '@tempstore.private', '@request_stack']
     tags:
       - { name: access_check, applies_to: _entity_delete_multiple_access }
+  access_checker.entity_revision:
+    class: \Drupal\Core\Entity\EntityRevisionAccessCheck
+    arguments: ['@entity_type.manager', '@current_route_match']
+    tags:
+      - { name: access_check, applies_to: _entity_access_revision }
   access_check.theme:
     class: Drupal\Core\Theme\ThemeAccessCheck
     arguments: ['@theme_handler']
