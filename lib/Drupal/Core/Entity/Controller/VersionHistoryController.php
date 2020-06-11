@@ -11,6 +11,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Entity\RevisionLogInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -19,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * This controller leverages the revision controller trait, which is agnostic to
  * any entity type, by using \Drupal\Core\Entity\RevisionLogInterface.
  */
-class RevisionOverviewController extends ControllerBase {
+class VersionHistoryController extends ControllerBase implements VersionHistoryControllerInterface {
 
   use RevisionControllerTrait;
 
@@ -49,7 +50,10 @@ class RevisionOverviewController extends ControllerBase {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static($container->get('date.formatter'), $container->get('renderer'));
+    return new static(
+      $container->get('date.formatter'),
+      $container->get('renderer')
+    );
   }
 
   /**
@@ -84,16 +88,17 @@ class RevisionOverviewController extends ControllerBase {
   }
 
   /**
-   * Generates an overview table of older revisions of an entity.
-   *
-   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
-   *   The route match.
-   *
-   * @return array
-   *   A render array.
+   * {@inheritdoc}
    */
-  public function revisionOverviewController(RouteMatchInterface $route_match) {
+  public function renderVersionHistory(RouteMatchInterface $route_match) {
     return $this->revisionOverview($route_match->getParameter($route_match->getRouteObject()->getOption('entity_type_id')));
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function versionHistoryTitle(RouteMatchInterface $route_match) {
+    return new TranslatableMarkup('Revisions');
   }
 
   /**

@@ -119,10 +119,10 @@ class RevisionRevertForm extends ConfirmFormBase {
       $original_revision_timestamp = $this->revision->getRevisionCreationTime();
 
       $this->revision->setRevisionLogMessage($this->t('Copy of the revision from %date.', ['%date' => $this->dateFormatter->format($original_revision_timestamp)]));
-      drupal_set_message(t('@type %title has been reverted to the revision from %revision-date.', ['@type' => $this->getBundleLabel($this->revision), '%title' => $this->revision->label(), '%revision-date' => $this->dateFormatter->format($original_revision_timestamp)]));
+      $this->messenger()->addMessage($this->t('@type %title has been reverted to the revision from %revision-date.', ['@type' => $this->getBundleLabel($this->revision), '%title' => $this->revision->label(), '%revision-date' => $this->dateFormatter->format($original_revision_timestamp)]));
     }
     else {
-      drupal_set_message(t('@type %title has been reverted', ['@type' => $this->getBundleLabel($this->revision), '%title' => $this->revision->label()]));
+      $this->messenger()->addMessage($this->t('@type %title has been reverted', ['@type' => $this->getBundleLabel($this->revision), '%title' => $this->revision->label()]));
     }
 
     $this->revision->save();
