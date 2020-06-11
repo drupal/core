@@ -6,15 +6,11 @@ use Drupal\Core\Entity\Controller\EntityController;
 use Drupal\Core\Entity\Controller\EntityViewController;
 use Drupal\Core\Entity\Controller\VersionHistoryControllerInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\Core\Entity\Exception\NoEntityRevisionRevertFormException;
-use mysql_xdevapi\Exception;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
  * Provides revision routes.
- *
- * @todo Temporary workaround until https://www.drupal.org/project/drupal/issues/2976861 is implemented.
  */
 class RevisionHtmlRouteProvider implements EntityRouteProviderInterface {
 
@@ -43,10 +39,10 @@ class RevisionHtmlRouteProvider implements EntityRouteProviderInterface {
   /**
    * Gets the entity revision version history route.
    *
-   * @param EntityTypeInterface $entity_type
+   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
    *   The entity type.
    *
-   * @return Route|null
+   * @return \Symfony\Component\Routing\Route|null
    *   The generated route, if available.
    */
   protected function getVersionHistoryRoute(EntityTypeInterface $entity_type) {
@@ -77,10 +73,10 @@ class RevisionHtmlRouteProvider implements EntityRouteProviderInterface {
   /**
    * Gets the entity revision view route.
    *
-   * @param EntityTypeInterface $entity_type
+   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
    *   The entity type.
    *
-   * @return Route|null
+   * @return \Symfony\Component\Routing\Route|null
    *   The generated route, if available.
    */
   protected function getRevisionViewRoute(EntityTypeInterface $entity_type) {
@@ -109,40 +105,33 @@ class RevisionHtmlRouteProvider implements EntityRouteProviderInterface {
   /**
    * Gets the entity revision revert route.
    *
-   * @param EntityTypeInterface $entity_type
+   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
    *   The entity type.
    *
-   * @return Route|null
+   * @return \Symfony\Component\Routing\Route|null
    *   The generated route, if available.
-   *
-   * @throws NoEntityRevisionRevertFormException
    */
   protected function getRevisionRevertRoute(EntityTypeInterface $entity_type) {
     $revert_form_class = $entity_type->getFormClass('revision_revert');
-    if ($revert_form_class == NULL) {
-      throw new NoEntityRevisionRevertFormException('The revision form for '. $entity_type->getLabel() . ' could not be found.');
-    }
-    else {
-      if ($entity_type->hasLinkTemplate('revision-revert-form')) {
-        $entity_type_id = $entity_type->id();
-        $route = new Route($entity_type->getLinkTemplate('revision-revert-form'));
-        $route->addDefaults([
-          '_form' => $revert_form_class,
-          '_title' => 'Revert to earlier revision',
-        ]);
-        $route->addRequirements([
-          '_entity_access_revision' => "$entity_type_id.update",
-        ]);
-        $route->setOption('parameters', [
-          $entity_type->id() => [
-            'type' => 'entity:' . $entity_type->id(),
-          ],
-          $entity_type->id() . '_revision' => [
-            'type' => 'entity_revision:' . $entity_type->id(),
-          ],
-        ]);
-        return $route;
-      }
+    if ($entity_type->hasLinkTemplate('revision-revert-form') && $revert_form_class != NULL) {
+      $entity_type_id = $entity_type->id();
+      $route = new Route($entity_type->getLinkTemplate('revision-revert-form'));
+      $route->addDefaults([
+        '_form' => $revert_form_class,
+        '_title' => 'Revert to earlier revision',
+      ]);
+      $route->addRequirements([
+        '_entity_access_revision' => "$entity_type_id.update",
+      ]);
+      $route->setOption('parameters', [
+        $entity_type->id() => [
+          'type' => 'entity:' . $entity_type->id(),
+        ],
+        $entity_type->id() . '_revision' => [
+          'type' => 'entity_revision:' . $entity_type->id(),
+        ],
+      ]);
+      return $route;
     }
   }
 

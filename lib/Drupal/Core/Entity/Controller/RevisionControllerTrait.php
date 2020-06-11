@@ -71,18 +71,15 @@ trait RevisionControllerTrait {
   abstract protected function buildDeleteRevisionLink(EntityInterface $entity_revision);
 
   /**
-   * Returns a string providing details of the revision.
-   *
-   * E.g. Node describes its revisions using {date} by {username}. For the
-   *   non-current revision, it also provides a link to view that revision.
+   * Get a description of the revision.
    *
    * @param \Drupal\Core\Entity\ContentEntityInterface $revision
    *   The entity revision.
    * @param bool $is_current
-   *   TRUE if the revision is the current revision.
+   *   Whether the revision is the current revision.
    *
    * @return array
-   *   Returns array to provide the details of the revision.
+   *   A render array describing the revision.
    */
   abstract protected function getRevisionDescription(ContentEntityInterface $revision, $is_current = FALSE);
 
@@ -106,8 +103,6 @@ trait RevisionControllerTrait {
 
   /**
    * Generates an overview table of older revisions of an entity.
-   *
-   * @todo Follow pattern in https://www.drupal.org/project/drupal/issues/2899719.
    *
    * @param \Drupal\Core\Entity\ContentEntityInterface $entity
    *   An entity object.
