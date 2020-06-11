@@ -81,8 +81,8 @@ trait RevisionControllerTrait {
    * @param bool $is_current
    *   TRUE if the revision is the current revision.
    *
-   * @return string
-   *   Returns a string to provide the details of the revision.
+   * @return array
+   *   Returns array to provide the details of the revision.
    */
   abstract protected function getRevisionDescription(ContentEntityInterface $revision, $is_current = FALSE);
 
@@ -106,6 +106,8 @@ trait RevisionControllerTrait {
 
   /**
    * Generates an overview table of older revisions of an entity.
+   *
+   * @todo Follow pattern in https://www.drupal.org/project/drupal/issues/2899719.
    *
    * @param \Drupal\Core\Entity\ContentEntityInterface $entity
    *   An entity object.
