@@ -1,7 +1,7 @@
 CONTENTS OF THIS FILE
 ---------------------
 
- * Introduction
+ * Introduction!
  * Minor and patch version updates
  * Is my site using Composer?
  * Updating code manually
