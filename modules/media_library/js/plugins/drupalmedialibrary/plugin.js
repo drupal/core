@@ -59,6 +59,12 @@
           command: 'drupalmedialibrary'
         });
       }
+    },
+    init: function init(editor) {
+      // Prevent adding extra lines.
+      editor.dataProcessor.writer.setRules('drupal-media', {
+        breakAfterClose: false
+      });
     }
   });
 })(Drupal, CKEDITOR);
