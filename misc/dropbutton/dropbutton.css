@@ -35,7 +35,7 @@
   position: static;
 }
 .js td .dropbutton-multiple .dropbutton-widget {
-  position: absolute;
+  position: relative;
 }
 .js td .dropbutton-wrapper {
   min-height: 2em;
