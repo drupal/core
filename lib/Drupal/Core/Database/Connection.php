@@ -1522,6 +1522,9 @@ abstract class Connection {
    *   The escaped string.
    */
   public function escapeLike($string) {
+	if (!isset($string)) {
+      return $string;
+    }
     return addcslashes($string, '\%_');
   }
 
