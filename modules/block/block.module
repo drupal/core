@@ -209,7 +209,7 @@ function block_theme_suggestions_block(array $variables) {
 
   // We can safely explode on : because we know the Block plugin type manager
   // enforces that delimiter for all derivatives.
-  $parts = explode(':', $variables['elements']['#plugin_id']);
+  $parts = !empty($parts) ? explode(':', $variables['elements']['#plugin_id']) : [];
   $suggestion = 'block';
   while ($part = array_shift($parts)) {
     $suggestions[] = $suggestion .= '__' . strtr($part, '-', '_');
