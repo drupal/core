@@ -247,7 +247,7 @@
 
     messageWrapper.setAttribute('aria-label', messagesTypes[type]);
 
-    messageWrapper.innerHTML = `${text}`;
+    messageWrapper.innerText = `${text}`;
 
     return messageWrapper;
   };
