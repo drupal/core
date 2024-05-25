@@ -44,7 +44,7 @@
         wrapper.setAttribute('data-drupal-messages', '');
         wrapper.classList.remove('hidden');
       }
-      return wrapper.innerHTML === ''
+      return wrapper.innerText === ''
         ? Drupal.Message.messageInternalWrapper(wrapper)
         : wrapper.firstElementChild;
     }
