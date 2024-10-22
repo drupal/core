@@ -74,7 +74,7 @@
       liveElement.setAttribute('aria-live', priority);
       // Print the text to the live region. Text should be run through
       // Drupal.t() before being passed to Drupal.announce().
-      liveElement.innerHTML = text.join('\n');
+      liveElement.innerText = text.join('\n');
       // The live text area is updated. Allow the AT to announce the text.
       liveElement.setAttribute('aria-busy', 'false');
     }
