@@ -33,3 +33,4 @@ services:
   Drupal\content_translation\ContentTranslationManagerInterface: '@content_translation.manager'
   Drupal\content_translation\BundleTranslationSettingsInterface: '@content_translation.manager'
   Drupal\content_translation\FieldSyncWidget: ~
+  Drupal\content_translation\ContentTranslationEnableTranslationPerBundle: ~
