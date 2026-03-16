@@ -192,7 +192,7 @@ class ClaroPreRender implements TrustedCallbackInterface {
   /**
    * {@inheritdoc}
    */
-  public static function trustedCallbacks() {
+  public static function trustedCallbacks(): array {
     return [
       'managedFile',
       'verticalTabs',

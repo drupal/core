@@ -58,7 +58,7 @@ class TestableSqlContentEntityStorage extends SqlContentEntityStorage {
    *
    * {@inheritdoc}
    */
-  public function getTableMapping(?array $storage_definitions = NULL) {
+  public function getTableMapping(?array $storage_definitions = NULL): TableMappingInterface {
     return $this->tableMapping;
   }
 

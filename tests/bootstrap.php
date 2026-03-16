@@ -10,9 +10,9 @@
 declare(strict_types=1);
 
 use Drupal\TestTools\ErrorHandler\BootstrapErrorHandler;
+use Drupal\TestTools\ErrorHandler\DrupalDebugClassLoader;
 use Drupal\TestTools\Extension\DeprecationBridge\DeprecationHandler;
 use PHPUnit\Runner\ErrorHandler as PhpUnitErrorHandler;
-use Symfony\Component\ErrorHandler\DebugClassLoader;
 
 /**
  * Finds all valid extension directories recursively within a given directory.
@@ -176,5 +176,5 @@ if ($deprecationBridgeConfiguration = DeprecationHandler::getConfiguration()) {
 
   // Enable the DebugClassLoader to get deprecations for methods' signature
   // changes.
-  DebugClassLoader::enable();
+  DrupalDebugClassLoader::enable();
 }
