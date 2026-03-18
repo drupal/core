@@ -23,7 +23,7 @@ class Tasks extends InstallTasks {
    *
    * @see https://www.postgresql.org/docs/16/pgtrgm.html
    */
-  const PGSQL_MINIMUM_VERSION = '16';
+  const PGSQL_MINIMUM_VERSION = '18';
 
   /**
    * {@inheritdoc}
