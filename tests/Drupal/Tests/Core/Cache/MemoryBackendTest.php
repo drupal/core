@@ -24,8 +24,8 @@ class MemoryBackendTest extends UnitTestCase {
    * @legacy-covers ::garbageCollection
    */
   public function testGarbageCollection(): void {
-    $time = $this->createMock(TimeInterface::class);
-    $time->expects($this->any())
+    $time = $this->createStub(TimeInterface::class);
+    $time
       ->method('getRequestTime')
       ->willReturn(100);
     $backend = new MemoryBackend($time);

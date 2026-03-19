@@ -27,7 +27,7 @@ class ChainedFastBackendFactoryTest extends UnitTestCase {
   public function testIdenticalService(): void {
     $container = $this->createMock(ContainerInterface::class);
     $testCacheFactory = $this->createMock(CacheFactoryInterface::class);
-    $testCacheBackend = $this->createMock(CacheBackendInterface::class);
+    $testCacheBackend = $this->createStub(CacheBackendInterface::class);
 
     $container->expects($this->once())
       ->method('get')
@@ -55,8 +55,8 @@ class ChainedFastBackendFactoryTest extends UnitTestCase {
     $container = $this->createMock(ContainerInterface::class);
     $testConsistentCacheFactory = $this->createMock(CacheFactoryInterface::class);
     $testFastCacheFactory = $this->createMock(CacheFactoryInterface::class);
-    $testConsistentCacheBackend = $this->createMock(CacheBackendInterface::class);
-    $testFastCacheBackend = $this->createMock(CacheBackendInterface::class);
+    $testConsistentCacheBackend = $this->createStub(CacheBackendInterface::class);
+    $testFastCacheBackend = $this->createStub(CacheBackendInterface::class);
 
     $container->expects($this->exactly(2))
       ->method('get')

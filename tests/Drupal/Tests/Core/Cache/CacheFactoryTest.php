@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Cache;
 
+use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Cache\CacheFactory;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Site\Settings;
@@ -34,7 +35,7 @@ class CacheFactoryTest extends UnitTestCase {
     $builtin_default_backend_factory = $this->createMock('\Drupal\Core\Cache\CacheFactoryInterface');
     $container->set('cache.backend.database', $builtin_default_backend_factory);
 
-    $render_bin = $this->createMock('\Drupal\Core\Cache\CacheBackendInterface');
+    $render_bin = $this->createStub(CacheBackendInterface::class);
     $builtin_default_backend_factory->expects($this->once())
       ->method('get')
       ->with('render')
@@ -64,7 +65,7 @@ class CacheFactoryTest extends UnitTestCase {
     $custom_default_backend_factory = $this->createMock('\Drupal\Core\Cache\CacheFactoryInterface');
     $container->set('cache.backend.custom', $custom_default_backend_factory);
 
-    $render_bin = $this->createMock('\Drupal\Core\Cache\CacheBackendInterface');
+    $render_bin = $this->createStub(CacheBackendInterface::class);
     $custom_default_backend_factory->expects($this->once())
       ->method('get')
       ->with('render')
@@ -100,7 +101,7 @@ class CacheFactoryTest extends UnitTestCase {
     $custom_default_backend_factory = $this->createMock('\Drupal\Core\Cache\CacheFactoryInterface');
     $container->set('cache.backend.custom', $custom_default_backend_factory);
 
-    $render_bin = $this->createMock('\Drupal\Core\Cache\CacheBackendInterface');
+    $render_bin = $this->createStub(CacheBackendInterface::class);
     $custom_default_backend_factory->expects($this->once())
       ->method('get')
       ->with('render')
@@ -140,7 +141,7 @@ class CacheFactoryTest extends UnitTestCase {
     $custom_render_backend_factory = $this->createMock('\Drupal\Core\Cache\CacheFactoryInterface');
     $container->set('cache.backend.custom', $custom_render_backend_factory);
 
-    $render_bin = $this->createMock('\Drupal\Core\Cache\CacheBackendInterface');
+    $render_bin = $this->createStub(CacheBackendInterface::class);
     $custom_render_backend_factory->expects($this->once())
       ->method('get')
       ->with('render')

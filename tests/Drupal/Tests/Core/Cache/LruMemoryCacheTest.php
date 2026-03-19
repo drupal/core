@@ -379,8 +379,8 @@ class LruMemoryCacheTest extends UnitTestCase {
    *   The LRU cache.
    */
   private function getLruMemoryCache(int $slots): LruMemoryCache {
-    $time_mock = $this->createMock(TimeInterface::class);
-    $time_mock->expects($this->any())
+    $time_mock = $this->createStub(TimeInterface::class);
+    $time_mock
       ->method('getRequestTime')
       ->willReturnCallback('time');
     return new LruMemoryCache(

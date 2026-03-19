@@ -12,7 +12,6 @@ use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Tests Drupal\Core\Cache\CacheCollector.
@@ -24,17 +23,12 @@ class CacheCollectorTest extends UnitTestCase {
   /**
    * The cache backend that should be used.
    */
-  protected CacheBackendInterface&MockObject $cacheBackend;
-
-  /**
-   * The cache tags invalidator.
-   */
-  protected CacheTagsInvalidatorInterface&MockObject $cacheTagsInvalidator;
+  protected CacheBackendInterface $cacheBackend;
 
   /**
    * The lock backend that should be used.
    */
-  protected LockBackendInterface&MockObject $lock;
+  protected LockBackendInterface $lock;
 
   /**
    * The cache id used for the test.
@@ -56,13 +50,28 @@ class CacheCollectorTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->cacheBackend = $this->createMock('Drupal\Core\Cache\CacheBackendInterface');
-    $this->cacheTagsInvalidator = $this->createMock('Drupal\Core\Cache\CacheTagsInvalidatorInterface');
-    $this->lock = $this->createMock('Drupal\Core\Lock\LockBackendInterface');
+    $this->cacheBackend = $this->createStub(CacheBackendInterface::class);
+    $this->lock = $this->createStub(LockBackendInterface::class);
     $this->cid = $this->randomMachineName();
     $this->collector = new CacheCollectorHelper($this->cid, $this->cacheBackend, $this->lock);
+  }
 
-    $this->getContainerWithCacheTagsInvalidator($this->cacheTagsInvalidator);
+  /**
+   * Reinitializes the cache backend as a mock object.
+   */
+  protected function setUpMockCacheBackend(): void {
+    $this->cacheBackend = $this->createMock(CacheBackendInterface::class);
+    $reflection = new \ReflectionProperty($this->collector, 'cache');
+    $reflection->setValue($this->collector, $this->cacheBackend);
+  }
+
+  /**
+   * Reinitializes the lock backend as a mock object.
+   */
+  protected function setUpMockLockBackend(): void {
+    $this->lock = $this->createMock(LockBackendInterface::class);
+    $reflection = new \ReflectionProperty($this->collector, 'lock');
+    $reflection->setValue($this->collector, $this->lock);
   }
 
   /**
@@ -94,6 +103,8 @@ class CacheCollectorTest extends UnitTestCase {
    * Makes sure that NULL is a valid value and is collected.
    */
   public function testSetAndGetNull(): void {
+    $this->setUpMockCacheBackend();
+
     $key = $this->randomMachineName();
     $value = NULL;
 
@@ -115,6 +126,8 @@ class CacheCollectorTest extends UnitTestCase {
    * Tests returning value from the collected cache.
    */
   public function testGetFromCache(): void {
+    $this->setUpMockCacheBackend();
+
     $key = $this->randomMachineName();
     $value = $this->randomMachineName();
 
@@ -135,6 +148,8 @@ class CacheCollectorTest extends UnitTestCase {
    * Tests setting and deleting values.
    */
   public function testDelete(): void {
+    $this->setUpMockCacheBackend();
+
     $key = $this->randomMachineName();
     $value = $this->randomMachineName();
 
@@ -156,6 +171,9 @@ class CacheCollectorTest extends UnitTestCase {
    * Tests updating the cache when no changes were made.
    */
   public function testUpdateCacheNoChanges(): void {
+    $this->setUpMockCacheBackend();
+    $this->setUpMockLockBackend();
+
     $this->lock->expects($this->never())
       ->method('acquire');
     $this->cacheBackend->expects($this->never())
@@ -169,6 +187,9 @@ class CacheCollectorTest extends UnitTestCase {
    * Tests updating the cache after a set.
    */
   public function testUpdateCache(): void {
+    $this->setUpMockCacheBackend();
+    $this->setUpMockLockBackend();
+
     $key = $this->randomMachineName();
     $value = $this->randomMachineName();
 
@@ -200,6 +221,9 @@ class CacheCollectorTest extends UnitTestCase {
    * Tests updating the cache when the lock acquire fails.
    */
   public function testUpdateCacheLockFail(): void {
+    $this->setUpMockCacheBackend();
+    $this->setUpMockLockBackend();
+
     $key = $this->randomMachineName();
     $value = $this->randomMachineName();
 
@@ -222,6 +246,9 @@ class CacheCollectorTest extends UnitTestCase {
    * Tests updating the cache when there is a conflict after cache invalidation.
    */
   public function testUpdateCacheInvalidatedConflict(): void {
+    $this->setUpMockCacheBackend();
+    $this->setUpMockLockBackend();
+
     $key = $this->randomMachineName();
     $value = $this->randomMachineName();
 
@@ -266,6 +293,9 @@ class CacheCollectorTest extends UnitTestCase {
    * Tests a cache hit, then item updated by a different request.
    */
   public function testUpdateCacheMerge(): void {
+    $this->setUpMockCacheBackend();
+    $this->setUpMockLockBackend();
+
     $key = $this->randomMachineName();
     $value = $this->randomMachineName();
 
@@ -303,6 +333,9 @@ class CacheCollectorTest extends UnitTestCase {
    * Tests a cache miss, then item created by another request.
    */
   public function testUpdateCacheRace(): void {
+    $this->setUpMockCacheBackend();
+    $this->setUpMockLockBackend();
+
     $key = $this->randomMachineName();
     $value = $this->randomMachineName();
 
@@ -333,6 +366,9 @@ class CacheCollectorTest extends UnitTestCase {
    * Tests updating the cache after a delete.
    */
   public function testUpdateCacheDelete(): void {
+    $this->setUpMockCacheBackend();
+    $this->setUpMockLockBackend();
+
     $key = $this->randomMachineName();
     $value = $this->randomMachineName();
 
@@ -394,6 +430,9 @@ class CacheCollectorTest extends UnitTestCase {
    * Tests a clear of the cache collector.
    */
   public function testUpdateCacheClear(): void {
+    $this->setUpMockCacheBackend();
+    $cacheTagsInvalidator = $this->createMock(CacheTagsInvalidatorInterface::class);
+
     $key = $this->randomMachineName();
     $value = $this->randomMachineName();
 
@@ -409,7 +448,7 @@ class CacheCollectorTest extends UnitTestCase {
     $this->cacheBackend->expects($this->once())
       ->method('delete')
       ->with($this->cid);
-    $this->cacheTagsInvalidator->expects($this->never())
+    $cacheTagsInvalidator->expects($this->never())
       ->method('invalidateTags');
     $this->collector->clear();
     $this->assertEquals($value, $this->collector->get($key));
@@ -420,6 +459,10 @@ class CacheCollectorTest extends UnitTestCase {
    * Tests a clear of the cache collector using tags.
    */
   public function testUpdateCacheClearTags(): void {
+    $this->setUpMockCacheBackend();
+    $cacheTagsInvalidator = $this->createMock(CacheTagsInvalidatorInterface::class);
+    $this->getContainerWithCacheTagsInvalidator($cacheTagsInvalidator);
+
     $key = $this->randomMachineName();
     $value = $this->randomMachineName();
     $tags = [$this->randomMachineName()];
@@ -436,7 +479,7 @@ class CacheCollectorTest extends UnitTestCase {
     // Clear the collected cache using the tags, should call it again.
     $this->cacheBackend->expects($this->never())
       ->method('delete');
-    $this->cacheTagsInvalidator->expects($this->once())
+    $cacheTagsInvalidator->expects($this->once())
       ->method('invalidateTags')
       ->with($tags);
     $this->collector->clear();

@@ -8,12 +8,13 @@ use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Cache\Context\CacheContextInterface;
 use Drupal\Core\Cache\Context\CacheContextsManager;
 use Drupal\Core\Cache\Context\CalculatedCacheContextInterface;
+use Drupal\Core\DependencyInjection\Container as DrupalContainer;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\DependencyInjection\Container;
 
 // cspell:ignore cnenzrgre
@@ -29,10 +30,8 @@ class CacheContextsManagerTest extends UnitTestCase {
    */
   #[DataProvider('providerTestOptimizeTokens')]
   public function testOptimizeTokens(array $context_tokens, array $optimized_context_tokens): void {
-    $container = $this->getMockBuilder('Drupal\Core\DependencyInjection\Container')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $container->expects($this->any())
+    $container = $this->createStub(DrupalContainer::class);
+    $container
       ->method('get')
       ->willReturnMap([
         [
@@ -180,11 +179,9 @@ class CacheContextsManagerTest extends UnitTestCase {
     return ['foo', 'baz'];
   }
 
-  protected function getMockContainer(): MockObject {
-    $container = $this->getMockBuilder('Drupal\Core\DependencyInjection\Container')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $container->expects($this->any())
+  protected function getMockContainer(): Stub {
+    $container = $this->createStub(DrupalContainer::class);
+    $container
       ->method('get')
       ->willReturnMap([
         [

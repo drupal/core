@@ -6,6 +6,7 @@ namespace Drupal\Tests\Core\Cache;
 
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Cache\Context\CacheContextsManager;
 use Drupal\Tests\Core\Render\TestCacheableDependency;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -32,9 +33,7 @@ class CacheableMetadataTest extends UnitTestCase {
    */
   #[DataProvider('providerTestMerge')]
   public function testMerge(CacheableMetadata $a, CacheableMetadata $b, CacheableMetadata $expected): void {
-    $cache_contexts_manager = $this->getMockBuilder('Drupal\Core\Cache\Context\CacheContextsManager')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $cache_contexts_manager = $this->createStub(CacheContextsManager::class);
     $cache_contexts_manager->method('assertValidTokens')->willReturn(TRUE);
 
     $container = new ContainerBuilder();
@@ -56,9 +55,7 @@ class CacheableMetadataTest extends UnitTestCase {
    */
   #[DataProvider('providerTestMerge')]
   public function testAddCacheableDependency(CacheableMetadata $a, CacheableMetadata $b, CacheableMetadata $expected): void {
-    $cache_contexts_manager = $this->getMockBuilder('Drupal\Core\Cache\Context\CacheContextsManager')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $cache_contexts_manager = $this->createStub(CacheContextsManager::class);
     $cache_contexts_manager->method('assertValidTokens')->willReturn(TRUE);
     $container = new ContainerBuilder();
     $container->set('cache_contexts_manager', $cache_contexts_manager);
