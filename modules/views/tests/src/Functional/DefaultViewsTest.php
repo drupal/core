@@ -34,7 +34,6 @@ class DefaultViewsTest extends ViewTestBase {
   protected static $modules = [
     'views',
     'node',
-    'search',
     'comment',
     'taxonomy',
     'block',

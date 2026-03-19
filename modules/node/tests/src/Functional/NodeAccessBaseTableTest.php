@@ -30,7 +30,6 @@ class NodeAccessBaseTableTest extends NodeTestBase {
     'node_access_test',
     'views',
     'taxonomy',
-    'search',
   ];
 
   /**
@@ -210,7 +209,6 @@ class NodeAccessBaseTableTest extends NodeTestBase {
       'access content',
       'create article content',
       'node test view',
-      'search content',
     ]);
     $this->drupalLogin($access_user);
 
