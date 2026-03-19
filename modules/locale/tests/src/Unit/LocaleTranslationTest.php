@@ -12,7 +12,7 @@ use Drupal\locale\StringStorageInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -23,24 +23,24 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class LocaleTranslationTest extends UnitTestCase {
 
   /**
-   * A mocked storage to use when instantiating LocaleTranslation objects.
+   * A stub storage to use when instantiating LocaleTranslation objects.
    */
-  protected StringStorageInterface&MockObject $storage;
+  protected StringStorageInterface&Stub $storage;
 
   /**
-   * A mocked lock to use when instantiating LocaleTranslation objects.
+   * A stub lock to use when instantiating LocaleTranslation objects.
    */
-  protected LockBackendInterface&MockObject $lock;
+  protected LockBackendInterface&Stub $lock;
 
   /**
-   * A mocked cache to use when instantiating LocaleTranslation objects.
+   * A stub cache to use when instantiating LocaleTranslation objects.
    */
-  protected CacheBackendInterface&MockObject $cache;
+  protected CacheBackendInterface&Stub $cache;
 
   /**
-   * A mocked language manager built from LanguageManagerInterface.
+   * A stub language manager built from LanguageManagerInterface.
    */
-  protected LanguageManagerInterface&MockObject $languageManager;
+  protected LanguageManagerInterface&Stub $languageManager;
 
   /**
    * The request stack.
@@ -55,10 +55,10 @@ class LocaleTranslationTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->storage = $this->createMock('Drupal\locale\StringStorageInterface');
-    $this->cache = $this->createMock('Drupal\Core\Cache\CacheBackendInterface');
-    $this->lock = $this->createMock('Drupal\Core\Lock\LockBackendInterface');
-    $this->languageManager = $this->createMock('Drupal\Core\Language\LanguageManagerInterface');
+    $this->storage = $this->createStub(StringStorageInterface::class);
+    $this->cache = $this->createStub(CacheBackendInterface::class);
+    $this->lock = $this->createStub(LockBackendInterface::class);
+    $this->languageManager = $this->createStub(LanguageManagerInterface::class);
     $this->requestStack = new RequestStack();
   }
 

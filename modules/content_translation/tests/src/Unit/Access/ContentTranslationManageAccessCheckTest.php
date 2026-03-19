@@ -7,9 +7,11 @@ namespace Drupal\Tests\content_translation\Unit\Access;
 use Drupal\content_translation\Access\ContentTranslationManageAccessCheck;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\Context\CacheContextsManager;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\Language;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Tests\Core\Entity\ContentEntityBaseMockableClass;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -27,7 +29,7 @@ class ContentTranslationManageAccessCheckTest extends UnitTestCase {
   /**
    * The cache contexts manager.
    *
-   * @var \Drupal\Core\Cache\Context\CacheContextsManager|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Cache\Context\CacheContextsManager|\PHPUnit\Framework\MockObject\Stub
    */
   protected $cacheContextsManager;
 
@@ -37,9 +39,7 @@ class ContentTranslationManageAccessCheckTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->cacheContextsManager = $this->getMockBuilder('Drupal\Core\Cache\Context\CacheContextsManager')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $this->cacheContextsManager = $this->createStub(CacheContextsManager::class);
     $this->cacheContextsManager->method('assertValidTokens')->willReturn(TRUE);
 
     $container = new ContainerBuilder();
@@ -74,7 +74,7 @@ class ContentTranslationManageAccessCheckTest extends UnitTestCase {
     $language_manager->expects($this->once())
       ->method('getLanguages')
       ->willReturn([$source => [], $target => []]);
-    $language_manager->expects($this->any())
+    $language_manager
       ->method('getLanguage')
       ->willReturnMap([
         [$source, new Language(['id' => $source])],
@@ -117,7 +117,7 @@ class ContentTranslationManageAccessCheckTest extends UnitTestCase {
       ->willReturn($entity);
 
     // Set the mock account.
-    $account = $this->createMock('Drupal\Core\Session\AccountInterface');
+    $account = $this->createStub(AccountInterface::class);
 
     // The access check under test.
     $check = new ContentTranslationManageAccessCheck($entity_type_manager, $language_manager);

@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Drupal\Tests\config_translation\Unit;
 
 use Drupal\config_translation\ConfigMapperManager;
+use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\Schema\Mapping;
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\TypedData\DataDefinition;
@@ -51,15 +54,12 @@ class ConfigMapperManagerTest extends UnitTestCase {
     $this->typedConfigManager = $this->getMockBuilder('Drupal\Core\Config\TypedConfigManagerInterface')
       ->getMock();
 
-    $module_handler = $this->createMock('Drupal\Core\Extension\ModuleHandlerInterface');
-    $theme_handler = $this->createMock('Drupal\Core\Extension\ThemeHandlerInterface');
-
     $this->configMapperManager = new ConfigMapperManager(
-      $this->createMock('Drupal\Core\Cache\CacheBackendInterface'),
+      $this->createStub(CacheBackendInterface::class),
       $language_manager,
-      $module_handler,
+      $this->createStub(ModuleHandlerInterface::class),
       $this->typedConfigManager,
-      $theme_handler
+      $this->createStub(ThemeHandlerInterface::class)
     );
   }
 

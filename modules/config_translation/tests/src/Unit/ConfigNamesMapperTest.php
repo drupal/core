@@ -4,16 +4,23 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\config_translation\Unit;
 
+use Drupal\config_translation\ConfigMapperManagerInterface;
 use Drupal\config_translation\ConfigNamesMapper;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Language\Language;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Routing\RouteMatch;
+use Drupal\Core\Routing\RouteProviderInterface;
+use Drupal\Core\Routing\UrlGeneratorInterface;
 use Drupal\Core\Url;
+use Drupal\locale\LocaleConfigManager;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Routing\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Tests the functionality provided by the configuration names mapper.
@@ -40,21 +47,21 @@ class ConfigNamesMapperTest extends UnitTestCase {
   /**
    * The locale configuration manager.
    *
-   * @var \Drupal\locale\LocaleConfigManager|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\locale\LocaleConfigManager|\PHPUnit\Framework\MockObject\Stub
    */
   protected $localeConfigManager;
 
   /**
    * The typed configuration manager.
    *
-   * @var \Drupal\Core\Config\TypedConfigManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Config\TypedConfigManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $typedConfigManager;
 
   /**
    * The configuration mapper manager.
    *
-   * @var \Drupal\config_translation\ConfigMapperManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\config_translation\ConfigMapperManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $configMapperManager;
 
@@ -68,7 +75,7 @@ class ConfigNamesMapperTest extends UnitTestCase {
   /**
    * The route provider used for testing.
    *
-   * @var \Drupal\Core\Routing\RouteProviderInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Routing\RouteProviderInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $routeProvider;
 
@@ -80,26 +87,12 @@ class ConfigNamesMapperTest extends UnitTestCase {
   protected $urlGenerator;
 
   /**
-   * The mocked language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $languageManager;
-
-  /**
-   * The mocked event dispatcher.
-   *
-   * @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $eventDispatcher;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
 
-    $this->routeProvider = $this->createMock('Drupal\Core\Routing\RouteProviderInterface');
+    $this->routeProvider = $this->createStub(RouteProviderInterface::class);
 
     $this->pluginDefinition = [
       'class' => '\Drupal\config_translation\ConfigNamesMapper',
@@ -109,30 +102,18 @@ class ConfigNamesMapperTest extends UnitTestCase {
       'weight' => 42,
     ];
 
-    $this->typedConfigManager = $this->createMock('Drupal\Core\Config\TypedConfigManagerInterface');
+    $this->typedConfigManager = $this->createStub(TypedConfigManagerInterface::class);
 
-    $this->localeConfigManager = $this->getMockBuilder('Drupal\locale\LocaleConfigManager')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $this->localeConfigManager = $this->createStub(LocaleConfigManager::class);
 
-    $this->configMapperManager = $this->createMock('Drupal\config_translation\ConfigMapperManagerInterface');
-
-    $this->urlGenerator = $this->createMock('Drupal\Core\Routing\UrlGeneratorInterface');
-    $container = new ContainerBuilder();
-    $container->set('url_generator', $this->urlGenerator);
-    \Drupal::setContainer($container);
+    $this->configMapperManager = $this->createStub(ConfigMapperManagerInterface::class);
 
     $this->baseRoute = new Route('/admin/config/system/site-information');
 
     $this->routeProvider
-      ->expects($this->any())
       ->method('getRouteByName')
       ->with('system.site_information_settings')
       ->willReturn($this->baseRoute);
-
-    $this->languageManager = $this->createMock('Drupal\Core\Language\LanguageManagerInterface');
-
-    $this->eventDispatcher = $this->createMock('Symfony\Contracts\EventDispatcher\EventDispatcherInterface');
 
     $this->configNamesMapper = new TestConfigNamesMapper(
       'system.site_information_settings',
@@ -143,9 +124,19 @@ class ConfigNamesMapperTest extends UnitTestCase {
       $this->configMapperManager,
       $this->routeProvider,
       $this->getStringTranslationStub(),
-      $this->languageManager,
-      $this->eventDispatcher
+      $this->createStub(LanguageManagerInterface::class),
+      $this->createStub(EventDispatcherInterface::class)
     );
+  }
+
+  /**
+   * Builds the service container.
+   */
+  protected function buildContainer(): void {
+    $this->urlGenerator = $this->createMock(UrlGeneratorInterface::class);
+    $container = new ContainerBuilder();
+    $container->set('url_generator', $this->urlGenerator);
+    \Drupal::setContainer($container);
   }
 
   /**
@@ -184,6 +175,7 @@ class ConfigNamesMapperTest extends UnitTestCase {
    * Tests ConfigNamesMapper::getBasePath().
    */
   public function testGetBasePath(): void {
+    $this->buildContainer();
     $this->urlGenerator->expects($this->once())
       ->method('getPathFromRoute')
       ->with('system.site_information_settings', [])
@@ -230,6 +222,7 @@ class ConfigNamesMapperTest extends UnitTestCase {
    * Tests ConfigNamesMapper::getOverviewPath().
    */
   public function testGetOverviewPath(): void {
+    $this->buildContainer();
     $this->urlGenerator->expects($this->once())
       ->method('getPathFromRoute')
       ->with('config_translation.item.overview.system.site_information_settings', [])
@@ -501,7 +494,6 @@ class ConfigNamesMapperTest extends UnitTestCase {
       $map[] = [$config_name, $mock_return_values[$i]];
     }
     $this->typedConfigManager
-      ->expects($this->any())
       ->method('hasConfigSchema')
       ->willReturnMap($map);
 
@@ -547,7 +539,6 @@ class ConfigNamesMapperTest extends UnitTestCase {
       $map[] = isset($mock_return_values[$i]) ? [$config_name, $mock_return_values[$i]] : [];
     }
     $this->configMapperManager
-      ->expects($this->any())
       ->method('hasTranslatable')
       ->willReturnMap($map);
 
@@ -597,7 +588,6 @@ class ConfigNamesMapperTest extends UnitTestCase {
       $map[] = [$config_name, $language->getId(), $mock_return_values[$i]];
     }
     $this->localeConfigManager
-      ->expects($this->any())
       ->method('hasTranslation')
       ->willReturnMap($map);
 
