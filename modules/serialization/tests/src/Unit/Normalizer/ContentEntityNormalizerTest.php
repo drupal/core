@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\serialization\Unit\Normalizer;
 
+use Drupal\Core\Config\Entity\ConfigEntityInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityTypeRepositoryInterface;
@@ -17,6 +19,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Prophecy\Argument;
 use Symfony\Component\Serializer\Serializer;
 
@@ -47,9 +50,9 @@ class ContentEntityNormalizerTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $entity_field_manager = $this->createMock(EntityFieldManagerInterface::class);
-    $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
-    $entity_type_repository = $this->createMock(EntityTypeRepositoryInterface::class);
+    $entity_field_manager = $this->createStub(EntityFieldManagerInterface::class);
+    $entity_type_manager = $this->createStub(EntityTypeManagerInterface::class);
+    $entity_type_repository = $this->createStub(EntityTypeRepositoryInterface::class);
 
     $this->contentEntityNormalizer = new ContentEntityNormalizer($entity_type_manager, $entity_type_repository, $entity_field_manager);
 
@@ -61,8 +64,8 @@ class ContentEntityNormalizerTest extends UnitTestCase {
    * Tests supports normalization.
    */
   public function testSupportsNormalization(): void {
-    $content_mock = $this->createMock('Drupal\Core\Entity\ContentEntityInterface');
-    $config_mock = $this->createMock('Drupal\Core\Config\Entity\ConfigEntityInterface');
+    $content_mock = $this->createStub(ContentEntityInterface::class);
+    $config_mock = $this->createStub(ConfigEntityInterface::class);
     $this->assertTrue($this->contentEntityNormalizer->supportsNormalization($content_mock));
     $this->assertFalse($this->contentEntityNormalizer->supportsNormalization($config_mock));
   }
@@ -80,7 +83,7 @@ class ContentEntityNormalizerTest extends UnitTestCase {
       'field_accessible_internal' => $this->createMockFieldListItem(TRUE, TRUE),
       'field_non-accessible_internal' => $this->createMockFieldListItem(FALSE, TRUE),
     ];
-    $content_entity_mock = $this->createMockForContentEntity($definitions);
+    $content_entity_mock = $this->createStubForContentEntity($definitions);
 
     $normalized = $this->contentEntityNormalizer->normalize($content_entity_mock, 'test_format');
 
@@ -95,7 +98,7 @@ class ContentEntityNormalizerTest extends UnitTestCase {
    * Tests the normalize() method with account context passed.
    */
   public function testNormalizeWithAccountContext(): void {
-    $mock_account = $this->createMock('Drupal\Core\Session\AccountInterface');
+    $mock_account = $this->createStub(AccountInterface::class);
 
     $context = [
       'account' => $mock_account,
@@ -110,7 +113,7 @@ class ContentEntityNormalizerTest extends UnitTestCase {
       'field_1' => $this->createMockFieldListItem(TRUE, FALSE, $mock_account),
       'field_2' => $this->createMockFieldListItem(FALSE, FALSE, $mock_account),
     ];
-    $content_entity_mock = $this->createMockForContentEntity($definitions);
+    $content_entity_mock = $this->createStubForContentEntity($definitions);
 
     $normalized = $this->contentEntityNormalizer->normalize($content_entity_mock, 'test_format', $context);
 
@@ -120,24 +123,21 @@ class ContentEntityNormalizerTest extends UnitTestCase {
   }
 
   /**
-   * Creates a mock content entity.
+   * Creates a stub content entity.
    *
    * @param array $definitions
    *   The properties the will be returned.
    *
-   * @return \PHPUnit\Framework\MockObject\MockObject
-   *   The mock content entity.
+   * @return \PHPUnit\Framework\MockObject\Stub
+   *   The stub content entity.
    */
-  public function createMockForContentEntity($definitions) {
-    $content_entity_mock = $this->getMockBuilder(ContentEntityBaseMockableClass::class)
-      ->disableOriginalConstructor()
-      ->onlyMethods(['getTypedData'])
-      ->getMock();
+  protected function createStubForContentEntity(array $definitions): Stub {
+    $content_entity_mock = $this->createStub(ContentEntityBaseMockableClass::class);
     $typed_data = $this->prophesize(ComplexDataInterface::class);
     $typed_data->getProperties(TRUE)
       ->willReturn($definitions)
       ->shouldBeCalled();
-    $content_entity_mock->expects($this->any())
+    $content_entity_mock
       ->method('getTypedData')
       ->willReturn($typed_data->reveal());
 

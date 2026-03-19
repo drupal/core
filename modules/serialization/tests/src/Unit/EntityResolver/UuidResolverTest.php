@@ -9,6 +9,7 @@ use Drupal\serialization\EntityResolver\UuidResolver;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Tests Drupal\serialization\EntityResolver\UuidResolver.
@@ -49,7 +50,7 @@ class UuidResolverTest extends UnitTestCase {
     $this->entityRepository->expects($this->never())
       ->method('loadEntityByUuid');
 
-    $normalizer = $this->createMock('Symfony\Component\Serializer\Normalizer\NormalizerInterface');
+    $normalizer = $this->createStub(NormalizerInterface::class);
     $this->assertNull($this->resolver->resolve($normalizer, [], 'test_type'));
   }
 

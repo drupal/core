@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityTypeRepositoryInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\serialization\Normalizer\EntityNormalizer;
 use Drupal\Tests\Core\Entity\ContentEntityBaseMockableClass;
 use Drupal\Tests\UnitTestCase;
@@ -40,7 +41,7 @@ class EntityNormalizerTest extends UnitTestCase {
   /**
    * The mock entity type repository.
    *
-   * @var \Drupal\Core\Entity\EntityTypeRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Entity\EntityTypeRepositoryInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $entityTypeRepository;
 
@@ -66,7 +67,7 @@ class EntityNormalizerTest extends UnitTestCase {
 
     $this->entityFieldManager = $this->createMock(EntityFieldManagerInterface::class);
     $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
-    $this->entityTypeRepository = $this->createMock(EntityTypeRepositoryInterface::class);
+    $this->entityTypeRepository = $this->createStub(EntityTypeRepositoryInterface::class);
 
     $this->entityNormalizer = new EntityNormalizer(
       $this->entityTypeManager,
@@ -79,8 +80,15 @@ class EntityNormalizerTest extends UnitTestCase {
    * Tests the normalize() method.
    */
   public function testNormalize(): void {
-    $list_item_1 = $this->createMock('Drupal\Core\TypedData\TypedDataInterface');
-    $list_item_2 = $this->createMock('Drupal\Core\TypedData\TypedDataInterface');
+    $this->entityFieldManager->expects($this->never())
+      ->method('getBaseFieldDefinitions');
+    $this->entityTypeManager->expects($this->never())
+      ->method('getDefinition');
+    $this->entityTypeManager->expects($this->never())
+      ->method('getStorage');
+
+    $list_item_1 = $this->createStub(TypedDataInterface::class);
+    $list_item_2 = $this->createStub(TypedDataInterface::class);
 
     $definitions = [
       'field_1' => $list_item_1,
@@ -108,6 +116,13 @@ class EntityNormalizerTest extends UnitTestCase {
    * Tests the denormalize() method with no entity type provided in context.
    */
   public function testDenormalizeWithNoEntityType(): void {
+    $this->entityFieldManager->expects($this->never())
+      ->method('getBaseFieldDefinitions');
+    $this->entityTypeManager->expects($this->once())
+      ->method('getDefinition');
+    $this->entityTypeManager->expects($this->never())
+      ->method('getStorage');
+
     $this->expectException(UnexpectedValueException::class);
     $this->entityNormalizer->denormalize([], ContentEntityBaseMockableClass::class);
   }
@@ -183,8 +198,8 @@ class EntityNormalizerTest extends UnitTestCase {
       ->method('getQuery')
       ->willReturn($entity_query_mock);
 
-    $key_1 = $this->createMock(FieldItemListInterface::class);
-    $key_2 = $this->createMock(FieldItemListInterface::class);
+    $key_1 = $this->createStub(FieldItemListInterface::class);
+    $key_2 = $this->createStub(FieldItemListInterface::class);
 
     $entity = $this->createMock(ContentEntityBaseMockableClass::class);
     $entity->expects($this->exactly(2))
@@ -333,8 +348,8 @@ class EntityNormalizerTest extends UnitTestCase {
       ->with('test')
       ->willReturn($entity_type);
 
-    $key_1 = $this->createMock(FieldItemListInterface::class);
-    $key_2 = $this->createMock(FieldItemListInterface::class);
+    $key_1 = $this->createStub(FieldItemListInterface::class);
+    $key_2 = $this->createStub(FieldItemListInterface::class);
 
     $entity = $this->createMock(ContentEntityBaseMockableClass::class);
     $entity->expects($this->exactly(2))
@@ -400,7 +415,7 @@ class EntityNormalizerTest extends UnitTestCase {
     $storage->expects($this->once())
       ->method('create')
       ->with($test_data)
-      ->willReturn($this->createMock(ContentEntityBaseMockableClass::class));
+      ->willReturn($this->createStub(ContentEntityBaseMockableClass::class));
 
     $this->entityTypeManager->expects($this->once())
       ->method('getStorage')

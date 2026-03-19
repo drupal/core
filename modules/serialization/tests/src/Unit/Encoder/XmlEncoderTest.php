@@ -41,11 +41,9 @@ class XmlEncoderTest extends UnitTestCase {
   protected $testArray = ['test' => 'test'];
 
   /**
-   * {@inheritdoc}
+   * Initializes the encoder and baseEncoder properties.
    */
-  protected function setUp(): void {
-    parent::setUp();
-
+  protected function setUpEncoder(): void {
     $this->baseEncoder = $this->createMock(BaseXmlEncoder::class);
     $this->encoder = new XmlEncoder();
     $this->encoder->setBaseEncoder($this->baseEncoder);
@@ -55,22 +53,25 @@ class XmlEncoderTest extends UnitTestCase {
    * Tests the supportsEncoding() method.
    */
   public function testSupportsEncoding(): void {
-    $this->assertTrue($this->encoder->supportsEncoding('xml'));
-    $this->assertFalse($this->encoder->supportsEncoding('json'));
+    $encoder = new XmlEncoder();
+    $this->assertTrue($encoder->supportsEncoding('xml'));
+    $this->assertFalse($encoder->supportsEncoding('json'));
   }
 
   /**
    * Tests the supportsDecoding() method.
    */
   public function testSupportsDecoding(): void {
-    $this->assertTrue($this->encoder->supportsDecoding('xml'));
-    $this->assertFalse($this->encoder->supportsDecoding('json'));
+    $encoder = new XmlEncoder();
+    $this->assertTrue($encoder->supportsDecoding('xml'));
+    $this->assertFalse($encoder->supportsDecoding('json'));
   }
 
   /**
    * Tests the encode() method.
    */
   public function testEncode(): void {
+    $this->setUpEncoder();
     $this->baseEncoder->expects($this->once())
       ->method('encode')
       ->with($this->testArray, 'test', [])
@@ -83,6 +84,7 @@ class XmlEncoderTest extends UnitTestCase {
    * Tests the decode() method.
    */
   public function testDecode(): void {
+    $this->setUpEncoder();
     $this->baseEncoder->expects($this->once())
       ->method('decode')
       ->with('test', 'test', [])
