@@ -42121,12 +42121,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/DrupalTestBrowser.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\UnitTestCase\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 9,
-	'path' => __DIR__ . '/tests/Drupal/Tests/UnitTestCase.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Usage of deprecated trait Drupal\\\\TestTools\\\\Extension\\\\DeprecationBridge\\\\ExpectDeprecationTrait in class Drupal\\\\Tests\\\\UnitTestCase\\:
 in drupal\\:11\\.4\\.0 and is removed from drupal\\:12\\.0\\.0\\. Use
   \\$this\\-\\>expectUserDeprecationMessage\\(\\) or

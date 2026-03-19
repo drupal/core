@@ -7,6 +7,10 @@ namespace Drupal\Tests;
 use Drupal\Component\FileCache\FileCacheFactory;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
+use Drupal\Core\Config\Config;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\ImmutableConfig;
+use Drupal\Core\DependencyInjection\ClassResolverInterface;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\StringTranslation\PluralTranslatableMarkup;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
@@ -89,8 +93,8 @@ abstract class UnitTestCase extends TestCase {
    *   configuration object names and whose values are key => value arrays for
    *   the configuration object in question. Defaults to an empty array.
    *
-   * @return \PHPUnit\Framework\MockObject\MockObject|\Drupal\Core\Config\ConfigFactoryInterface
-   *   A mock configuration factory object.
+   * @return \Drupal\Core\Config\ConfigFactoryInterface|\PHPUnit\Framework\MockObject\Stub
+   *   A stub configuration factory object.
    */
   public function getConfigFactoryStub(array $configs = []) {
     $config_get_map = [];
@@ -115,29 +119,25 @@ abstract class UnitTestCase extends TestCase {
         return $key_exists ? $value : NULL;
       };
 
-      $immutable_config_object = $this->getMockBuilder('Drupal\Core\Config\ImmutableConfig')
-        ->disableOriginalConstructor()
-        ->getMock();
-      $immutable_config_object->expects($this->any())
+      $immutable_config_object = $this->createStub(ImmutableConfig::class);
+      $immutable_config_object
         ->method('get')
         ->willReturnCallback($config_get);
       $config_get_map[] = [$config_name, $immutable_config_object];
 
-      $mutable_config_object = $this->getMockBuilder('Drupal\Core\Config\Config')
-        ->disableOriginalConstructor()
-        ->getMock();
-      $mutable_config_object->expects($this->any())
+      $mutable_config_object = $this->createStub(Config::class);
+      $mutable_config_object
         ->method('get')
         ->willReturnCallback($config_get);
       $config_editable_map[] = [$config_name, $mutable_config_object];
     }
     // Construct a config factory with the array of configuration object stubs
     // as its return map.
-    $config_factory = $this->createMock('Drupal\Core\Config\ConfigFactoryInterface');
-    $config_factory->expects($this->any())
+    $config_factory = $this->createStub(ConfigFactoryInterface::class);
+    $config_factory
       ->method('get')
       ->willReturnMap($config_get_map);
-    $config_factory->expects($this->any())
+    $config_factory
       ->method('getEditable')
       ->willReturnMap($config_editable_map);
     return $config_factory;
@@ -146,23 +146,23 @@ abstract class UnitTestCase extends TestCase {
   /**
    * Returns a stub translation manager that just returns the passed string.
    *
-   * @return \PHPUnit\Framework\MockObject\MockObject|\Drupal\Core\StringTranslation\TranslationInterface
-   *   A mock translation object.
+   * @return \Drupal\Core\StringTranslation\TranslationInterface|\PHPUnit\Framework\MockObject\Stub
+   *   A stub translation object.
    */
   public function getStringTranslationStub() {
-    $translation = $this->createMock('Drupal\Core\StringTranslation\TranslationInterface');
-    $translation->expects($this->any())
+    $translation = $this->createStub('Drupal\Core\StringTranslation\TranslationInterface');
+    $translation
       ->method('translate')
       ->willReturnCallback(function ($string, array $args = [], array $options = []) use ($translation): TranslatableMarkup {
         // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
         return new TranslatableMarkup($string, $args, $options, $translation);
       });
-    $translation->expects($this->any())
+    $translation
       ->method('translateString')
       ->willReturnCallback(function (TranslatableMarkup $wrapper) {
         return $wrapper->getUntranslatedString();
       });
-    $translation->expects($this->any())
+    $translation
       ->method('formatPlural')
       ->willReturnCallback(function ($count, $singular, $plural, array $args = [], array $options = []) use ($translation): PluralTranslatableMarkup {
         $wrapper = new PluralTranslatableMarkup($count, $singular, $plural, $args, $options, $translation);
@@ -182,7 +182,7 @@ abstract class UnitTestCase extends TestCase {
    */
   protected function getContainerWithCacheTagsInvalidator(CacheTagsInvalidatorInterface $cache_tags_validator) {
     $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-    $container->expects($this->any())
+    $container->expects($this->atLeastOnce())
       ->method('get')
       ->with('cache_tags.invalidator')
       ->willReturn($cache_tags_validator);
@@ -198,8 +198,8 @@ abstract class UnitTestCase extends TestCase {
    *   The class resolver stub.
    */
   protected function getClassResolverStub() {
-    $class_resolver = $this->createMock('Drupal\Core\DependencyInjection\ClassResolverInterface');
-    $class_resolver->expects($this->any())
+    $class_resolver = $this->createStub(ClassResolverInterface::class);
+    $class_resolver
       ->method('getInstanceFromDefinition')
       ->willReturnCallback(function ($class) {
         if (is_subclass_of($class, 'Drupal\Core\DependencyInjection\ContainerInjectionInterface')) {

@@ -70,7 +70,6 @@ class ViewsDataTest extends UnitTestCase {
 
     $this->cacheTagsInvalidator = $this->createMock('Drupal\Core\Cache\CacheTagsInvalidatorInterface');
     $this->cacheBackend = $this->createMock('Drupal\Core\Cache\CacheBackendInterface');
-    $this->getContainerWithCacheTagsInvalidator($this->cacheTagsInvalidator);
 
     $this->moduleHandler = $this->createMock('Drupal\Core\Extension\ModuleHandlerInterface');
     $this->languageManager = $this->createMock('Drupal\Core\Language\LanguageManagerInterface');
@@ -208,6 +207,7 @@ class ViewsDataTest extends UnitTestCase {
    * Tests the cache of the full and single table data.
    */
   public function testFullAndTableGetCache(): void {
+    $this->getContainerWithCacheTagsInvalidator($this->cacheTagsInvalidator);
     $expected_views_data = $this->viewsDataWithProvider();
     $table_name = 'views_test_data';
     $table_name_2 = 'views_test_data_2';
@@ -777,6 +777,7 @@ class ViewsDataTest extends UnitTestCase {
    * data can be reloaded on the next request.
    */
   public function testClearResetsFullyLoaded(): void {
+    $this->getContainerWithCacheTagsInvalidator($this->cacheTagsInvalidator);
     $expected_views_data = $this->viewsDataWithProvider();
 
     $this->setupMockedModuleHandler();
