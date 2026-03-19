@@ -14096,12 +14096,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/field/tests/src/Kernel/FieldKernelTestBase.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\field\\\\Unit\\\\FieldConfigEntityUnitTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 13,
-	'path' => __DIR__ . '/modules/field/tests/src/Unit/FieldConfigEntityUnitTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\field\\\\Unit\\\\DependencyFieldItem\\:\\:calculateDependencies\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -14112,18 +14106,6 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/field/tests/src/Unit/FieldConfigEntityUnitTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\field\\\\Unit\\\\FieldStorageConfigAccessControlHandlerTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 12,
-	'path' => __DIR__ . '/modules/field/tests/src/Unit/FieldStorageConfigAccessControlHandlerTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\field\\\\Unit\\\\FieldStorageConfigEntityUnitTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 6,
-	'path' => __DIR__ . '/modules/field/tests/src/Unit/FieldStorageConfigEntityUnitTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\field\\\\Unit\\\\TestFieldType\\:\\:calculateStorageDependencies\\(\\) has no return type specified\\.$#',
