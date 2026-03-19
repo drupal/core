@@ -22,6 +22,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -40,72 +41,58 @@ final class CronSuspendQueueDelayTest extends UnitTestCase {
   protected $cronConstructorArguments;
 
   /**
-   * A worker for testing.
-   *
-   * @var \Drupal\Core\Queue\QueueWorkerInterface|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $workerA;
-
-  /**
-   * A worker for testing.
-   *
-   * @var \Drupal\Core\Queue\QueueWorkerInterface|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $workerB;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
-    $lock = $this->createMock(LockBackendInterface::class);
-    $lock->expects($this->any())
+    $lock = $this->createStub(LockBackendInterface::class);
+    $lock
       ->method('acquire')
       ->willReturn(TRUE);
     $this->cronConstructorArguments = [
-      'moduleHandler' => $this->createMock(ModuleHandlerInterface::class),
+      'moduleHandler' => $this->createStub(ModuleHandlerInterface::class),
       'lock' => $lock,
-      'queueFactory' => $this->createMock(QueueFactory::class),
-      'state' => $this->createMock(StateInterface::class),
-      'accountSwitcher' => $this->createMock(AccountSwitcherInterface::class),
-      'logger' => $this->createMock(LoggerInterface::class),
+      'queueFactory' => $this->createStub(QueueFactory::class),
+      'state' => $this->createStub(StateInterface::class),
+      'accountSwitcher' => $this->createStub(AccountSwitcherInterface::class),
+      'logger' => $this->createStub(LoggerInterface::class),
       'queueManager' => $this->createMock(QueueWorkerManagerInterface::class),
-      'time' => $this->createMock(TimeInterface::class),
+      'time' => $this->createStub(TimeInterface::class),
       'queue_config' => [],
     ];
 
     // Capture error logs.
     $config = $this->createMock(ImmutableConfig::class);
-    $config->expects($this->any())
+    $config
       ->method('get')
       ->with('logging')
       ->willReturn(0);
     $configFactory = $this->createMock(ConfigFactoryInterface::class);
-    $configFactory->expects($this->any())
+    $configFactory
       ->method('get')
       ->with('system.cron')
       ->willReturn($config);
     $container = new ContainerBuilder();
     $container->set('config.factory', $configFactory);
     \Drupal::setContainer($container);
+  }
 
-    $this->workerA = $this->createMock(QueueWorkerInterface::class);
-    $this->workerA->expects($this->any())
+  /**
+   * Initializes a queue worker mock object.
+   *
+   * @return \Drupal\Core\Queue\QueueWorkerInterface&\PHPUnit\Framework\MockObject\MockObject
+   *   The mocked queue worker.
+   */
+  protected function setUpWorker(): QueueWorkerInterface&MockObject {
+    $worker = $this->createMock(QueueWorkerInterface::class);
+    $worker
       ->method('getPluginDefinition')
       ->willReturn([
         'cron' => [
           'time' => 300,
         ],
       ]);
-
-    $this->workerB = $this->createMock(QueueWorkerInterface::class);
-    $this->workerB->expects($this->any())
-      ->method('getPluginDefinition')
-      ->willReturn([
-        'cron' => [
-          'time' => 300,
-        ],
-      ]);
+    return $worker;
   }
 
   /**
@@ -126,8 +113,10 @@ final class CronSuspendQueueDelayTest extends UnitTestCase {
    *    - no items remaining, quits.
    */
   public function testSuspendQueue(): void {
+    // Override the queue factory so we can set expectations.
+    $queueFactory = $this->createMock(QueueFactory::class);
+    $this->cronConstructorArguments['queueFactory'] = $queueFactory;
     [
-      'queueFactory' => $queueFactory,
       'queueManager' => $queueManager,
       'time' => $time,
     ] = $this->cronConstructorArguments;
@@ -186,25 +175,27 @@ final class CronSuspendQueueDelayTest extends UnitTestCase {
         FALSE,
       );
 
-    $queueManager->expects($this->any())
+    $workerA = $this->setUpWorker();
+    $workerB = $this->setUpWorker();
+    $queueManager
       ->method('createInstance')
       ->willReturnMap([
-        ['test_worker_a', [], $this->workerA],
-        ['test_worker_b', [], $this->workerB],
+        ['test_worker_a', [], $workerA],
+        ['test_worker_b', [], $workerB],
       ]);
 
-    $this->workerA->expects($this->exactly(2))
+    $workerA->expects($this->exactly(2))
       ->method('processItem')
       ->with($this->anything())
       ->willReturnOnConsecutiveCalls(
         $this->throwException(new SuspendQueueException('', 0, NULL, 2.0)),
         $this->throwException(new SuspendQueueException('', 0, NULL, 3.0))
       );
-    $this->workerB->expects($this->once())
+    $workerB->expects($this->once())
       ->method('processItem')
       ->with('test_data_b1');
 
-    $time->expects($this->any())
+    $time
       ->method('getCurrentTime')
       ->willReturn(60);
 
@@ -230,8 +221,10 @@ final class CronSuspendQueueDelayTest extends UnitTestCase {
     $this->cronConstructorArguments['queue_config'] = [
       'suspendMaximumWait' => $threshold,
     ];
+    // Override the queue factory so we can set expectations.
+    $queueFactory = $this->createMock(QueueFactory::class);
+    $this->cronConstructorArguments['queueFactory'] = $queueFactory;
     [
-      'queueFactory' => $queueFactory,
       'queueManager' => $queueManager,
     ] = $this->cronConstructorArguments;
 
@@ -265,12 +258,13 @@ final class CronSuspendQueueDelayTest extends UnitTestCase {
         FALSE,
       );
 
+    $worker = $this->setUpWorker();
     $queueManager->expects($this->exactly(1))
       ->method('createInstance')
       ->with('test_worker')
-      ->willReturn($this->workerA);
+      ->willReturn($worker);
 
-    $this->workerA->expects($this->once())
+    $worker->expects($this->once())
       ->method('processItem')
       ->with($this->anything())
       ->willReturnOnConsecutiveCalls(
@@ -307,8 +301,11 @@ final class CronSuspendQueueDelayTest extends UnitTestCase {
    * If multiple queues are delayed, they must execute in order of time.
    */
   public function testSuspendQueueOrder(): void {
+    // Override the queue factory so we can set expectations.
+    $queueFactory = $this->createMock(QueueFactory::class);
+    $this->cronConstructorArguments['queueFactory'] = $queueFactory;
+
     [
-      'queueFactory' => $queueFactory,
       'queueManager' => $queueManager,
       'time' => $time,
     ] = $this->cronConstructorArguments;
@@ -318,7 +315,7 @@ final class CronSuspendQueueDelayTest extends UnitTestCase {
       ->setConstructorArgs($this->cronConstructorArguments)
       ->getMock();
 
-    $cron->expects($this->any())
+    $cron
       ->method('usleep');
 
     $queueManager->expects($this->once())
@@ -342,10 +339,10 @@ final class CronSuspendQueueDelayTest extends UnitTestCase {
         ],
       ]);
 
-    $queueA = $this->createMock(QueueInterface::class);
-    $queueB = $this->createMock(QueueInterface::class);
-    $queueC = $this->createMock(QueueInterface::class);
-    $queueD = $this->createMock(QueueInterface::class);
+    $queueA = $this->createStub(QueueInterface::class);
+    $queueB = $this->createStub(QueueInterface::class);
+    $queueC = $this->createStub(QueueInterface::class);
+    $queueD = $this->createStub(QueueInterface::class);
     $queueFactory->expects($this->exactly(4))
       ->method('get')
       ->willReturnMap([
@@ -355,41 +352,43 @@ final class CronSuspendQueueDelayTest extends UnitTestCase {
         ['test_worker_d', FALSE, $queueD],
       ]);
 
-    $queueA->expects($this->any())
+    $queueA
       ->method('claimItem')
       ->willReturnOnConsecutiveCalls(
         (object) ['data' => 'test_data_from_queue_a'],
         FALSE,
       );
-    $queueB->expects($this->any())
+    $queueB
       ->method('claimItem')
       ->willReturnOnConsecutiveCalls(
         (object) ['data' => 'test_data_from_queue_b'],
         (object) ['data' => 'test_data_from_queue_b'],
         FALSE,
       );
-    $queueC->expects($this->any())
+    $queueC
       ->method('claimItem')
       ->willReturnOnConsecutiveCalls(
         (object) ['data' => 'test_data_from_queue_c'],
         (object) ['data' => 'test_data_from_queue_c'],
         FALSE,
       );
-    $queueD->expects($this->any())
+    $queueD
       ->method('claimItem')
       ->willReturnOnConsecutiveCalls(
         (object) ['data' => 'test_data_from_queue_d'],
         FALSE,
       );
 
+    $worker = $this->setUpWorker();
+
     // Recycle the same worker for all queues to test order sanely:
-    $queueManager->expects($this->any())
+    $queueManager
       ->method('createInstance')
       ->willReturnMap([
-        ['test_worker_a', [], $this->workerA],
-        ['test_worker_b', [], $this->workerA],
-        ['test_worker_c', [], $this->workerA],
-        ['test_worker_d', [], $this->workerA],
+        ['test_worker_a', [], $worker],
+        ['test_worker_b', [], $worker],
+        ['test_worker_c', [], $worker],
+        ['test_worker_d', [], $worker],
       ]);
 
     $queues = [
@@ -403,7 +402,7 @@ final class CronSuspendQueueDelayTest extends UnitTestCase {
       // Queue B is executed again, after queue C since its delay was longer.
       'test_data_from_queue_b',
     ];
-    $this->workerA->expects($this->exactly(count($queues)))
+    $worker->expects($this->exactly(count($queues)))
       ->method('processItem')
       ->with($this->callback(function ($queue) use (&$queues): bool {
         return array_shift($queues) === $queue;
@@ -418,12 +417,12 @@ final class CronSuspendQueueDelayTest extends UnitTestCase {
       );
 
     $currentTime = 60;
-    $time->expects($this->any())
+    $time
       ->method('getCurrentTime')
       ->willReturnCallback(function () use (&$currentTime): int {
         return (int) $currentTime;
       });
-    $time->expects($this->any())
+    $time
       ->method('getCurrentMicroTime')
       ->willReturnCallback(function () use (&$currentTime): float {
         return (float) $currentTime;

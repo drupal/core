@@ -6,6 +6,8 @@ namespace Drupal\Tests\Core\Block;
 
 use Drupal\block_test\Plugin\Block\TestBlockInstantiation;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Transliteration\PhpTransliteration;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -31,11 +33,7 @@ class BlockBaseTest extends UnitTestCase {
    */
   #[DataProvider('providerTestGetMachineNameSuggestion')]
   public function testGetMachineNameSuggestion(string $label, string $expected): void {
-    $module_handler = $this->createMock('Drupal\Core\Extension\ModuleHandlerInterface');
-    $transliteration = $this->getMockBuilder('Drupal\Core\Transliteration\PhpTransliteration')
-      ->setConstructorArgs([NULL, $module_handler])
-      ->onlyMethods(['readLanguageOverrides'])
-      ->getMock();
+    $transliteration = new PhpTransliteration(NULL, $this->createStub(ModuleHandlerInterface::class));
 
     $config = [];
     $definition = [

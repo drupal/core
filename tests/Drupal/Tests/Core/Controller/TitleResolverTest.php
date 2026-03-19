@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Controller;
 
+use Drupal\Core\Controller\ControllerResolverInterface;
 use Drupal\Core\Controller\TitleResolver;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 use Symfony\Component\Routing\Route;
 
 /**
@@ -24,21 +27,21 @@ class TitleResolverTest extends UnitTestCase {
   /**
    * The mocked controller resolver.
    *
-   * @var \Drupal\Core\Controller\ControllerResolverInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Controller\ControllerResolverInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $controllerResolver;
 
   /**
    * The mocked translation manager.
    *
-   * @var \Drupal\Core\StringTranslation\TranslationInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\StringTranslation\TranslationInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $translationManager;
 
   /**
    * The mocked argument resolver.
    *
-   * @var \Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $argumentResolver;
 
@@ -55,9 +58,9 @@ class TitleResolverTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->controllerResolver = $this->createMock('\Drupal\Core\Controller\ControllerResolverInterface');
-    $this->translationManager = $this->createMock('\Drupal\Core\StringTranslation\TranslationInterface');
-    $this->argumentResolver = $this->createMock('\Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface');
+    $this->controllerResolver = $this->createStub(ControllerResolverInterface::class);
+    $this->translationManager = $this->createStub(TranslationInterface::class);
+    $this->argumentResolver = $this->createStub(ArgumentResolverInterface::class);
 
     $this->titleResolver = new TitleResolver($this->controllerResolver, $this->translationManager, $this->argumentResolver);
   }
@@ -249,15 +252,20 @@ class TitleResolverTest extends UnitTestCase {
       '_title_callback' => 'Drupal\Tests\Core\Controller\TitleCallback::example',
     ]);
 
+    // Override the controller resolver and argument resolver to set
+    // expectations.
     $callable = [new TitleCallback(), 'example'];
-    $this->controllerResolver->expects($this->once())
+    $controllerResolver = $this->createMock(ControllerResolverInterface::class);
+    $controllerResolver->expects($this->once())
       ->method('getControllerFromDefinition')
       ->with('Drupal\Tests\Core\Controller\TitleCallback::example')
       ->willReturn($callable);
-    $this->argumentResolver->expects($this->once())
+    $argumentResolver = $this->createMock(ArgumentResolverInterface::class);
+    $argumentResolver->expects($this->once())
       ->method('getArguments')
       ->with($request, $callable)
       ->willReturn([$title]);
+    $this->titleResolver = new TitleResolver($controllerResolver, $this->translationManager, $argumentResolver);
 
     $this->assertEquals($expected, $this->titleResolver->getTitle($request, $route));
   }

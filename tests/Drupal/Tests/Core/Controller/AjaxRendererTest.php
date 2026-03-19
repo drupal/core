@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Controller;
 
+use Drupal\Core\Render\ElementInfoManagerInterface;
 use Drupal\Core\Render\MainContent\AjaxRenderer;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
@@ -38,17 +40,9 @@ class AjaxRendererTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $element_info_manager = $this->createMock('Drupal\Core\Render\ElementInfoManagerInterface');
-    $element_info_manager->expects($this->any())
-      ->method('getInfo')
-      ->with('ajax')
-      ->willReturn([
-        '#header' => TRUE,
-        '#commands' => [],
-        '#error' => NULL,
-      ]);
+    $element_info_manager = $this->createStub(ElementInfoManagerInterface::class);
     $renderer = $this->createMock(RendererInterface::class);
-    $renderer->expects($this->any())
+    $renderer->expects($this->atLeastOnce())
       ->method('renderRoot')
       ->willReturnCallback(function (array &$elements, $is_root_call = FALSE) {
         $elements += ['#attached' => []];
@@ -74,7 +68,7 @@ class AjaxRendererTest extends UnitTestCase {
   public function testRenderWithFragmentObject(): void {
     $main_content = ['#markup' => 'example content'];
     $request = new Request();
-    $route_match = $this->createMock('Drupal\Core\Routing\RouteMatchInterface');
+    $route_match = $this->createStub(RouteMatchInterface::class);
     /** @var \Drupal\Core\Ajax\AjaxResponse $result */
     $result = $this->ajaxRenderer->renderResponse($main_content, $request, $route_match);
 

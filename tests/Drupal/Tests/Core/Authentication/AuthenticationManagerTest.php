@@ -31,7 +31,7 @@ class AuthenticationManagerTest extends UnitTestCase {
    */
   #[DataProvider('providerTestDefaultFilter')]
   public function testDefaultFilter($applies, $has_route, $auth_option, $provider_id, $global): void {
-    $auth_provider = $this->createMock('Drupal\Core\Authentication\AuthenticationProviderInterface');
+    $auth_provider = $this->createStub(AuthenticationProviderInterface::class);
     $auth_collector = new AuthenticationCollector();
     $auth_collector->addProvider($auth_provider, $provider_id, 0, $global);
     $authentication_manager = new AuthenticationManager($auth_collector);

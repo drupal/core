@@ -124,7 +124,7 @@ class StackedKernelPassTest extends UnitTestCase {
     $stacked_kernel = new Definition(StackedHttpKernel::class);
     $stacked_kernel->setPublic(TRUE);
     $this->containerBuilder->setDefinition('http_kernel', $stacked_kernel);
-    $basic_kernel = $this->createMock(HttpKernelInterface::class);
+    $basic_kernel = $this->createStub(HttpKernelInterface::class);
     $basic_definition = (new Definition($basic_kernel::class))
       ->setPublic(TRUE);
     $this->containerBuilder->setDefinition('http_kernel.basic', $basic_definition);
@@ -162,7 +162,7 @@ class StackedKernelPassTest extends UnitTestCase {
     $stacked_kernel = new Definition(StackedHttpKernel::class);
     $stacked_kernel->setPublic(TRUE);
     $this->containerBuilder->setDefinition('http_kernel', $stacked_kernel);
-    $basic_kernel = $this->createMock(HttpKernelInterface::class);
+    $basic_kernel = $this->createStub(HttpKernelInterface::class);
     $basic_definition = (new Definition($basic_kernel::class))
       ->setPublic(TRUE);
     $this->containerBuilder->setDefinition('http_kernel.basic', $basic_definition);
