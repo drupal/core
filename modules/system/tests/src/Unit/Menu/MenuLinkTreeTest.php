@@ -6,9 +6,14 @@ namespace Drupal\Tests\system\Unit\Menu;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\Context\CacheContextsManager;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\Menu\MenuActiveTrailInterface;
+use Drupal\Core\Menu\MenuLinkManagerInterface;
 use Drupal\Core\Menu\MenuLinkTree;
 use Drupal\Core\Menu\MenuLinkTreeElement;
+use Drupal\Core\Menu\MenuTreeStorageInterface;
+use Drupal\Core\Routing\RouteProviderInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
 use Drupal\Core\Utility\CallableResolver;
@@ -39,16 +44,14 @@ class MenuLinkTreeTest extends UnitTestCase {
     parent::setUp();
 
     $this->menuLinkTree = new MenuLinkTree(
-      $this->createMock('\Drupal\Core\Menu\MenuTreeStorageInterface'),
-      $this->createMock('\Drupal\Core\Menu\MenuLinkManagerInterface'),
-      $this->createMock('\Drupal\Core\Routing\RouteProviderInterface'),
-      $this->createMock('\Drupal\Core\Menu\MenuActiveTrailInterface'),
-      $this->createMock(CallableResolver::class)
+      $this->createStub(MenuTreeStorageInterface::class),
+      $this->createStub(MenuLinkManagerInterface::class),
+      $this->createStub(RouteProviderInterface::class),
+      $this->createStub(MenuActiveTrailInterface::class),
+      $this->createStub(CallableResolver::class)
     );
 
-    $cache_contexts_manager = $this->getMockBuilder('Drupal\Core\Cache\Context\CacheContextsManager')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $cache_contexts_manager = $this->createStub(CacheContextsManager::class);
     $cache_contexts_manager->method('assertValidTokens')->willReturn(TRUE);
     $container = new ContainerBuilder();
     $container->set('cache_contexts_manager', $cache_contexts_manager);

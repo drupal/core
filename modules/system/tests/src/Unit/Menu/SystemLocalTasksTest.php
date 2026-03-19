@@ -39,12 +39,12 @@ class SystemLocalTasksTest extends LocalTaskIntegrationTestBase {
     $theme = new Extension($this->root, 'theme', 'core/themes/olivero', 'olivero.info.yml');
     $theme->status = 1;
     $theme->info = ['name' => 'olivero'];
-    $this->themeHandler->expects($this->any())
+    $this->themeHandler->expects($this->once())
       ->method('listInfo')
       ->willReturn([
         'olivero' => $theme,
       ]);
-    $this->themeHandler->expects($this->any())
+    $this->themeHandler->expects($this->once())
       ->method('hasUi')
       ->with('olivero')
       ->willReturn(TRUE);
@@ -56,8 +56,8 @@ class SystemLocalTasksTest extends LocalTaskIntegrationTestBase {
       ->method('hasLinkTemplate')
       ->with('version-history')
       ->willReturn(TRUE);
-    $entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
-    $entityTypeManager->expects($this->any())
+    $entityTypeManager = $this->createStub(EntityTypeManagerInterface::class);
+    $entityTypeManager
       ->method('getDefinitions')
       ->willReturn([
         'foo' => $fooEntityDefinition,

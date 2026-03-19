@@ -24,7 +24,7 @@ class BatchControllerTest extends UnitTestCase {
    * Tests title callback.
    */
   public function testBatchPageTitle(): void {
-    $batch_storage = $this->createMock(BatchStorageInterface::class);
+    $batch_storage = $this->createStub(BatchStorageInterface::class);
     $controller = new BatchController($this->root, $batch_storage);
     require_once $this->root . '/core/includes/form.inc';
     $this->assertSame('', $controller->batchPageTitle(new Request()));

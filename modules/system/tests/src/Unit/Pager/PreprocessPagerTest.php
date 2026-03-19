@@ -6,7 +6,10 @@ namespace Drupal\Tests\system\Unit\Pager;
 
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\EventSubscriber\MainContentViewSubscriber;
+use Drupal\Core\Pager\Pager;
+use Drupal\Core\Pager\PagerManager;
 use Drupal\Core\Pager\PagerPreprocess;
+use Drupal\Core\Routing\UrlGenerator;
 use Drupal\Core\Template\AttributeString;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -32,15 +35,9 @@ class PreprocessPagerTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $pager_manager = $this->getMockBuilder('Drupal\Core\Pager\PagerManager')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $pager = $this->getMockBuilder('Drupal\Core\Pager\Pager')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $url_generator = $this->getMockBuilder('Drupal\Core\Routing\UrlGenerator')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $pager_manager = $this->createStub(PagerManager::class);
+    $pager = $this->createStub(Pager::class);
+    $url_generator = $this->createStub(UrlGenerator::class);
 
     $pager->method('getTotalPages')->willReturn(3);
     $pager->method('getCurrentPage')->willReturn(1);
@@ -50,12 +47,12 @@ class PreprocessPagerTest extends UnitTestCase {
     $pager_manager->method('getPager')->willReturn($pager);
     $pager_manager->method('getUpdatedParameters')->willReturn('');
 
-    $request_stack = $this->createMock(RequestStack::class);
+    $request_stack = $this->createStub(RequestStack::class);
     $request = Request::createFromGlobals();
     $request->query->set(MainContentViewSubscriber::WRAPPER_FORMAT, 'drupal_modal');
 
     // Mocks the request stack getting the current request.
-    $request_stack->expects($this->any())
+    $request_stack
       ->method('getCurrentRequest')
       ->willReturn($request);
 
