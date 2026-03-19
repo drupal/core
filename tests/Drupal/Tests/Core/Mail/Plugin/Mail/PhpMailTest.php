@@ -90,16 +90,20 @@ class PhpMailTest extends UnitTestCase {
       ->onlyMethods(['doMail'])
       ->getMock();
 
-    $request = $this->getMockBuilder(Request::class)
-      ->disableOriginalConstructor()
-      ->getMock();
+    $request = $this->createStub(Request::class);
 
     $request->server = $this->getMockBuilder(ServerBag::class)
       ->onlyMethods(['has', 'get'])
       ->getMock();
 
-    $request->server->method('has')->willReturn(FALSE);
-    $request->server->method('get')->willReturn(FALSE);
+    $request->server
+      ->expects($this->atLeastOnce())
+      ->method('has')
+      ->willReturn(FALSE);
+    $request->server
+      ->expects($this->atLeastOnce())
+      ->method('get')
+      ->willReturn(FALSE);
 
     $reflection = new \ReflectionClass($mailer);
     $reflection_property = $reflection->getProperty('request');

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\Core\Path;
 
 use Drupal\Core\Path\PathMatcher;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -39,8 +40,7 @@ class PathMatcherTest extends UnitTestCase {
         ],
       ]
     );
-    $route_match = $this->createMock('Drupal\Core\Routing\RouteMatchInterface');
-    $this->pathMatcher = new PathMatcher($config_factory_stub, $route_match);
+    $this->pathMatcher = new PathMatcher($config_factory_stub, $this->createStub(RouteMatchInterface::class));
   }
 
   /**
@@ -65,8 +65,7 @@ class PathMatcherTest extends UnitTestCase {
         ],
       ]
     );
-    $route_match = $this->createMock('Drupal\Core\Routing\RouteMatchInterface');
-    $pathMatcher = new PathMatcher($config_factory_stub, $route_match);
+    $pathMatcher = new PathMatcher($config_factory_stub, $this->createStub(RouteMatchInterface::class));
     $this->assertTrue($pathMatcher->matchPath('/foo', '/*'));
   }
 

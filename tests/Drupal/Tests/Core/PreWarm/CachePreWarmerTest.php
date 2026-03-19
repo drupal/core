@@ -20,7 +20,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 class CachePreWarmerTest extends UnitTestCase {
 
   /**
-   * @var \Drupal\Core\DependencyInjection\ClassResolverInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\DependencyInjection\ClassResolverInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected MockObject|ClassResolverInterface $classResolver;
 
@@ -41,12 +41,12 @@ class CachePreWarmerTest extends UnitTestCase {
   }
 
   protected function setupCacheServices(): void {
-    $this->classResolver = $this->createMock(ClassResolverInterface::class);
+    $this->classResolver = $this->createStub(ClassResolverInterface::class);
     $this->warmedMap = new \SplObjectStorage();
 
     for ($i = 0; $i < 4; $i++) {
       $serviceId = 'service' . $i;
-      $serviceMock = $this->createMock(PrewarmableInterface::class);
+      $serviceMock = $this->createStub(PrewarmableInterface::class);
       $this->warmedMap[$serviceMock] = 0;
 
       $serviceMock->method('preWarm')

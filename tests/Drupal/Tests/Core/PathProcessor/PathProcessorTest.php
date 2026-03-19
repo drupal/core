@@ -9,7 +9,11 @@ use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\PathProcessor\PathProcessorDecode;
 use Drupal\Core\PathProcessor\PathProcessorFront;
 use Drupal\Core\PathProcessor\PathProcessorManager;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\language\ConfigurableLanguageManagerInterface;
+use Drupal\language\EventSubscriber\ConfigSubscriber;
 use Drupal\language\HttpKernel\PathProcessorLanguage;
+use Drupal\language\LanguageNegotiatorInterface;
 use Drupal\language\Plugin\LanguageNegotiation\LanguageNegotiationUrl;
 use Drupal\path_alias\AliasManager;
 use Drupal\path_alias\PathProcessor\AliasPathProcessor;
@@ -33,7 +37,7 @@ class PathProcessorTest extends UnitTestCase {
   /**
    * The language manager stub used to construct a PathProcessorLanguage object.
    *
-   * @var \Drupal\language\ConfigurableLanguageManagerInterface|\PHPUnit\Framework\MockObject\MockBuilder
+   * @var \Drupal\language\ConfigurableLanguageManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $languageManager;
 
@@ -52,15 +56,14 @@ class PathProcessorTest extends UnitTestCase {
     $this->languages = $languages;
 
     // Create a language manager stub.
-    $language_manager = $this->getMockBuilder('Drupal\language\ConfigurableLanguageManagerInterface')
-      ->getMock();
-    $language_manager->expects($this->any())
+    $language_manager = $this->createStub(ConfigurableLanguageManagerInterface::class);
+    $language_manager
       ->method('getCurrentLanguage')
       ->willReturn($languages['en']);
-    $language_manager->expects($this->any())
+    $language_manager
       ->method('getLanguages')
       ->willReturn($this->languages);
-    $language_manager->expects($this->any())
+    $language_manager
       ->method('getLanguageTypes')
       ->willReturn([LanguageInterface::TYPE_INTERFACE]);
 
@@ -73,9 +76,7 @@ class PathProcessorTest extends UnitTestCase {
   public function testProcessInbound(): void {
 
     // Create an alias manager stub.
-    $alias_manager = $this->getMockBuilder(AliasManager::class)
-      ->disableOriginalConstructor()
-      ->getMock();
+    $alias_manager = $this->createStub(AliasManager::class);
 
     $system_path_map = [
       // Set up one proper alias that can be resolved to a system path.
@@ -86,7 +87,7 @@ class PathProcessorTest extends UnitTestCase {
       ['/user/login', NULL, '/user/login'],
     ];
 
-    $alias_manager->expects($this->any())
+    $alias_manager
       ->method('getPathByAlias')
       ->willReturnMap($system_path_map);
 
@@ -107,9 +108,8 @@ class PathProcessorTest extends UnitTestCase {
     );
 
     // Create a language negotiator stub.
-    $negotiator = $this->getMockBuilder('Drupal\language\LanguageNegotiatorInterface')
-      ->getMock();
-    $negotiator->expects($this->any())
+    $negotiator = $this->createStub(LanguageNegotiatorInterface::class);
+    $negotiator
       ->method('getNegotiationMethods')
       ->willReturn([
         LanguageNegotiationUrl::METHOD_ID => [
@@ -120,18 +120,15 @@ class PathProcessorTest extends UnitTestCase {
     $method = new LanguageNegotiationUrl();
     $method->setConfig($config_factory_stub);
     $method->setLanguageManager($this->languageManager);
-    $negotiator->expects($this->any())
+    $negotiator
       ->method('getNegotiationMethodInstance')
       ->willReturn($method);
 
     // Create a user stub.
-    $current_user = $this->getMockBuilder('Drupal\Core\Session\AccountInterface')
-      ->getMock();
+    $current_user = $this->createStub(AccountInterface::class);
 
     // Create a config event subscriber stub.
-    $config_subscriber = $this->getMockBuilder('Drupal\language\EventSubscriber\ConfigSubscriber')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $config_subscriber = $this->createStub(ConfigSubscriber::class);
 
     // Create the processors.
     $alias_processor = new AliasPathProcessor($alias_manager);

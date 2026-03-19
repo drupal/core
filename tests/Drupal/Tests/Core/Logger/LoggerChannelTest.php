@@ -48,21 +48,19 @@ class LoggerChannelTest extends UnitTestCase {
       ->with($this->anything(), $message, $this->callback($expected));
     $channel->addLogger($logger);
     if ($request) {
-      $request_mock = $this->getMockBuilder(Request::class)
-        ->onlyMethods(['getClientIp'])
-        ->getMock();
-      $request_mock->expects($this->any())
+      $request_mock = $this->createStub(Request::class);
+      $request_mock
         ->method('getClientIp')
         ->willReturn('127.0.0.1');
-      $request_mock->headers = $this->createMock(HeaderBag::class);
+      $request_mock->headers = $this->createStub(HeaderBag::class);
 
       $requestStack = new RequestStack();
       $requestStack->push($request_mock);
       $channel->setRequestStack($requestStack);
     }
     if ($account) {
-      $account_mock = $this->createMock(AccountInterface::class);
-      $account_mock->expects($this->any())
+      $account_mock = $this->createStub(AccountInterface::class);
+      $account_mock
         ->method('id')
         ->willReturn(1);
 
@@ -126,12 +124,11 @@ class LoggerChannelTest extends UnitTestCase {
     // Set up a request stack that has a request that will return NULL when
     // ::getClientIp() is called.
     $requestStack = new RequestStack();
-    $request_mock = $this->getMockBuilder(Request::class)
-      ->onlyMethods(['getClientIp'])
-      ->getMock();
-    $request_mock->expects($this->any())
+    $request_mock = $this->createStub(Request::class);
+    $request_mock
       ->method('getClientIp')
       ->willReturn(NULL);
+    $request_mock->headers = $this->createStub(HeaderBag::class);
     $requestStack->push($request_mock);
 
     // Set up the logger channel for testing.

@@ -50,10 +50,10 @@ class SymfonyMailerTest extends UnitTestCase {
     ];
 
     /** @var \Symfony\Component\Mailer\MailerInterface|\PHPUnit\Framework\MockObject\MockObject */
-    $mailer = $this->getMockBuilder(MailerInterface::class)->getMock();
+    $mailer = $this->createStub(MailerInterface::class);
 
     /** @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject */
-    $logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
+    $logger = $this->createStub(LoggerInterface::class);
 
     $plugin = new SymfonyMailer($logger, $mailer);
     $message = $plugin->format($message);
@@ -141,7 +141,7 @@ class SymfonyMailerTest extends UnitTestCase {
       );
 
     /** @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject */
-    $logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
+    $logger = $this->createStub(LoggerInterface::class);
 
     $plugin = new SymfonyMailer($logger, $mailer);
     $this->assertTrue($plugin->mail($message));

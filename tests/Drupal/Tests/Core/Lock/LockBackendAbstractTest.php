@@ -39,7 +39,7 @@ class LockBackendAbstractTest extends UnitTestCase {
    * Tests the wait() method when lockMayBeAvailable() returns TRUE.
    */
   public function testWaitFalse(): void {
-    $this->lock->expects($this->any())
+    $this->lock
       ->method('lockMayBeAvailable')
       ->with($this->equalTo('test_name'))
       ->willReturn(TRUE);
@@ -53,7 +53,7 @@ class LockBackendAbstractTest extends UnitTestCase {
    * Waiting could take 1 second so we need to extend the possible runtime.
    */
   public function testWaitTrue(): void {
-    $this->lock->expects($this->any())
+    $this->lock
       ->method('lockMayBeAvailable')
       ->with($this->equalTo('test_name'))
       ->willReturn(FALSE);
@@ -65,6 +65,9 @@ class LockBackendAbstractTest extends UnitTestCase {
    * Tests the getLockId() method.
    */
   public function testGetLockId(): void {
+    $this->lock->expects($this->never())
+      ->method('lockMayBeAvailable');
+
     $lock_id = $this->lock->getLockId();
     $this->assertIsString($lock_id);
     // Example lock ID would be '7213141505232b6ee2cb967.27683891'.
