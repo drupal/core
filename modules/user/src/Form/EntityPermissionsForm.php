@@ -2,19 +2,15 @@
 
 namespace Drupal\user\Form;
 
-use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Config\ConfigManagerInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\user\PermissionHandlerInterface;
 use Drupal\user\RoleStorageInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Routing\Route;
 
 /**
  * Provides the permissions administration form for a bundle.
@@ -59,14 +55,10 @@ class EntityPermissionsForm extends UserPermissionsForm {
    *   The configuration entity manager.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
-   * @param \Drupal\Core\Extension\ModuleExtensionList|null $module_extension_list
+   * @param \Drupal\Core\Extension\ModuleExtensionList $module_extension_list
    *   The module extension list.
    */
-  public function __construct(PermissionHandlerInterface $permission_handler, RoleStorageInterface $role_storage, ModuleHandlerInterface $module_handler, ConfigManagerInterface $config_manager, EntityTypeManagerInterface $entity_type_manager, ?ModuleExtensionList $module_extension_list = NULL) {
-    if ($module_extension_list === NULL) {
-      @trigger_error('Calling ' . __METHOD__ . '() without the $module_extension_list argument is deprecated in drupal:10.3.0 and will be required in drupal:12.0.0. See https://www.drupal.org/node/3310017', E_USER_DEPRECATED);
-      $module_extension_list = \Drupal::service('extension.list.module');
-    }
+  public function __construct(PermissionHandlerInterface $permission_handler, RoleStorageInterface $role_storage, ModuleHandlerInterface $module_handler, ConfigManagerInterface $config_manager, EntityTypeManagerInterface $entity_type_manager, ModuleExtensionList $module_extension_list) {
     parent::__construct($permission_handler, $role_storage, $module_handler, $module_extension_list);
     $this->configManager = $config_manager;
     $this->entityTypeManager = $entity_type_manager;
@@ -138,55 +130,6 @@ class EntityPermissionsForm extends UserPermissionsForm {
       ->load($bundle);
 
     return parent::buildForm($form, $form_state);
-  }
-
-  /**
-   * Checks that there are permissions to be managed.
-   *
-   * @param \Symfony\Component\Routing\Route $route
-   *   The route to check against.
-   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
-   *   The parametrized route.
-   * @param string|EntityInterface $bundle
-   *   (optional) The bundle. Different entity types can have different names
-   *   for their bundle key, so if not specified on the route via a {bundle}
-   *   parameter, the access checker determines the appropriate key name, and
-   *   gets the value from the corresponding request attribute. For example,
-   *   for nodes, the bundle key is "node_type", so the value would be
-   *   available via the {node_type} parameter rather than a {bundle}
-   *   parameter.
-   *
-   * @return \Drupal\Core\Access\AccessResultInterface
-   *   The access result.
-   *
-   * @deprecated in drupal:11.1.0 and is removed from drupal:12.0.0. Use
-   * a permissions check in the route definition instead.
-   * @see https://www.drupal.org/node/3384745
-   */
-  public function access(Route $route, RouteMatchInterface $route_match, $bundle = NULL): AccessResultInterface {
-    @trigger_error(__METHOD__ . '() is deprecated in drupal:11.1.0 and is removed from drupal:12.0.0. Use a permissions check on the route definition instead. See https://www.drupal.org/node/3384745', E_USER_DEPRECATED);
-    $permission = $route->getRequirement('_permission');
-    if ($permission && !$this->currentUser()->hasPermission($permission)) {
-      return AccessResult::neutral()->cachePerPermissions();
-    }
-    // Set $this->bundle for use by ::permissionsByProvider().
-    if ($bundle instanceof EntityInterface) {
-      $this->bundle = $bundle;
-    }
-    else {
-      $bundle_entity_type = $route->getDefault('bundle_entity_type');
-      $bundle_name = is_string($bundle) ? $bundle : $route_match->getRawParameter($bundle_entity_type);
-      $this->bundle = $this->entityTypeManager
-        ->getStorage($bundle_entity_type)
-        ->load($bundle_name);
-    }
-
-    if (empty($this->bundle)) {
-      // A typo in the request path can lead to this case.
-      return AccessResult::forbidden();
-    }
-
-    return AccessResult::allowedIf((bool) $this->permissionsByProvider());
   }
 
 }

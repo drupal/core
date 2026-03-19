@@ -38,13 +38,11 @@ services:
     class: Drupal\user\EventSubscriber\UserRequestSubscriber
   theme.negotiator.admin_theme:
     class: Drupal\user\Theme\AdminNegotiator
-    arguments: ['@current_user', '@config.factory', '@router.admin_context']
     tags:
       - { name: theme_negotiator, priority: -40 }
   user.auth:
     class: Drupal\user\UserAuthentication
   Drupal\user\UserAuthenticationInterface: '@user.auth'
-  Drupal\user\UserAuthInterface: '@user.auth'
   user.permissions:
     class: Drupal\user\PermissionHandler
   Drupal\user\PermissionHandlerInterface: '@user.permissions'

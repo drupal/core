@@ -6,7 +6,6 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheableDependencyInterface;
 use Drupal\Core\DependencyInjection\DeprecatedServicePropertyTrait;
 use Drupal\Core\Extension\ModuleExtensionList;
-use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
@@ -62,7 +61,7 @@ class Permission extends AccessPluginBase implements CacheableDependencyInterfac
    *   The plugin implementation definition.
    * @param \Drupal\user\PermissionHandlerInterface $permission_handler
    *   The permission handler.
-   * @param \Drupal\Core\Extension\ModuleExtensionList|\Drupal\Core\Extension\ModuleHandlerInterface $module_extension_list
+   * @param \Drupal\Core\Extension\ModuleExtensionList $module_extension_list
    *   The module extension list.
    */
   public function __construct(
@@ -71,14 +70,10 @@ class Permission extends AccessPluginBase implements CacheableDependencyInterfac
     $plugin_definition,
     PermissionHandlerInterface $permission_handler,
     #[Autowire(service: 'extension.list.module')]
-    ModuleExtensionList|ModuleHandlerInterface $module_extension_list,
+    ModuleExtensionList $module_extension_list,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->permissionHandler = $permission_handler;
-    if ($module_extension_list instanceof ModuleHandlerInterface) {
-      @trigger_error('Calling ' . __METHOD__ . '() with the $module_extension_list argument as ModuleHandlerInterface is deprecated in drupal:10.3.0 and will be required in drupal:12.0.0. See https://www.drupal.org/node/3310017', E_USER_DEPRECATED);
-      $module_extension_list = \Drupal::service('extension.list.module');
-    }
     $this->moduleExtensionList = $module_extension_list;
   }
 

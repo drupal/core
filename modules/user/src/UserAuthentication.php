@@ -8,7 +8,7 @@ use Drupal\Core\Password\PasswordInterface;
 /**
  * Validates user authentication credentials.
  */
-class UserAuthentication implements UserAuthInterface, UserAuthenticationInterface {
+class UserAuthentication implements UserAuthenticationInterface {
 
   /**
    * The entity type manager.
@@ -35,25 +35,6 @@ class UserAuthentication implements UserAuthInterface, UserAuthenticationInterfa
   public function __construct(EntityTypeManagerInterface $entity_type_manager, PasswordInterface $password_checker) {
     $this->entityTypeManager = $entity_type_manager;
     $this->passwordChecker = $password_checker;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function authenticate($username, #[\SensitiveParameter] $password) {
-    @trigger_error(__METHOD__ . ' is deprecated in drupal:10.3.0 and will be removed from drupal:12.0.0. Implement \Drupal\user\UserAuthenticationInterface instead. See https://www.drupal.org/node/3411040');
-    $uid = FALSE;
-
-    if (!empty($username) && strlen($password) > 0) {
-      $account_search = $this->entityTypeManager->getStorage('user')->loadByProperties(['name' => $username]);
-
-      if ($account = reset($account_search)) {
-        if ($this->authenticateAccount($account, $password)) {
-          $uid = $account->id();
-        }
-      }
-    }
-    return $uid;
   }
 
   /**

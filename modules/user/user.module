@@ -11,7 +11,6 @@ use Drupal\Core\Session\AnonymousUserSession;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
 use Drupal\user\Entity\User;
-use Drupal\user\Hook\UserThemeHooks;
 use Drupal\user\UserInterface;
 
 /**
@@ -61,73 +60,6 @@ function user_load_by_name($name) {
   $users = \Drupal::entityTypeManager()->getStorage('user')
     ->loadByProperties(['name' => $name]);
   return $users ? reset($users) : FALSE;
-}
-
-/**
- * Verify the syntax of the given name.
- *
- * @param string $name
- *   The user name to validate.
- *
- * @return string|null
- *   A translated violation message if the name is invalid or NULL if the name
- *   is valid.
- *
- * @deprecated in drupal:10.3.0 and is removed from drupal:12.0.0. Use
- *   \Drupal\user\UserNameValidator::validateName() instead.
- *
- * @see https://www.drupal.org/node/3431205
- */
-function user_validate_name($name) {
-  @trigger_error(__METHOD__ . '() is deprecated in drupal:10.3.0 and is removed from drupal:12.0.0. Use \Drupal\user\UserNameValidator::validateName() instead. See https://www.drupal.org/node/3431205', E_USER_DEPRECATED);
-  $violations = \Drupal::service('user.name_validator')->validateName($name);
-  if (count($violations) > 0) {
-    return $violations[0]->getMessage();
-  }
-}
-
-/**
- * Checks for usernames blocked by user administration.
- *
- * @param string $name
- *   A string containing a name of the user.
- *
- * @return bool
- *   TRUE if the user is blocked, FALSE otherwise.
- *
- * @deprecated in drupal:11.0.0 and is removed from drupal:12.0.0. Use
- * Drupal\user\UserInterface::isBlocked() instead.
- * @see https://www.drupal.org/node/3411040
- */
-function user_is_blocked($name) {
-  @trigger_error('user_is_blocked() is deprecated in drupal:11.0.0 and is removed from drupal:12.0.0. Use \Drupal\user\UserInterface::isBlocked() instead. See https://www.drupal.org/node/3411040', E_USER_DEPRECATED);
-  return (bool) \Drupal::entityQuery('user')
-    ->accessCheck(FALSE)
-    ->condition('name', $name)
-    ->condition('status', 0)
-    ->execute();
-}
-
-/**
- * Prepares variables for username templates.
- *
- * Default template: username.html.twig.
- *
- * Modules that make any changes to variables like 'name' or 'extra' must ensure
- * that the final string is safe.
- *
- * @param array $variables
- *   An associative array containing:
- *   - account: The user account (\Drupal\Core\Session\AccountInterface).
- *
- * @deprecated in drupal:11.3.0 and is removed from drupal:12.0.0. Initial
- *    template_preprocess functions are registered directly in hook_theme().
- *
- * @see https://www.drupal.org/node/3504125
- */
-function template_preprocess_username(&$variables): void {
-  @trigger_error(__FUNCTION__ . '() is deprecated in drupal:11.3.0 and is removed from drupal:12.0.0. Initial template_preprocess functions are registered directly in hook_theme(). See https://www.drupal.org/node/3504125', E_USER_DEPRECATED);
-  \Drupal::service(UserThemeHooks::class)->preprocessUsername($variables);
 }
 
 /**
@@ -693,27 +625,4 @@ function user_logout(): void {
   // @see https://github.com/symfony/symfony/issues/12375
   \Drupal::service('session_manager')->destroy();
   $user->setAccount(new AnonymousUserSession());
-}
-
-/**
- * Prepares variables for user templates.
- *
- * Default template: user.html.twig.
- *
- * @param array $variables
- *   An associative array containing:
- *   - elements: An associative array containing the user information and any
- *     fields attached to the user. Properties used:
- *     - #user: A \Drupal\user\Entity\User object. The user account of the
- *       profile being viewed.
- *   - attributes: HTML attributes for the containing element.
- *
- * @deprecated in drupal:11.3.0 and is removed from drupal:12.0.0. Initial
- *    template_preprocess functions are registered directly in hook_theme().
- *
- * @see https://www.drupal.org/node/3504125
- */
-function template_preprocess_user(&$variables): void {
-  @trigger_error(__FUNCTION__ . '() is deprecated in drupal:11.3.0 and is removed from drupal:12.0.0. Initial template_preprocess functions are registered directly in hook_theme(). See https://www.drupal.org/node/3504125', E_USER_DEPRECATED);
-  \Drupal::service(UserThemeHooks::class)->preprocessUser($variables);
 }

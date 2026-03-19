@@ -9,7 +9,6 @@ use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Render\BareHtmlPageRendererInterface;
 use Drupal\Core\Url;
 use Drupal\user\UserAuthenticationInterface;
-use Drupal\user\UserAuthInterface;
 use Drupal\user\UserInterface;
 use Drupal\user\UserStorageInterface;
 use Drupal\user\UserFloodControlInterface;
@@ -39,7 +38,7 @@ class UserLoginForm extends FormBase implements WorkspaceSafeFormInterface {
   /**
    * The user authentication object.
    *
-   * @var \Drupal\user\UserAuthInterface|\Drupal\user\UserAuthenticationInterface
+   * @var \Drupal\user\UserAuthenticationInterface
    */
   protected $userAuth;
 
@@ -64,19 +63,16 @@ class UserLoginForm extends FormBase implements WorkspaceSafeFormInterface {
    *   The user flood control service.
    * @param \Drupal\user\UserStorageInterface $user_storage
    *   The user storage.
-   * @param \Drupal\user\UserAuthInterface|\Drupal\user\UserAuthenticationInterface $user_auth
+   * @param \Drupal\user\UserAuthenticationInterface $user_auth
    *   The user authentication object.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The renderer.
    * @param \Drupal\Core\Render\BareHtmlPageRendererInterface $bare_html_renderer
    *   The renderer.
    */
-  public function __construct(UserFloodControlInterface $user_flood_control, UserStorageInterface $user_storage, UserAuthInterface|UserAuthenticationInterface $user_auth, RendererInterface $renderer, BareHtmlPageRendererInterface $bare_html_renderer) {
+  public function __construct(UserFloodControlInterface $user_flood_control, UserStorageInterface $user_storage, UserAuthenticationInterface $user_auth, RendererInterface $renderer, BareHtmlPageRendererInterface $bare_html_renderer) {
     $this->userFloodControl = $user_flood_control;
     $this->userStorage = $user_storage;
-    if (!$user_auth instanceof UserAuthenticationInterface) {
-      @trigger_error('The $user_auth parameter not implementing UserAuthenticationInterface is deprecated in drupal:10.3.0 and will be removed in drupal:12.0.0. See https://www.drupal.org/node/3411040');
-    }
     $this->userAuth = $user_auth;
     $this->renderer = $renderer;
     $this->bareHtmlPageRenderer = $bare_html_renderer;
@@ -188,13 +184,7 @@ class UserLoginForm extends FormBase implements WorkspaceSafeFormInterface {
         $form_state->set('flood_control_triggered', 'ip');
         return;
       }
-      if ($this->userAuth instanceof UserAuthenticationInterface) {
-        $account = $this->userAuth->lookupAccount($form_state->getValue('name'));
-      }
-      else {
-        $accounts = $this->userStorage->loadByProperties(['name' => $form_state->getValue('name')]);
-        $account = reset($accounts);
-      }
+      $account = $this->userAuth->lookupAccount($form_state->getValue('name'));
       if ($account && $account->isBlocked()) {
         $form_state->setErrorByName('name', $this->t('The username %name has not been activated or is blocked.', ['%name' => $form_state->getValue('name')]));
       }
@@ -231,20 +221,7 @@ class UserLoginForm extends FormBase implements WorkspaceSafeFormInterface {
         }
         // We are not limited by flood control, so try to authenticate.
         // Store the user ID in form state as a flag for self::validateFinal().
-        if ($this->userAuth instanceof UserAuthenticationInterface) {
-          $form_state->set('uid', $this->userAuth->authenticateAccount($account, $password) ? $account->id() : FALSE);
-        }
-        // The userAuth object is decorated by an object that that has not
-        // been upgraded to the new UserAuthenticationInterface. Fallback
-        // to the authenticate() method.
-        else {
-          $uid = $this->userAuth->authenticate($form_state->getValue('name'), $password);
-          $form_state->set('uid', $uid);
-        }
-      }
-      elseif (!$this->userAuth instanceof UserAuthenticationInterface) {
-        $uid = $this->userAuth->authenticate($form_state->getValue('name'), $password);
-        $form_state->set('uid', $uid);
+        $form_state->set('uid', $this->userAuth->authenticateAccount($account, $password) ? $account->id() : FALSE);
       }
     }
   }

@@ -5,7 +5,6 @@ namespace Drupal\user\Plugin\views\filter;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\DependencyInjection\DeprecatedServicePropertyTrait;
 use Drupal\Core\Extension\ModuleExtensionList;
-use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\user\Entity\Role;
 use Drupal\user\PermissionHandlerInterface;
 use Drupal\user\RoleInterface;
@@ -50,7 +49,7 @@ class Permissions extends ManyToOne {
    *   The plugin implementation definition.
    * @param \Drupal\user\PermissionHandlerInterface $permission_handler
    *   The permission handler.
-   * @param \Drupal\Core\Extension\ModuleExtensionList|\Drupal\Core\Extension\ModuleHandlerInterface $module_extension_list
+   * @param \Drupal\Core\Extension\ModuleExtensionList $module_extension_list
    *   The module extension list.
    */
   public function __construct(
@@ -59,15 +58,11 @@ class Permissions extends ManyToOne {
     $plugin_definition,
     PermissionHandlerInterface $permission_handler,
     #[Autowire(service: 'extension.list.module')]
-    ModuleExtensionList|ModuleHandlerInterface $module_extension_list,
+    ModuleExtensionList $module_extension_list,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
     $this->permissionHandler = $permission_handler;
-    if ($module_extension_list instanceof ModuleHandlerInterface) {
-      @trigger_error('Calling ' . __METHOD__ . '() with the $module_extension_list argument as ModuleHandlerInterface is deprecated in drupal:10.3.0 and will be required in drupal:12.0.0. See https://www.drupal.org/node/3310017', E_USER_DEPRECATED);
-      $module_extension_list = \Drupal::service('extension.list.module');
-    }
     $this->moduleExtensionList = $module_extension_list;
   }
 

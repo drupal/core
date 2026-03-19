@@ -29,15 +29,11 @@ class CurrentUser extends ArgumentDefaultPluginBase implements CacheableDependen
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Session\AccountInterface|null $currentUser
+   * @param \Drupal\Core\Session\AccountInterface $currentUser
    *   The current user.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, protected ?AccountInterface $currentUser = NULL) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, protected AccountInterface $currentUser) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    if ($this->currentUser === NULL) {
-      @trigger_error('Calling ' . __CLASS__ . '::__construct() without the $currentUser argument is deprecated in drupal:11.2.0 and is required in drupal:12.0.0. See https://www.drupal.org/node/3347878', E_USER_DEPRECATED);
-      $this->currentUser = \Drupal::currentUser();
-    }
   }
 
   /**

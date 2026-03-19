@@ -4,7 +4,6 @@ namespace Drupal\user\Theme;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\DeprecatedServicePropertyTrait;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Routing\AdminContext;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -49,21 +48,13 @@ class AdminNegotiator implements ThemeNegotiatorInterface {
    *   The current user.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
-   * @param \Drupal\Core\Routing\AdminContext|EntityTypeManagerInterface $admin_context
+   * @param \Drupal\Core\Routing\AdminContext $admin_context
    *   The route admin context to determine whether the route is an admin one.
    */
-  public function __construct(AccountInterface $user, ConfigFactoryInterface $config_factory, AdminContext|EntityTypeManagerInterface $admin_context) {
+  public function __construct(AccountInterface $user, ConfigFactoryInterface $config_factory, AdminContext $admin_context) {
     $this->user = $user;
     $this->configFactory = $config_factory;
-
-    if ($admin_context instanceof EntityTypeManagerInterface) {
-      $deprecated_service_name = EntityTypeManagerInterface::class;
-      @trigger_error("Passing the $deprecated_service_name (entity_type.manager service) to " . __CLASS__ . '::_construct() is deprecated in drupal:11.2.0 and is removed in drupal:12.0.0. There is no replacement for this service, as it is not used. See https://www.drupal.org/project/drupal/issues/3501727', E_USER_DEPRECATED);
-      $this->adminContext = \Drupal::service('router.admin_context');
-    }
-    else {
-      $this->adminContext = $admin_context;
-    }
+    $this->adminContext = $admin_context;
   }
 
   /**

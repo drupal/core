@@ -10,9 +10,7 @@ use Drupal\Core\Render\Element\Email;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
-use Drupal\user\UserInterface;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
@@ -37,46 +35,6 @@ class UserValidationTest extends KernelTestBase {
     // Make sure that the default roles exist.
     $this->installConfig(['user']);
 
-  }
-
-  /**
-   * Tests user name validation.
-   */
-  #[IgnoreDeprecations]
-  public function testUsernames(): void {
-    // cSpell:disable
-    $test_cases = [
-      // '<username>' => ['<description>', 'assert<testName>'].
-      'foo'                    => ['Valid username', 'assertNull'],
-      'FOO'                    => ['Valid username', 'assertNull'],
-      'Foo O\'Bar'             => ['Valid username', 'assertNull'],
-      'foo@bar'                => ['Valid username', 'assertNull'],
-      'foo@example.com'        => ['Valid username', 'assertNull'],
-      // Invalid domains are allowed in usernames.
-      'foo@-example.com'       => ['Valid username', 'assertNull'],
-      'þòøÇßªř€'               => ['Valid username', 'assertNull'],
-      // '+' symbol is allowed.
-      'foo+bar'                => ['Valid username', 'assertNull'],
-      // runes.
-      'ᚠᛇᚻ᛫ᛒᛦᚦ'                => ['Valid UTF8 username', 'assertNull'],
-      ' foo'                   => ['Invalid username that starts with a space', 'assertNotNull'],
-      'foo '                   => ['Invalid username that ends with a space', 'assertNotNull'],
-      'foo  bar'               => ['Invalid username that contains 2 spaces \'&nbsp;&nbsp;\'', 'assertNotNull'],
-      ''                       => ['Invalid empty username', 'assertNotNull'],
-      'foo/'                   => ['Invalid username containing invalid chars', 'assertNotNull'],
-      // NULL.
-      'foo' . chr(0) . 'bar'   => ['Invalid username containing chr(0)', 'assertNotNull'],
-      // CR.
-      'foo' . chr(13) . 'bar'  => ['Invalid username containing chr(13)', 'assertNotNull'],
-      str_repeat('x', UserInterface::USERNAME_MAX_LENGTH + 1) => ['Invalid excessively long username', 'assertNotNull'],
-    ];
-    $this->expectUserDeprecationMessage('user_validate_name() is deprecated in drupal:10.3.0 and is removed from drupal:12.0.0. Use \Drupal\user\UserNameValidator::validateName() instead. See https://www.drupal.org/node/3431205');
-    // cSpell:enable
-    foreach ($test_cases as $name => $test_case) {
-      [$description, $test] = $test_case;
-      $result = user_validate_name($name);
-      $this->$test($result, $description . ' (' . $name . ')');
-    }
   }
 
   /**

@@ -14,9 +14,8 @@ use Drupal\Core\Session\SessionConfigurationInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\user\Authentication\Provider\Cookie;
 use Drupal\user\Entity\User;
-use Drupal\user\UserAuth;
+use Drupal\user\UserAuthentication;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,11 +24,11 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
- * Tests Drupal\user\UserAuth.
+ * Tests Drupal\user\UserAuthentication.
  */
-#[CoversClass(UserAuth::class)]
+#[CoversClass(UserAuthentication::class)]
 #[Group('user')]
-class UserAuthTest extends UnitTestCase {
+class UserAuthenticationTest extends UnitTestCase {
 
   /**
    * The mock user storage.
@@ -48,23 +47,23 @@ class UserAuthTest extends UnitTestCase {
   /**
    * The user auth object under test.
    *
-   * @var \Drupal\user\UserAuth
+   * @var \Drupal\user\UserAuthentication
    */
-  protected $userAuth;
+  protected UserAuthentication $userAuth;
 
   /**
    * The test username.
    *
    * @var string
    */
-  protected $username = 'test_user';
+  protected string $username = 'test_user';
 
   /**
    * The test password.
    *
    * @var string
    */
-  protected $password = 'password';
+  protected string $password = 'password';
 
   /**
    * {@inheritdoc}
@@ -83,45 +82,29 @@ class UserAuthTest extends UnitTestCase {
 
     $this->passwordService = $this->createStub(PasswordInterface::class);
 
-    $this->userAuth = new UserAuth($entity_type_manager, $this->passwordService);
+    $this->userAuth = new UserAuthentication($entity_type_manager, $this->passwordService);
   }
 
   /**
-   * Tests failing authentication with missing credential parameters.
+   * Tests lookupAccount() with a valid username.
    */
-  #[DataProvider('providerTestAuthenticateWithMissingCredentials')]
-  public function testAuthenticateWithMissingCredentials($username, $password): void {
-    $this->userStorage->expects($this->never())
-      ->method('loadByProperties');
-
-    $this->assertFalse($this->userAuth->authenticate($username, $password));
-  }
-
-  /**
-   * Data provider for testAuthenticateWithMissingCredentials().
-   *
-   * @return array
-   *   An array of test data.
-   */
-  public static function providerTestAuthenticateWithMissingCredentials() {
-    return [
-      [NULL, NULL],
-      [NULL, ''],
-      ['', NULL],
-      ['', ''],
-    ];
-  }
-
-  /**
-   * Tests the authenticate method with no account returned.
-   */
-  public function testAuthenticateWithNoAccountReturned(): void {
+  public function testLookupAccountWithValidUsername(): void {
     $this->userStorage->expects($this->once())
       ->method('loadByProperties')
       ->with(['name' => $this->username])
-      ->willReturn([]);
+      ->willReturn([$this->createStub(User::class)]);
+    $this->assertInstanceOf(User::class, $this->userAuth->lookupAccount($this->username));
+  }
 
-    $this->assertFalse($this->userAuth->authenticate($this->username, $this->password));
+  /**
+   * Tests lookupAccount() with an invalid username.
+   */
+  public function testLookupAccountWithInvalidUsername(): void {
+    $this->userStorage->expects($this->once())
+      ->method('loadByProperties')
+      ->with(['name' => 'invalidUser'])
+      ->willReturn([]);
+    $this->assertFalse($this->userAuth->lookupAccount('invalidUser'));
   }
 
   /**
@@ -137,7 +120,8 @@ class UserAuthTest extends UnitTestCase {
       ->method('check')
       ->willReturn(FALSE);
 
-    $this->assertFalse($this->userAuth->authenticate($this->username, $this->password));
+    $user = $this->userAuth->lookupAccount($this->username);
+    $this->assertFalse($this->userAuth->authenticateAccount($user, $this->password));
   }
 
   /**
@@ -145,10 +129,6 @@ class UserAuthTest extends UnitTestCase {
    */
   public function testAuthenticateWithCorrectPassword(): void {
     $testUser = $this->createPartialMock(User::class, ['id', 'getPassword']);
-    $testUser->expects($this->once())
-      ->method('id')
-      ->willReturn(1);
-
     $this->userStorage->expects($this->once())
       ->method('loadByProperties')
       ->with(['name' => $this->username])
@@ -157,8 +137,8 @@ class UserAuthTest extends UnitTestCase {
     $this->passwordService
       ->method('check')
       ->willReturn(TRUE);
-
-    $this->assertSame(1, $this->userAuth->authenticate($this->username, $this->password));
+    $user = $this->userAuth->lookupAccount($this->username);
+    $this->assertTrue($this->userAuth->authenticateAccount($user, $this->password));
   }
 
   /**
@@ -170,9 +150,6 @@ class UserAuthTest extends UnitTestCase {
    */
   public function testAuthenticateWithZeroPassword(): void {
     $testUser = $this->createPartialMock(User::class, ['id', 'getPassword']);
-    $testUser->expects($this->once())
-      ->method('id')
-      ->willReturn(2);
 
     $this->userStorage->expects($this->once())
       ->method('loadByProperties')
@@ -181,10 +158,11 @@ class UserAuthTest extends UnitTestCase {
 
     $this->passwordService
       ->method('check')
-      ->with(0, 0)
+      ->with('0', 0)
       ->willReturn(TRUE);
 
-    $this->assertSame(2, $this->userAuth->authenticate($this->username, 0));
+    $user = $this->userAuth->lookupAccount($this->username);
+    $this->assertTrue($this->userAuth->authenticateAccount($user, '0'));
   }
 
   /**
@@ -192,9 +170,7 @@ class UserAuthTest extends UnitTestCase {
    */
   public function testAuthenticateWithCorrectPasswordAndNewPasswordHash(): void {
     $testUser = $this->createPartialMock(User::class, ['id', 'setPassword', 'save', 'getPassword']);
-    $testUser->expects($this->once())
-      ->method('id')
-      ->willReturn(1);
+
     $testUser->expects($this->once())
       ->method('setPassword')
       ->with($this->password);
@@ -213,7 +189,8 @@ class UserAuthTest extends UnitTestCase {
       ->method('needsRehash')
       ->willReturn(TRUE);
 
-    $this->assertSame(1, $this->userAuth->authenticate($this->username, $this->password));
+    $user = $this->userAuth->lookupAccount($this->username);
+    $this->assertTrue($this->userAuth->authenticateAccount($user, $this->password));
   }
 
   /**
