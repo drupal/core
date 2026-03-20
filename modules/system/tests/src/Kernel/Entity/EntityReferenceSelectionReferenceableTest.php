@@ -18,7 +18,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests entity reference selection plugins.
  */
 #[Group('entity_reference')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class EntityReferenceSelectionReferenceableTest extends KernelTestBase {
 

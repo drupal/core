@@ -15,6 +15,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests the click sorting AJAX functionality of Views exposed forms.
  */
 #[Group('views')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class PaginationAJAXTest extends WebDriverTestBase {
 

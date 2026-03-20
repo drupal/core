@@ -17,6 +17,7 @@ use Psr\Log\LogLevel;
  * Tests Change Logger.
  */
 #[Group('package_manager')]
+#[Group('#slow')]
 #[CoversClass(ChangeLogger::class)]
 #[RunTestsInSeparateProcesses]
 class ChangeLoggerTest extends PackageManagerKernelTestBase {

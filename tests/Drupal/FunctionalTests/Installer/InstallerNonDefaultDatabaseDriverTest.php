@@ -14,6 +14,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests the interactive installer.
  */
 #[Group('Installer')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class InstallerNonDefaultDatabaseDriverTest extends InstallerTestBase {
 

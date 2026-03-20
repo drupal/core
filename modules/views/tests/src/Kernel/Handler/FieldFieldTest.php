@@ -25,7 +25,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * @see \Drupal\views\Plugin\views\field\EntityField
  */
 #[Group('views')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class FieldFieldTest extends ViewsKernelTestBase {
 

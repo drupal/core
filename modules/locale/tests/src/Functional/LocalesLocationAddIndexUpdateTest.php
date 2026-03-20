@@ -12,6 +12,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests Locale update functions.
  */
 #[Group('locale')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class LocalesLocationAddIndexUpdateTest extends UpdatePathTestBase {
 

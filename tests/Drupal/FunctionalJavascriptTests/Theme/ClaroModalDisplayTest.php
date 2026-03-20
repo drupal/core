@@ -16,6 +16,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests that buttons in modals are not in their button pane.
  */
 #[Group('claro')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class ClaroModalDisplayTest extends MediaLibraryTestBase {
 

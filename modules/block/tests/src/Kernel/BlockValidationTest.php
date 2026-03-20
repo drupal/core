@@ -15,7 +15,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests validation of block entities.
  */
 #[Group('block')]
-#[Group('#slow')]
 #[Group('config')]
 #[Group('Validation')]
 #[RunTestsInSeparateProcesses]

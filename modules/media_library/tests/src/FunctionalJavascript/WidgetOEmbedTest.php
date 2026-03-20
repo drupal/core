@@ -15,6 +15,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests that oEmbed media can be added in the Media library's widget.
  */
 #[Group('media_library')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class WidgetOEmbedTest extends MediaLibraryTestBase {
 

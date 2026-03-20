@@ -23,6 +23,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @internal
  */
 #[Group('package_manager')]
+#[Group('#slow')]
 #[CoversClass(GitExcluder::class)]
 #[RunTestsInSeparateProcesses]
 class GitExcluderTest extends PackageManagerKernelTestBase {

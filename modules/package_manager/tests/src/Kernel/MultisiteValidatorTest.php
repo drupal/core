@@ -20,6 +20,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * @internal
  */
 #[Group('package_manager')]
+#[Group('#slow')]
 #[CoversClass(MultisiteValidator::class)]
 #[RunTestsInSeparateProcesses]
 class MultisiteValidatorTest extends PackageManagerKernelTestBase {

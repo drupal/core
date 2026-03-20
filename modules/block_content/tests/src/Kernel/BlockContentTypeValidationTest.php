@@ -13,7 +13,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests validation of block_content_type entities.
  */
 #[Group('block_content')]
-#[Group('#slow')]
 #[Group('config')]
 #[Group('Validation')]
 #[RunTestsInSeparateProcesses]

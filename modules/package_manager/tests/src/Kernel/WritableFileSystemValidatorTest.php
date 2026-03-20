@@ -26,6 +26,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @internal
  */
 #[Group('package_manager')]
+#[Group('#slow')]
 #[CoversClass(WritableFileSystemValidator::class)]
 #[RunTestsInSeparateProcesses]
 class WritableFileSystemValidatorTest extends PackageManagerKernelTestBase {

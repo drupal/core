@@ -22,7 +22,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  */
 #[CoversClass(FieldResolver::class)]
 #[Group('jsonapi')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class FieldResolverTest extends JsonapiKernelTestBase {
 

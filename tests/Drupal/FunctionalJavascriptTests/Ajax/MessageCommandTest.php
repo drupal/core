@@ -13,6 +13,7 @@ use PHPUnit\Framework\ExpectationFailedException;
  * Tests adding messages via AJAX command.
  */
 #[Group('Ajax')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class MessageCommandTest extends WebDriverTestBase {
 

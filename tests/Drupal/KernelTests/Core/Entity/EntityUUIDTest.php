@@ -12,6 +12,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests creation, saving, and loading of entity UUIDs.
  */
 #[Group('Entity')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class EntityUUIDTest extends EntityKernelTestBase {
 

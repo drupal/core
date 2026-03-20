@@ -24,6 +24,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * @internal
  */
 #[Group('package_manager')]
+#[Group('#slow')]
 #[CoversClass(OverwriteExistingPackagesValidator::class)]
 #[RunTestsInSeparateProcesses]
 class OverwriteExistingPackagesValidatorTest extends PackageManagerKernelTestBase {

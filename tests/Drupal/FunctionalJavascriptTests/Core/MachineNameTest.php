@@ -12,6 +12,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests for the machine name field.
  */
 #[Group('field')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class MachineNameTest extends WebDriverTestBase {
 

@@ -12,6 +12,9 @@ parameters:
 
   checkInternalClassCaseSensitivity: true
 
+  parallel:
+    minimumNumberOfJobsPerProcess: 1
+
   fileExtensions:
     - sh
 

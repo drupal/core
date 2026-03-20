@@ -16,7 +16,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests Recipe Validation.
  */
 #[Group('Recipe')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class RecipeValidationTest extends KernelTestBase {
 

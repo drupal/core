@@ -14,6 +14,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Testing opening and saving block forms in the off-canvas dialog.
  */
 #[Group('settings_tray')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class SettingsTrayBlockFormTest extends SettingsTrayTestBase {
 

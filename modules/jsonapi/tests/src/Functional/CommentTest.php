@@ -26,6 +26,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * JSON:API integration test for the "Comment" content entity type.
  */
 #[Group('jsonapi')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class CommentTest extends ResourceTestBase {
 

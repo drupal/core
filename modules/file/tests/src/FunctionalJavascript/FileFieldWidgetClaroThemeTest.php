@@ -17,6 +17,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * @see _claro_preprocess_file_and_image_widget()
  */
 #[Group('file')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class FileFieldWidgetClaroThemeTest extends FileFieldWidgetTest {
 

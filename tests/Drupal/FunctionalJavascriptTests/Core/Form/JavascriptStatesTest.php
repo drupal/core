@@ -18,6 +18,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * @see Drupal\form_test\Form\JavascriptStatesForm
  */
 #[Group('javascript')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class JavascriptStatesTest extends WebDriverTestBase {
 

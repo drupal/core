@@ -13,6 +13,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Installs the config translation module on a site installed in non english.
  */
 #[Group('config_translation')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class ConfigTranslationInstallTest extends InstallerTestBase {
 

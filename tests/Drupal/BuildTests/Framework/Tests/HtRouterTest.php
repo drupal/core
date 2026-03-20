@@ -16,6 +16,7 @@ use PHPUnit\Framework\Attributes\RequiresPhpExtension;
  */
 #[CoversClass(BuildTestBase::class)]
 #[Group('Build')]
+#[Group('#slow')]
 #[RequiresPhpExtension('pdo_sqlite')]
 class HtRouterTest extends QuickStartTestBase {
 

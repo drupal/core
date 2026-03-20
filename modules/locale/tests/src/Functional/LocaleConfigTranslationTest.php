@@ -14,6 +14,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests translation of configuration strings.
  */
 #[Group('locale')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class LocaleConfigTranslationTest extends BrowserTestBase {
 

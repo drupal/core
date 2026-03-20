@@ -13,7 +13,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests validation of action entities.
  */
 #[Group('system')]
-#[Group('#slow')]
 #[Group('config')]
 #[Group('Validation')]
 #[RunTestsInSeparateProcesses]

@@ -16,6 +16,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests the file field widget, single and multi-valued, using AJAX upload.
  */
 #[Group('file')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class FileFieldWidgetTest extends WebDriverTestBase {
 

@@ -17,7 +17,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests validation of Layout Builder's entity_view_display entities.
  */
 #[Group('layout_builder')]
-#[Group('#slow')]
 #[Group('config')]
 #[Group('Validation')]
 #[RunTestsInSeparateProcesses]

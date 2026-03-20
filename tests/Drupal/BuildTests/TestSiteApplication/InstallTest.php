@@ -15,6 +15,7 @@ use Symfony\Component\Process\PhpExecutableFinder;
  */
 #[Group('Build')]
 #[Group('TestSiteApplication')]
+#[Group('#slow')]
 class InstallTest extends BuildTestBase {
 
   public function testInstall(): void {

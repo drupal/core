@@ -13,6 +13,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests the Media Translation UI.
  */
 #[Group('media')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class MediaTranslationUITest extends ContentTranslationUITestBase {
 

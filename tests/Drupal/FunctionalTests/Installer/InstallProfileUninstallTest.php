@@ -12,6 +12,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests that an install profile can be uninstalled.
  */
 #[Group('Extension')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class InstallProfileUninstallTest extends BrowserTestBase {
 

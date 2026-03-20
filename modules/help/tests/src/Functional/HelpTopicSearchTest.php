@@ -15,6 +15,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Verifies help topic search.
  */
 #[Group('help')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class HelpTopicSearchTest extends HelpTopicTranslatedTestBase {
 

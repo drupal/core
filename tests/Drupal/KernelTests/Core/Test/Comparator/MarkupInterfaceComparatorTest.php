@@ -23,7 +23,6 @@ use SebastianBergmann\Comparator\Factory;
  */
 #[CoversClass(MarkupInterfaceComparator::class)]
 #[Group('Test')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class MarkupInterfaceComparatorTest extends KernelTestBase {
 

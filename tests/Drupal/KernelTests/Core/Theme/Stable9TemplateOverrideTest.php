@@ -14,7 +14,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests Stable 9's template overrides.
  */
 #[Group('Theme')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class Stable9TemplateOverrideTest extends KernelTestBase {
 

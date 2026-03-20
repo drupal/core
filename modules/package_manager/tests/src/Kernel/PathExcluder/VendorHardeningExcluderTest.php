@@ -17,6 +17,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * @internal
  */
 #[Group('package_manager')]
+#[Group('#slow')]
 #[CoversClass(VendorHardeningExcluder::class)]
 #[RunTestsInSeparateProcesses]
 class VendorHardeningExcluderTest extends PackageManagerKernelTestBase {

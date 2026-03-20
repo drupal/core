@@ -18,7 +18,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * applied.
  */
 #[Group('Asset')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class ResolvedLibraryDefinitionsFilesMatchTest extends KernelTestBase {
 

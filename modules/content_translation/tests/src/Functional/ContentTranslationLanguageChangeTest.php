@@ -16,6 +16,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests the content translation language that is set.
  */
 #[Group('content_translation')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class ContentTranslationLanguageChangeTest extends NodeTestBase {
 

@@ -21,6 +21,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests schema API for the MySQL driver.
  */
 #[Group('Database')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 #[CoversClass(Schema::class)]
 class SchemaTest extends DriverSpecificSchemaTestBase {

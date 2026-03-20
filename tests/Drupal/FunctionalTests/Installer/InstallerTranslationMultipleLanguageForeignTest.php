@@ -11,6 +11,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests translation files for multiple languages get imported during install.
  */
 #[Group('Installer')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class InstallerTranslationMultipleLanguageForeignTest extends InstallerTranslationMultipleLanguageTest {
 

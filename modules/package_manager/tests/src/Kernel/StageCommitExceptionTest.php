@@ -27,6 +27,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  */
 #[CoversClass(SandboxManagerBase::class)]
 #[Group('package_manager')]
+#[Group('#slow')]
 #[CoversClass(PackageManagerUninstallValidator::class)]
 #[RunTestsInSeparateProcesses]
 class StageCommitExceptionTest extends PackageManagerKernelTestBase {

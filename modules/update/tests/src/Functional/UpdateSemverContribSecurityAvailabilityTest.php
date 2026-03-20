@@ -11,6 +11,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests Update Status with a security update available for a contrib project.
  */
 #[Group('update')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class UpdateSemverContribSecurityAvailabilityTest extends UpdateSemverContribTestBase {
 

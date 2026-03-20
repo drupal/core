@@ -22,7 +22,6 @@ use Prophecy\Prophet;
  */
 #[CoversClass(WorkflowAccessControlHandler::class)]
 #[Group('workflows')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class WorkflowAccessControlHandlerTest extends KernelTestBase {
 
