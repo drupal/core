@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\Core\Language;
 
 use Drupal\Core\Language\Language;
+use Drupal\Core\Language\LanguageDefault;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -68,9 +69,9 @@ class LanguageUnitTest extends UnitTestCase {
    * Tests is default.
    */
   public function testIsDefault(): void {
-    $language_default = $this->getMockBuilder('Drupal\Core\Language\LanguageDefault')->disableOriginalConstructor()->getMock();
+    $language_default = $this->createStub(LanguageDefault::class);
     $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-    $container->expects($this->any())
+    $container
       ->method('get')
       ->with('language.default')
       ->willReturn($language_default);
@@ -79,7 +80,7 @@ class LanguageUnitTest extends UnitTestCase {
     $language = new Language(['id' => $this->randomMachineName(2)]);
     // Set up the LanguageDefault to return different default languages on
     // consecutive calls.
-    $language_default->expects($this->any())
+    $language_default
       ->method('get')
       ->willReturnOnConsecutiveCalls(
         $language,

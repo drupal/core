@@ -7,6 +7,7 @@ namespace Drupal\Tests\Core\Http;
 use Drupal\Core\Http\ClientFactory;
 use Drupal\Core\Site\Settings;
 use Drupal\Tests\UnitTestCase;
+use GuzzleHttp\HandlerStack;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -31,10 +32,7 @@ class ClientFactoryTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $stack = $this->getMockBuilder('GuzzleHttp\HandlerStack')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->factory = new ClientFactory($stack);
+    $this->factory = new ClientFactory($this->createStub(HandlerStack::class));
   }
 
   /**

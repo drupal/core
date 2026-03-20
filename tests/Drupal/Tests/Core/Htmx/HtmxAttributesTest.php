@@ -37,11 +37,8 @@ class HtmxAttributesTest extends UnitTestCase {
     $this->htmx = new Htmx();
     $generated = new GeneratedUrl();
     $generated->setGeneratedUrl('https://www.example.test/common-test/destination');
-    $this->url = $this->getMockBuilder(Url::class)
-      ->disableOriginalConstructor()
-      ->onlyMethods(['toString'])
-      ->getMock();
-    $this->url->expects($this->any())
+    $this->url = $this->createStub(Url::class);
+    $this->url
       ->method('toString')
       ->willReturn($generated);
   }

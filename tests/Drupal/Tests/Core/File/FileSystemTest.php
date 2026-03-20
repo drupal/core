@@ -37,7 +37,7 @@ class FileSystemTest extends UnitTestCase {
   /**
    * The stream wrapper manager.
    *
-   * @var \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface
    */
   protected $streamWrapperManager;
 
@@ -48,7 +48,7 @@ class FileSystemTest extends UnitTestCase {
     parent::setUp();
 
     $settings = new Settings([]);
-    $this->streamWrapperManager = $this->createMock(StreamWrapperManagerInterface::class);
+    $this->streamWrapperManager = $this->createStub(StreamWrapperManagerInterface::class);
     $this->fileSystem = new FileSystem($this->streamWrapperManager, $settings);
   }
 
@@ -92,6 +92,9 @@ class FileSystemTest extends UnitTestCase {
    * Tests unlink.
    */
   public function testUnlink(): void {
+    $this->streamWrapperManager = $this->createMock(StreamWrapperManagerInterface::class);
+    $this->fileSystem = new FileSystem($this->streamWrapperManager, new Settings([]));
+
     vfsStream::setup('dir');
     vfsStream::create(['test.txt' => 'asdf']);
     $uri = 'vfs://dir/test.txt';

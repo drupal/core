@@ -29,7 +29,7 @@ class ThemeHandlerTest extends UnitTestCase {
   /**
    * The theme listing service.
    *
-   * @var \Drupal\Core\Extension\ThemeExtensionList|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Extension\ThemeExtensionList|\PHPUnit\Framework\MockObject\Stub
    */
   protected $themeList;
 
@@ -55,16 +55,14 @@ class ThemeHandlerTest extends UnitTestCase {
         ],
       ],
     ]);
-    $this->themeList = $this->getMockBuilder(ThemeExtensionList::class)
-      ->disableOriginalConstructor()
-      ->getMock();
+    $this->themeList = $this->createStub(ThemeExtensionList::class);
     $this->themeHandler = new StubThemeHandler($this->root, $this->configFactory, $this->themeList);
 
     $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-    $container->expects($this->any())
+    $container
       ->method('get')
       ->with('class_loader')
-      ->willReturn($this->createMock(ClassLoader::class));
+      ->willReturn($this->createStub(ClassLoader::class));
     \Drupal::setContainer($container);
   }
 

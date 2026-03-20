@@ -62,8 +62,8 @@ class ModuleHandlerTest extends UnitTestCase {
     $keyvalue = new KeyValueMemoryFactory();
     $cache = new NullBackend('bootstrap');
     $keyvalue->get('hook_data')->set('hook_list', $implementations);
-    $callableResolver = $this->createMock(CallableResolver::class);
-    $callableResolver->expects($this->any())
+    $callableResolver = $this->createStub(CallableResolver::class);
+    $callableResolver
       ->method('getCallableFromDefinition')
       ->willReturnCallback(fn ($definition) => $definition);
     $moduleHandler = new ModuleHandler($this->root, $moduleList, $keyvalue, $callableResolver, $cache);
@@ -122,7 +122,7 @@ class ModuleHandlerTest extends UnitTestCase {
           ],
         ],
         new KeyValueMemoryFactory(),
-        $this->createMock(CallableResolver::class),
+        $this->createStub(CallableResolver::class),
         new NullBackend('bootstrap'),
       ])
       ->onlyMethods(['load'])
@@ -182,7 +182,7 @@ class ModuleHandlerTest extends UnitTestCase {
         $this->root,
         [],
         new KeyValueMemoryFactory(),
-        $this->createMock(CallableResolver::class),
+        $this->createStub(CallableResolver::class),
         new NullBackend('bootstrap'),
       ])
       ->onlyMethods(['resetImplementations'])
@@ -228,7 +228,7 @@ class ModuleHandlerTest extends UnitTestCase {
           ],
         ],
         new KeyValueMemoryFactory(),
-        $this->createMock(CallableResolver::class),
+        $this->createStub(CallableResolver::class),
         new NullBackend('bootstrap'),
       ])
       ->onlyMethods(['loadInclude'])

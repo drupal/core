@@ -41207,18 +41207,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/EventSubscriber/RedirectResponseSubscriberTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Extension\\\\ModuleHandlerTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Extension/ModuleHandlerTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Extension\\\\ThemeHandlerTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Extension/ThemeHandlerTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Function module_handler_test_hook\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -41241,12 +41229,6 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Extension/modules/module_handler_test_all2/module_handler_test_all2.module',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Field\\\\FieldItemListTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 23,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Field/FieldItemListTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Form\\\\ConfigFormBaseTraitTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
@@ -41387,18 +41369,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Form/FormValidatorTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Htmx\\\\HtmxAttributesTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Htmx/HtmxAttributesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Htmx\\\\HtmxHeadersTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Htmx/HtmxHeadersTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Call to deprecated method getConfig\\(\\) of class GuzzleHttp\\\\Client\\:
 Client\\:\\:getConfig will be removed in guzzlehttp/guzzle\\:8\\.0\\.$#',
 	'identifier' => 'method.deprecated',
@@ -41410,12 +41380,6 @@ $ignoreErrors[] = [
 	'identifier' => 'disallowed.method',
 	'count' => 3,
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Image/ImageTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Language\\\\LanguageUnitTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Language/LanguageUnitTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\ParamConverter\\\\EntityConverterTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
