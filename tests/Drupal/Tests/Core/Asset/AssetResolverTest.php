@@ -10,8 +10,14 @@ use Drupal\Core\Asset\AttachedAssets;
 use Drupal\Core\Asset\AttachedAssetsInterface;
 use Drupal\Core\Asset\JsCollectionGrouper;
 use Drupal\Core\Asset\LibraryDependencyResolver;
+use Drupal\Core\Asset\LibraryDiscoveryCollector;
 use Drupal\Core\Cache\MemoryBackend;
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Theme\ActiveTheme;
+use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -34,7 +40,7 @@ class AssetResolverTest extends UnitTestCase {
   /**
    * The mocked library discovery service.
    *
-   * @var \Drupal\Core\Asset\LibraryDiscoveryInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Asset\LibraryDiscoveryInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $libraryDiscovery;
 
@@ -48,21 +54,21 @@ class AssetResolverTest extends UnitTestCase {
   /**
    * The mocked module handler.
    *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $moduleHandler;
 
   /**
    * The mocked theme manager.
    *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Theme\ThemeManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $themeManager;
 
   /**
    * The mocked language manager.
    *
-   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $languageManager;
 
@@ -76,7 +82,7 @@ class AssetResolverTest extends UnitTestCase {
   /**
    * The mocked theme handler.
    *
-   * @var \Drupal\Core\Extension\ThemeHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Extension\ThemeHandlerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $themeHandler;
 
@@ -100,10 +106,8 @@ class AssetResolverTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->libraryDiscovery = $this->getMockBuilder('Drupal\Core\Asset\LibraryDiscoveryCollector')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->libraryDiscovery->expects($this->any())
+    $this->libraryDiscovery = $this->createStub(LibraryDiscoveryCollector::class);
+    $this->libraryDiscovery
       ->method('getLibraryByName')
       ->willReturnCallback(function (string $extension, string $name) {
         return $this->libraries[$extension . '/' . $name];
@@ -171,33 +175,29 @@ class AssetResolverTest extends UnitTestCase {
       ],
     ];
     $this->libraryDependencyResolver = new LibraryDependencyResolver($this->libraryDiscovery);
-    $this->moduleHandler = $this->createMock('\Drupal\Core\Extension\ModuleHandlerInterface');
-    $this->themeManager = $this->createMock('\Drupal\Core\Theme\ThemeManagerInterface');
-    $active_theme = $this->getMockBuilder('\Drupal\Core\Theme\ActiveTheme')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->themeManager->expects($this->any())
+    $this->moduleHandler = $this->createStub(ModuleHandlerInterface::class);
+    $this->themeManager = $this->createStub(ThemeManagerInterface::class);
+    $this->themeManager
       ->method('getActiveTheme')
-      ->willReturn($active_theme);
+      ->willReturn($this->createStub(ActiveTheme::class));
 
-    $this->languageManager = $this->createMock('\Drupal\Core\Language\LanguageManagerInterface');
-    $english = $this->createMock('\Drupal\Core\Language\LanguageInterface');
-    $english->expects($this->any())
+    $english = $this->createStub('\Drupal\Core\Language\LanguageInterface');
+    $english
       ->method('getId')
       ->willReturn('en');
     $this->english = $english;
-    $japanese = $this->createMock('\Drupal\Core\Language\LanguageInterface');
-    $japanese->expects($this->any())
+    $japanese = $this->createStub('\Drupal\Core\Language\LanguageInterface');
+    $japanese
       ->method('getId')
       ->willReturn('jp');
     $this->japanese = $japanese;
-    $this->languageManager = $this->createMock('\Drupal\Core\Language\LanguageManagerInterface');
-    $this->languageManager->expects($this->any())
+    $this->languageManager = $this->createStub(LanguageManagerInterface::class);
+    $this->languageManager
       ->method('getCurrentLanguage')
       ->willReturn($english, $english, $japanese, $japanese);
     $this->cache = new TestMemoryBackend(new Time());
 
-    $this->themeHandler = $this->createMock('\Drupal\Core\Extension\ThemeHandlerInterface');
+    $this->themeHandler = $this->createStub(ThemeHandlerInterface::class);
 
     $this->assetResolver = new AssetResolver($this->libraryDiscovery, $this->libraryDependencyResolver, $this->moduleHandler, $this->themeManager, $this->languageManager, $this->cache, $this->themeHandler);
   }
@@ -207,7 +207,7 @@ class AssetResolverTest extends UnitTestCase {
    */
   #[DataProvider('providerAttachedCssAssets')]
   public function testGetCssAssets(AttachedAssetsInterface $assets_a, AttachedAssetsInterface $assets_b, int $expected_css_cache_item_count): void {
-    $this->libraryDiscovery->expects($this->any())
+    $this->libraryDiscovery
       ->method('getLibraryByName')
       ->willReturnCallback(function (string $extension, string $name) {
         return $this->libraries[$extension . '/' . $name];
@@ -237,7 +237,7 @@ class AssetResolverTest extends UnitTestCase {
    */
   #[DataProvider('providerAttachedJsAssets')]
   public function testGetJsAssets(AttachedAssetsInterface $assets_a, AttachedAssetsInterface $assets_b, int $expected_js_cache_item_count, int $expected_multilingual_js_cache_item_count): void {
-    $this->libraryDiscovery->expects($this->any())
+    $this->libraryDiscovery
       ->method('getLibraryByName')
       ->willReturnCallback(function (string $extension, string $name) {
         return $this->libraries[$extension . '/' . $name];

@@ -53,14 +53,14 @@ class LibraryDiscoveryParserTest extends UnitTestCase {
   /**
    * The mocked theme manager.
    *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Theme\ThemeManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $themeManager;
 
   /**
    * The mocked active theme.
    *
-   * @var \Drupal\Core\Theme\ActiveTheme|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Theme\ActiveTheme|\PHPUnit\Framework\MockObject\Stub
    */
   protected $activeTheme;
 
@@ -74,14 +74,14 @@ class LibraryDiscoveryParserTest extends UnitTestCase {
   /**
    * The mocked stream wrapper manager.
    *
-   * @var \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface
    */
   protected $streamWrapperManager;
 
   /**
    * The mocked libraries directory file finder.
    *
-   * @var \Drupal\Core\Asset\LibrariesDirectoryFileFinder|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Asset\LibrariesDirectoryFileFinder
    */
   protected $librariesDirectoryFileFinder;
 
@@ -95,7 +95,7 @@ class LibraryDiscoveryParserTest extends UnitTestCase {
   /**
    * The mocked extension path resolver.
    *
-   * @var \Drupal\Core\Theme\ComponentPluginManager|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Theme\ComponentPluginManager|\PHPUnit\Framework\MockObject\Stub
    */
   protected $componentPluginManager;
 
@@ -106,21 +106,37 @@ class LibraryDiscoveryParserTest extends UnitTestCase {
     parent::setUp();
 
     $this->moduleHandler = $this->createMock('Drupal\Core\Extension\ModuleHandlerInterface');
-    $this->themeManager = $this->createMock(ThemeManagerInterface::class);
-    $this->activeTheme = $this->getMockBuilder(ActiveTheme::class)
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->activeTheme->expects($this->any())
+    $this->themeManager = $this->createStub(ThemeManagerInterface::class);
+    $this->activeTheme = $this->createStub(ActiveTheme::class);
+    $this->activeTheme
       ->method('getLibrariesOverride')
       ->willReturn([]);
-    $this->themeManager->expects($this->any())
+    $this->themeManager
       ->method('getActiveTheme')
       ->willReturn($this->activeTheme);
-    $this->streamWrapperManager = $this->createMock(StreamWrapperManagerInterface::class);
-    $this->librariesDirectoryFileFinder = $this->createMock(LibrariesDirectoryFileFinder::class);
+    $this->streamWrapperManager = $this->createStub(StreamWrapperManagerInterface::class);
+    $this->librariesDirectoryFileFinder = $this->createStub(LibrariesDirectoryFileFinder::class);
     $this->extensionPathResolver = $this->createMock(ExtensionPathResolver::class);
-    $this->componentPluginManager = $this->createMock(ComponentPluginManager::class);
+    $this->componentPluginManager = $this->createStub(ComponentPluginManager::class);
     $this->libraryDiscoveryParser = new TestLibraryDiscoveryParser($this->root, $this->moduleHandler, $this->themeManager, $this->streamWrapperManager, $this->librariesDirectoryFileFinder, $this->extensionPathResolver, $this->componentPluginManager);
+  }
+
+  /**
+   * Reinitializes the libraries directory file finder as a mock object.
+   */
+  protected function setUpMockLibrariesDirectoryFileFinder(): void {
+    $this->librariesDirectoryFileFinder = $this->createMock(LibrariesDirectoryFileFinder::class);
+    $reflection = new \ReflectionProperty($this->libraryDiscoveryParser, 'librariesDirectoryFileFinder');
+    $reflection->setValue($this->libraryDiscoveryParser, $this->librariesDirectoryFileFinder);
+  }
+
+  /**
+   * Reinitializes the stream wrapper manager as a mock object.
+   */
+  protected function setUpMockStreamWrapperManager(): void {
+    $this->streamWrapperManager = $this->createMock(StreamWrapperManagerInterface::class);
+    $reflection = new \ReflectionProperty($this->libraryDiscoveryParser, 'streamWrapperManager');
+    $reflection->setValue($this->libraryDiscoveryParser, $this->streamWrapperManager);
   }
 
   /**
@@ -456,6 +472,8 @@ class LibraryDiscoveryParserTest extends UnitTestCase {
    * @legacy-covers ::buildByExtension
    */
   public function testLibraryWithDataTypes(): void {
+    $this->setUpMockStreamWrapperManager();
+
     $this->moduleHandler->expects($this->atLeastOnce())
       ->method('moduleExists')
       ->with('data_types')
@@ -631,10 +649,8 @@ class LibraryDiscoveryParserTest extends UnitTestCase {
    */
   public function testLibraryOverride(): void {
     $mock_theme_path = 'mocked_themes/kittens';
-    $this->themeManager = $this->createMock(ThemeManagerInterface::class);
-    $this->activeTheme = $this->getMockBuilder(ActiveTheme::class)
-      ->disableOriginalConstructor()
-      ->getMock();
+    $this->themeManager = $this->createStub(ThemeManagerInterface::class);
+    $this->activeTheme = $this->createMock(ActiveTheme::class);
     $this->activeTheme->expects($this->atLeastOnce())
       ->method('getLibrariesOverride')
       ->willReturn([
@@ -649,7 +665,7 @@ class LibraryDiscoveryParserTest extends UnitTestCase {
           ],
         ],
       ]);
-    $this->themeManager->expects($this->any())
+    $this->themeManager
       ->method('getActiveTheme')
       ->willReturn($this->activeTheme);
 
@@ -659,7 +675,7 @@ class LibraryDiscoveryParserTest extends UnitTestCase {
       ->method('getPath')
       ->with('module', 'example_module')
       ->willReturn($path);
-    $this->componentPluginManager = $this->createMock(ComponentPluginManager::class);
+    $this->componentPluginManager = $this->createStub(ComponentPluginManager::class);
 
     $this->libraryDiscoveryParser = new TestLibraryDiscoveryParser($this->root, $this->moduleHandler, $this->themeManager, $this->streamWrapperManager, $this->librariesDirectoryFileFinder, $this->extensionPathResolver, $this->componentPluginManager);
 
@@ -686,7 +702,7 @@ class LibraryDiscoveryParserTest extends UnitTestCase {
   public function testLibraryOverrideDeprecated(): void {
     $this->expectUserDeprecationMessage('Theme "test_theme" is overriding a deprecated library. The "deprecated/deprecated" asset library is deprecated in drupal:X.0.0 and is removed from drupal:Y.0.0. Use another library instead. See https://www.example.com');
     $mock_theme_path = 'mocked_themes/kittens';
-    $this->themeManager = $this->createMock(ThemeManagerInterface::class);
+    $this->themeManager = $this->createStub(ThemeManagerInterface::class);
     $this->activeTheme = $this->getMockBuilder(ActiveTheme::class)
       ->disableOriginalConstructor()
       ->getMock();
@@ -706,7 +722,7 @@ class LibraryDiscoveryParserTest extends UnitTestCase {
           ],
         ],
       ]);
-    $this->themeManager->expects($this->any())
+    $this->themeManager
       ->method('getActiveTheme')
       ->willReturn($this->activeTheme);
 
@@ -716,7 +732,7 @@ class LibraryDiscoveryParserTest extends UnitTestCase {
       ->method('getPath')
       ->with('module', 'deprecated')
       ->willReturn($path);
-    $this->componentPluginManager = $this->createMock(ComponentPluginManager::class);
+    $this->componentPluginManager = $this->createStub(ComponentPluginManager::class);
     $this->libraryDiscoveryParser = new TestLibraryDiscoveryParser($this->root, $this->moduleHandler, $this->themeManager, $this->streamWrapperManager, $this->librariesDirectoryFileFinder, $this->extensionPathResolver, $this->componentPluginManager);
 
     $this->moduleHandler->expects($this->atLeastOnce())
@@ -780,6 +796,8 @@ class LibraryDiscoveryParserTest extends UnitTestCase {
    * @legacy-covers ::buildByExtension
    */
   public function testNonCoreLibrariesFound(): void {
+    $this->setUpMockLibrariesDirectoryFileFinder();
+
     $this->moduleHandler->expects($this->atLeastOnce())
       ->method('moduleExists')
       ->with('example_contrib_module')
@@ -813,6 +831,8 @@ class LibraryDiscoveryParserTest extends UnitTestCase {
    * @legacy-covers ::buildByExtension
    */
   public function testNonCoreLibrariesNotFound(): void {
+    $this->setUpMockLibrariesDirectoryFileFinder();
+
     $this->moduleHandler->expects($this->atLeastOnce())
       ->method('moduleExists')
       ->with('example_contrib_module')

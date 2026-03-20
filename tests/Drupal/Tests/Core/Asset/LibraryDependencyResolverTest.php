@@ -18,14 +18,6 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Asset')]
 class LibraryDependencyResolverTest extends UnitTestCase {
 
-
-  /**
-   * The mock library discovery parser.
-   *
-   * @var \Drupal\Core\Asset\LibraryDiscoveryParser|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $libraryDiscoveryParser;
-
   /**
    * The tested library dependency resolver.
    *
@@ -65,15 +57,11 @@ class LibraryDependencyResolverTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->libraryDiscoveryParser = $this->getMockBuilder('Drupal\Core\Asset\LibraryDiscoveryParser')
-      ->disableOriginalConstructor()
-      ->getMock();
-
     $this->libraryDiscovery = $this->getMockBuilder(LibraryDiscoveryCollector::class)
       ->disableOriginalConstructor()
       ->onlyMethods(['getLibrariesByExtension'])
       ->getMock();
-    $this->libraryDiscovery->expects($this->any())
+    $this->libraryDiscovery
       ->method('getLibrariesByExtension')
       ->with('test')
       ->willReturn($this->libraryData);

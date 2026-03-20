@@ -42,7 +42,7 @@ class CssCollectionOptimizerLazyUnitTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
     $this->fileUrlGenerator = $this->createMock(FileUrlGeneratorInterface::class);
-    $this->fileUrlGenerator->expects($this->any())
+    $this->fileUrlGenerator
       ->method('generateString')
       ->with($this->isString())
       ->willReturnCallback(function (string $uri): string {
@@ -55,7 +55,7 @@ class CssCollectionOptimizerLazyUnitTest extends UnitTestCase {
    * Tests that CSS imports with strange letters do not destroy the CSS output.
    */
   public function testCssImport(): void {
-    $mock_grouper = $this->createMock(AssetCollectionGrouperInterface::class);
+    $mock_grouper = $this->createStub(AssetCollectionGrouperInterface::class);
     $mock_grouper->method('group')
       ->willReturnCallback(function ($assets): array {
         return [
@@ -66,20 +66,24 @@ class CssCollectionOptimizerLazyUnitTest extends UnitTestCase {
           ],
         ];
       });
-    $mock_optimizer = $this->createMock(AssetOptimizerInterface::class);
+    $mock_optimizer = $this->createStub(AssetOptimizerInterface::class);
     $mock_optimizer->method('optimize')
       ->willReturn(
         file_get_contents(__DIR__ . '/css_test_files/css_input_with_import.css.optimized.css'),
         file_get_contents(__DIR__ . '/css_test_files/css_subfolder/css_input_with_import.css.optimized.css')
       );
-    $mock_theme_manager = $this->createMock(ThemeManagerInterface::class);
-    $mock_dependency_resolver = $this->createMock(LibraryDependencyResolverInterface::class);
-    $mock_file_system = $this->createMock(FileSystemInterface::class);
-    $mock_config_factory = $this->createMock(ConfigFactoryInterface::class);
-    $mock_file_url_generator = $this->createMock(FileUrlGeneratorInterface::class);
-    $mock_time = $this->createMock(TimeInterface::class);
-    $mock_language = $this->createMock(LanguageManagerInterface::class);
-    $optimizer = new CssCollectionOptimizerLazy($mock_grouper, $mock_optimizer, $mock_theme_manager, $mock_dependency_resolver, new RequestStack(), $mock_file_system, $mock_config_factory, $mock_file_url_generator, $mock_time, $mock_language);
+    $optimizer = new CssCollectionOptimizerLazy(
+      $mock_grouper,
+      $mock_optimizer,
+      $this->createStub(ThemeManagerInterface::class),
+      $this->createStub(LibraryDependencyResolverInterface::class),
+      new RequestStack(),
+      $this->createStub(FileSystemInterface::class),
+      $this->createStub(ConfigFactoryInterface::class),
+      $this->createStub(FileUrlGeneratorInterface::class),
+      $this->createStub(TimeInterface::class),
+      $this->createStub(LanguageManagerInterface::class),
+    );
     $gpl_license = [
       'name' => 'GPL-2.0-or-later',
       'url' => 'https://www.drupal.org/licensing/faq',
@@ -113,7 +117,7 @@ class CssCollectionOptimizerLazyUnitTest extends UnitTestCase {
    * have the same license. Checks that multiple licenses are added properly.
    */
   public function testCssLicenseAggregation(): void {
-    $mock_grouper = $this->createMock(AssetCollectionGrouperInterface::class);
+    $mock_grouper = $this->createStub(AssetCollectionGrouperInterface::class);
     $mock_grouper->method('group')
       ->willReturnCallback(function ($assets): array {
         return [
@@ -124,21 +128,25 @@ class CssCollectionOptimizerLazyUnitTest extends UnitTestCase {
           ],
         ];
       });
-    $mock_optimizer = $this->createMock(AssetOptimizerInterface::class);
+    $mock_optimizer = $this->createStub(AssetOptimizerInterface::class);
     $mock_optimizer->method('optimize')
       ->willReturn(
         file_get_contents(__DIR__ . '/css_test_files/css_input_with_import.css.optimized.css'),
         file_get_contents(__DIR__ . '/css_test_files/css_subfolder/css_input_with_import.css.optimized.css'),
         file_get_contents(__DIR__ . '/css_test_files/css_input_without_import.css.optimized.css')
       );
-    $mock_theme_manager = $this->createMock(ThemeManagerInterface::class);
-    $mock_dependency_resolver = $this->createMock(LibraryDependencyResolverInterface::class);
-    $mock_file_system = $this->createMock(FileSystemInterface::class);
-    $mock_config_factory = $this->createMock(ConfigFactoryInterface::class);
-    $mock_file_url_generator = $this->createMock(FileUrlGeneratorInterface::class);
-    $mock_time = $this->createMock(TimeInterface::class);
-    $mock_language = $this->createMock(LanguageManagerInterface::class);
-    $optimizer = new CssCollectionOptimizerLazy($mock_grouper, $mock_optimizer, $mock_theme_manager, $mock_dependency_resolver, new RequestStack(), $mock_file_system, $mock_config_factory, $mock_file_url_generator, $mock_time, $mock_language);
+    $optimizer = new CssCollectionOptimizerLazy(
+      $mock_grouper,
+      $mock_optimizer,
+      $this->createStub(ThemeManagerInterface::class),
+      $this->createStub(LibraryDependencyResolverInterface::class),
+      new RequestStack(),
+      $this->createStub(FileSystemInterface::class),
+      $this->createStub(ConfigFactoryInterface::class),
+      $this->createStub(FileUrlGeneratorInterface::class),
+      $this->createStub(TimeInterface::class),
+      $this->createStub(LanguageManagerInterface::class),
+    );
     $gpl_license = [
       'name' => 'GPL-2.0-or-later',
       'url' => 'https://www.drupal.org/licensing/faq',
@@ -182,23 +190,22 @@ class CssCollectionOptimizerLazyUnitTest extends UnitTestCase {
    * CssOptimizer exception and are safely ignored.
    */
   public function testExternalMinifiedCssAssetOptimizationIsSkipped(): void {
-    $mock_grouper = $this->createMock(AssetCollectionGrouperInterface::class);
     $mock_optimizer = $this->createMock(AssetOptimizerInterface::class);
 
     // The expectation is to never call optimize on minified external assets.
     $mock_optimizer->expects($this->never())->method('optimize');
 
     $optimizer = new CssCollectionOptimizerLazy(
-      $mock_grouper,
+      $this->createStub(AssetCollectionGrouperInterface::class),
       $mock_optimizer,
-      $this->createMock(ThemeManagerInterface::class),
-      $this->createMock(LibraryDependencyResolverInterface::class),
+      $this->createStub(ThemeManagerInterface::class),
+      $this->createStub(LibraryDependencyResolverInterface::class),
       new RequestStack(),
-      $this->createMock(FileSystemInterface::class),
-      $this->createMock(ConfigFactoryInterface::class),
-      $this->createMock(FileUrlGeneratorInterface::class),
-      $this->createMock(TimeInterface::class),
-      $this->createMock(LanguageManagerInterface::class)
+      $this->createStub(FileSystemInterface::class),
+      $this->createStub(ConfigFactoryInterface::class),
+      $this->createStub(FileUrlGeneratorInterface::class),
+      $this->createStub(TimeInterface::class),
+      $this->createStub(LanguageManagerInterface::class)
     );
 
     $optimizer->optimizeGroup([
@@ -221,21 +228,20 @@ class CssCollectionOptimizerLazyUnitTest extends UnitTestCase {
    * paths.
    */
   public function testLocalMinifiedCssAssetOptimizationIsNotSkipped(): void {
-    $mock_grouper = $this->createMock(AssetCollectionGrouperInterface::class);
     $mock_optimizer = $this->createMock(AssetOptimizerInterface::class);
     $mock_optimizer->expects($this->once())->method('optimize');
 
     $optimizer = new CssCollectionOptimizerLazy(
-      $mock_grouper,
+      $this->createStub(AssetCollectionGrouperInterface::class),
       $mock_optimizer,
-      $this->createMock(ThemeManagerInterface::class),
-      $this->createMock(LibraryDependencyResolverInterface::class),
+      $this->createStub(ThemeManagerInterface::class),
+      $this->createStub(LibraryDependencyResolverInterface::class),
       new RequestStack(),
-      $this->createMock(FileSystemInterface::class),
-      $this->createMock(ConfigFactoryInterface::class),
-      $this->createMock(FileUrlGeneratorInterface::class),
-      $this->createMock(TimeInterface::class),
-      $this->createMock(LanguageManagerInterface::class)
+      $this->createStub(FileSystemInterface::class),
+      $this->createStub(ConfigFactoryInterface::class),
+      $this->createStub(FileUrlGeneratorInterface::class),
+      $this->createStub(TimeInterface::class),
+      $this->createStub(LanguageManagerInterface::class)
     );
 
     $optimizer->optimizeGroup([
@@ -258,19 +264,17 @@ class CssCollectionOptimizerLazyUnitTest extends UnitTestCase {
    * rewritten during optimization.
    */
   public function testRelativePathsInLocalMinifiedCssAssets(): void {
-    $mock_grouper = $this->createMock(AssetCollectionGrouperInterface::class);
-
     $optimizer = new CssCollectionOptimizerLazy(
-      $mock_grouper,
+      $this->createStub(AssetCollectionGrouperInterface::class),
       $this->optimizer,
-      $this->createMock(ThemeManagerInterface::class),
-      $this->createMock(LibraryDependencyResolverInterface::class),
+      $this->createStub(ThemeManagerInterface::class),
+      $this->createStub(LibraryDependencyResolverInterface::class),
       new RequestStack(),
-      $this->createMock(FileSystemInterface::class),
-      $this->createMock(ConfigFactoryInterface::class),
-      $this->createMock(FileUrlGeneratorInterface::class),
-      $this->createMock(TimeInterface::class),
-      $this->createMock(LanguageManagerInterface::class)
+      $this->createStub(FileSystemInterface::class),
+      $this->createStub(ConfigFactoryInterface::class),
+      $this->createStub(FileUrlGeneratorInterface::class),
+      $this->createStub(TimeInterface::class),
+      $this->createStub(LanguageManagerInterface::class)
     );
 
     $result = $optimizer->optimizeGroup([

@@ -24,13 +24,6 @@ class LibraryDiscoveryTest extends UnitTestCase {
   protected $libraryDiscovery;
 
   /**
-   * The cache tags invalidator.
-   *
-   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $cacheTagsInvalidator;
-
-  /**
    * Test library data.
    *
    * @var array
@@ -63,16 +56,15 @@ class LibraryDiscoveryTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->cacheTagsInvalidator = $this->createMock('Drupal\Core\Cache\CacheTagsInvalidatorInterface');
     $this->libraryDiscovery = $this->getMockBuilder('Drupal\Core\Asset\LibraryDiscoveryCollector')
       ->onlyMethods(['resolveCacheMiss', 'getLibrariesByExtension'])
       ->disableOriginalConstructor()
       ->getMock();
-    $this->libraryDiscovery->expects($this->any())
+    $this->libraryDiscovery
       ->method('resolveCacheMiss')
       ->with('test')
       ->willReturn($this->libraryData);
-    $this->libraryDiscovery->expects($this->any())
+    $this->libraryDiscovery
       ->method('getLibrariesByExtension')
       ->with('test')
       ->willReturn($this->libraryData);

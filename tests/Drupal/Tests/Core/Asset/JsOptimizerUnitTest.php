@@ -8,6 +8,7 @@ use Drupal\Core\Asset\JsOptimizer;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Psr\Log\LoggerInterface;
 
 /**
  * Tests the JS asset optimizer.
@@ -27,8 +28,7 @@ class JsOptimizerUnitTest extends UnitTestCase {
    */
   protected function setUp(): void {
     parent::setUp();
-    $logger = $this->createMock('\Psr\Log\LoggerInterface');
-    $this->optimizer = new JsOptimizer($logger);
+    $this->optimizer = new JsOptimizer($this->createStub(LoggerInterface::class));
   }
 
   /**

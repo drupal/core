@@ -38,7 +38,7 @@ class CssCollectionRendererUnitTest extends UnitTestCase {
     parent::setUp();
     $assetQueryString = $this->prophesize(AssetQueryStringInterface::class);
     $file_url_generator = $this->createMock(FileUrlGeneratorInterface::class);
-    $file_url_generator->expects($this->any())
+    $file_url_generator
       ->method('generateString')
       ->with($this->isString())
       ->willReturnCallback(function (string $uri): string {
