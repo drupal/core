@@ -69,12 +69,18 @@ class AliasPathProcessorTest extends UnitTestCase {
    */
   #[DataProvider('providerTestProcessOutbound')]
   public function testProcessOutbound($path, array $options, $expected_path): void {
-    $this->aliasManager->expects($this->any())
-      ->method('getAliasByPath')
-      ->willReturnMap([
-        ['internal-url', NULL, 'url-alias'],
-        ['url', NULL, 'url'],
-      ]);
+    if (isset($options['alias']) && $options['alias']) {
+      $this->aliasManager->expects($this->never())
+        ->method('getAliasByPath');
+    }
+    else {
+      $this->aliasManager->expects($this->once())
+        ->method('getAliasByPath')
+        ->willReturnMap([
+          ['internal-url', NULL, 'url-alias'],
+          ['url', NULL, 'url'],
+        ]);
+    }
 
     $bubbleable_metadata = new BubbleableMetadata();
     $this->assertEquals($expected_path, $this->pathProcessor->processOutbound($path, $options, NULL, $bubbleable_metadata));

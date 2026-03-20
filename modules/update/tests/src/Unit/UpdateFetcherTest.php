@@ -9,6 +9,7 @@ use Drupal\Core\Site\Settings;
 use Drupal\Tests\UnitTestCase;
 use Drupal\update\UpdateFetcher;
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
@@ -73,7 +74,7 @@ class UpdateFetcherTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
     $this->mockConfigFactory = $this->getConfigFactoryStub(['update.settings' => ['fetch_url' => 'http://www.example.com']]);
-    $this->mockHttpClient = $this->createMock('\GuzzleHttp\ClientInterface');
+    $this->mockHttpClient = $this->createStub(ClientInterface::class);
     $settings = new Settings([]);
     $this->logger = new TestLogger();
     $this->updateFetcher = new UpdateFetcher($this->mockConfigFactory, $this->mockHttpClient, $settings, $this->logger);

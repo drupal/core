@@ -247,8 +247,8 @@ class ImageItemTest extends FieldKernelTestBase {
    */
   private function validateImageUriForDirectory(string $file_directory, string $expected_start): void {
     // Mock the field definition with the specified file directory.
-    $definition = $this->createMock(FieldDefinitionInterface::class);
-    $definition->expects($this->any())
+    $definition = $this->createStub(FieldDefinitionInterface::class);
+    $definition
       ->method('getSettings')
       ->willReturn([
         'file_extensions' => 'jpg',

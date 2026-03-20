@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\update\Unit;
 
 use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\Session\AccountProxy;
 use Drupal\Tests\UnitTestCase;
 use Drupal\update\Hook\UpdateHooks;
 use Drupal\update\UpdateManagerInterface;
@@ -29,7 +30,7 @@ class UpdateMailTest extends UnitTestCase {
   /**
    * The mocked current user service.
    *
-   * @var \Drupal\Core\Session\AccountProxy|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Session\AccountProxy|\PHPUnit\Framework\MockObject\Stub
    */
   protected $currentUser;
 
@@ -67,7 +68,7 @@ class UpdateMailTest extends UnitTestCase {
     \Drupal::setContainer($this->container);
 
     // Get needed mocks.
-    $this->currentUser = $this->createMock('\Drupal\Core\Session\AccountProxy');
+    $this->currentUser = $this->createStub(AccountProxy::class);
     $this->languageManager = $this->createMock('Drupal\language\ConfigurableLanguageManagerInterface');
     $this->configFactory = $this->createMock('Drupal\Core\Config\ConfigFactory');
     $this->urlGenerator = $this->createMock('\Drupal\Core\Render\MetadataBubblingUrlGenerator');

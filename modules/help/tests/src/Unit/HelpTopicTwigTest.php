@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\help\Unit;
 
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Template\TwigEnvironment;
 use Drupal\help\HelpTopicTwig;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -102,16 +103,9 @@ class HelpTopicTwigTest extends UnitTestCase {
    * Creates a mock Twig loader class for the test.
    */
   protected function getTwigMock() {
-    $twig = $this
-      ->getMockBuilder('Drupal\Core\Template\TwigEnvironment')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $twig = $this->createStub(TwigEnvironment::class);
 
-    $template = $this
-      ->getMockBuilder(Template::class)
-      ->onlyMethods(['render', 'getTemplateName', 'getDebugInfo', 'getSourceContext', 'doDisplay'])
-      ->setConstructorArgs([$twig])
-      ->getMock();
+    $template = $this->createStub(Template::class);
 
     $template
       ->method('render')

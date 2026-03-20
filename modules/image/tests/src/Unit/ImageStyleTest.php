@@ -6,10 +6,19 @@ namespace Drupal\Tests\image\Unit;
 
 use Drupal\Component\Utility\Crypt;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\StreamWrapper\StreamWrapperManagerInterface;
 use Drupal\image\Entity\ImageStyle;
+use Drupal\image\ImageEffectBase;
+use Drupal\image\ImageEffectManager;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Log\LoggerInterface;
 
 /**
  * Tests Drupal\image\Entity\ImageStyle.
@@ -21,14 +30,14 @@ class ImageStyleTest extends UnitTestCase {
   /**
    * The entity type used for testing.
    *
-   * @var \Drupal\Core\Entity\EntityTypeInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Entity\EntityTypeInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $entityType;
 
   /**
    * The entity type manager used for testing.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $entityTypeManager;
 
@@ -49,14 +58,12 @@ class ImageStyleTest extends UnitTestCase {
    * @param array $stubs
    *   An array of additional method names to mock.
    *
-   * @return \Drupal\image\ImageStyleInterface
+   * @return \Drupal\image\Entity\ImageStyle&\PHPUnit\Framework\MockObject\MockObject
    *   The mocked image style.
    */
-  protected function getImageStyleMock($image_effect_id, $image_effect, $stubs = []) {
-    $effectManager = $this->getMockBuilder('\Drupal\image\ImageEffectManager')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $effectManager->expects($this->any())
+  protected function getImageStyleMock($image_effect_id, $image_effect, $stubs = []): ImageStyle&MockObject {
+    $effectManager = $this->createStub(ImageEffectManager::class);
+    $effectManager
       ->method('createInstance')
       ->with($image_effect_id)
       ->willReturn($image_effect);
@@ -69,10 +76,10 @@ class ImageStyleTest extends UnitTestCase {
       ->onlyMethods(array_merge($default_stubs, $stubs))
       ->getMock();
 
-    $image_style->expects($this->any())
+    $image_style
       ->method('getImageEffectPluginManager')
       ->willReturn($effectManager);
-    $image_style->expects($this->any())
+    $image_style
       ->method('fileDefaultScheme')
       ->willReturnCallback([$this, 'fileDefaultScheme']);
 
@@ -87,12 +94,12 @@ class ImageStyleTest extends UnitTestCase {
 
     $this->entityTypeId = $this->randomMachineName();
     $provider = $this->randomMachineName();
-    $this->entityType = $this->createMock('\Drupal\Core\Entity\EntityTypeInterface');
-    $this->entityType->expects($this->any())
+    $this->entityType = $this->createStub(EntityTypeInterface::class);
+    $this->entityType
       ->method('getProvider')
       ->willReturn($provider);
-    $this->entityTypeManager = $this->createMock('\Drupal\Core\Entity\EntityTypeManagerInterface');
-    $this->entityTypeManager->expects($this->any())
+    $this->entityTypeManager = $this->createStub(EntityTypeManagerInterface::class);
+    $this->entityTypeManager
       ->method('getDefinition')
       ->with($this->entityTypeId)
       ->willReturn($this->entityType);
@@ -103,15 +110,14 @@ class ImageStyleTest extends UnitTestCase {
    */
   public function testGetDerivativeExtension(): void {
     $image_effect_id = $this->randomMachineName();
-    $logger = $this->getMockBuilder('\Psr\Log\LoggerInterface')->getMock();
-    $image_effect = $this->getMockBuilder('\Drupal\image\ImageEffectBase')
-      ->setConstructorArgs([[], $image_effect_id, [], $logger])
-      ->getMock();
-    $image_effect->expects($this->any())
+    $image_effect = $this->createStub(ImageEffectBase::class);
+    $image_effect
       ->method('getDerivativeExtension')
       ->willReturn('png');
 
     $image_style = $this->getImageStyleMock($image_effect_id, $image_effect);
+    $image_style->expects($this->once())
+      ->method('getImageEffectPluginManager');
 
     $extensions = ['jpeg', 'gif', 'png'];
     foreach ($extensions as $extension) {
@@ -126,27 +132,26 @@ class ImageStyleTest extends UnitTestCase {
   public function testBuildUri(): void {
     // Image style that changes the extension.
     $image_effect_id = $this->randomMachineName();
-    $logger = $this->getMockBuilder('\Psr\Log\LoggerInterface')->getMock();
-    $image_effect = $this->getMockBuilder('\Drupal\image\ImageEffectBase')
-      ->setConstructorArgs([[], $image_effect_id, [], $logger])
-      ->getMock();
-    $image_effect->expects($this->any())
+    $image_effect = $this->createStub(ImageEffectBase::class);
+    $image_effect
       ->method('getDerivativeExtension')
       ->willReturn('png');
 
     $image_style = $this->getImageStyleMock($image_effect_id, $image_effect);
+    $image_style->expects($this->once())
+      ->method('fileDefaultScheme');
     $this->assertEquals($image_style->buildUri('public://test.jpeg'), 'public://styles/' . $image_style->id() . '/public/test.jpeg.png');
 
     // Image style that doesn't change the extension.
     $image_effect_id = $this->randomMachineName();
-    $image_effect = $this->getMockBuilder('\Drupal\image\ImageEffectBase')
-      ->setConstructorArgs([[], $image_effect_id, [], $logger])
-      ->getMock();
-    $image_effect->expects($this->any())
+    $image_effect = $this->createStub('\Drupal\image\ImageEffectBase');
+    $image_effect
       ->method('getDerivativeExtension')
       ->willReturnArgument(0);
 
     $image_style = $this->getImageStyleMock($image_effect_id, $image_effect);
+    $image_style->expects($this->once())
+      ->method('fileDefaultScheme');
     $this->assertEquals($image_style->buildUri('public://test.jpeg'), 'public://styles/' . $image_style->id() . '/public/test.jpeg');
   }
 
@@ -154,7 +159,7 @@ class ImageStyleTest extends UnitTestCase {
    * Tests get path token.
    */
   public function testGetPathToken(): void {
-    $logger = $this->getMockBuilder('\Psr\Log\LoggerInterface')->getMock();
+    $logger = $this->createStub(LoggerInterface::class);
     $private_key = $this->randomMachineName();
     $hash_salt = $this->randomMachineName();
 
@@ -163,15 +168,15 @@ class ImageStyleTest extends UnitTestCase {
     $image_effect = $this->getMockBuilder('\Drupal\image\ImageEffectBase')
       ->setConstructorArgs([[], $image_effect_id, [], $logger])
       ->getMock();
-    $image_effect->expects($this->any())
+    $image_effect->expects($this->atLeastOnce())
       ->method('getDerivativeExtension')
       ->willReturn('png');
 
     $image_style = $this->getImageStyleMock($image_effect_id, $image_effect, ['getPrivateKey', 'getHashSalt']);
-    $image_style->expects($this->any())
+    $image_style->expects($this->atLeastOnce())
       ->method('getPrivateKey')
       ->willReturn($private_key);
-    $image_style->expects($this->any())
+    $image_style->expects($this->atLeastOnce())
       ->method('getHashSalt')
       ->willReturn($hash_salt);
 
@@ -182,18 +187,16 @@ class ImageStyleTest extends UnitTestCase {
 
     // Image style that doesn't change the extension.
     $image_effect_id = $this->randomMachineName();
-    $image_effect = $this->getMockBuilder('\Drupal\image\ImageEffectBase')
-      ->setConstructorArgs([[], $image_effect_id, [], $logger])
-      ->getMock();
-    $image_effect->expects($this->any())
+    $image_effect = $this->createStub(ImageEffectBase::class);
+    $image_effect
       ->method('getDerivativeExtension')
       ->willReturnArgument(0);
 
     $image_style = $this->getImageStyleMock($image_effect_id, $image_effect, ['getPrivateKey', 'getHashSalt']);
-    $image_style->expects($this->any())
+    $image_style->expects($this->atLeastOnce())
       ->method('getPrivateKey')
       ->willReturn($private_key);
-    $image_style->expects($this->any())
+    $image_style->expects($this->atLeastOnce())
       ->method('getHashSalt')
       ->willReturn($hash_salt);
     // Assert no extension has been added to the uri before creating the token.
@@ -207,10 +210,10 @@ class ImageStyleTest extends UnitTestCase {
    */
   public function testFlush(): void {
     $cache_tag_invalidator = $this->createMock('\Drupal\Core\Cache\CacheTagsInvalidator');
-    $file_system = $this->createMock('\Drupal\Core\File\FileSystemInterface');
-    $module_handler = $this->createMock('\Drupal\Core\Extension\ModuleHandlerInterface');
-    $stream_wrapper_manager = $this->createMock('\Drupal\Core\StreamWrapper\StreamWrapperManagerInterface');
-    $stream_wrapper_manager->expects($this->any())
+    $file_system = $this->createStub(FileSystemInterface::class);
+    $module_handler = $this->createStub(ModuleHandlerInterface::class);
+    $stream_wrapper_manager = $this->createStub(StreamWrapperManagerInterface::class);
+    $stream_wrapper_manager
       ->method('getWrappers')
       ->willReturn([]);
     $theme_registry = $this->createMock('\Drupal\Core\Theme\Registry');
@@ -229,10 +232,10 @@ class ImageStyleTest extends UnitTestCase {
       ->getMock();
 
     $image_style = $this->getImageStyleMock($image_effect_id, $image_effect, ['buildUri', 'getCacheTagsToInvalidate']);
-    $image_style->expects($this->any())
+    $image_style->expects($this->atLeastOnce())
       ->method('buildUri')
       ->willReturn('test.jpg');
-    $image_style->expects($this->any())
+    $image_style->expects($this->atLeastOnce())
       ->method('getCacheTagsToInvalidate')
       ->willReturn([]);
 

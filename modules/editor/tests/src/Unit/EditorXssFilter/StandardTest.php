@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\editor\Unit\EditorXssFilter;
 
 use Drupal\editor\EditorXssFilter\Standard;
+use Drupal\filter\Entity\FilterFormat;
 use Drupal\filter\Plugin\FilterInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -24,7 +25,7 @@ class StandardTest extends UnitTestCase {
   /**
    * The mocked text format configuration entity.
    *
-   * @var \Drupal\filter\Entity\FilterFormat|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\filter\Entity\FilterFormat|\PHPUnit\Framework\MockObject\Stub
    */
   protected $format;
 
@@ -35,10 +36,8 @@ class StandardTest extends UnitTestCase {
     parent::setUp();
 
     // Mock text format configuration entity object.
-    $this->format = $this->getMockBuilder('\Drupal\filter\Entity\FilterFormat')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->format->expects($this->any())
+    $this->format = $this->createStub(FilterFormat::class);
+    $this->format
       ->method('getFilterTypes')
       ->willReturn([FilterInterface::TYPE_HTML_RESTRICTOR]);
     $restrictions = [
@@ -51,7 +50,7 @@ class StandardTest extends UnitTestCase {
         ],
       ],
     ];
-    $this->format->expects($this->any())
+    $this->format
       ->method('getHtmlRestrictions')
       ->willReturn($restrictions);
   }

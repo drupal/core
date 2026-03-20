@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\search\Unit;
 
+use Drupal\search\Plugin\SearchInterface;
 use Drupal\search\Plugin\SearchPluginCollection;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -55,7 +56,7 @@ class SearchPluginCollectionTest extends UnitTestCase {
    * Tests the get() method.
    */
   public function testGet(): void {
-    $plugin = $this->createMock('Drupal\search\Plugin\SearchInterface');
+    $plugin = $this->createStub(SearchInterface::class);
     $this->pluginManager->expects($this->once())
       ->method('createInstance')
       ->willReturn($plugin);

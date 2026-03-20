@@ -23,14 +23,14 @@ class SerializerTest extends UnitTestCase {
   /**
    * The View instance.
    *
-   * @var \Drupal\views\ViewExecutable|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\views\ViewExecutable|\PHPUnit\Framework\MockObject\Stub
    */
   protected $view;
 
   /**
    * The RestExport display handler.
    *
-   * @var \Drupal\rest\Plugin\views\display\RestExport|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\rest\Plugin\views\display\RestExport|\PHPUnit\Framework\MockObject\Stub
    */
   protected $displayHandler;
 
@@ -40,19 +40,14 @@ class SerializerTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->view = $this->getMockBuilder(ViewExecutable::class)
-      ->disableOriginalConstructor()
-      ->getMock();
+    $this->view = $this->createStub(ViewExecutable::class);
 
     // Make the view result empty so we don't have to mock the row plugin render
     // call.
     $this->view->result = [];
 
-    $this->displayHandler = $this->getMockBuilder(RestExport::class)
-      ->disableOriginalConstructor()
-      ->getMock();
-
-    $this->displayHandler->expects($this->any())
+    $this->displayHandler = $this->createStub(RestExport::class);
+    $this->displayHandler
       ->method('getContentType')
       ->willReturn('json');
   }

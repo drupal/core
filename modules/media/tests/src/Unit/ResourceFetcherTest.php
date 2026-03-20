@@ -6,6 +6,7 @@ namespace Drupal\Tests\media\Unit;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Cache\NullBackend;
+use Drupal\media\OEmbed\ProviderRepositoryInterface;
 use Drupal\media\OEmbed\ResourceException;
 use Drupal\media\OEmbed\ResourceFetcher;
 use Drupal\Tests\UnitTestCase;
@@ -47,7 +48,7 @@ class ResourceFetcherTest extends UnitTestCase {
 
     $fetcher = new ResourceFetcher(
       $client->reveal(),
-      $this->createMock('\Drupal\media\OEmbed\ProviderRepositoryInterface'),
+      $this->createStub(ProviderRepositoryInterface::class),
       new NullBackend('default'),
       $non_default_timeout
     );
@@ -84,7 +85,7 @@ class ResourceFetcherTest extends UnitTestCase {
     $client = new Client([
       'handler' => HandlerStack::create($mock_handler),
     ]);
-    $providers = $this->createMock('\Drupal\media\OEmbed\ProviderRepositoryInterface');
+    $providers = $this->createStub(ProviderRepositoryInterface::class);
 
     $fetcher = new ResourceFetcher($client, $providers, new NullBackend('default'));
     /** @var \Drupal\media\OEmbed\Resource $resource */

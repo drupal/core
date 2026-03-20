@@ -42,13 +42,13 @@ class HelpTopicTwigLoaderTest extends UnitTestCase {
 
     $this->setUpVfs();
 
-    $module_handler = $this->createMock(ModuleHandlerInterface::class);
+    $module_handler = $this->createStub(ModuleHandlerInterface::class);
     $module_handler
       ->method('getModuleDirectories')
       ->willReturn($this->directories['module']);
 
     /** @var \Drupal\Core\Extension\ThemeHandlerInterface|\Prophecy\Prophecy\ObjectProphecy $module_handler */
-    $theme_handler = $this->createMock(ThemeHandlerInterface::class);
+    $theme_handler = $this->createStub(ThemeHandlerInterface::class);
     $theme_handler
       ->method('getThemeDirectories')
       ->willReturn($this->directories['theme']);
