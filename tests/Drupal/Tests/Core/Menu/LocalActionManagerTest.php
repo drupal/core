@@ -13,6 +13,7 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Cache\Context\CacheContextsManager;
 use Drupal\Core\DependencyInjection\Container;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Menu\LocalActionDefault;
 use Drupal\Core\Menu\LocalActionManager;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Routing\RouteProviderInterface;
@@ -45,56 +46,56 @@ class LocalActionManagerTest extends UnitTestCase {
   /**
    * The mocked request.
    *
-   * @var \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\Stub
    */
   protected $request;
 
   /**
    * The mocked module handler.
    *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $moduleHandler;
 
   /**
    * The mocked router provider.
    *
-   * @var \Drupal\Core\Routing\RouteProviderInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Routing\RouteProviderInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $routeProvider;
 
   /**
    * The mocked cache backend.
    *
-   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $cacheBackend;
 
   /**
    * The mocked access manager.
    *
-   * @var \Drupal\Core\Access\AccessManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Access\AccessManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $accessManager;
 
   /**
    * The mocked account.
    *
-   * @var \Drupal\Core\Session\AccountInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Session\AccountInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $account;
 
   /**
    * The mocked factory.
    *
-   * @var \Drupal\Component\Plugin\Factory\FactoryInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Component\Plugin\Factory\FactoryInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $factory;
 
   /**
    * The mocked plugin discovery.
    *
-   * @var \Drupal\Component\Plugin\Discovery\DiscoveryInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Component\Plugin\Discovery\DiscoveryInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $discovery;
 
@@ -112,10 +113,10 @@ class LocalActionManagerTest extends UnitTestCase {
     parent::setUp();
 
     $this->argumentResolver = $this->createMock('\Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface');
-    $this->request = $this->createMock('Symfony\Component\HttpFoundation\Request');
-    $this->routeProvider = $this->createMock('Drupal\Core\Routing\RouteProviderInterface');
-    $this->moduleHandler = $this->createMock('Drupal\Core\Extension\ModuleHandlerInterface');
-    $this->cacheBackend = $this->createMock('Drupal\Core\Cache\CacheBackendInterface');
+    $this->request = $this->createStub(Request::class);
+    $this->routeProvider = $this->createStub(RouteProviderInterface::class);
+    $this->moduleHandler = $this->createStub(ModuleHandlerInterface::class);
+    $this->cacheBackend = $this->createStub(CacheBackendInterface::class);
 
     $cache_contexts_manager = $this->prophesize(CacheContextsManager::class);
     $cache_contexts_manager->assertValidTokens(Argument::any())
@@ -126,14 +127,14 @@ class LocalActionManagerTest extends UnitTestCase {
     \Drupal::setContainer($container);
 
     $access_result = (new AccessResultForbidden())->cachePerPermissions();
-    $this->accessManager = $this->createMock('Drupal\Core\Access\AccessManagerInterface');
-    $this->accessManager->expects($this->any())
+    $this->accessManager = $this->createStub(AccessManagerInterface::class);
+    $this->accessManager
       ->method('checkNamedRoute')
       ->willReturn($access_result);
-    $this->account = $this->createMock('Drupal\Core\Session\AccountInterface');
-    $this->discovery = $this->createMock('Drupal\Component\Plugin\Discovery\DiscoveryInterface');
-    $this->factory = $this->createMock('Drupal\Component\Plugin\Factory\FactoryInterface');
-    $route_match = $this->createMock('Drupal\Core\Routing\RouteMatchInterface');
+    $this->account = $this->createStub(AccountInterface::class);
+    $this->discovery = $this->createStub(DiscoveryInterface::class);
+    $this->factory = $this->createStub(FactoryInterface::class);
+    $route_match = $this->createStub(RouteMatchInterface::class);
 
     $this->localActionManager = new TestLocalActionManager($this->argumentResolver, $this->request, $route_match, $this->routeProvider, $this->moduleHandler, $this->cacheBackend, $this->accessManager, $this->account, $this->discovery, $this->factory);
   }
@@ -160,45 +161,45 @@ class LocalActionManagerTest extends UnitTestCase {
    */
   #[DataProvider('getActionsForRouteProvider')]
   public function testGetActionsForRoute($route_appears, array $plugin_definitions, array $expected_actions): void {
-    $this->discovery->expects($this->any())
+    $this->discovery
       ->method('getDefinitions')
       ->willReturn($plugin_definitions);
     $map = [];
     foreach ($plugin_definitions as $plugin_id => $plugin_definition) {
-      $plugin = $this->createMock('Drupal\Core\Menu\LocalActionDefault');
-      $plugin->expects($this->any())
+      $plugin = $this->createStub(LocalActionDefault::class);
+      $plugin
         ->method('getCacheContexts')
         ->willReturn([]);
-      $plugin->expects($this->any())
+      $plugin
         ->method('getCacheTags')
         ->willReturn([]);
-      $plugin->expects($this->any())
+      $plugin
         ->method('getCacheMaxAge')
         ->willReturn(0);
-      $plugin->expects($this->any())
+      $plugin
         ->method('getRouteName')
         ->willReturn($plugin_definition['route_name']);
-      $plugin->expects($this->any())
+      $plugin
         ->method('getRouteParameters')
         ->willReturn($plugin_definition['route_parameters'] ?? []);
-      $plugin->expects($this->any())
+      $plugin
         ->method('getTitle')
         ->willReturn($plugin_definition['title']);
-      $this->argumentResolver->expects($this->any())
+      $this->argumentResolver
         ->method('getArguments')
         ->with($this->request, [$plugin, 'getTitle'])
         ->willReturn([]);
 
-      $plugin->expects($this->any())
+      $plugin
         ->method('getWeight')
         ->willReturn($plugin_definition['weight']);
-      $this->argumentResolver->expects($this->any())
+      $this->argumentResolver
         ->method('getArguments')
         ->with($this->request, [$plugin, 'getTitle'])
         ->willReturn([]);
       $map[] = [$plugin_id, [], $plugin];
     }
-    $this->factory->expects($this->any())
+    $this->factory
       ->method('createInstance')
       ->willReturnMap($map);
 

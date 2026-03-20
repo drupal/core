@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Menu;
 
+use Drupal\Core\Access\AccessManagerInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\Context\CacheContextsManager;
 use Drupal\Core\DependencyInjection\Container;
@@ -12,6 +13,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Menu\DefaultMenuLinkTreeManipulators;
 use Drupal\Core\Menu\MenuLinkTreeElement;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -27,28 +29,28 @@ class DefaultMenuLinkTreeManipulatorsTest extends UnitTestCase {
   /**
    * The mocked access manager.
    *
-   * @var \Drupal\Core\Access\AccessManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Access\AccessManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $accessManager;
 
   /**
    * The mocked current user.
    *
-   * @var \Drupal\Core\Session\AccountInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Session\AccountInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $currentUser;
 
   /**
    * The mocked entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $entityTypeManager;
 
   /**
    * The mocked module handler.
    *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $moduleHandler;
 
@@ -86,12 +88,12 @@ class DefaultMenuLinkTreeManipulatorsTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->accessManager = $this->createMock('\Drupal\Core\Access\AccessManagerInterface');
-    $this->currentUser = $this->createMock('Drupal\Core\Session\AccountInterface');
+    $this->accessManager = $this->createStub(AccessManagerInterface::class);
+    $this->currentUser = $this->createStub(AccountInterface::class);
     $this->currentUser->method('isAuthenticated')
       ->willReturn(TRUE);
-    $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
-    $this->moduleHandler = $this->createMock(ModuleHandlerInterface::class);
+    $this->entityTypeManager = $this->createStub(EntityTypeManagerInterface::class);
+    $this->moduleHandler = $this->createStub(ModuleHandlerInterface::class);
 
     $this->defaultMenuTreeManipulators = new DefaultMenuLinkTreeManipulators($this->accessManager, $this->currentUser, $this->entityTypeManager, $this->moduleHandler);
 
@@ -100,6 +102,15 @@ class DefaultMenuLinkTreeManipulatorsTest extends UnitTestCase {
     $container->set('cache_contexts_manager', $this->cacheContextManager->reveal());
     $container->set('module_handler', $this->moduleHandler);
     \Drupal::setContainer($container);
+  }
+
+  /**
+   * Reinitializes the access manager as a mock object.
+   */
+  protected function setUpMockAccessManager(): void {
+    $this->accessManager = $this->createMock(AccessManagerInterface::class);
+    $reflection = new \ReflectionProperty($this->defaultMenuTreeManipulators, 'accessManager');
+    $reflection->setValue($this->defaultMenuTreeManipulators, $this->accessManager);
   }
 
   /**
@@ -219,6 +230,8 @@ class DefaultMenuLinkTreeManipulatorsTest extends UnitTestCase {
    * @legacy-covers ::menuLinkCheckAccess
    */
   public function testCheckAccess(): void {
+    $this->setUpMockAccessManager();
+
     // Those menu links that are non-external will have their access checks
     // performed. 9 routes, but 1 is external, 2 already have their 'access'
     // property set, and 1 is a child if an inaccessible menu link, so only 5
@@ -299,6 +312,8 @@ class DefaultMenuLinkTreeManipulatorsTest extends UnitTestCase {
    * @legacy-covers ::menuLinkCheckAccess
    */
   public function testCheckAccessTreeManipulator(): void {
+    $this->setUpMockAccessManager();
+
     $this->mockTree();
     // There are 9 checks but one is on an external link, so the route access
     // checker should be called only 8 times.
@@ -339,6 +354,8 @@ class DefaultMenuLinkTreeManipulatorsTest extends UnitTestCase {
    * @legacy-covers ::checkAccess
    */
   public function testCheckNodeAccess(): void {
+    $this->setUpMockAccessManager();
+
     $links = [
       1 => MenuLinkMock::createMock([
         'id' => 'node.1',
@@ -402,9 +419,8 @@ class DefaultMenuLinkTreeManipulatorsTest extends UnitTestCase {
     $storage->expects($this->once())
       ->method('getQuery')
       ->willReturn($query->reveal());
-    $this->entityTypeManager->expects($this->once())
+    $this->entityTypeManager
       ->method('getStorage')
-      ->with('node')
       ->willReturn($storage);
 
     $this->cacheContextManager->assertValidTokens(['user.permissions'])->shouldBeCalled()->willReturn(TRUE);
