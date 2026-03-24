@@ -6,6 +6,7 @@ namespace Drupal\Tests\Core\Routing;
 
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Routing\RedirectDestination;
+use Drupal\Core\Routing\UrlGeneratorInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -30,7 +31,7 @@ class RedirectDestinationTest extends UnitTestCase {
   /**
    * The mocked URL generator.
    *
-   * @var \Drupal\Core\Routing\UrlGeneratorInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Routing\UrlGeneratorInterface
    */
   protected $urlGenerator;
 
@@ -48,12 +49,12 @@ class RedirectDestinationTest extends UnitTestCase {
     parent::setUp();
 
     $this->requestStack = new RequestStack();
-    $this->urlGenerator = $this->createMock('Drupal\Core\Routing\UrlGeneratorInterface');
+    $this->urlGenerator = $this->createStub(UrlGeneratorInterface::class);
     $this->redirectDestination = new RedirectDestination($this->requestStack, $this->urlGenerator);
   }
 
   protected function setupUrlGenerator(): void {
-    $this->urlGenerator->expects($this->any())
+    $this->urlGenerator
       ->method('generateFromRoute')
       ->willReturnCallback(function ($route, $parameters, array $options): string {
         $query_string = '';

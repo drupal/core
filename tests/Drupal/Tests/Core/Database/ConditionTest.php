@@ -230,7 +230,7 @@ class ConditionTest extends UnitTestCase {
    * Tests that the core Condition can be overridden.
    */
   public function testContribCondition(): void {
-    $connection = new StubConnection($this->createMock(StubPDO::class), [
+    $connection = new StubConnection($this->createStub(StubPDO::class), [
       'namespace' => 'Drupal\mock\Driver\Database\mock',
       'prefix' => '',
     ]);

@@ -35,7 +35,7 @@ class DatabaseEventsTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->connection = new StubConnection($this->createMock(StubPDO::class), []);
+    $this->connection = new StubConnection($this->createStub(StubPDO::class), []);
   }
 
   /**
@@ -92,7 +92,7 @@ class DatabaseEventsTest extends UnitTestCase {
   public function testEventDispatchingWhenNoContainerAvailable(): void {
     $this->expectException(EventException::class);
     $this->expectExceptionMessage('The event dispatcher service is not available. Database API events can only be fired if the container is initialized');
-    $this->connection->dispatchEvent($this->createMock(DatabaseEvent::class));
+    $this->connection->dispatchEvent($this->createStub(DatabaseEvent::class));
   }
 
 }

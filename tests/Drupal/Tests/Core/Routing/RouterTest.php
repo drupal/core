@@ -48,8 +48,8 @@ class RouterTest extends UnitTestCase {
     $current_path_stack = $this->prophesize(CurrentPathStack::class);
     $router = new Router($route_provider->reveal(), $current_path_stack->reveal());
 
-    $request_context = $this->createMock(RequestContext::class);
-    $request_context->expects($this->any())
+    $request_context = $this->createStub(RequestContext::class);
+    $request_context
       ->method('getScheme')
       ->willReturn('http');
     $router->setContext($request_context);

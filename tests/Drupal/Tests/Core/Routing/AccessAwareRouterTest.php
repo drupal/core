@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Routing;
 
+use Drupal\Core\Access\AccessManagerInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Routing\AccessAwareRouter;
 use Drupal\Core\Routing\AccessAwareRouterInterface;
 use Drupal\Core\Routing\RouteObjectInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
@@ -40,12 +42,12 @@ class AccessAwareRouterTest extends UnitTestCase {
   protected $coreRouter;
 
   /**
-   * @var \Drupal\Core\Access\AccessManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Access\AccessManagerInterface
    */
   protected $accessManager;
 
   /**
-   * @var \Drupal\Core\Session\AccountInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Session\AccountInterface
    */
   protected $currentUser;
 
@@ -60,8 +62,8 @@ class AccessAwareRouterTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
     $this->route = new Route('test');
-    $this->accessManager = $this->createMock('Drupal\Core\Access\AccessManagerInterface');
-    $this->currentUser = $this->createMock('Drupal\Core\Session\AccountInterface');
+    $this->accessManager = $this->createStub(AccessManagerInterface::class);
+    $this->currentUser = $this->createStub(AccountInterface::class);
   }
 
   /**
@@ -81,6 +83,9 @@ class AccessAwareRouterTest extends UnitTestCase {
    * Tests the matchRequest() function for access allowed.
    */
   public function testMatchRequestAllowed(): void {
+    // Override the access manager so we can set expectations.
+    $this->accessManager = $this->createMock(AccessManagerInterface::class);
+
     $this->setupRouter();
     $request = new Request();
     $access_result = AccessResult::allowed();
@@ -101,6 +106,9 @@ class AccessAwareRouterTest extends UnitTestCase {
    * Tests the matchRequest() function for access denied.
    */
   public function testMatchRequestDenied(): void {
+    // Override the access manager so we can set expectations.
+    $this->accessManager = $this->createMock(AccessManagerInterface::class);
+
     $this->setupRouter();
     $request = new Request();
     $access_result = AccessResult::forbidden();
@@ -116,6 +124,9 @@ class AccessAwareRouterTest extends UnitTestCase {
    * Tests the matchRequest() function for access denied with reason message.
    */
   public function testCheckAccessResultWithReason(): void {
+    // Override the access manager so we can set expectations.
+    $this->accessManager = $this->createMock(AccessManagerInterface::class);
+
     $this->setupRouter();
     $request = new Request();
     $reason = $this->getRandomGenerator()->string();
@@ -135,7 +146,7 @@ class AccessAwareRouterTest extends UnitTestCase {
    * @legacy-covers ::__call
    */
   public function testCall(): void {
-    $mock_router = $this->createMock(RouterInterface::class);
+    $mock_router = $this->createStub(RouterInterface::class);
 
     $this->router = $this->getMockBuilder(MockRouterInterface::class)
       ->disableOriginalConstructor()
