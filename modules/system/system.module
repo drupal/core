@@ -184,15 +184,3 @@ function system_admin_compact_mode() {
   // its parser, so we use a converted cookie name.
   return \Drupal::request()->cookies->get('Drupal_visitor_admin_compact_mode', \Drupal::config('system.site')->get('admin_compact_mode'));
 }
-
-/**
- * Determines if Claro is the admin theme but not the active theme.
- *
- * @return bool
- *   TRUE if Claro is the admin theme but not the active theme.
- */
-function _system_is_claro_admin_and_not_active() {
-  $admin_theme = \Drupal::configFactory()->get('system.theme')->get('admin');
-  $active_theme = \Drupal::theme()->getActiveTheme()->getName();
-  return $active_theme !== 'claro' && $admin_theme === 'claro';
-}
