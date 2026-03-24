@@ -10,11 +10,15 @@ use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Routing\RedirectDestinationInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\Core\Url;
 use Drupal\entity_test\EntityTestListBuilder;
 use Drupal\Tests\UnitTestCase;
+use Drupal\user\RoleInterface;
+use Drupal\user\RoleStorageInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -49,7 +53,7 @@ class EntityListBuilderTest extends UnitTestCase {
   /**
    * The role storage used for testing.
    *
-   * @var \Drupal\user\RoleStorageInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\user\RoleStorageInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $roleStorage;
 
@@ -63,7 +67,7 @@ class EntityListBuilderTest extends UnitTestCase {
   /**
    * The entity used to construct the EntityListBuilder.
    *
-   * @var \Drupal\user\RoleInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\user\RoleInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $role;
 
@@ -87,11 +91,11 @@ class EntityListBuilderTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->role = $this->createMock('Drupal\user\RoleInterface');
-    $this->roleStorage = $this->createMock('\Drupal\user\RoleStorageInterface');
+    $this->role = $this->createStub(RoleInterface::class);
+    $this->roleStorage = $this->createStub(RoleStorageInterface::class);
     $this->moduleHandler = $this->createMock('\Drupal\Core\Extension\ModuleHandlerInterface');
-    $this->entityType = $this->createMock('\Drupal\Core\Entity\EntityTypeInterface');
-    $this->translationManager = $this->createMock('\Drupal\Core\StringTranslation\TranslationInterface');
+    $this->entityType = $this->createStub(EntityTypeInterface::class);
+    $this->translationManager = $this->createStub(TranslationInterface::class);
     $this->entityListBuilder = new TestEntityListBuilder($this->entityType, $this->roleStorage);
     $this->redirectDestination = $this->createMock(RedirectDestinationInterface::class);
     $this->container = new ContainerBuilder();
@@ -118,14 +122,14 @@ class EntityListBuilderTest extends UnitTestCase {
 
     $this->container->set('module_handler', $this->moduleHandler);
 
-    $this->role->expects($this->any())
+    $this->role
       ->method('access')
       ->willReturn(AccessResult::allowed());
-    $this->role->expects($this->any())
+    $this->role
       ->method('hasLinkTemplate')
       ->willReturn(TRUE);
     $url = Url::fromRoute('entity.user_role.collection');
-    $this->role->expects($this->any())
+    $this->role
       ->method('toUrl')
       ->willReturn($url);
 
@@ -170,22 +174,22 @@ class EntityListBuilderTest extends UnitTestCase {
 
     $this->container->set('module_handler', $this->moduleHandler);
 
-    $this->role->expects($this->any())
+    $this->role
       ->method('access')
       ->willReturn(AccessResult::allowed());
-    $this->role->expects($this->any())
+    $this->role
       ->method('hasLinkTemplate')
       ->willReturn(TRUE);
-    $this->role->expects($this->any())
+    $this->role
       ->method('toUrl')
       ->willReturnCallback(static fn(): Url => Url::fromRoute('entity.user_role.collection'));
-    $this->role->expects($this->any())
+    $this->role
       ->method('label')
       ->willReturn(NULL);
-    $this->role->expects($this->any())
+    $this->role
       ->method('bundle')
       ->willReturn('role');
-    $this->role->expects($this->any())
+    $this->role
       ->method('id')
       ->willReturn('role_id');
 

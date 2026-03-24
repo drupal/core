@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Field\FieldDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Field\FieldTypePluginManagerInterface;
+use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -214,18 +215,14 @@ class FieldDefinitionTest extends UnitTestCase {
     ];
     $expected_default_value = [$default_value];
     $definition->setDefaultValue($default_value);
-    $entity = $this->getMockBuilder(ContentEntityBaseMockableClass::class)
-      ->disableOriginalConstructor()
-      ->getMock();
+    $entity = $this->createStub(ContentEntityBaseMockableClass::class);
     // Set the field item list class to be used to avoid requiring the typed
     // data manager to retrieve it.
     $definition->setClass('Drupal\Core\Field\FieldItemList');
     $this->assertEquals($expected_default_value, $definition->getDefaultValue($entity));
 
-    $data_definition = $this->getMockBuilder('Drupal\Core\TypedData\DataDefinition')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $data_definition->expects($this->any())
+    $data_definition = $this->createStub(DataDefinition::class);
+    $data_definition
       ->method('getClass')
       ->willReturn('Drupal\Core\Field\FieldItemBase');
     $definition->setItemDefinition($data_definition);

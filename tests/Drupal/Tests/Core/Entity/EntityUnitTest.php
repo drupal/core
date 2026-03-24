@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Entity;
 
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\Context\CacheContextsManager;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityBase;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityTypeRepositoryInterface;
 use Drupal\Core\Language\Language;
-use Drupal\entity_test\Entity\EntityTestMul;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
@@ -64,7 +65,7 @@ class EntityUnitTest extends UnitTestCase {
   /**
    * The UUID generator used for testing.
    *
-   * @var \Drupal\Component\Uuid\UuidInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Component\Uuid\UuidInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $uuid;
 
@@ -103,24 +104,24 @@ class EntityUnitTest extends UnitTestCase {
     $this->entityTypeId = $this->randomMachineName();
 
     $this->entityType = $this->createMock('\Drupal\Core\Entity\EntityTypeInterface');
-    $this->entityType->expects($this->any())
+    $this->entityType
       ->method('getListCacheTags')
       ->willReturn([$this->entityTypeId . '_list']);
-    $this->entityType->expects($this->any())
+    $this->entityType
       ->method('getBundleListCacheTags')
       ->with($this->entityTypeId)
       ->willReturn([$this->entityTypeId . '_list:' . $this->entityTypeId]);
 
     $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
-    $this->entityTypeManager->expects($this->any())
+    $this->entityTypeManager
       ->method('getDefinition')
       ->with($this->entityTypeId)
       ->willReturn($this->entityType);
 
-    $this->uuid = $this->createMock('\Drupal\Component\Uuid\UuidInterface');
+    $this->uuid = $this->createStub(UuidInterface::class);
 
     $this->languageManager = $this->createMock('\Drupal\Core\Language\LanguageManagerInterface');
-    $this->languageManager->expects($this->any())
+    $this->languageManager
       ->method('getLanguage')
       ->with('en')
       ->willReturn(new Language(['id' => 'en']));
@@ -229,7 +230,7 @@ class EntityUnitTest extends UnitTestCase {
    * Tests language.
    */
   public function testLanguage(): void {
-    $this->entityType->expects($this->any())
+    $this->entityType
       ->method('getKey')
       ->willReturnMap([
         ['langcode', 'langcode'],
@@ -241,18 +242,10 @@ class EntityUnitTest extends UnitTestCase {
    * Setup for the tests of the ::load() method.
    */
   public function setupTestLoad(): void {
-    // Base our mocked entity on a real entity class so we can test if calling
+    // Base our test entity on a real entity class so we can test if calling
     // EntityBase::load() on the base class will bubble up to an actual entity.
-    $this->entityTypeId = 'entity_test_mul';
-    $methods = get_class_methods(EntityTestMul::class);
-    unset($methods[array_search('load', $methods)]);
-    unset($methods[array_search('loadMultiple', $methods)]);
-    unset($methods[array_search('create', $methods)]);
-    $this->entity = $this->getMockBuilder(EntityTestMul::class)
-      ->disableOriginalConstructor()
-      ->onlyMethods($methods)
-      ->getMock();
-
+    $this->entityTypeId = 'stub_entity_base';
+    $this->entity = new StubEntityBase([], $this->entityTypeId);
   }
 
   /**
@@ -402,7 +395,7 @@ class EntityUnitTest extends UnitTestCase {
    */
   public function testPreSave(): void {
     // This method is internal, so check for errors on calling it only.
-    $storage = $this->createMock('\Drupal\Core\Entity\EntityStorageInterface');
+    $storage = $this->createStub(EntityStorageInterface::class);
     // Our mocked entity->preSave() returns NULL, so assert that.
     $this->assertNull($this->entity->preSave($storage));
   }
@@ -412,7 +405,7 @@ class EntityUnitTest extends UnitTestCase {
    */
   public function testPostSave(): void {
     // This method is internal, so check for errors on calling it only.
-    $storage = $this->createMock('\Drupal\Core\Entity\EntityStorageInterface');
+    $storage = $this->createStub(EntityStorageInterface::class);
 
     // A creation should trigger the invalidation of the "list" cache tag.
     $this->entity->postSave($storage, FALSE);
@@ -439,7 +432,7 @@ class EntityUnitTest extends UnitTestCase {
       ->willReturn(TRUE);
 
     // This method is internal, so check for errors on calling it only.
-    $storage = $this->createMock('\Drupal\Core\Entity\EntityStorageInterface');
+    $storage = $this->createStub(EntityStorageInterface::class);
 
     // A creation should trigger the invalidation of the global list cache tag
     // and the one for the bundle.
@@ -464,7 +457,7 @@ class EntityUnitTest extends UnitTestCase {
    */
   public function testPreCreate(): void {
     // This method is internal, so check for errors on calling it only.
-    $storage = $this->createMock('\Drupal\Core\Entity\EntityStorageInterface');
+    $storage = $this->createStub(EntityStorageInterface::class);
     $values = [];
     // Our mocked entity->preCreate() returns NULL, so assert that.
     $this->assertNull($this->entity->preCreate($storage, $values));
@@ -475,7 +468,7 @@ class EntityUnitTest extends UnitTestCase {
    */
   public function testPostCreate(): void {
     // This method is internal, so check for errors on calling it only.
-    $storage = $this->createMock('\Drupal\Core\Entity\EntityStorageInterface');
+    $storage = $this->createStub(EntityStorageInterface::class);
     // Our mocked entity->postCreate() returns NULL, so assert that.
     $this->assertNull($this->entity->postCreate($storage));
   }
@@ -485,7 +478,7 @@ class EntityUnitTest extends UnitTestCase {
    */
   public function testPreDelete(): void {
     // This method is internal, so check for errors on calling it only.
-    $storage = $this->createMock('\Drupal\Core\Entity\EntityStorageInterface');
+    $storage = $this->createStub(EntityStorageInterface::class);
     // Our mocked entity->preDelete() returns NULL, so assert that.
     $this->assertNull($this->entity->preDelete($storage, [$this->entity]));
   }
@@ -538,7 +531,7 @@ class EntityUnitTest extends UnitTestCase {
    */
   public function testPostLoad(): void {
     // This method is internal, so check for errors on calling it only.
-    $storage = $this->createMock('\Drupal\Core\Entity\EntityStorageInterface');
+    $storage = $this->createStub(EntityStorageInterface::class);
     $entities = [$this->entity];
     // Our mocked entity->postLoad() returns NULL, so assert that.
     $this->assertNull($this->entity->postLoad($storage, $entities));
@@ -581,9 +574,7 @@ class EntityUnitTest extends UnitTestCase {
    * @legacy-covers ::addCacheContexts
    */
   public function testCacheContexts(): void {
-    $cache_contexts_manager = $this->getMockBuilder('Drupal\Core\Cache\Context\CacheContextsManager')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $cache_contexts_manager = $this->createStub(CacheContextsManager::class);
     $cache_contexts_manager->method('assertValidTokens')->willReturn(TRUE);
 
     $container = new ContainerBuilder();

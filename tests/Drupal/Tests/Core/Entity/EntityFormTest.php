@@ -63,10 +63,10 @@ class EntityFormTest extends UnitTestCase {
       ->onlyMethods(['getEntityType', 'bundle'])
       ->getMock();
 
-    $entity->expects($this->any())
+    $entity->expects($this->once())
       ->method('getEntityType')
       ->willReturn($this->entityType);
-    $entity->expects($this->any())
+    $entity
       ->method('bundle')
       ->willReturn($definition['bundle']);
 

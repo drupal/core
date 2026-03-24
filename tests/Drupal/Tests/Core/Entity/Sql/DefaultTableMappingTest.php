@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Entity\Sql;
 
+use Drupal\Core\Entity\ContentEntityTypeInterface;
 use Drupal\Core\Entity\Sql\DefaultTableMapping;
 use Drupal\Core\Entity\Sql\SqlContentEntityStorageException;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Tests\Core\Field\TestBaseFieldDefinitionInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * Tests Drupal\Core\Entity\Sql\DefaultTableMapping.
@@ -22,7 +25,7 @@ class DefaultTableMappingTest extends UnitTestCase {
   /**
    * The entity type definition.
    *
-   * @var \Drupal\Core\Entity\ContentEntityTypeInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Entity\ContentEntityTypeInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $entityType;
 
@@ -32,9 +35,8 @@ class DefaultTableMappingTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->entityType = $this->createMock('\Drupal\Core\Entity\ContentEntityTypeInterface');
+    $this->entityType = $this->createStub(ContentEntityTypeInterface::class);
     $this->entityType
-      ->expects($this->any())
       ->method('id')
       ->willReturn('entity_test');
   }
@@ -227,7 +229,7 @@ class DefaultTableMappingTest extends UnitTestCase {
 
     $definitions['test'] = $this->setUpDefinition('test', ['value']);
     // Set custom storage.
-    $definitions['test']->expects($this->any())
+    $definitions['test']
       ->method('hasCustomStorage')
       ->wilLReturn(TRUE);
     $table_mapping = new TestDefaultTableMapping($this->entityType, $definitions);
@@ -304,7 +306,7 @@ class DefaultTableMappingTest extends UnitTestCase {
     $definitions['test'] = $this->setUpDefinition('test', $columns, $base_field);
 
     // Mark field storage definition as custom storage.
-    $definitions['test']->expects($this->any())
+    $definitions['test']
       ->method('hasCustomStorage')
       ->willReturn(TRUE);
 
@@ -357,40 +359,33 @@ class DefaultTableMappingTest extends UnitTestCase {
 
     $definition = $this->setUpDefinition($field_name, $columns);
     $definition
-      ->expects($this->any())
       ->method('getColumns')
       ->willReturn($columns);
-    $definition->expects($this->any())
+    $definition
       ->method('getTargetEntityTypeId')
       ->willReturn('entity_test');
 
     $this->entityType
-      ->expects($this->any())
       ->method('getBaseTable')
       ->willReturn($table_names['base'] ?? 'entity_test');
 
     $this->entityType
-      ->expects($this->any())
       ->method('getDataTable')
       ->willReturn($table_names['data'] ?? FALSE);
 
     $this->entityType
-      ->expects($this->any())
       ->method('getRevisionTable')
       ->willReturn($table_names['revision'] ?? FALSE);
 
     $this->entityType
-      ->expects($this->any())
       ->method('isTranslatable')
       ->willReturn(isset($table_names['data']));
 
     $this->entityType
-      ->expects($this->any())
       ->method('isRevisionable')
       ->willReturn(isset($table_names['revision']));
 
     $this->entityType
-      ->expects($this->any())
       ->method('getRevisionMetadataKeys')
       ->willReturn([]);
 
@@ -457,23 +452,20 @@ class DefaultTableMappingTest extends UnitTestCase {
     $field_name = $info['field_name'];
 
     $definition = $this->setUpDefinition($field_name, []);
-    $definition->expects($this->any())
+    $definition
       ->method('getTargetEntityTypeId')
       ->willReturn($entity_type_id);
-    $definition->expects($this->any())
+    $definition
       ->method('getUniqueStorageIdentifier')
       ->willReturn($entity_type_id . '-' . $field_name);
 
     $this->entityType
-      ->expects($this->any())
       ->method('getBaseTable')
       ->willReturn($info['entity_type_id']);
     $this->entityType
-      ->expects($this->any())
       ->method('isTranslatable')
       ->willReturn(FALSE);
     $this->entityType
-      ->expects($this->any())
       ->method('isRevisionable')
       ->willReturn(FALSE);
 
@@ -582,18 +574,18 @@ class DefaultTableMappingTest extends UnitTestCase {
    *   Flag indicating whether the field should be treated as a base or bundle
    *   field.
    *
-   * @return \Drupal\Core\Field\FieldStorageDefinitionInterface|\PHPUnit\Framework\MockObject\MockObject
-   *   A mock field storage definition with configured field properties.
+   * @return \Drupal\Core\Field\FieldStorageDefinitionInterface|\PHPUnit\Framework\MockObject\Stub
+   *   A stub field storage definition with configured field properties.
    */
-  protected function setUpDefinition($name, array $column_names, $base_field = TRUE): MockObject {
-    $definition = $this->createMock('Drupal\Tests\Core\Field\TestBaseFieldDefinitionInterface');
-    $definition->expects($this->any())
+  protected function setUpDefinition($name, array $column_names, $base_field = TRUE): FieldStorageDefinitionInterface&Stub {
+    $definition = $this->createStub(TestBaseFieldDefinitionInterface::class);
+    $definition
       ->method('isBaseField')
       ->willReturn($base_field);
-    $definition->expects($this->any())
+    $definition
       ->method('getName')
       ->willReturn($name);
-    $definition->expects($this->any())
+    $definition
       ->method('getColumns')
       ->willReturn(array_fill_keys($column_names, []));
     return $definition;

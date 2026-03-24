@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Link;
+use Drupal\Core\Utility\LinkGeneratorInterface;
 use Drupal\Tests\Core\Config\Entity\StubConfigEntity;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -32,7 +33,7 @@ class EntityLinkTest extends UnitTestCase {
   /**
    * The tested link generator.
    *
-   * @var \Drupal\Core\Utility\LinkGeneratorInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Utility\LinkGeneratorInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $linkGenerator;
 
@@ -50,7 +51,7 @@ class EntityLinkTest extends UnitTestCase {
     parent::setUp();
 
     $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
-    $this->linkGenerator = $this->createMock('Drupal\Core\Utility\LinkGeneratorInterface');
+    $this->linkGenerator = $this->createStub(LinkGeneratorInterface::class);
     $this->languageManager = $this->createMock('Drupal\Core\Language\LanguageManagerInterface');
 
     $container = new ContainerBuilder();
@@ -67,7 +68,7 @@ class EntityLinkTest extends UnitTestCase {
   public function testToLink($entity_label, $link_text, $expected_text, string $link_rel = 'canonical', array $link_options = []): void {
     $language = new Language(['id' => 'es']);
     $link_options += ['language' => $language];
-    $this->languageManager->expects($this->any())
+    $this->languageManager->expects($this->atLeastOnce())
       ->method('getLanguage')
       ->with('es')
       ->willReturn($language);
@@ -84,7 +85,7 @@ class EntityLinkTest extends UnitTestCase {
     $entity_type->expects($this->once())
       ->method('getLinkTemplates')
       ->willReturn($route_name_map);
-    $entity_type->expects($this->any())
+    $entity_type->expects($this->atLeastOnce())
       ->method('getKey')
       ->willReturnMap([
         ['label', 'label'],
@@ -92,7 +93,7 @@ class EntityLinkTest extends UnitTestCase {
       ]);
 
     $this->entityTypeManager
-      ->expects($this->any())
+      ->expects($this->atLeastOnce())
       ->method('getDefinition')
       ->with($entity_type_id)
       ->willReturn($entity_type);

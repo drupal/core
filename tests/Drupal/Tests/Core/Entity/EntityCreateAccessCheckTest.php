@@ -8,6 +8,9 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\Context\CacheContextsManager;
 use Drupal\Core\DependencyInjection\Container;
 use Drupal\Core\Entity\EntityCreateAccessCheck;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -25,7 +28,7 @@ class EntityCreateAccessCheckTest extends UnitTestCase {
   /**
    * The mocked entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   public $entityTypeManager;
 
@@ -42,7 +45,7 @@ class EntityCreateAccessCheckTest extends UnitTestCase {
     $container->set('cache_contexts_manager', $cache_contexts_manager);
     \Drupal::setContainer($container);
 
-    $this->entityTypeManager = $this->createMock('Drupal\Core\Entity\EntityTypeManagerInterface');
+    $this->entityTypeManager = $this->createStub(EntityTypeManagerInterface::class);
   }
 
   /**
@@ -94,7 +97,7 @@ class EntityCreateAccessCheckTest extends UnitTestCase {
         ->with($entity_bundle)
         ->willReturn($access_result);
 
-      $this->entityTypeManager->expects($this->any())
+      $this->entityTypeManager
         ->method('getAccessControlHandler')
         ->willReturn($access_control_handler);
     }
@@ -104,7 +107,7 @@ class EntityCreateAccessCheckTest extends UnitTestCase {
     $route = $this->getMockBuilder('Symfony\Component\Routing\Route')
       ->disableOriginalConstructor()
       ->getMock();
-    $route->expects($this->any())
+    $route
       ->method('getRequirement')
       ->with('_entity_create_access')
       ->willReturn($requirement);
@@ -114,12 +117,12 @@ class EntityCreateAccessCheckTest extends UnitTestCase {
       $raw_variables->set('bundle_argument', $entity_bundle);
     }
 
-    $route_match = $this->createMock('Drupal\Core\Routing\RouteMatchInterface');
-    $route_match->expects($this->any())
+    $route_match = $this->createStub(RouteMatchInterface::class);
+    $route_match
       ->method('getRawParameters')
       ->willReturn($raw_variables);
 
-    $account = $this->createMock('Drupal\Core\Session\AccountInterface');
+    $account = $this->createStub(AccountInterface::class);
     $this->assertEquals($expected_access_result, $applies_check->access($route, $route_match, $account));
   }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\Core\Entity;
 
 use Drupal\Core\Entity\EntityFormBuilder;
+use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
@@ -52,11 +53,11 @@ class EntityFormBuilderTest extends UnitTestCase {
    * Tests the getForm() method.
    */
   public function testGetForm(): void {
-    $form_controller = $this->createMock('Drupal\Core\Entity\EntityFormInterface');
-    $form_controller->expects($this->any())
+    $form_controller = $this->createStub(EntityFormInterface::class);
+    $form_controller
       ->method('getFormId')
       ->willReturn('the_form_id');
-    $this->entityTypeManager->expects($this->any())
+    $this->entityTypeManager
       ->method('getFormObject')
       ->with('the_entity_type', 'default')
       ->willReturn($form_controller);

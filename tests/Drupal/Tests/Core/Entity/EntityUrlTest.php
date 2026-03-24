@@ -95,7 +95,7 @@ class EntityUrlTest extends UnitTestCase {
    * Tests the toUrl() method without an entity ID.
    */
   public function testToUrlNoId(): void {
-    $entity = $this->getEntity(StubEntityBase::class, []);
+    $entity = new StubEntityBase([], static::ENTITY_TYPE_ID);
 
     $this->expectException(EntityMalformedException::class);
     $this->expectExceptionMessage('The "' . static::ENTITY_TYPE_ID . '" entity cannot have a URI as it does not have an ID');
@@ -449,7 +449,7 @@ class EntityUrlTest extends UnitTestCase {
     // Test route with no mandatory parameters.
     $this->registerLinkTemplate('canonical');
     $route_name_0 = 'entity.' . static::ENTITY_TYPE_ID . '.canonical';
-    $url_generator->expects($this->any())
+    $url_generator
       ->method('generateFromRoute')
       ->with($route_name_0)
       ->willReturn((new GeneratedUrl())->setGeneratedUrl('/entity_test'));
@@ -458,7 +458,7 @@ class EntityUrlTest extends UnitTestCase {
     // Test route with non-default mandatory parameters.
     $this->registerLinkTemplate('{non_default_parameter}');
     $route_name_1 = 'entity.' . static::ENTITY_TYPE_ID . '.{non_default_parameter}';
-    $url_generator->expects($this->any())
+    $url_generator
       ->method('generateFromRoute')
       ->with($route_name_1)
       ->willThrowException(new MissingMandatoryParametersException($route_name_1, ['missing_parameter']));
@@ -494,7 +494,7 @@ class EntityUrlTest extends UnitTestCase {
     $this->entityType = $this->prophesize(EntityTypeInterface::class);
     $this->entityType->getLinkTemplates()->willReturn([]);
     $this->entityType->getKey('langcode')->willReturn(FALSE);
-    $entity->method('getEntityType')->willReturn($this->entityType->reveal());
+    $entity->expects($this->atLeastOnce())->method('getEntityType')->willReturn($this->entityType->reveal());
 
     $this->entityTypeBundleInfo = $this->prophesize(EntityTypeBundleInfoInterface::class);
     $entity->method('entityTypeBundleInfo')->willReturn($this->entityTypeBundleInfo->reveal());

@@ -54,18 +54,18 @@ class BaseFieldDefinitionTest extends UnitTestCase {
       ],
     ];
 
-    $field_type_manager->expects($this->any())
+    $field_type_manager
       ->method('getDefinitions')
       ->willReturn([$this->fieldType => $this->fieldTypeDefinition]);
-    $field_type_manager->expects($this->any())
+    $field_type_manager
       ->method('getDefinition')
       ->with($this->fieldType)
       ->willReturn($this->fieldTypeDefinition);
-    $field_type_manager->expects($this->any())
+    $field_type_manager->expects($this->atLeastOnce())
       ->method('getDefaultStorageSettings')
       ->with($this->fieldType)
       ->willReturn($this->fieldTypeDefinition['storage_settings']);
-    $field_type_manager->expects($this->any())
+    $field_type_manager->expects($this->atLeastOnce())
       ->method('getDefaultFieldSettings')
       ->with($this->fieldType)
       ->willReturn($this->fieldTypeDefinition['field_settings']);
@@ -167,10 +167,7 @@ class BaseFieldDefinitionTest extends UnitTestCase {
     ];
     $expected_default_value = [$default_value];
     $definition->setDefaultValue($default_value);
-    $entity = $this->getMockBuilder(ContentEntityBaseMockableClass::class)
-      ->disableOriginalConstructor()
-      ->onlyMethods([])
-      ->getMock();
+    $entity = $this->createStub(ContentEntityBaseMockableClass::class);
     // Set the field item list class to be used to avoid requiring the typed
     // data manager to retrieve it.
     $definition->setClass('Drupal\Core\Field\FieldItemList');
@@ -180,7 +177,7 @@ class BaseFieldDefinitionTest extends UnitTestCase {
     $data_definition = $this->getMockBuilder('Drupal\Core\TypedData\DataDefinition')
       ->disableOriginalConstructor()
       ->getMock();
-    $data_definition->expects($this->any())
+    $data_definition->expects($this->atLeastOnce())
       ->method('getClass')
       ->willReturn('Drupal\Core\Field\FieldItemBase');
     $definition->setItemDefinition($data_definition);
@@ -224,7 +221,7 @@ class BaseFieldDefinitionTest extends UnitTestCase {
     $data_definition = $this->getMockBuilder('Drupal\Core\TypedData\DataDefinition')
       ->disableOriginalConstructor()
       ->getMock();
-    $data_definition->expects($this->any())
+    $data_definition->expects($this->atLeastOnce())
       ->method('getClass')
       ->willReturn('Drupal\Core\Field\FieldItemBase');
     $definition->setItemDefinition($data_definition);
