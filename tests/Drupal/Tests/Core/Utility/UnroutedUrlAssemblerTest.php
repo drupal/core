@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\Core\Utility;
 
 use Drupal\Core\GeneratedUrl;
+use Drupal\Core\PathProcessor\OutboundPathProcessorInterface;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Utility\UnroutedUrlAssembler;
 use Drupal\Tests\UnitTestCase;
@@ -46,7 +47,7 @@ class UnroutedUrlAssemblerTest extends UnitTestCase {
   /**
    * The mocked outbound path processor.
    *
-   * @var \Drupal\Core\PathProcessor\OutboundPathProcessorInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\PathProcessor\OutboundPathProcessorInterface
    */
   protected $pathProcessor;
 
@@ -57,8 +58,17 @@ class UnroutedUrlAssemblerTest extends UnitTestCase {
     parent::setUp();
 
     $this->requestStack = new RequestStack();
-    $this->pathProcessor = $this->createMock('Drupal\Core\PathProcessor\OutboundPathProcessorInterface');
+    $this->pathProcessor = $this->createStub(OutboundPathProcessorInterface::class);
     $this->unroutedUrlAssembler = new UnroutedUrlAssembler($this->requestStack, $this->pathProcessor);
+  }
+
+  /**
+   * Reinitializes the path processor as a mock object.
+   */
+  protected function setUpMockPathProcessor(): void {
+    $this->pathProcessor = $this->createMock(OutboundPathProcessorInterface::class);
+    $reflection = new \ReflectionProperty($this->unroutedUrlAssembler, 'pathProcessor');
+    $reflection->setValue($this->unroutedUrlAssembler, $this->pathProcessor);
   }
 
   /**
@@ -86,6 +96,7 @@ class UnroutedUrlAssemblerTest extends UnitTestCase {
   #[DataProvider('providerTestAssembleWithExternalUrl')]
   public function testAssembleWithExternalUrl(string $uri, array $options, string $expected): void {
     $this->setupRequestStack(FALSE);
+
     $this->assertEquals($expected, $this->unroutedUrlAssembler->assemble($uri, $options));
     $generated_url = $this->unroutedUrlAssembler->assemble($uri, $options, TRUE);
     $this->assertEquals($expected, $generated_url->getGeneratedUrl());
@@ -168,6 +179,7 @@ class UnroutedUrlAssemblerTest extends UnitTestCase {
    * Tests assemble with not enabled processing.
    */
   public function testAssembleWithNotEnabledProcessing(): void {
+    $this->setUpMockPathProcessor();
     $this->setupRequestStack(FALSE);
     $this->pathProcessor->expects($this->never())
       ->method('processOutbound');
@@ -179,6 +191,7 @@ class UnroutedUrlAssemblerTest extends UnitTestCase {
    * Tests assemble with enabled processing.
    */
   public function testAssembleWithEnabledProcessing(): void {
+    $this->setUpMockPathProcessor();
     $this->setupRequestStack(FALSE);
     $this->pathProcessor->expects($this->exactly(2))
       ->method('processOutbound')
@@ -203,6 +216,7 @@ class UnroutedUrlAssemblerTest extends UnitTestCase {
    * Tests assemble with starting slash enabled processing.
    */
   public function testAssembleWithStartingSlashEnabledProcessing(): void {
+    $this->setUpMockPathProcessor();
     $this->setupRequestStack(FALSE);
     $this->pathProcessor->expects($this->exactly(2))
       ->method('processOutbound')

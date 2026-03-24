@@ -13,6 +13,7 @@ use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -34,9 +35,7 @@ class DrupalTest extends UnitTestCase {
    */
   protected function setUp(): void {
     parent::setUp();
-    $this->container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
-      ->onlyMethods(['get'])
-      ->getMock();
+    $this->container = new ContainerBuilder();
   }
 
   /**
@@ -218,13 +217,12 @@ class DrupalTest extends UnitTestCase {
    * Tests the entityQuery() method.
    */
   public function testEntityQuery(): void {
-    $query = $this->createMock(QueryInterface::class);
     $storage = $this->createMock(EntityStorageInterface::class);
     $storage
       ->expects($this->once())
       ->method('getQuery')
       ->with('OR')
-      ->willReturn($query);
+      ->willReturn($this->createStub(QueryInterface::class));
 
     $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
     $entity_type_manager
@@ -242,13 +240,12 @@ class DrupalTest extends UnitTestCase {
    * Tests the entityQueryAggregate() method.
    */
   public function testEntityQueryAggregate(): void {
-    $query = $this->createMock(QueryAggregateInterface::class);
     $storage = $this->createMock(EntityStorageInterface::class);
     $storage
       ->expects($this->once())
       ->method('getAggregateQuery')
       ->with('OR')
-      ->willReturn($query);
+      ->willReturn($this->createStub(QueryAggregateInterface::class));
 
     $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
     $entity_type_manager
@@ -406,6 +403,10 @@ class DrupalTest extends UnitTestCase {
    *   The value to return from the mocked container get() method.
    */
   protected function setMockContainerService($service_name, $return = NULL): void {
+    $this->container = $this->getMockBuilder(ContainerBuilder::class)
+      ->onlyMethods(['get'])
+      ->getMock();
+
     $this->container->expects($this->once())
       ->method('get')
       ->with($service_name)

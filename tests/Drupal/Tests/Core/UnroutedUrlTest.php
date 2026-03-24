@@ -6,6 +6,8 @@ namespace Drupal\Tests\Core;
 
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Url;
+use Drupal\Core\Utility\UnroutedUrlAssemblerInterface;
+use Drupal\Tests\Core\Routing\TestRouterInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -24,14 +26,14 @@ class UnroutedUrlTest extends UnitTestCase {
   /**
    * The URL assembler.
    *
-   * @var \Drupal\Core\Utility\UnroutedUrlAssemblerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Utility\UnroutedUrlAssemblerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $urlAssembler;
 
   /**
    * The router.
    *
-   * @var \Drupal\Tests\Core\Routing\TestRouterInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Tests\Core\Routing\TestRouterInterface
    */
   protected $router;
 
@@ -55,16 +57,24 @@ class UnroutedUrlTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->urlAssembler = $this->createMock('Drupal\Core\Utility\UnroutedUrlAssemblerInterface');
-    $this->urlAssembler->expects($this->any())
+    $this->urlAssembler = $this->createStub(UnroutedUrlAssemblerInterface::class);
+    $this->urlAssembler
       ->method('assemble')
       ->willReturnArgument(0);
 
-    $this->router = $this->createMock('Drupal\Tests\Core\Routing\TestRouterInterface');
+    $this->router = $this->createStub(TestRouterInterface::class);
     $container = new ContainerBuilder();
     $container->set('router.no_access_checks', $this->router);
     $container->set('unrouted_url_assembler', $this->urlAssembler);
     \Drupal::setContainer($container);
+  }
+
+  /**
+   * Reinitializes the router as a mock object.
+   */
+  protected function setUpMockRouter(): void {
+    $this->router = $this->createMock(TestRouterInterface::class);
+    \Drupal::getContainer()->set('router.no_access_checks', $this->router);
   }
 
   /**
@@ -135,6 +145,7 @@ class UnroutedUrlTest extends UnitTestCase {
    * Tests the createFromRequest method.
    */
   public function testCreateFromRequest(): void {
+    $this->setUpMockRouter();
     $request = Request::create('/test-path');
 
     $this->router->expects($this->once())

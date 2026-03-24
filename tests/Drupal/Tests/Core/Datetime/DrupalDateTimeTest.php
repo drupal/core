@@ -254,8 +254,8 @@ class DrupalDateTimeTest extends UnitTestCase {
    * @legacy-covers ::format
    */
   public function testRfc2822DateFormat(): void {
-    $language_manager = $this->createMock(LanguageManager::class);
-    $language_manager->expects($this->any())
+    $language_manager = $this->createStub(LanguageManager::class);
+    $language_manager
       ->method('getCurrentLanguage')
       ->willReturn(new Language(['id' => $this->randomMachineName(2)]));
     $container = new ContainerBuilder();

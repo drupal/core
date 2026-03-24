@@ -8,9 +8,14 @@ use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Access\AccessManagerInterface;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\GeneratedUrl;
+use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Routing\RouteMatch;
 use Drupal\Core\Routing\RouteObjectInterface;
+use Drupal\Core\Routing\UrlGeneratorInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
+use Drupal\path_alias\AliasManagerInterface;
+use Drupal\Tests\Core\Routing\TestRouterInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -38,21 +43,21 @@ class UrlTest extends UnitTestCase {
   /**
    * The URL generator.
    *
-   * @var \Drupal\Core\Routing\UrlGeneratorInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Routing\UrlGeneratorInterface
    */
   protected $urlGenerator;
 
   /**
    * The path alias manager.
    *
-   * @var \Drupal\path_alias\AliasManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\path_alias\AliasManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $pathAliasManager;
 
   /**
    * The router.
    *
-   * @var \Drupal\Tests\Core\Routing\TestRouterInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Tests\Core\Routing\TestRouterInterface
    */
   protected $router;
 
@@ -66,7 +71,7 @@ class UrlTest extends UnitTestCase {
   /**
    * The mocked path validator.
    *
-   * @var \Drupal\Core\Path\PathValidatorInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Path\PathValidatorInterface
    */
   protected $pathValidator;
 
@@ -105,18 +110,18 @@ class UrlTest extends UnitTestCase {
         (new GeneratedUrl())->setGeneratedUrl($values[4]),
       ];
     }
-    $this->urlGenerator = $this->createMock('Drupal\Core\Routing\UrlGeneratorInterface');
-    $this->urlGenerator->expects($this->any())
+    $this->urlGenerator = $this->createStub(UrlGeneratorInterface::class);
+    $this->urlGenerator
       ->method('generateFromRoute')
       ->willReturnMap($generate_from_route_map);
 
-    $this->pathAliasManager = $this->createMock('Drupal\path_alias\AliasManagerInterface');
-    $this->pathAliasManager->expects($this->any())
+    $this->pathAliasManager = $this->createStub(AliasManagerInterface::class);
+    $this->pathAliasManager
       ->method('getPathByAlias')
       ->willReturnMap($alias_map);
 
-    $this->router = $this->createMock('Drupal\Tests\Core\Routing\TestRouterInterface');
-    $this->pathValidator = $this->createMock('Drupal\Core\Path\PathValidatorInterface');
+    $this->router = $this->createStub(TestRouterInterface::class);
+    $this->pathValidator = $this->createStub(PathValidatorInterface::class);
 
     $this->container = new ContainerBuilder();
     $this->container->set('router.no_access_checks', $this->router);
@@ -127,9 +132,35 @@ class UrlTest extends UnitTestCase {
   }
 
   /**
+   * Reinitializes the path validator as a mock object.
+   */
+  protected function setUpMockPathValidator(): void {
+    $this->pathValidator = $this->createMock(PathValidatorInterface::class);
+    $this->container->set('path.validator', $this->pathValidator);
+  }
+
+  /**
+   * Reinitializes the router as a mock object.
+   */
+  protected function setUpMockRouter(): void {
+    $this->router = $this->createMock(TestRouterInterface::class);
+    $this->container->set('router.no_access_checks', $this->router);
+  }
+
+  /**
+   * Reinitializes the URL generator as a mock object.
+   */
+  protected function setUpMockUrlGenerator(): void {
+    $this->urlGenerator = $this->createMock(UrlGeneratorInterface::class);
+    $this->container->set('url_generator', $this->urlGenerator);
+  }
+
+  /**
    * Tests creating a URL from a request.
    */
   public function testUrlFromRequest(): array {
+    $this->setUpMockRouter();
+
     $this->router->expects($this->exactly(3))
       ->method('matchRequest')
       ->willReturnCallback(function (Request $request): array {
@@ -163,6 +194,8 @@ class UrlTest extends UnitTestCase {
    */
   #[DataProvider('providerUrlFromRequestWithQueryParameters')]
   public function testUrlFromRequestWithQueryParameters(array $queryParameters): void {
+    $this->setUpMockRouter();
+
     $this->router->expects($this->once())
       ->method('matchRequest')
       ->willReturn([
@@ -239,6 +272,8 @@ class UrlTest extends UnitTestCase {
    * @legacy-covers ::fromUri
    */
   public function testFromRoutedPathWithInvalidRoute(): void {
+    $this->setUpMockPathValidator();
+
     $this->pathValidator->expects($this->once())
       ->method('getUrlIfValidWithoutAccessCheck')
       ->with('invalid-path')
@@ -254,6 +289,8 @@ class UrlTest extends UnitTestCase {
    * @legacy-covers ::fromUri
    */
   public function testFromRoutedPathWithValidRoute(): void {
+    $this->setUpMockPathValidator();
+
     $url = Url::fromRoute('test_route');
     $this->pathValidator->expects($this->once())
       ->method('getUrlIfValidWithoutAccessCheck')
@@ -267,6 +304,8 @@ class UrlTest extends UnitTestCase {
    * Tests the createFromRequest method.
    */
   public function testCreateFromRequest(): void {
+    $this->setUpMockRouter();
+
     $attributes = [
       '_raw_variables' => new InputBag([
         'color' => 'chartreuse',
@@ -291,6 +330,8 @@ class UrlTest extends UnitTestCase {
    * @legacy-covers ::createFromRequest
    */
   public function testUrlFromRequestInvalid(): void {
+    $this->setUpMockRouter();
+
     $request = Request::create('/test-path');
 
     $this->router->expects($this->once())
@@ -505,7 +546,7 @@ class UrlTest extends UnitTestCase {
    */
   #[DataProvider('accessProvider')]
   public function testAccessRouted(bool $access): void {
-    $account = $this->createMock('Drupal\Core\Session\AccountInterface');
+    $account = $this->createStub(AccountInterface::class);
     $url = new TestUrl('entity.node.canonical', ['node' => 3]);
     $url->setAccessManager($this->getMockAccessManager($access, $account));
     $this->assertEquals($access, $url->access($account));
@@ -515,7 +556,7 @@ class UrlTest extends UnitTestCase {
    * Tests the access() method for unrouted URLs (they always have access).
    */
   public function testAccessUnrouted(): void {
-    $account = $this->createMock('Drupal\Core\Session\AccountInterface');
+    $account = $this->createStub(AccountInterface::class);
     $url = TestUrl::fromUri('base:kittens');
     $access_manager = $this->createMock('Drupal\Core\Access\AccessManagerInterface');
     $access_manager->expects($this->never())
@@ -614,6 +655,8 @@ class UrlTest extends UnitTestCase {
    * @legacy-covers ::fromUri
    */
   public function testInvalidEntityUriParameter(): void {
+    $this->setUpMockUrlGenerator();
+
     // Make the mocked URL generator behave like the actual one.
     $this->urlGenerator->expects($this->once())
       ->method('generateFromRoute')
@@ -662,7 +705,7 @@ class UrlTest extends UnitTestCase {
   #[DataProvider('providerTestToUriStringForInternal')]
   public function testToUriStringForInternal(string $uri, array $options, string $uri_string): void {
     $url = Url::fromRoute('entity.test_entity.canonical', ['test_entity' => '1']);
-    $this->pathValidator->expects($this->any())
+    $this->pathValidator
       ->method('getUrlIfValidWithoutAccessCheck')
       ->willReturnMap([
         ['test-entity/1', $url],
