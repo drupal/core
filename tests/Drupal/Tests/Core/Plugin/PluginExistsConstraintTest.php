@@ -28,7 +28,7 @@ class PluginExistsConstraintTest extends UnitTestCase {
   public function testMissingOption(): void {
     $this->expectException(MissingOptionsException::class);
     $this->expectExceptionMessage('The option "manager" must be set for constraint "Drupal\Core\Plugin\Plugin\Validation\Constraint\PluginExistsConstraint".');
-    $container = $this->createMock(ContainerInterface::class);
+    $container = $this->createStub(ContainerInterface::class);
     PluginExistsConstraint::create($container, [], 'test_plugin_id', []);
   }
 
@@ -40,8 +40,8 @@ class PluginExistsConstraintTest extends UnitTestCase {
    */
   public function testManagerOption(): void {
     $container = $this->createMock(ContainerInterface::class);
-    $manager = $this->createMock(PluginManagerInterface::class);
-    $container->expects($this->any())
+    $manager = $this->createStub(PluginManagerInterface::class);
+    $container
       ->method('get')
       ->with('plugin.manager.mock')
       ->willReturn($manager);

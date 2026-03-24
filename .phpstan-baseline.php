@@ -41250,12 +41250,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/ParamConverter/ParamConverterManagerTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Plugin\\\\CategorizingPluginManagerTraitTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Plugin/CategorizingPluginManagerTraitTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Core\\\\Plugin\\\\CategorizingPluginManager\\:\\:processDefinitionCategory\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -41268,30 +41262,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Plugin/CategorizingPluginManagerTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Plugin\\\\Context\\\\ContextTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Plugin/Context/ContextTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Plugin\\\\ContextHandlerTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Plugin/ContextHandlerTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Plugin\\\\DefaultLazyPluginCollectionTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Plugin/DefaultLazyPluginCollectionTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Plugin\\\\DefaultPluginManagerTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Plugin/DefaultPluginManagerTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Core\\\\Plugin\\\\TestPluginForm\\:\\:submitConfigurationForm\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -41302,18 +41272,6 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Plugin/DefaultPluginManagerTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Plugin\\\\DefaultSingleLazyPluginCollectionTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 3,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Plugin/DefaultSingleLazyPluginCollectionTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Plugin\\\\Discovery\\\\DerivativeDiscoveryDecoratorTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 8,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Plugin/Discovery/DerivativeDiscoveryDecoratorTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Constructor of class Drupal\\\\Tests\\\\Core\\\\Plugin\\\\Discovery\\\\TestContainerDerivativeDiscovery has an unused parameter \\$example_service\\.$#',
@@ -41352,12 +41310,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Plugin/FilteredPluginManagerTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Plugin\\\\LazyPluginCollectionTestBase\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Plugin/LazyPluginCollectionTestBase.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Core\\\\Plugin\\\\LazyPluginCollectionTestBase\\:\\:setupPluginCollection\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -41386,12 +41338,6 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Plugin/PluginDependencyTraitTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Plugin\\\\PluginExistsConstraintTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Plugin/PluginExistsConstraintTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Core\\\\Plugin\\\\TestClass\\:\\:submitConfigurationForm\\(\\) has no return type specified\\.$#',

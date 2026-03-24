@@ -89,7 +89,7 @@ class DefaultLazyPluginCollectionTest extends LazyPluginCollectionTestBase {
    */
   #[DataProvider('providerTestSortHelper')]
   public function testSortHelper(string $plugin_id_1, string $plugin_id_2, int $expected): void {
-    $this->setupPluginCollection($this->any());
+    $this->setupPluginCollection($this->never());
     if ($expected != 0) {
       $expected = $expected > 0 ? 1 : -1;
     }
@@ -102,7 +102,7 @@ class DefaultLazyPluginCollectionTest extends LazyPluginCollectionTestBase {
    * @legacy-covers ::sortHelper
    */
   public function testSortHelperException(): void {
-    $this->setupPluginCollection($this->any());
+    $this->setupPluginCollection($this->never());
     $this->expectException(PluginNotFoundException::class);
     $this->expectExceptionMessage("Plugin ID 'pear' was not found.");
     $this->defaultPluginCollection->sortHelper("apple", "pear");

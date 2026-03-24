@@ -17,6 +17,7 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\Context\ContextDefinition;
 use Drupal\Core\Plugin\Context\ContextDefinitionInterface;
 use Drupal\Core\Plugin\Context\ContextHandler;
+use Drupal\Core\Plugin\Context\ContextInterface;
 use Drupal\Core\Plugin\ContextAwarePluginInterface;
 use Drupal\Core\Test\TestKernel;
 use Drupal\Core\TypedData\TypedDataManager;
@@ -307,14 +308,12 @@ class ContextHandlerTest extends UnitTestCase {
     $context_hit->expects($this->atLeastOnce())
       ->method('hasContextValue')
       ->willReturn(TRUE);
-    $context_miss = $this->createMock('Drupal\Core\Plugin\Context\ContextInterface');
+    $context_miss = $this->createStub(ContextInterface::class);
 
     $contexts = [
       'hit' => $context_hit,
       'miss' => $context_miss,
     ];
-
-    $context_definition = $this->createMock('Drupal\Core\Plugin\Context\ContextDefinitionInterface');
 
     $plugin = $this->createMock('Drupal\Core\Plugin\ContextAwarePluginInterface');
     $plugin->expects($this->once())
@@ -322,7 +321,7 @@ class ContextHandlerTest extends UnitTestCase {
       ->willReturn([]);
     $plugin->expects($this->once())
       ->method('getContextDefinitions')
-      ->willReturn(['hit' => $context_definition]);
+      ->willReturn(['hit' => $this->createStub(ContextDefinitionInterface::class)]);
     $plugin->expects($this->once())
       ->method('setContext')
       ->with('hit', $context_hit);
@@ -368,7 +367,7 @@ class ContextHandlerTest extends UnitTestCase {
       ->method('setContext');
 
     // No context, so no cacheability metadata can be passed along.
-    $plugin->expects($this->any())
+    $plugin
       ->method('getContext')
       ->willThrowException(new ContextException());
 
@@ -405,7 +404,7 @@ class ContextHandlerTest extends UnitTestCase {
       ->method('setContext');
 
     // No context, so no cacheability metadata can be passed along.
-    $plugin->expects($this->any())
+    $plugin
       ->method('getContext')
       ->willThrowException(new ContextException());
 
@@ -493,15 +492,13 @@ class ContextHandlerTest extends UnitTestCase {
       'name' => $context,
     ];
 
-    $context_definition = $this->createMock('Drupal\Core\Plugin\Context\ContextDefinitionInterface');
-
     $plugin = $this->createMock('Drupal\Tests\Core\Plugin\TestConfigurableContextAwarePluginInterface');
     $plugin->expects($this->once())
       ->method('getContextMapping')
       ->willReturn([]);
     $plugin->expects($this->once())
       ->method('getContextDefinitions')
-      ->willReturn(['hit' => $context_definition]);
+      ->willReturn(['hit' => $this->createStub(ContextDefinitionInterface::class)]);
     $plugin->expects($this->once())
       ->method('setContext')
       ->with('hit', $context);
@@ -531,15 +528,13 @@ class ContextHandlerTest extends UnitTestCase {
       'name' => $context,
     ];
 
-    $context_definition = $this->createMock('Drupal\Core\Plugin\Context\ContextDefinitionInterface');
-
     $plugin = $this->createMock('Drupal\Tests\Core\Plugin\TestConfigurableContextAwarePluginInterface');
     $plugin->expects($this->once())
       ->method('getContextMapping')
       ->willReturn([]);
     $plugin->expects($this->once())
       ->method('getContextDefinitions')
-      ->willReturn(['hit' => $context_definition]);
+      ->willReturn(['hit' => $this->createStub(ContextDefinitionInterface::class)]);
     $plugin->expects($this->never())
       ->method('setContext');
 

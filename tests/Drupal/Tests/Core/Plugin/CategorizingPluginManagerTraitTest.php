@@ -36,12 +36,12 @@ class CategorizingPluginManagerTraitTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $module_handler = $this->createMock('Drupal\Core\Extension\ModuleHandlerInterface');
-    $module_handler->expects($this->any())
+    $module_handler = $this->createStub(ModuleHandlerInterface::class);
+    $module_handler
       ->method('getModuleList')
       ->willReturn(['node' => []]);
-    $module_extension_list = $this->createMock(ModuleExtensionList::class);
-    $module_extension_list->expects($this->any())
+    $module_extension_list = $this->createStub(ModuleExtensionList::class);
+    $module_extension_list
       ->method('getName')
       ->willReturnCallback(function ($argument): string {
         if ($argument == 'node') {
