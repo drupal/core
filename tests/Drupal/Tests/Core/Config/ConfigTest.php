@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Config;
 
+use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ConfigValueException;
+use Drupal\Core\Config\StorageInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Render\Markup;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Tests the Config.
@@ -32,28 +36,28 @@ class ConfigTest extends UnitTestCase {
   /**
    * Storage.
    *
-   * @var \Drupal\Core\Config\StorageInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Config\StorageInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $storage;
 
   /**
    * Event Dispatcher.
    *
-   * @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $eventDispatcher;
 
   /**
    * Typed Config.
    *
-   * @var \Drupal\Core\Config\TypedConfigManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Config\TypedConfigManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $typedConfig;
 
   /**
    * The mocked cache tags invalidator.
    *
-   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface
    */
   protected $cacheTagsInvalidator;
 
@@ -63,15 +67,23 @@ class ConfigTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->storage = $this->createMock('Drupal\Core\Config\StorageInterface');
-    $this->eventDispatcher = $this->createMock('Symfony\Contracts\EventDispatcher\EventDispatcherInterface');
-    $this->typedConfig = $this->createMock('\Drupal\Core\Config\TypedConfigManagerInterface');
+    $this->storage = $this->createStub(StorageInterface::class);
+    $this->eventDispatcher = $this->createStub(EventDispatcherInterface::class);
+    $this->typedConfig = $this->createStub(TypedConfigManagerInterface::class);
     $this->config = new Config('config.test', $this->storage, $this->eventDispatcher, $this->typedConfig);
-    $this->cacheTagsInvalidator = $this->createMock('Drupal\Core\Cache\CacheTagsInvalidatorInterface');
+    $this->cacheTagsInvalidator = $this->createStub(CacheTagsInvalidatorInterface::class);
 
     $container = new ContainerBuilder();
     $container->set('cache_tags.invalidator', $this->cacheTagsInvalidator);
     \Drupal::setContainer($container);
+  }
+
+  /**
+   * Reinitializes the route processor manager as a mock object.
+   */
+  protected function setUpMockCacheTagsInvalidator(): void {
+    $this->cacheTagsInvalidator = $this->createMock(CacheTagsInvalidatorInterface::class);
+    \Drupal::getContainer()->set('cache_tags.invalidator', $this->cacheTagsInvalidator);
   }
 
   /**
@@ -135,6 +147,7 @@ class ConfigTest extends UnitTestCase {
    */
   #[DataProvider('nestedDataProvider')]
   public function testSaveNew(array $data): void {
+    $this->setUpMockCacheTagsInvalidator();
     $this->cacheTagsInvalidator->expects($this->never())
       ->method('invalidateTags');
 
@@ -161,6 +174,7 @@ class ConfigTest extends UnitTestCase {
    */
   #[DataProvider('nestedDataProvider')]
   public function testSaveExisting(array $data): void {
+    $this->setUpMockCacheTagsInvalidator();
     $this->cacheTagsInvalidator->expects($this->once())
       ->method('invalidateTags')
       ->with(['config:config.test']);
@@ -346,6 +360,7 @@ class ConfigTest extends UnitTestCase {
    */
   #[DataProvider('overrideDataProvider')]
   public function testDelete(array $data, array $module_data, array $setting_data): void {
+    $this->setUpMockCacheTagsInvalidator();
     $this->cacheTagsInvalidator->expects($this->once())
       ->method('invalidateTags')
       ->with(['config:config.test']);

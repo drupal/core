@@ -5,12 +5,18 @@ declare(strict_types=1);
 namespace Drupal\Tests\Core\Config\Entity\Query;
 
 use Drupal\Core\Config\Config;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\ConfigManagerInterface;
+use Drupal\Core\Config\Entity\ConfigEntityTypeInterface;
 use Drupal\Core\Config\Entity\Query\QueryFactory;
+use Drupal\Core\Config\StorageInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
+use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Tests Drupal\Core\Config\Entity\Query\QueryFactory.
@@ -31,10 +37,10 @@ class QueryFactoryTest extends UnitTestCase {
     foreach ($sets as $set) {
       $config->set(...$set);
     }
-    $config_factory = $this->createMock('Drupal\Core\Config\ConfigFactoryInterface');
-    $key_value_factory = $this->createMock('Drupal\Core\KeyValueStore\KeyValueFactoryInterface');
-    $config_manager = $this->createMock('Drupal\Core\Config\ConfigManagerInterface');
-    $config_entity_type = $this->createMock('Drupal\Core\Config\Entity\ConfigEntityTypeInterface');
+    $config_factory = $this->createStub(ConfigFactoryInterface::class);
+    $key_value_factory = $this->createStub(KeyValueFactoryInterface::class);
+    $config_manager = $this->createStub(ConfigManagerInterface::class);
+    $config_entity_type = $this->createStub(ConfigEntityTypeInterface::class);
     $query_factory = new QueryFactory($config_factory, $key_value_factory, $config_manager);
     $method = new \ReflectionMethod($query_factory, 'getKeys');
 
@@ -113,9 +119,9 @@ class QueryFactoryTest extends UnitTestCase {
    * @legacy-covers ::getValues
    */
   public function testGetKeysWildCardEnd(): void {
-    $config_factory = $this->createMock('Drupal\Core\Config\ConfigFactoryInterface');
-    $key_value_factory = $this->createMock('Drupal\Core\KeyValueStore\KeyValueFactoryInterface');
-    $config_manager = $this->createMock('Drupal\Core\Config\ConfigManagerInterface');
+    $config_factory = $this->createStub(ConfigFactoryInterface::class);
+    $key_value_factory = $this->createStub(KeyValueFactoryInterface::class);
+    $config_manager = $this->createStub(ConfigManagerInterface::class);
     $config_entity_type = $this->createMock('Drupal\Core\Config\Entity\ConfigEntityTypeInterface');
     $config_entity_type->expects($this->atLeastOnce())
       ->method('id')
@@ -134,15 +140,16 @@ class QueryFactoryTest extends UnitTestCase {
    * @param string $name
    *   The config name.
    *
-   * @return \Drupal\Core\Config\Config&\PHPUnit\Framework\MockObject\MockObject
+   * @return \Drupal\Core\Config\Config
    *   The test configuration object.
    */
-  protected function getConfigObject(string $name): Config&MockObject {
-    $config = $this->getMockBuilder(Config::class)
-      ->disableOriginalConstructor()
-      ->onlyMethods(['save', 'delete'])
-      ->getMock();
-    return $config->setName($name);
+  protected function getConfigObject(string $name): Config {
+    return new Config(
+      $name,
+      $this->createStub(StorageInterface::class),
+      $this->createStub(EventDispatcherInterface::class),
+      $this->createStub(TypedConfigManagerInterface::class),
+    );
   }
 
 }

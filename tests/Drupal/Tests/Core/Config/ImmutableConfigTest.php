@@ -6,9 +6,12 @@ namespace Drupal\Tests\Core\Config;
 
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Config\ImmutableConfigException;
+use Drupal\Core\Config\StorageInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Tests Drupal\Core\Config\ImmutableConfig.
@@ -29,9 +32,9 @@ class ImmutableConfigTest extends UnitTestCase {
    */
   protected function setUp(): void {
     parent::setUp();
-    $storage = $this->createMock('Drupal\Core\Config\StorageInterface');
-    $event_dispatcher = $this->createMock('Symfony\Contracts\EventDispatcher\EventDispatcherInterface');
-    $typed_config = $this->createMock('Drupal\Core\Config\TypedConfigManagerInterface');
+    $storage = $this->createStub(StorageInterface::class);
+    $event_dispatcher = $this->createStub(EventDispatcherInterface::class);
+    $typed_config = $this->createStub(TypedConfigManagerInterface::class);
     $this->config = new ImmutableConfig('test', $storage, $event_dispatcher, $typed_config);
   }
 
