@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Theme;
 
+use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
 use Drupal\Core\KeyValueStore\KeyValueMemoryFactory;
+use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Theme\ActiveTheme;
 use Drupal\Core\Theme\Registry;
+use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\theme_test\Hook\ThemeTestHooks;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -30,56 +35,56 @@ class RegistryTest extends UnitTestCase {
   /**
    * The mocked cache backend.
    *
-   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $cache;
 
   /**
    * The mocked lock backend.
    *
-   * @var \Drupal\Core\Lock\LockBackendInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Lock\LockBackendInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $lock;
 
   /**
    * The mocked module handler.
    *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
    */
   protected $moduleHandler;
 
   /**
    * The mocked theme handler.
    *
-   * @var \Drupal\Core\Extension\ThemeHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Extension\ThemeHandlerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $themeHandler;
 
   /**
    * The mocked cache backend.
    *
-   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $runtimeCache;
 
   /**
    * The theme manager.
    *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Theme\ThemeManagerInterface
    */
   protected $themeManager;
 
   /**
    * The module list.
    *
-   * @var \Drupal\Core\Extension\ModuleExtensionList|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Extension\ModuleExtensionList
    */
   protected $moduleList;
 
   /**
    * The kernel.
    *
-   * @var \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $kernel;
 
@@ -103,18 +108,45 @@ class RegistryTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->cache = $this->createMock('Drupal\Core\Cache\CacheBackendInterface');
-    $this->lock = $this->createMock('Drupal\Core\Lock\LockBackendInterface');
-    $this->moduleHandler = $this->createMock('Drupal\Core\Extension\ModuleHandlerInterface');
-    $this->themeHandler = $this->createMock('Drupal\Core\Extension\ThemeHandlerInterface');
-    $this->runtimeCache = $this->createMock('Drupal\Core\Cache\CacheBackendInterface');
-    $this->themeManager = $this->createMock('Drupal\Core\Theme\ThemeManagerInterface');
-    $this->moduleList = $this->createMock(ModuleExtensionList::class);
-    $this->kernel = $this->createMock(HttpKernelInterface::class);
+    $this->cache = $this->createStub(CacheBackendInterface::class);
+    $this->lock = $this->createStub(LockBackendInterface::class);
+    $this->moduleHandler = $this->createStub(ModuleHandlerInterface::class);
+    $this->themeHandler = $this->createStub(ThemeHandlerInterface::class);
+    $this->runtimeCache = $this->createStub(CacheBackendInterface::class);
+    $this->themeManager = $this->createStub(ThemeManagerInterface::class);
+    $this->moduleList = $this->createStub(ModuleExtensionList::class);
+    $this->kernel = $this->createStub(HttpKernelInterface::class);
     $this->keyValueFactory = new KeyValueMemoryFactory();
 
     $this->registry = new Registry($this->cache, $this->lock, $this->moduleHandler, $this->themeHandler, $this->runtimeCache, $this->moduleList, $this->kernel, $this->keyValueFactory);
     $this->registry->setThemeManager($this->themeManager);
+  }
+
+  /**
+   * Reinitializes the module handler as a mock object.
+   */
+  protected function setUpMockModuleHandler(): void {
+    $this->moduleHandler = $this->createMock(ModuleHandlerInterface::class);
+    $reflection = new \ReflectionProperty($this->registry, 'moduleHandler');
+    $reflection->setValue($this->registry, $this->moduleHandler);
+  }
+
+  /**
+   * Reinitializes the module list as a mock object.
+   */
+  protected function setUpMockModuleList(): void {
+    $this->moduleList = $this->createMock(ModuleExtensionList::class);
+    $reflection = new \ReflectionProperty($this->registry, 'moduleList');
+    $reflection->setValue($this->registry, $this->moduleList);
+  }
+
+  /**
+   * Reinitializes the theme manager as a mock object.
+   */
+  protected function setUpMockThemeManager(): void {
+    $this->themeManager = $this->createMock(ThemeManagerInterface::class);
+    $reflection = new \ReflectionProperty($this->registry, 'themeManager');
+    $reflection->setValue($this->registry, $this->themeManager);
   }
 
   /**
@@ -129,6 +161,10 @@ class RegistryTest extends UnitTestCase {
    * Tests getting the theme registry defined by a module.
    */
   public function testGetRegistryForModule(): void {
+    $this->setUpMockModuleList();
+    $this->setUpMockModuleHandler();
+    $this->setUpMockThemeManager();
+
     $test_theme = new ActiveTheme([
       'name' => 'test_theme',
       'path' => 'core/modules/system/tests/themes/test_theme/test_theme.info.yml',
@@ -229,6 +265,8 @@ class RegistryTest extends UnitTestCase {
    */
   #[\PHPUnit\Framework\Attributes\DataProvider('providerTestPostProcessExtension')]
   public function testPostProcessExtension($defined_functions, $hooks, $expected): void {
+    $this->setUpMockModuleHandler();
+
     static::$functions['user'] = $defined_functions;
 
     $theme = $this->prophesize(ActiveTheme::class);

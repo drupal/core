@@ -37,7 +37,7 @@ class PathExtractorTest extends UnitTestCase {
   /**
    * The IconFinder instance.
    *
-   * @var \Drupal\Core\Theme\Icon\IconFinder|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Theme\Icon\IconFinder|\PHPUnit\Framework\MockObject\Stub
    */
   private IconFinder $iconFinder;
 
@@ -46,7 +46,7 @@ class PathExtractorTest extends UnitTestCase {
    */
   public function setUp():void {
     parent::setUp();
-    $this->iconFinder = $this->createMock(IconFinder::class);
+    $this->iconFinder = $this->createStub(IconFinder::class);
     $this->pathExtractorPlugin = new PathExtractor(
       [
         'id' => $this->pluginId,

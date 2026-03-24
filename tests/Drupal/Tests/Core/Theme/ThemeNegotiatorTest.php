@@ -78,7 +78,7 @@ class ThemeNegotiatorTest extends UnitTestCase {
 
     $negotiators = ['test_negotiator'];
 
-    $this->themeAccessCheck->expects($this->any())
+    $this->themeAccessCheck->expects($this->once())
       ->method('checkAccess')
       ->willReturn(TRUE);
 
@@ -118,7 +118,7 @@ class ThemeNegotiatorTest extends UnitTestCase {
       $this->container->set($id, $negotiator);
     }
 
-    $this->themeAccessCheck->expects($this->any())
+    $this->themeAccessCheck->expects($this->once())
       ->method('checkAccess')
       ->willReturn(TRUE);
 
@@ -204,7 +204,7 @@ class ThemeNegotiatorTest extends UnitTestCase {
       $this->container->set($id, $negotiator);
     }
 
-    $this->themeAccessCheck->expects($this->any())
+    $this->themeAccessCheck->expects($this->once())
       ->method('checkAccess')
       ->willReturn(TRUE);
 

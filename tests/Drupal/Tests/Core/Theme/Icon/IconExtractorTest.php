@@ -33,7 +33,7 @@ class IconExtractorTest extends UnitTestCase {
     parent::setUp();
 
     $this->container = new ContainerBuilder();
-    $this->container->set('string_translation', $this->createMock(TranslationInterface::class));
+    $this->container->set('string_translation', $this->createStub(TranslationInterface::class));
     \Drupal::setContainer($this->container);
   }
 

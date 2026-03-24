@@ -383,10 +383,13 @@ class IconExtractorSettingsFormTest extends UnitTestCase {
       ],
     ];
 
-    $form_state = $this->createMock(SubformStateInterface::class);
+    $form_state = $this->createStub(SubformStateInterface::class);
     $subform_state = $this->createMock(SubformStateInterface::class);
     $form_state->method('getCompleteFormState')->willReturn($subform_state);
-    $subform_state->method('getValue')->with('saved_values')->willReturn(['test_saved' => 'saved value']);
+    $subform_state->expects($this->once())
+      ->method('getValue')
+      ->with('saved_values')
+      ->willReturn(['test_saved' => 'saved value']);
 
     $actual = IconExtractorSettingsForm::generateSettingsForm($options, $form_state);
     $expected = [
