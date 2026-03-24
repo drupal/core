@@ -48,13 +48,13 @@ class StackedHttpKernelTest extends UnitTestCase {
       ->method('terminate')
       ->with($request, $response);
 
-    $outer = $this->createMock(HttpKernelInterface::class);
+    $outer = $this->createStub(HttpKernelInterface::class);
     $middle = $this->createMockForIntersectionOfInterfaces([HttpKernelInterface::class, TerminableInterface::class]);
     $middle->expects($this->once())
       ->method('terminate')
       ->with($request, $response);
 
-    $inner = $this->createMock(HttpKernelInterface::class);
+    $inner = $this->createStub(HttpKernelInterface::class);
 
     $middlewares = new \ArrayIterator([$outer, $middle, $inner, $basicKernel]);
     $stack = new StackedHttpKernel($outer, $middlewares);

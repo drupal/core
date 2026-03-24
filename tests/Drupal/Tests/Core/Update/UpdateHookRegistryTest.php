@@ -67,17 +67,17 @@ function under_test_update_1234_failed(): void {
 class UpdateHookRegistryTest extends UnitTestCase {
 
   /**
-   * @var \Drupal\Core\KeyValueStore\KeyValueStoreInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\KeyValueStore\KeyValueStoreInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $keyValueStore;
 
   /**
-   * @var \Drupal\Core\KeyValueStore\KeyValueFactoryInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\KeyValueStore\KeyValueFactoryInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $keyValueFactory;
 
   /**
-   * @var \Drupal\Core\KeyValueStore\KeyValueStoreInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\KeyValueStore\KeyValueStoreInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected KeyValueStoreInterface $equivalentUpdatesStore;
 
@@ -86,9 +86,9 @@ class UpdateHookRegistryTest extends UnitTestCase {
    */
   protected function setUp(): void {
     parent::setUp();
-    $this->keyValueFactory = $this->createMock(KeyValueFactoryInterface::class);
-    $this->keyValueStore = $this->createMock(KeyValueStoreInterface::class);
-    $this->equivalentUpdatesStore = $this->createMock(KeyValueStoreInterface::class);
+    $this->keyValueFactory = $this->createStub(KeyValueFactoryInterface::class);
+    $this->keyValueStore = $this->createStub(KeyValueStoreInterface::class);
+    $this->equivalentUpdatesStore = $this->createStub(KeyValueStoreInterface::class);
 
     $this->keyValueFactory
       ->method('get')

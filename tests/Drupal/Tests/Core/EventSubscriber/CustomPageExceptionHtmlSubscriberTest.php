@@ -5,20 +5,25 @@ declare(strict_types=1);
 namespace Drupal\Tests\Core\EventSubscriber;
 
 use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Access\AccessManagerInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\EventSubscriber\CustomPageExceptionHtmlSubscriber;
+use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Render\HtmlResponse;
 use Drupal\Core\Routing\AccessAwareRouterInterface;
+use Drupal\Core\Routing\RedirectDestinationInterface;
 use Drupal\Core\Url;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 use Symfony\Component\Routing\RequestContext;
 
 /**
@@ -66,14 +71,14 @@ class CustomPageExceptionHtmlSubscriberTest extends UnitTestCase {
   /**
    * The mocked redirect.destination service.
    *
-   * @var \Drupal\Core\Routing\RedirectDestinationInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Routing\RedirectDestinationInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $redirectDestination;
 
   /**
    * The mocked access unaware router.
    *
-   * @var \Symfony\Component\Routing\Matcher\UrlMatcherInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Symfony\Component\Routing\Matcher\UrlMatcherInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $accessUnawareRouter;
 
@@ -98,26 +103,26 @@ class CustomPageExceptionHtmlSubscriberTest extends UnitTestCase {
     ]);
 
     $this->kernel = $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface');
-    $this->logger = $this->createMock('Psr\Log\LoggerInterface');
-    $this->redirectDestination = $this->createMock('\Drupal\Core\Routing\RedirectDestinationInterface');
-    $this->redirectDestination->expects($this->any())
+    $this->logger = $this->createStub(LoggerInterface::class);
+    $this->redirectDestination = $this->createStub(RedirectDestinationInterface::class);
+    $this->redirectDestination
       ->method('getAsArray')
       ->willReturn(['destination' => 'test']);
-    $this->accessUnawareRouter = $this->createMock('Symfony\Component\Routing\Matcher\UrlMatcherInterface');
-    $this->accessUnawareRouter->expects($this->any())
+    $this->accessUnawareRouter = $this->createStub(UrlMatcherInterface::class);
+    $this->accessUnawareRouter
       ->method('match')
       ->willReturn([
         '_controller' => 'mocked',
       ]);
-    $this->accessManager = $this->createMock('Drupal\Core\Access\AccessManagerInterface');
-    $this->accessManager->expects($this->any())
+    $this->accessManager = $this->createStub(AccessManagerInterface::class);
+    $this->accessManager
       ->method('checkNamedRoute')
       ->willReturn(AccessResult::allowed()->addCacheTags(['foo', 'bar']));
 
     $this->customPageSubscriber = new CustomPageExceptionHtmlSubscriber($this->configFactory, $this->kernel, $this->logger, $this->redirectDestination, $this->accessUnawareRouter, $this->accessManager);
 
-    $path_validator = $this->createMock('Drupal\Core\Path\PathValidatorInterface');
-    $path_validator->expects($this->any())
+    $path_validator = $this->createStub(PathValidatorInterface::class);
+    $path_validator
       ->method('getUrlIfValidWithoutAccessCheck')
       ->willReturn(Url::fromRoute('foo', ['foo' => 'bar']));
     $container = new ContainerBuilder();
@@ -145,7 +150,7 @@ class CustomPageExceptionHtmlSubscriberTest extends UnitTestCase {
 
     $request_context = new RequestContext();
     $request_context->fromRequest($request);
-    $this->accessUnawareRouter->expects($this->any())
+    $this->accessUnawareRouter
       ->method('getContext')
       ->willReturn($request_context);
 
@@ -172,7 +177,7 @@ class CustomPageExceptionHtmlSubscriberTest extends UnitTestCase {
 
     $request_context = new RequestContext();
     $request_context->fromRequest($request);
-    $this->accessUnawareRouter->expects($this->any())
+    $this->accessUnawareRouter
       ->method('getContext')
       ->willReturn($request_context);
 

@@ -30,54 +30,54 @@ class FinishResponseSubscriberTest extends UnitTestCase {
   /**
    * The mock Kernel.
    *
-   * @var \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $kernel;
 
   /**
    * The mock language manager.
    *
-   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $languageManager;
 
   /**
    * The mock request policy.
    *
-   * @var \Drupal\Core\PageCache\RequestPolicyInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\PageCache\RequestPolicyInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $requestPolicy;
 
   /**
    * The mock response policy.
    *
-   * @var \Drupal\Core\PageCache\ResponsePolicyInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\PageCache\ResponsePolicyInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $responsePolicy;
 
   /**
    * The mock cache contexts manager.
    *
-   * @var \Drupal\Core\Cache\Context\CacheContextsManager|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Cache\Context\CacheContextsManager|\PHPUnit\Framework\MockObject\Stub
    */
   protected $cacheContextsManager;
 
   /**
    * The mock time service.
    *
-   * @var \Drupal\Component\Datetime\TimeInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Component\Datetime\TimeInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $time;
 
   protected function setUp(): void {
     parent::setUp();
 
-    $this->kernel = $this->createMock(HttpKernelInterface::class);
-    $this->languageManager = $this->createMock(LanguageManagerInterface::class);
-    $this->requestPolicy = $this->createMock(RequestPolicyInterface::class);
-    $this->responsePolicy = $this->createMock(ResponsePolicyInterface::class);
-    $this->cacheContextsManager = $this->createMock(CacheContextsManager::class);
-    $this->time = $this->createMock(TimeInterface::class);
+    $this->kernel = $this->createStub(HttpKernelInterface::class);
+    $this->languageManager = $this->createStub(LanguageManagerInterface::class);
+    $this->requestPolicy = $this->createStub(RequestPolicyInterface::class);
+    $this->responsePolicy = $this->createStub(ResponsePolicyInterface::class);
+    $this->cacheContextsManager = $this->createStub(CacheContextsManager::class);
+    $this->time = $this->createStub(TimeInterface::class);
   }
 
   /**
@@ -99,8 +99,8 @@ class FinishResponseSubscriberTest extends UnitTestCase {
     $this->languageManager->method('getCurrentLanguage')
       ->willReturn(new Language(['id' => 'en']));
 
-    $request = $this->createMock(Request::class);
-    $response = $this->createMock(Response::class);
+    $request = $this->createStub(Request::class);
+    $response = $this->createStub(Response::class);
     $response->headers = new ResponseHeaderBag();
     $event = new ResponseEvent($this->kernel, $request, HttpKernelInterface::MAIN_REQUEST, $response);
 
@@ -130,8 +130,8 @@ class FinishResponseSubscriberTest extends UnitTestCase {
     $this->languageManager->method('getCurrentLanguage')
       ->willReturn(new Language(['id' => 'en']));
 
-    $request = $this->createMock(Request::class);
-    $response = $this->createMock(Response::class);
+    $request = $this->createStub(Request::class);
+    $response = $this->createStub(Response::class);
     $response->headers = new ResponseHeaderBag();
     $event = new ResponseEvent($this->kernel, $request, HttpKernelInterface::MAIN_REQUEST, $response);
 

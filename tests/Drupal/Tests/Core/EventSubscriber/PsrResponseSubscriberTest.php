@@ -8,6 +8,8 @@ use Drupal\Core\EventSubscriber\PsrResponseSubscriber;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
+use Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
@@ -40,13 +42,10 @@ class PsrResponseSubscriberTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $factory = $this->getMockBuilder('Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $factory = $this->createStub(HttpFoundationFactoryInterface::class);
     $factory
-      ->expects($this->any())
       ->method('createResponse')
-      ->willReturn($this->createMock('Symfony\Component\HttpFoundation\Response'));
+      ->willReturn($this->createStub(Response::class));
 
     $this->httpFoundationFactoryMock = $factory;
 
@@ -59,7 +58,7 @@ class PsrResponseSubscriberTest extends UnitTestCase {
    * @legacy-covers ::onKernelView
    */
   public function testConvertsControllerResult(): void {
-    $event = $this->createEvent($this->createMock('Psr\Http\Message\ResponseInterface'));
+    $event = $this->createEvent($this->createStub(ResponseInterface::class));
     $this->psrResponseSubscriber->onKernelView($event);
     $this->assertInstanceOf(Response::class, $event->getResponse());
   }
@@ -90,8 +89,8 @@ class PsrResponseSubscriberTest extends UnitTestCase {
    */
   protected function createEvent($controller_result): ViewEvent {
     return new ViewEvent(
-      $this->createMock(HttpKernelInterface::class),
-      $this->createMock(Request::class),
+      $this->createStub(HttpKernelInterface::class),
+      $this->createStub(Request::class),
       HttpKernelInterface::MAIN_REQUEST,
       $controller_result
     );

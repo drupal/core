@@ -108,14 +108,14 @@ class NegotiationMiddlewareTest extends UnitTestCase {
     $this->httpKernel->handle($request_mock, HttpKernelInterface::MAIN_REQUEST, TRUE)
       ->shouldBeCalled()
       ->willReturn(
-        $this->createMock(Response::class)
+        $this->createStub(Response::class)
       );
     $this->contentNegotiation->handle($request_mock);
     // Calling kernel app with specified arguments.
     $this->httpKernel->handle($request_mock, HttpKernelInterface::SUB_REQUEST, FALSE)
       ->shouldBeCalled()
       ->willReturn(
-        $this->createMock(Response::class)
+        $this->createStub(Response::class)
       );
     $this->contentNegotiation->handle($request_mock, HttpKernelInterface::SUB_REQUEST, FALSE);
   }
@@ -129,7 +129,7 @@ class NegotiationMiddlewareTest extends UnitTestCase {
     $httpKernel = $this->createMock(HttpKernelInterface::class);
     $httpKernel->expects($this->once())
       ->method('handle')
-      ->willReturn($this->createMock(Response::class));
+      ->willReturn($this->createStub(Response::class));
 
     $content_negotiation = new StubNegotiationMiddleware($httpKernel);
 

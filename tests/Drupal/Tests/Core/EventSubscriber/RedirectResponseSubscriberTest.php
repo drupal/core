@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\Core\EventSubscriber;
 
 use Drupal\Core\EventSubscriber\RedirectResponseSubscriber;
+use Drupal\Core\Routing\RequestContext;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Utility\UnroutedUrlAssemblerInterface;
 use Drupal\Tests\UnitTestCase;
@@ -30,14 +31,14 @@ class RedirectResponseSubscriberTest extends UnitTestCase {
   /**
    * The mocked request context.
    *
-   * @var \Drupal\Core\Routing\RequestContext|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Routing\RequestContext|\PHPUnit\Framework\MockObject\Stub
    */
   protected $requestContext;
 
   /**
    * The mocked request context.
    *
-   * @var \Drupal\Core\Utility\UnroutedUrlAssemblerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Utility\UnroutedUrlAssemblerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $urlAssembler;
 
@@ -56,16 +57,13 @@ class RedirectResponseSubscriberTest extends UnitTestCase {
       return $this->prophesize(LoggerInterface::class)->reveal();
     };
 
-    $this->requestContext = $this->getMockBuilder('Drupal\Core\Routing\RequestContext')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->requestContext->expects($this->any())
+    $this->requestContext = $this->createStub(RequestContext::class);
+    $this->requestContext
       ->method('getCompleteBaseUrl')
       ->willReturn('http://example.com/drupal');
 
-    $this->urlAssembler = $this->createMock(UnroutedUrlAssemblerInterface::class);
+    $this->urlAssembler = $this->createStub(UnroutedUrlAssemblerInterface::class);
     $this->urlAssembler
-      ->expects($this->any())
       ->method('assemble')
       ->willReturnMap([
         [
@@ -112,7 +110,7 @@ class RedirectResponseSubscriberTest extends UnitTestCase {
   #[DataProvider('providerTestDestinationRedirect')]
   public function testDestinationRedirect(Request $request, bool|string $expected): void {
     $dispatcher = new EventDispatcher();
-    $kernel = $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+    $kernel = $this->createStub(HttpKernelInterface::class);
     $response = new RedirectResponse('http://example.com/drupal');
     $request->headers->set('HOST', 'example.com');
 
@@ -154,7 +152,7 @@ class RedirectResponseSubscriberTest extends UnitTestCase {
   #[DataProvider('providerTestDestinationRedirectToExternalUrl')]
   public function testDestinationRedirectToExternalUrl(Request $request, string $expected): void {
     $dispatcher = new EventDispatcher();
-    $kernel = $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+    $kernel = $this->createStub(HttpKernelInterface::class);
     $response = new RedirectResponse('http://other-example.com');
 
     $listener = new RedirectResponseSubscriber($this->urlAssembler, $this->requestContext, $this->loggerClosure);
@@ -171,7 +169,7 @@ class RedirectResponseSubscriberTest extends UnitTestCase {
    */
   public function testRedirectWithOptInExternalUrl(): void {
     $dispatcher = new EventDispatcher();
-    $kernel = $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+    $kernel = $this->createStub(HttpKernelInterface::class);
     $response = new TrustedRedirectResponse('http://external-url.com');
     $request = Request::create('');
     $request->headers->set('HOST', 'example.com');
@@ -223,7 +221,7 @@ class RedirectResponseSubscriberTest extends UnitTestCase {
   #[DataProvider('providerTestDestinationRedirectWithInvalidUrl')]
   public function testDestinationRedirectWithInvalidUrl(Request $request): void {
     $dispatcher = new EventDispatcher();
-    $kernel = $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+    $kernel = $this->createStub(HttpKernelInterface::class);
     $response = new RedirectResponse('http://example.com/drupal');
 
     $listener = new RedirectResponseSubscriber($this->urlAssembler, $this->requestContext, $this->loggerClosure);

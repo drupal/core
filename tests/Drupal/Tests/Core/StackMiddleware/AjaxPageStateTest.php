@@ -47,7 +47,7 @@ class AjaxPageStateTest extends UnitTestCase {
     $kernel = $this->prophesize(HttpKernelInterface::class);
     $kernel->handle($result_request, HttpKernelInterface::MAIN_REQUEST, TRUE)
       ->shouldBeCalled()
-      ->willReturn($this->createMock(Response::class));
+      ->willReturn($this->createStub(Response::class));
     $middleware = new AjaxPageState($kernel->reveal());
     $middleware->handle($request);
 

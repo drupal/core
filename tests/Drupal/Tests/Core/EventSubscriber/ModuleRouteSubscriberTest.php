@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\Core\EventSubscriber;
 
 use Drupal\Core\EventSubscriber\ModuleRouteSubscriber;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Routing\RouteBuildEvent;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -23,7 +24,7 @@ class ModuleRouteSubscriberTest extends UnitTestCase {
   /**
    * The mock module handler.
    *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $moduleHandler;
 
@@ -33,14 +34,14 @@ class ModuleRouteSubscriberTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->moduleHandler = $this->createMock('Drupal\Core\Extension\ModuleHandlerInterface');
+    $this->moduleHandler = $this->createStub(ModuleHandlerInterface::class);
 
     $value_map = [
       ['enabled', TRUE],
       ['disabled', FALSE],
     ];
 
-    $this->moduleHandler->expects($this->any())
+    $this->moduleHandler
       ->method('moduleExists')
       ->willReturnMap($value_map);
   }
