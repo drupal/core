@@ -4,23 +4,17 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\olivero\Unit;
 
+use Drupal\olivero\HexToHslTrait;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Tests the _olivero_hex_to_hsl() function.
+ * Tests the \Drupal\olivero\HexToHslTrait:convertHexToHsl() function.
  */
 #[Group('olivero')]
 final class OliveroHexToHslTest extends UnitTestCase {
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setUp(): void {
-    parent::setUp();
-    require_once __DIR__ . '/../../../olivero.theme';
-  }
+  use HexToHslTrait;
 
   /**
    * Tests hex to HSL conversion.
@@ -32,7 +26,7 @@ final class OliveroHexToHslTest extends UnitTestCase {
    */
   #[DataProvider('hexCodes')]
   public function testHexToHsl(string $hex, array $expected_hsl): void {
-    self::assertEquals($expected_hsl, _olivero_hex_to_hsl($hex));
+    self::assertEquals($expected_hsl, $this->convertHexToHsl($hex));
   }
 
   /**
