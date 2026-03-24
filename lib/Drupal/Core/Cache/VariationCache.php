@@ -235,13 +235,13 @@ class VariationCache implements VariationCacheInterface {
             // adding the cacheability from previous access checks that did not
             // lead to a value being returned.
             if (!array_diff($common_contexts, $previous_step_contexts)) {
-              trigger_error(sprintf(
+              throw new \LogicException(sprintf(
                 'Trying to overwrite a cache redirect for "%s" with one that has nothing in common, old one at address "%s" was pointing to "%s", new one points to "%s".',
                 $chain_cid,
                 implode(', ', $previous_step_contexts),
                 implode(', ', array_diff($result_contexts, $previous_step_contexts)),
                 implode(', ', array_diff($contexts, $previous_step_contexts)),
-              ), E_USER_WARNING);
+              ));
             }
 
             // != is the most appropriate comparison operator here, since we
