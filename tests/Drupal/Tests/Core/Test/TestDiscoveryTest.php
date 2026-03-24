@@ -423,7 +423,7 @@ EOF;
       ->onlyMethods(['getExtensions'])
       ->getMock();
 
-    $test_discovery->expects($this->any())
+    $test_discovery->expects($this->atLeastOnce())
       ->method('getExtensions')
       ->willReturn($extensions);
 

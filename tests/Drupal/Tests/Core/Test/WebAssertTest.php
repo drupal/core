@@ -140,11 +140,11 @@ class WebAssertTest extends UnitTestCase {
     $this->visit('http://localhost/test-page?a=b&c=d');
     $this->assertSession()->addressEquals('test-page');
     $this->assertSession()->addressEquals('test-page?a=b&c=d');
-    $url = $this->createMock(Url::class);
-    $url->expects($this->any())
+    $url = $this->createStub(Url::class);
+    $url
       ->method('setAbsolute')
       ->willReturn($url);
-    $url->expects($this->any())
+    $url
       ->method('toString')
       ->willReturn('test-page?a=b&c=d');
     $this->assertSession()->addressEquals($url);

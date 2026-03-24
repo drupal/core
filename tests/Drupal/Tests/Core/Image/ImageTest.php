@@ -65,8 +65,13 @@ class ImageTest extends UnitTestCase {
    */
   protected function getToolkitMock(array $stubs = []): GDToolkit&MockObject {
     $mock_builder = $this->getMockBuilder(GDToolkit::class);
-    $stubs = array_merge(['getPluginId', 'save'], $stubs);
-    return $mock_builder
+    // ::buildConfigurationForm() is added as a stub method to prevent PHPUnit
+    // 12.5+ from issuing notices that these toolkit mock objects have no
+    // expectations configured. If for any reason ::buildConfigurationForm()
+    // must be tested in this class, then the never() expectation below can be
+    // changed to another unused method on the GDToolkit class.
+    $stubs = array_merge(['getPluginId', 'save', 'buildConfigurationForm'], $stubs);
+    $mock = $mock_builder
       ->setConstructorArgs([
         [],
         '',
@@ -79,6 +84,9 @@ class ImageTest extends UnitTestCase {
       ])
       ->onlyMethods($stubs)
       ->getMock();
+    $mock->expects($this->never())
+      ->method('buildConfigurationForm');
+    return $mock;
   }
 
   /**
@@ -121,7 +129,7 @@ class ImageTest extends UnitTestCase {
 
     $this->toolkit = $this->getToolkitMock($stubs);
 
-    $this->toolkit->expects($this->any())
+    $this->toolkit
       ->method('getPluginId')
       ->willReturn('gd');
 
@@ -148,11 +156,11 @@ class ImageTest extends UnitTestCase {
     $this->toolkit = $this->getToolkitMock(['getToolkitOperation']);
     $this->toolkitOperation = $this->getToolkitOperationMock($class_name, $this->toolkit);
 
-    $this->toolkit->expects($this->any())
+    $this->toolkit
       ->method('getPluginId')
       ->willReturn('gd');
 
-    $this->toolkit->expects($this->any())
+    $this->toolkit
       ->method('getToolkitOperation')
       ->willReturn($this->toolkitOperation);
 
