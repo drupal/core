@@ -37498,6 +37498,15 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/BrowserTestBaseTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Call to deprecated function user_load_by_name\\(\\)\\:
+in drupal\\:11\\.4\\.0 and is removed from drupal\\:13\\.0\\.0\\.
+  Use \\\\Drupal\\:\\:entityTypeManager\\(\\)\\-\\>getStorage\\(\'user\'\\)\\-\\>loadByProperties\\(\\)
+  instead\\.$#',
+	'identifier' => 'function.deprecated',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/DefaultContent/BulkContentExportTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\ConfigAfterInstallerTestBase\\:\\:assertConfigDiff\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
