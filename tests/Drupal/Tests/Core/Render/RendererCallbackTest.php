@@ -22,7 +22,7 @@ class RendererCallbackTest extends RendererTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
-    $this->callableResolver->expects($this->any())
+    $this->callableResolver
       ->method('getCallableFromDefinition')
       ->willReturnArgument(0);
   }

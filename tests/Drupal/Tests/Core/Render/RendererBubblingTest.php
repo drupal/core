@@ -44,7 +44,7 @@ class RendererBubblingTest extends RendererTestBase {
     $this->setUpRequest();
     $this->setUpMemoryCache();
 
-    $this->cacheContextsManager->expects($this->any())
+    $this->cacheContextsManager
       ->method('convertTokensToKeys')
       ->willReturnArgument(0);
 
@@ -85,6 +85,7 @@ class RendererBubblingTest extends RendererTestBase {
    * Tests cache context bubbling with a custom cache bin.
    */
   public function testContextBubblingCustomCacheBin(): void {
+    $this->setUpMockVariationCacheFactory();
     $bin = $this->randomMachineName();
 
     $this->setUpRequest();
@@ -102,7 +103,7 @@ class RendererBubblingTest extends RendererTestBase {
           throw new \Exception();
         }
       });
-    $this->cacheContextsManager->expects($this->any())
+    $this->cacheContextsManager
       ->method('convertTokensToKeys')
       ->willReturnArgument(0);
 
@@ -142,7 +143,7 @@ class RendererBubblingTest extends RendererTestBase {
   public function testContextBubblingEdgeCases(array $element, array $expected_top_level_contexts, $expected_cache_item): void {
     $this->setUpRequest();
     $this->setUpMemoryCache();
-    $this->cacheContextsManager->expects($this->any())
+    $this->cacheContextsManager
       ->method('convertTokensToKeys')
       ->willReturnArgument(0);
 
@@ -460,7 +461,7 @@ class RendererBubblingTest extends RendererTestBase {
 
     // Simulate the theme system/Twig: a recursive call to Renderer::render(),
     // just like the theme system or a Twig template would have done.
-    $this->themeManager->expects($this->any())
+    $this->themeManager
       ->method('render')
       ->willReturnCallback(function ($hook, array $vars) {
         return $this->renderer->render($vars['foo']);

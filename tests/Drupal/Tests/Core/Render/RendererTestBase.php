@@ -8,13 +8,17 @@ use Drupal\Component\Datetime\Time;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Cache\Context\CacheContextsManager;
 use Drupal\Core\Cache\Context\ContextCacheKeys;
 use Drupal\Core\Cache\MemoryBackend;
 use Drupal\Core\Cache\VariationCache;
+use Drupal\Core\Cache\VariationCacheFactoryInterface;
+use Drupal\Core\Render\ElementInfoManagerInterface;
 use Drupal\Core\Render\PlaceholderGenerator;
 use Drupal\Core\Render\PlaceholderingRenderCache;
 use Drupal\Core\Render\Renderer;
 use Drupal\Core\Security\TrustedCallbackInterface;
+use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Core\Utility\CallableResolver;
 use Drupal\Tests\UnitTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -60,33 +64,33 @@ abstract class RendererTestBase extends UnitTestCase {
   protected $requestStack;
 
   /**
-   * @var \Drupal\Core\Cache\VariationCacheFactoryInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Cache\VariationCacheFactoryInterface
    */
   protected $cacheFactory;
 
   /**
-   * @var \Drupal\Core\Cache\Context\CacheContextsManager|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Cache\Context\CacheContextsManager
    */
   protected $cacheContextsManager;
 
   /**
    * The mocked controller resolver.
    *
-   * @var \Drupal\Core\Utility\CallableResolver|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Utility\CallableResolver
    */
   protected $callableResolver;
 
   /**
    * The mocked theme manager.
    *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Theme\ThemeManagerInterface
    */
   protected $themeManager;
 
   /**
    * The mocked element info.
    *
-   * @var \Drupal\Core\Render\ElementInfoManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Render\ElementInfoManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $elementInfo;
 
@@ -126,13 +130,13 @@ abstract class RendererTestBase extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->callableResolver = $this->createMock(CallableResolver::class);
-    $this->callableResolver->expects($this->any())
+    $this->callableResolver = $this->createStub(CallableResolver::class);
+    $this->callableResolver
       ->method('getCallableFromDefinition')
       ->willReturnArgument(0);
-    $this->themeManager = $this->createMock('Drupal\Core\Theme\ThemeManagerInterface');
-    $this->elementInfo = $this->createMock('Drupal\Core\Render\ElementInfoManagerInterface');
-    $this->elementInfo->expects($this->any())
+    $this->themeManager = $this->createStub(ThemeManagerInterface::class);
+    $this->elementInfo = $this->createStub(ElementInfoManagerInterface::class);
+    $this->elementInfo
       ->method('getInfo')
       ->willReturnCallback(function ($type): array {
         switch ($type) {
@@ -154,18 +158,16 @@ abstract class RendererTestBase extends UnitTestCase {
     $request = new Request();
     $request->server->set('REQUEST_TIME', $_SERVER['REQUEST_TIME']);
     $this->requestStack->push($request);
-    $this->cacheFactory = $this->createMock('Drupal\Core\Cache\VariationCacheFactoryInterface');
-    $this->cacheContextsManager = $this->getMockBuilder('Drupal\Core\Cache\Context\CacheContextsManager')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $this->cacheFactory = $this->createStub(VariationCacheFactoryInterface::class);
+    $this->cacheContextsManager = $this->createStub(CacheContextsManager::class);
     $this->cacheContextsManager->method('assertValidTokens')->willReturn(TRUE);
-    $this->cacheContextsManager->expects($this->any())
+    $this->cacheContextsManager
       ->method('optimizeTokens')
       ->willReturnCallback(function ($context_tokens) {
         return $context_tokens;
       });
     $current_user_role = &$this->currentUserRole;
-    $this->cacheContextsManager->expects($this->any())
+    $this->cacheContextsManager
       ->method('convertTokensToKeys')
       ->willReturnCallback(function ($context_tokens) use (&$current_user_role): ContextCacheKeys {
         $keys = [];
@@ -203,6 +205,45 @@ abstract class RendererTestBase extends UnitTestCase {
   }
 
   /**
+   * Reinitializes the route processor manager as a mock object.
+   */
+  protected function setUpMockCallableResolver(): void {
+    $this->callableResolver = $this->createMock(CallableResolver::class);
+    $this->callableResolver
+      ->method('getCallableFromDefinition')
+      ->willReturnArgument(0);
+    $reflection = new \ReflectionProperty($this->renderer, 'callableResolver');
+    $reflection->setValue($this->renderer, $this->callableResolver);
+  }
+
+  /**
+   * Reinitializes the theme manager as a mock object.
+   */
+  protected function setUpMockThemeManager(): void {
+    $this->themeManager = $this->createMock(ThemeManagerInterface::class);
+    $reflection = new \ReflectionProperty($this->renderer, 'theme');
+    $reflection->setValue($this->renderer, $this->themeManager);
+  }
+
+  /**
+   * Reinitializes the variation cache factory as a mock object.
+   */
+  protected function setUpMockVariationCacheFactory(): void {
+    $this->cacheFactory = $this->createMock(VariationCacheFactoryInterface::class);
+    $reflection = new \ReflectionProperty($this->renderCache, 'cacheFactory');
+    $reflection->setValue($this->renderCache, $this->cacheFactory);
+  }
+
+  /**
+   * Reinitializes the cache contexts manager as a mock object.
+   */
+  protected function setUpMockCacheContextsManager(): void {
+    $this->cacheContextsManager = $this->createMock(CacheContextsManager::class);
+    $reflection = new \ReflectionProperty($this->renderCache, 'cacheContextsManager');
+    $reflection->setValue($this->renderCache, $this->cacheContextsManager);
+  }
+
+  /**
    * Generates a random context value for the placeholder tests.
    *
    * The #context array used by the placeholder #lazy_builder callback will
@@ -225,6 +266,8 @@ abstract class RendererTestBase extends UnitTestCase {
    * Sets up a render cache back-end that is asserted to be never used.
    */
   protected function setUpUnusedCache() {
+    $this->setUpMockVariationCacheFactory();
+
     $this->cacheFactory->expects($this->never())
       ->method('get');
   }
@@ -233,6 +276,8 @@ abstract class RendererTestBase extends UnitTestCase {
    * Sets up a memory-based render cache back-end.
    */
   protected function setUpMemoryCache() {
+    $this->setUpMockVariationCacheFactory();
+
     $this->memoryCache = $this->memoryCache ?: new VariationCache($this->requestStack, new MemoryBackend(new Time($this->requestStack)), $this->cacheContextsManager);
 
     $this->cacheFactory->expects($this->atLeastOnce())

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Render\Plugin\DisplayVariant;
 
+use Drupal\Core\Cache\Context\CacheContextsManager;
 use Drupal\Core\DependencyInjection\Container;
 use Drupal\Core\Render\PageDisplayVariantSelectionEvent;
 use Drupal\Core\Render\Plugin\DisplayVariant\SimplePageVariant;
@@ -32,12 +33,9 @@ class SimplePageVariantTest extends UnitTestCase {
    */
   public function setUpDisplayVariant($configuration = [], $definition = []) {
     $container = new Container();
-    $cache_context_manager = $this->getMockBuilder('Drupal\Core\Cache\Context\CacheContextsManager')
-      ->disableOriginalConstructor()
-      ->onlyMethods(['assertValidTokens'])
-      ->getMock();
+    $cache_context_manager = $this->createStub(CacheContextsManager::class);
     $container->set('cache_contexts_manager', $cache_context_manager);
-    $cache_context_manager->expects($this->any())
+    $cache_context_manager
       ->method('assertValidTokens')
       ->willReturn(TRUE);
     \Drupal::setContainer($container);
@@ -99,7 +97,7 @@ class SimplePageVariantTest extends UnitTestCase {
    */
   public function testCacheMetadataFromPlugin(): void {
     $display_variant = $this->setUpDisplayVariant();
-    $route_match = $this->createMock(RouteMatchInterface::class);
+    $route_match = $this->createStub(RouteMatchInterface::class);
 
     $event = new PageDisplayVariantSelectionEvent($display_variant->getPluginId(), $route_match);
     $event->addCacheTags(['my_tag']);

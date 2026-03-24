@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Render;
 
+use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\Render\ElementInfoManager;
 use Drupal\Core\Theme\ActiveTheme;
+use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -20,57 +23,6 @@ use PHPUnit\Framework\Attributes\Group;
 class ElementInfoManagerTest extends UnitTestCase {
 
   /**
-   * The mocked element_info.
-   *
-   * @var \Drupal\Core\Render\ElementInfoManagerInterface
-   */
-  protected $elementInfo;
-
-  /**
-   * The cache backend to use.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $cache;
-
-  /**
-   * The mocked module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $moduleHandler;
-
-  /**
-   * The mocked theme manager.
-   *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $themeManager;
-
-  /**
-   * The mocked theme handler.
-   *
-   * @var \Drupal\Core\Extension\ThemeHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $themeHandler;
-
-  /**
-   * {@inheritdoc}
-   *
-   * @legacy-covers ::__construct
-   */
-  protected function setUp(): void {
-    parent::setUp();
-
-    $this->cache = $this->createMock('Drupal\Core\Cache\CacheBackendInterface');
-    $this->themeHandler = $this->createMock(ThemeHandlerInterface::class);
-    $this->moduleHandler = $this->createMock('Drupal\Core\Extension\ModuleHandlerInterface');
-    $this->themeManager = $this->createMock('Drupal\Core\Theme\ThemeManagerInterface');
-
-    $this->elementInfo = new ElementInfoManager(new \ArrayObject(), $this->cache, $this->themeHandler, $this->moduleHandler, $this->themeManager);
-  }
-
-  /**
    * Tests the getInfo() method when render element plugins are used.
    *
    * @legacy-covers ::getInfo
@@ -78,7 +30,9 @@ class ElementInfoManagerTest extends UnitTestCase {
    */
   #[DataProvider('providerTestGetInfoElementPlugin')]
   public function testGetInfoElementPlugin(string $plugin_class, $expected_info): void {
-    $this->moduleHandler->expects($this->once())
+    // Override the module handler to set expectations.
+    $moduleHandler = $this->createMock(ModuleHandlerInterface::class);
+    $moduleHandler->expects($this->once())
       ->method('alter')
       ->with('element_info', $this->anything())
       ->willReturnArgument(0);
@@ -90,18 +44,20 @@ class ElementInfoManagerTest extends UnitTestCase {
         '#theme' => 'page',
       ]);
 
+    $themeManager = $this->createStub(ThemeManagerInterface::class);
+
     $element_info = $this->getMockBuilder('Drupal\Core\Render\ElementInfoManager')
       ->setConstructorArgs([
         new \ArrayObject(),
-        $this->cache,
-        $this->themeHandler,
-        $this->moduleHandler,
-        $this->themeManager,
+        $this->createStub(CacheBackendInterface::class),
+        $this->createStub(ThemeHandlerInterface::class),
+        $moduleHandler,
+        $themeManager,
       ])
       ->onlyMethods(['getDefinitions', 'createInstance'])
       ->getMock();
 
-    $this->themeManager->expects($this->any())
+    $themeManager
       ->method('getActiveTheme')
       ->willReturn(new ActiveTheme(['name' => 'test']));
 
@@ -152,11 +108,18 @@ class ElementInfoManagerTest extends UnitTestCase {
    * Tests get info property.
    */
   public function testGetInfoProperty(): void {
-    $this->themeManager
+    $themeManager = $this->createStub(ThemeManagerInterface::class);
+    $themeManager
       ->method('getActiveTheme')
       ->willReturn(new ActiveTheme(['name' => 'test']));
 
-    $element_info = new TestElementInfoManager(new \ArrayObject(), $this->cache, $this->themeHandler, $this->moduleHandler, $this->themeManager);
+    $element_info = new TestElementInfoManager(
+      new \ArrayObject(),
+      $this->createStub(CacheBackendInterface::class),
+      $this->createStub(ThemeHandlerInterface::class),
+      $this->createStub(ModuleHandlerInterface::class),
+      $themeManager,
+    );
     $this->assertSame('baz', $element_info->getInfoProperty('foo', '#bar'));
     $this->assertNull($element_info->getInfoProperty('foo', '#non_existing_property'));
     $this->assertSame('qux', $element_info->getInfoProperty('foo', '#non_existing_property', 'qux'));

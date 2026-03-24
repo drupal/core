@@ -60,6 +60,8 @@ class RendererTest extends RendererTestBase {
   #[DataProvider('providerTestRenderBasic')]
   public function testRenderBasic(string|array|null $build, $expected, ?callable $setup_code = NULL): void {
     if (isset($setup_code)) {
+      $this->setUpMockThemeManager();
+
       $setup_code = $setup_code->bindTo($this);
       $setup_code($this->themeManager, $this);
     }
@@ -822,6 +824,7 @@ class RendererTest extends RendererTestBase {
    * @legacy-covers ::doRender
    */
   public function testRenderWithoutThemeArguments(): void {
+    $this->setUpMockThemeManager();
     $element = [
       '#theme' => 'common_test_foo',
     ];
@@ -842,6 +845,7 @@ class RendererTest extends RendererTestBase {
    * @legacy-covers ::doRender
    */
   public function testRenderWithThemeArguments(): void {
+    $this->setUpMockThemeManager();
     $element = [
       '#theme' => 'common_test_foo',
       '#foo' => $this->randomMachineName(),
