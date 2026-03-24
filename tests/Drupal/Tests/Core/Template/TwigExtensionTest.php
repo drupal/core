@@ -7,15 +7,19 @@ namespace Drupal\Tests\Core\Template;
 // cspell:ignore mila
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\GeneratedLink;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Render\RenderableInterface;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\Routing\UrlGeneratorInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Template\Loader\StringLoader;
 use Drupal\Core\Template\TwigEnvironment;
 use Drupal\Core\Template\TwigExtension;
+use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Core\Url;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -38,28 +42,28 @@ class TwigExtensionTest extends UnitTestCase {
   /**
    * The renderer.
    *
-   * @var \Drupal\Core\Render\RendererInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Render\RendererInterface
    */
   protected $renderer;
 
   /**
    * The URL generator.
    *
-   * @var \Drupal\Core\Routing\UrlGeneratorInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Routing\UrlGeneratorInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $urlGenerator;
 
   /**
    * The theme manager.
    *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Theme\ThemeManagerInterface
    */
   protected $themeManager;
 
   /**
    * The date formatter.
    *
-   * @var \Drupal\Core\Datetime\DateFormatterInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Datetime\DateFormatterInterface
    */
   protected $dateFormatter;
 
@@ -73,7 +77,7 @@ class TwigExtensionTest extends UnitTestCase {
   /**
    * The file URL generator mock.
    *
-   * @var \Drupal\Core\File\FileUrlGeneratorInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\File\FileUrlGeneratorInterface
    */
   protected $fileUrlGenerator;
 
@@ -83,13 +87,49 @@ class TwigExtensionTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->renderer = $this->createMock('\Drupal\Core\Render\RendererInterface');
-    $this->urlGenerator = $this->createMock('\Drupal\Core\Routing\UrlGeneratorInterface');
-    $this->themeManager = $this->createMock('\Drupal\Core\Theme\ThemeManagerInterface');
-    $this->dateFormatter = $this->createMock('\Drupal\Core\Datetime\DateFormatterInterface');
-    $this->fileUrlGenerator = $this->createMock(FileUrlGeneratorInterface::class);
+    $this->renderer = $this->createStub(RendererInterface::class);
+    $this->urlGenerator = $this->createStub(UrlGeneratorInterface::class);
+    $this->themeManager = $this->createStub(ThemeManagerInterface::class);
+    $this->dateFormatter = $this->createStub(DateFormatterInterface::class);
+    $this->fileUrlGenerator = $this->createStub(FileUrlGeneratorInterface::class);
 
     $this->systemUnderTest = new TwigExtension($this->renderer, $this->urlGenerator, $this->themeManager, $this->dateFormatter, $this->fileUrlGenerator);
+  }
+
+  /**
+   * Reinitializes the date formatter as a mock object.
+   */
+  protected function setUpMockDateFormatter(): void {
+    $this->dateFormatter = $this->createMock(DateFormatterInterface::class);
+    $reflection = new \ReflectionProperty($this->systemUnderTest, 'dateFormatter');
+    $reflection->setValue($this->systemUnderTest, $this->dateFormatter);
+  }
+
+  /**
+   * Reinitializes the file URL generator as a mock object.
+   */
+  protected function setUpMockFileUrlGenerator(): void {
+    $this->fileUrlGenerator = $this->createMock(FileUrlGeneratorInterface::class);
+    $reflection = new \ReflectionProperty($this->systemUnderTest, 'fileUrlGenerator');
+    $reflection->setValue($this->systemUnderTest, $this->fileUrlGenerator);
+  }
+
+  /**
+   * Reinitializes the renderer as a mock object.
+   */
+  protected function setUpMockRenderer(): void {
+    $this->renderer = $this->createMock(RendererInterface::class);
+    $reflection = new \ReflectionProperty($this->systemUnderTest, 'renderer');
+    $reflection->setValue($this->systemUnderTest, $this->renderer);
+  }
+
+  /**
+   * Reinitializes the theme manager as a mock object.
+   */
+  protected function setUpMockThemeManager(): void {
+    $this->themeManager = $this->createMock(ThemeManagerInterface::class);
+    $reflection = new \ReflectionProperty($this->systemUnderTest, 'themeManager');
+    $reflection->setValue($this->systemUnderTest, $this->themeManager);
   }
 
   /**
@@ -149,6 +189,8 @@ class TwigExtensionTest extends UnitTestCase {
    * Tests the active_theme function.
    */
   public function testActiveTheme(): void {
+    $this->setUpMockThemeManager();
+
     $active_theme = $this->getMockBuilder('\Drupal\Core\Theme\ActiveTheme')
       ->disableOriginalConstructor()
       ->getMock();
@@ -170,6 +212,8 @@ class TwigExtensionTest extends UnitTestCase {
    * Tests the format_date filter.
    */
   public function testFormatDate(): void {
+    $this->setUpMockDateFormatter();
+
     $this->dateFormatter->expects($this->exactly(1))
       ->method('format')
       ->willReturnCallback(function ($timestamp): string {
@@ -188,6 +232,8 @@ class TwigExtensionTest extends UnitTestCase {
    * Tests the file_url filter.
    */
   public function testFileUrl(): void {
+    $this->setUpMockFileUrlGenerator();
+
     $this->fileUrlGenerator->expects($this->once())
       ->method('generateString')
       ->with('public://picture.jpg')
@@ -204,6 +250,8 @@ class TwigExtensionTest extends UnitTestCase {
    * Tests the active_theme_path function.
    */
   public function testActiveThemePath(): void {
+    $this->setUpMockThemeManager();
+
     $active_theme = $this->getMockBuilder('\Drupal\Core\Theme\ActiveTheme')
       ->disableOriginalConstructor()
       ->getMock();
@@ -252,7 +300,9 @@ class TwigExtensionTest extends UnitTestCase {
    * Tests safe join.
    */
   public function testSafeJoin(): void {
-    $this->renderer->expects($this->any())
+    $this->setUpMockRenderer();
+
+    $this->renderer
       ->method('render')
       ->with(['#markup' => '<strong>will be rendered</strong>', '#printed' => FALSE])
       ->willReturn('<strong>will be rendered</strong>');
@@ -294,7 +344,9 @@ class TwigExtensionTest extends UnitTestCase {
  */
   #[DataProvider('providerTestRenderVar')]
   public function testRenderVar($result, $input): void {
-    $this->renderer->expects($this->any())
+    $this->setUpMockRenderer();
+
+    $this->renderer
       ->method('render')
       ->with($result += ['#printed' => FALSE])
       ->willReturn('Rendered output');
@@ -320,6 +372,8 @@ class TwigExtensionTest extends UnitTestCase {
    * @legacy-covers ::bubbleArgMetadata
    */
   public function testEscapeWithGeneratedLink(): void {
+    $this->setUpMockRenderer();
+
     $loader = new FilesystemLoader();
     $twig = new Environment($loader, [
       'debug' => TRUE,
@@ -355,6 +409,8 @@ class TwigExtensionTest extends UnitTestCase {
    * @legacy-covers ::bubbleArgMetadata
    */
   public function testRenderVarWithGeneratedLink(): void {
+    $this->setUpMockRenderer();
+
     $link = new GeneratedLink();
     $link->setGeneratedLink('<a href="http://example.com"></a>');
     $link->addCacheTags(['foo']);

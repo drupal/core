@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Drupal\Tests\Core\TypedData;
 
 use Drupal\Core\Cache\NullBackend;
+use Drupal\Core\DependencyInjection\ClassResolverInterface;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\TypedData\MapDataDefinition;
 use Drupal\Core\TypedData\TypedData as TypedDataBase;
@@ -14,6 +16,7 @@ use Drupal\Core\TypedData\Validation\RecursiveContextualValidator;
 use Drupal\Core\TypedData\Validation\RecursiveValidator;
 use Drupal\Core\Validation\ConstraintManager;
 use Drupal\Core\Validation\ExecutionContextFactory;
+use Drupal\Core\Validation\TranslatorInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -67,14 +70,9 @@ class RecursiveContextualValidatorTest extends UnitTestCase {
       'Drupal\\Core\\TypedData' => $this->root . '/core/lib/Drupal/Core/TypedData',
       'Drupal\\Core\\Validation' => $this->root . '/core/lib/Drupal/Core/Validation',
     ]);
-    $module_handler = $this->getMockBuilder('Drupal\Core\Extension\ModuleHandlerInterface')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $class_resolver = $this->getMockBuilder('Drupal\Core\DependencyInjection\ClassResolverInterface')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $module_handler = $this->createStub(ModuleHandlerInterface::class);
 
-    $this->typedDataManager = new TypedDataManager($namespaces, $cache_backend, $module_handler, $class_resolver);
+    $this->typedDataManager = new TypedDataManager($namespaces, $cache_backend, $module_handler, $this->createStub(ClassResolverInterface::class));
     $this->typedDataManager->setValidationConstraintManager(
       new ConstraintManager($namespaces, $cache_backend, $module_handler)
     );
@@ -83,8 +81,8 @@ class RecursiveContextualValidatorTest extends UnitTestCase {
     $container->set('typed_data_manager', $this->typedDataManager);
     \Drupal::setContainer($container);
 
-    $translator = $this->createMock('Drupal\Core\Validation\TranslatorInterface');
-    $translator->expects($this->any())
+    $translator = $this->createStub(TranslatorInterface::class);
+    $translator
       ->method('trans')
       ->willReturnCallback(function ($id) {
         return $id;

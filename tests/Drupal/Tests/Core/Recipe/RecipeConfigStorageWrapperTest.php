@@ -205,8 +205,8 @@ class RecipeConfigStorageWrapperTest extends UnitTestCase {
    * Test that we only use storage A's encode method.
    */
   public function testEncode(): void {
-    $a = $this->createMock(StorageInterface::class);
-    $b = $this->createMock(StorageInterface::class);
+    $a = $this->createStub(StorageInterface::class);
+    $b = $this->createStub(StorageInterface::class);
     $storage = new RecipeConfigStorageWrapper($a, $b);
     $this->expectException(\BadMethodCallException::class);
     $storage->encode(['value']);
@@ -216,8 +216,8 @@ class RecipeConfigStorageWrapperTest extends UnitTestCase {
    * Test that we only use storage A's decode method.
    */
   public function testDecode(): void {
-    $a = $this->createMock(StorageInterface::class);
-    $b = $this->createMock(StorageInterface::class);
+    $a = $this->createStub(StorageInterface::class);
+    $b = $this->createStub(StorageInterface::class);
     $storage = new RecipeConfigStorageWrapper($a, $b);
     $this->expectException(\BadMethodCallException::class);
     $storage->decode('value');
@@ -281,8 +281,8 @@ class RecipeConfigStorageWrapperTest extends UnitTestCase {
    * Test the collection name is stored properly.
    */
   public function testGetCollection(): void {
-    $a = $this->createMock(StorageInterface::class);
-    $b = $this->createMock(StorageInterface::class);
+    $a = $this->createStub(StorageInterface::class);
+    $b = $this->createStub(StorageInterface::class);
     $storage = new RecipeConfigStorageWrapper($a, $b, 'collection');
     $this->assertEquals('collection', $storage->getCollectionName());
   }

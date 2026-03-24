@@ -9,7 +9,6 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,26 +19,13 @@ use Symfony\Component\HttpFoundation\Request;
 class SessionConfigurationTest extends UnitTestCase {
 
   /**
-   * Constructs a partially mocked SUT.
-   *
-   * @return \Drupal\Core\Session\SessionConfiguration|\PHPUnit\Framework\MockObject\MockObject
-   *   A mock object of SessionConfiguration with specific methods overridden.
-   */
-  protected function createSessionConfiguration($options = []): SessionConfiguration&MockObject {
-    return $this->getMockBuilder(SessionConfiguration::class)
-      ->onlyMethods(['drupalValidTestUa'])
-      ->setConstructorArgs([$options])
-      ->getMock();
-  }
-
-  /**
    * Tests whether the session.cookie_domain ini settings is computed correctly.
    *
    * @legacy-covers ::getOptions
    */
   #[DataProvider('providerTestGeneratedCookieDomain')]
   public function testGeneratedCookieDomain(string $uri, string $expected_domain): void {
-    $config = $this->createSessionConfiguration();
+    $config = new SessionConfiguration();
 
     $request = Request::create($uri);
     $options = $config->getOptions($request);
@@ -77,7 +63,7 @@ class SessionConfigurationTest extends UnitTestCase {
    */
   #[DataProvider('providerTestEnforcedCookieDomain')]
   public function testEnforcedCookieDomain(string $uri, string $expected_domain): void {
-    $config = $this->createSessionConfiguration(['cookie_domain' => '.example.com']);
+    $config = new SessionConfiguration(['cookie_domain' => '.example.com']);
 
     $request = Request::create($uri);
     $options = $config->getOptions($request);
@@ -114,7 +100,7 @@ class SessionConfigurationTest extends UnitTestCase {
    */
   #[DataProvider('providerTestCookieSecure')]
   public function testCookieSecure(string $uri, bool $expected_secure): void {
-    $config = $this->createSessionConfiguration();
+    $config = new SessionConfiguration();
 
     $request = Request::create($uri);
     $options = $config->getOptions($request);
@@ -128,7 +114,7 @@ class SessionConfigurationTest extends UnitTestCase {
   public function testSameSiteCookie(): void {
     $request = Request::create('https://example.com');
 
-    $config = $this->createSessionConfiguration(['cookie_samesite' => 'Strict']);
+    $config = new SessionConfiguration(['cookie_samesite' => 'Strict']);
     $options = $config->getOptions($request);
     $this->assertEquals('Strict', $options['cookie_samesite']);
   }
@@ -141,7 +127,7 @@ class SessionConfigurationTest extends UnitTestCase {
    */
   #[DataProvider('providerTestCookieSecure')]
   public function testCookieSecureNotOverridable(string $uri, bool $expected_secure): void {
-    $config = $this->createSessionConfiguration(['cookie_secure' => FALSE]);
+    $config = new SessionConfiguration(['cookie_secure' => FALSE]);
 
     $request = Request::create($uri);
     $options = $config->getOptions($request);
@@ -173,7 +159,7 @@ class SessionConfigurationTest extends UnitTestCase {
    */
   #[DataProvider('providerTestGeneratedSessionName')]
   public function testGeneratedSessionName(string $uri, $expected_name): void {
-    $config = $this->createSessionConfiguration();
+    $config = new SessionConfiguration();
 
     $request = Request::create($uri);
     $options = $config->getOptions($request);
@@ -220,7 +206,7 @@ class SessionConfigurationTest extends UnitTestCase {
    */
   #[DataProvider('providerTestEnforcedSessionName')]
   public function testEnforcedSessionNameViaCookieDomain(string $uri, $expected_name): void {
-    $config = $this->createSessionConfiguration(['cookie_domain' => '.example.com']);
+    $config = new SessionConfiguration(['cookie_domain' => '.example.com']);
 
     $request = Request::create($uri);
     $options = $config->getOptions($request);
@@ -266,11 +252,11 @@ class SessionConfigurationTest extends UnitTestCase {
    * @legacy-covers ::__construct
    */
   public function testConstructorDefaultSettings(): void {
-    $config = $this->createSessionConfiguration([]);
+    $config = new SessionConfiguration([]);
     $options = $config->getOptions(Request::createFromGlobals());
     $this->assertSame('', $options['name_suffix']);
 
-    $config = $this->createSessionConfiguration(['name_suffix' => 'some-suffix']);
+    $config = new SessionConfiguration(['name_suffix' => 'some-suffix']);
     $options = $config->getOptions(Request::createFromGlobals());
     $this->assertSame('some-suffix', $options['name_suffix']);
   }

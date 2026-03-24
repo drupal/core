@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Template;
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Template\Attribute\TwigAllowed;
 use Drupal\Core\Template\Loader\StringLoader;
@@ -49,9 +50,8 @@ class TwigSandboxTest extends UnitTestCase {
    */
   #[DataProvider('getTwigEntityDangerousMethods')]
   public function testEntityDangerousMethods(string $template): void {
-    $entity = $this->createMock('Drupal\Core\Entity\EntityInterface');
     $this->expectException(SecurityError::class);
-    $this->twig->render($template, ['entity' => $entity]);
+    $this->twig->render($template, ['entity' => $this->createStub(EntityInterface::class)]);
   }
 
   /**
