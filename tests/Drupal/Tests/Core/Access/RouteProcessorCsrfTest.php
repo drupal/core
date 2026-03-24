@@ -11,7 +11,8 @@ use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Route;
 
@@ -23,14 +24,9 @@ use Symfony\Component\Routing\Route;
 class RouteProcessorCsrfTest extends UnitTestCase {
 
   /**
-   * The mock CSRF token generator.
+   * The mocked request stack.
    */
-  protected CsrfTokenGenerator&MockObject $csrfToken;
-
-  /**
-   * The mock request stack.
-   */
-  protected RequestStack&MockObject $requestStack;
+  protected RequestStack&Stub $requestStack;
 
   /**
    * The route processor.
@@ -43,32 +39,28 @@ class RouteProcessorCsrfTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->csrfToken = $this->getMockBuilder('Drupal\Core\Access\CsrfTokenGenerator')
-      ->disableOriginalConstructor()
-      ->getMock();
-
-    $this->requestStack = $this->getMockBuilder('Symfony\Component\HttpFoundation\RequestStack')
-      ->disableOriginalConstructor()
-      ->getMock();
-
-    $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
-    $request->expects($this->any())
+    $request = $this->createStub(Request::class);
+    $request
       ->method('getRequestFormat')
       ->willReturn('html');
 
-    $this->requestStack->expects($this->any())
+    $this->requestStack = $this->createStub(RequestStack::class);
+    $this->requestStack
       ->method('getCurrentRequest')
       ->willReturn($request);
 
-    $this->processor = new RouteProcessorCsrf($this->csrfToken, $this->requestStack);
+    $this->processor = new RouteProcessorCsrf($this->createStub(CsrfTokenGenerator::class), $this->requestStack);
   }
 
   /**
    * Tests the processOutbound() method with no _csrf_token route requirement.
    */
   public function testProcessOutboundNoRequirement(): void {
-    $this->csrfToken->expects($this->never())
+    // Override the token generator so we can set expectations.
+    $csrfToken = $this->createMock(CsrfTokenGenerator::class);
+    $csrfToken->expects($this->never())
       ->method('get');
+    $this->processor = new RouteProcessorCsrf($csrfToken, $this->requestStack);
 
     $route = new Route('/test-path');
     $parameters = [];
@@ -151,19 +143,20 @@ class RouteProcessorCsrfTest extends UnitTestCase {
     $request->expects($this->once())
       ->method('getRequestFormat')
       ->willReturn('json');
-    $this->requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
-    $this->requestStack->expects($this->once())
+    $requestStack = $this->createMock(RequestStack::class);
+    $requestStack->expects($this->once())
       ->method('getCurrentRequest')
       ->willReturn($request);
 
     // Mock that the CSRF token service should be called once with 'test-path'
     // and return a test token.
-    $this->csrfToken->expects($this->any())
+    $csrfToken = $this->createMock(CsrfTokenGenerator::class);
+    $csrfToken->expects($this->atLeastOnce())
       ->method('get')
       ->with('test-path')
       ->willReturn('real_token_value');
 
-    $this->processor = new RouteProcessorCsrf($this->csrfToken, $this->requestStack);
+    $this->processor = new RouteProcessorCsrf($csrfToken, $requestStack);
 
     $route = new Route('/test-path', [], ['_csrf_token' => 'TRUE']);
     $parameters = [];

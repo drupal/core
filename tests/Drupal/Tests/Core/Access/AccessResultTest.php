@@ -10,7 +10,10 @@ use Drupal\Core\Access\AccessResultNeutral;
 use Drupal\Core\Access\AccessResultReasonInterface;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheableDependencyInterface;
+use Drupal\Core\Cache\Context\CacheContextsManager;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -24,25 +27,16 @@ use PHPUnit\Framework\Attributes\Group;
 class AccessResultTest extends UnitTestCase {
 
   /**
-   * The cache contexts manager.
-   *
-   * @var \Drupal\Core\Cache\Context\CacheContextsManager|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $cacheContextsManager;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
 
-    $this->cacheContextsManager = $this->getMockBuilder('Drupal\Core\Cache\Context\CacheContextsManager')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $cacheContextsManager = $this->createStub(CacheContextsManager::class);
 
-    $this->cacheContextsManager->method('assertValidTokens')->willReturn(TRUE);
+    $cacheContextsManager->method('assertValidTokens')->willReturn(TRUE);
     $container = new ContainerBuilder();
-    $container->set('cache_contexts_manager', $this->cacheContextsManager);
+    $container->set('cache_contexts_manager', $cacheContextsManager);
     \Drupal::setContainer($container);
   }
 
@@ -474,7 +468,7 @@ class AccessResultTest extends UnitTestCase {
 
     // ::allowIfHasPermission and ::allowedIfHasPermission convenience methods.
     $account = $this->createMock('\Drupal\Core\Session\AccountInterface');
-    $account->expects($this->any())
+    $account
       ->method('hasPermission')
       ->with('may herd llamas')
       ->willReturn(FALSE);
@@ -528,14 +522,14 @@ class AccessResultTest extends UnitTestCase {
     $verify($access, ['bar:baz', 'bar:qux', 'foo:bar', 'foo:baz']);
 
     // ::addCacheableDependency() convenience method.
-    $node = $this->createMock('\Drupal\node\NodeInterface');
-    $node->expects($this->any())
+    $node = $this->createStub(NodeInterface::class);
+    $node
       ->method('getCacheTags')
       ->willReturn(['node:20011988']);
-    $node->expects($this->any())
+    $node
       ->method('getCacheMaxAge')
       ->willReturn(600);
-    $node->expects($this->any())
+    $node
       ->method('getCacheContexts')
       ->willReturn(['user']);
     $tags = ['node:20011988'];
@@ -934,8 +928,8 @@ class AccessResultTest extends UnitTestCase {
    */
   #[DataProvider('providerTestAllowedIfHasPermissions')]
   public function testAllowedIfHasPermissions($permissions, $conjunction, AccessResult $expected_access): void {
-    $account = $this->createMock('\Drupal\Core\Session\AccountInterface');
-    $account->expects($this->any())
+    $account = $this->createStub(AccountInterface::class);
+    $account
       ->method('hasPermission')
       ->willReturnMap([
         ['allowed', TRUE],

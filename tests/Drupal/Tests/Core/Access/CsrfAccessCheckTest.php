@@ -38,7 +38,7 @@ class CsrfAccessCheckTest extends UnitTestCase {
   protected RouteMatchInterface $routeMatch;
 
   /**
-   * The mock parameter bag.
+   * The stub parameter bag.
    */
   protected ParameterBagInterface $parameterBag;
 
@@ -52,7 +52,7 @@ class CsrfAccessCheckTest extends UnitTestCase {
       ->disableOriginalConstructor()
       ->getMock();
 
-    $this->parameterBag = $this->createMock(ParameterBagInterface::class);
+    $this->parameterBag = $this->createStub(ParameterBagInterface::class);
 
     $this->routeMatch = $this->createMock(RouteMatchInterface::class);
 
