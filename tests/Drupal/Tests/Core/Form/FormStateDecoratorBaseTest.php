@@ -1198,7 +1198,7 @@ class FormStateDecoratorBaseTest extends UnitTestCase {
    * Tests set response.
    */
   public function testSetResponse(): void {
-    $response = $this->createMock(Response::class);
+    $response = $this->createStub(Response::class);
 
     $this->decoratedFormState->setResponse($response)
       ->shouldBeCalled();
@@ -1210,7 +1210,7 @@ class FormStateDecoratorBaseTest extends UnitTestCase {
    * Tests get response.
    */
   public function testGetResponse(): void {
-    $response = $this->createMock(Response::class);
+    $response = $this->createStub(Response::class);
 
     $this->decoratedFormState->getResponse()
       ->willReturn($response)
@@ -1434,7 +1434,7 @@ class FormStateDecoratorBaseTest extends UnitTestCase {
    * Tests set form object.
    */
   public function testSetFormObject(): void {
-    $form = $this->createMock(FormInterface::class);
+    $form = $this->createStub(FormInterface::class);
 
     $this->decoratedFormState->setFormObject($form)
       ->shouldBeCalled();
@@ -1446,7 +1446,7 @@ class FormStateDecoratorBaseTest extends UnitTestCase {
    * Tests get form object.
    */
   public function testGetFormObject(): void {
-    $form = $this->createMock(FormInterface::class);
+    $form = $this->createStub(FormInterface::class);
 
     $this->decoratedFormState->getFormObject()
       ->willReturn($form)

@@ -38,7 +38,7 @@ class FormAjaxSubscriberTest extends UnitTestCase {
   protected $formAjaxResponseBuilder;
 
   /**
-   * @var \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $httpKernel;
 
@@ -52,7 +52,7 @@ class FormAjaxSubscriberTest extends UnitTestCase {
   /**
    * The mocked messenger.
    *
-   * @var \Drupal\Core\Messenger\MessengerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Messenger\MessengerInterface
    */
   protected $messenger;
 
@@ -69,10 +69,10 @@ class FormAjaxSubscriberTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->httpKernel = $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+    $this->httpKernel = $this->createStub(HttpKernelInterface::class);
     $this->formAjaxResponseBuilder = $this->createMock('Drupal\Core\Form\FormAjaxResponseBuilderInterface');
     $this->stringTranslation = $this->getStringTranslationStub();
-    $this->messenger = $this->createMock(MessengerInterface::class);
+    $this->messenger = $this->createStub(MessengerInterface::class);
     $this->subscriber = new FormAjaxSubscriber($this->formAjaxResponseBuilder, $this->stringTranslation, $this->messenger);
   }
 
@@ -169,6 +169,7 @@ class FormAjaxSubscriberTest extends UnitTestCase {
     $this->formAjaxResponseBuilder->expects($this->never())
       ->method('buildResponse');
 
+    $this->messenger = $this->createMock(MessengerInterface::class);
     $this->messenger->expects($this->once())
       ->method('addError');
 

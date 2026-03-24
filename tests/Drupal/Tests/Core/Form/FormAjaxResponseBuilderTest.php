@@ -9,6 +9,7 @@ use Drupal\Core\Ajax\AlertCommand;
 use Drupal\Core\Form\FormAjaxResponseBuilder;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Utility\CallableResolver;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -30,7 +31,7 @@ class FormAjaxResponseBuilderTest extends UnitTestCase {
   protected $renderer;
 
   /**
-   * @var \Drupal\Core\Routing\RouteMatchInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Routing\RouteMatchInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $routeMatch;
 
@@ -50,7 +51,7 @@ class FormAjaxResponseBuilderTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
     $this->renderer = $this->createMock('Drupal\Core\Render\MainContent\MainContentRendererInterface');
-    $this->routeMatch = $this->createMock('Drupal\Core\Routing\RouteMatchInterface');
+    $this->routeMatch = $this->createStub(RouteMatchInterface::class);
     $this->callableResolver = $this->createStub(CallableResolver::class);
     $this->formAjaxResponseBuilder = new FormAjaxResponseBuilder($this->renderer, $this->routeMatch, $this->callableResolver);
   }

@@ -28,7 +28,7 @@ class ConfigFormBaseTraitTest extends UnitTestCase {
       'immutable.config' => [],
     ]);
 
-    $trait->expects($this->any())
+    $trait->expects($this->atLeastOnce())
       ->method('getEditableConfigNames')
       ->willReturn(['editable.config']);
 

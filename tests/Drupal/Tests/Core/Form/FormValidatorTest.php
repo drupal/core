@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Form;
 
+use Drupal\Core\Access\CsrfTokenGenerator;
+use Drupal\Core\Form\FormErrorHandlerInterface;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormValidator;
 use Drupal\Core\Utility\CallableResolver;
@@ -13,6 +15,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\Stub;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -26,21 +29,21 @@ class FormValidatorTest extends UnitTestCase {
   /**
    * A logger instance.
    *
-   * @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Psr\Log\LoggerInterface
    */
   protected $logger;
 
   /**
    * The CSRF token generator to validate the form token.
    *
-   * @var \Drupal\Core\Access\CsrfTokenGenerator|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Access\CsrfTokenGenerator
    */
   protected $csrfToken;
 
   /**
    * The form error handler.
    *
-   * @var \Drupal\Core\Form\FormErrorHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Form\FormErrorHandlerInterface
    */
   protected $formErrorHandler;
 
@@ -54,11 +57,9 @@ class FormValidatorTest extends UnitTestCase {
    */
   protected function setUp(): void {
     parent::setUp();
-    $this->logger = $this->createMock('Psr\Log\LoggerInterface');
-    $this->csrfToken = $this->getMockBuilder('Drupal\Core\Access\CsrfTokenGenerator')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->formErrorHandler = $this->createMock('Drupal\Core\Form\FormErrorHandlerInterface');
+    $this->logger = $this->createStub(LoggerInterface::class);
+    $this->csrfToken = $this->createStub(CsrfTokenGenerator::class);
+    $this->formErrorHandler = $this->createStub(FormErrorHandlerInterface::class);
     $this->callableResolver = $this->createStub(CallableResolver::class);
   }
 
@@ -118,6 +119,7 @@ class FormValidatorTest extends UnitTestCase {
    * @legacy-covers ::validateForm
    */
   public function testMustValidate(): void {
+    $this->formErrorHandler = $this->createMock(FormErrorHandlerInterface::class);
     $form_validator = $this->getMockBuilder('Drupal\Core\Form\FormValidator')
       ->setConstructorArgs([
         new RequestStack(),
@@ -150,6 +152,7 @@ class FormValidatorTest extends UnitTestCase {
     $request_stack = new RequestStack();
     $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/test/example?foo=bar']);
     $request_stack->push($request);
+    $this->csrfToken = $this->createMock(CsrfTokenGenerator::class);
     $this->csrfToken->expects($this->once())
       ->method('validate')
       ->willReturn(FALSE);
@@ -187,6 +190,7 @@ class FormValidatorTest extends UnitTestCase {
    */
   public function testValidateValidFormToken(): void {
     $request_stack = new RequestStack();
+    $this->csrfToken = $this->createMock(CsrfTokenGenerator::class);
     $this->csrfToken->expects($this->once())
       ->method('validate')
       ->willReturn(TRUE);
@@ -449,13 +453,14 @@ class FormValidatorTest extends UnitTestCase {
    */
   #[DataProvider('providerTestPerformRequiredValidation')]
   public function testPerformRequiredValidation(array $element, string $expected_message, bool $call_watchdog): void {
-    $form_validator = new FormValidator(new RequestStack(), $this->getStringTranslationStub(), $this->csrfToken, $this->logger, $this->formErrorHandler, $this->callableResolver);
-
     if ($call_watchdog) {
+      $this->logger = $this->createMock(LoggerInterface::class);
       $this->logger->expects($this->once())
         ->method('error')
         ->with($this->isString(), $this->isArray());
     }
+
+    $form_validator = new FormValidator(new RequestStack(), $this->getStringTranslationStub(), $this->csrfToken, $this->logger, $this->formErrorHandler, $this->callableResolver);
 
     $form = [];
     $form['test'] = $element + [

@@ -5,15 +5,27 @@ declare(strict_types=1);
 namespace Drupal\Tests\Core\Form;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Access\CsrfTokenGenerator;
+use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\DrupalKernel;
 use Drupal\Core\EventSubscriber\RedirectResponseSubscriber;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormBuilder;
+use Drupal\Core\Form\FormCacheInterface;
+use Drupal\Core\Form\FormErrorHandlerInterface;
 use Drupal\Core\Form\FormInterface;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\FormValidator;
+use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\Core\Render\ElementInfoManagerInterface;
+use Drupal\Core\Routing\UrlGeneratorInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Core\Utility\CallableResolver;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\MockObject\Stub;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -34,47 +46,47 @@ abstract class FormTestBase extends UnitTestCase {
   protected $formBuilder;
 
   /**
-   * @var \Drupal\Core\Form\FormValidatorInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Form\FormValidatorInterface
    */
   protected $formValidator;
 
   /**
-   * @var \Drupal\Core\Form\FormSubmitterInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Form\FormSubmitterInterface
    */
   protected $formSubmitter;
 
   /**
    * The mocked URL generator.
    *
-   * @var \Drupal\Core\Routing\UrlGeneratorInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Routing\UrlGeneratorInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $urlGenerator;
 
   /**
    * The mocked module handler.
    *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $moduleHandler;
 
   /**
    * The form cache.
    *
-   * @var \Drupal\Core\Form\FormCacheInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Form\FormCacheInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $formCache;
 
   /**
    * The cache backend to use.
    *
-   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $cache;
 
   /**
    * The current user.
    *
-   * @var \Drupal\Core\Session\AccountInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Session\AccountInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $account;
 
@@ -88,7 +100,7 @@ abstract class FormTestBase extends UnitTestCase {
   /**
    * The CSRF token generator.
    *
-   * @var \Drupal\Core\Access\CsrfTokenGenerator|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Access\CsrfTokenGenerator
    */
   protected $csrfToken;
 
@@ -109,7 +121,7 @@ abstract class FormTestBase extends UnitTestCase {
   /**
    * The class results.
    *
-   * @var \Drupal\Core\DependencyInjection\ClassResolverInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\DependencyInjection\ClassResolverInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $classResolver;
 
@@ -123,7 +135,7 @@ abstract class FormTestBase extends UnitTestCase {
   /**
    * The event dispatcher.
    *
-   * @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $eventDispatcher;
 
@@ -133,24 +145,24 @@ abstract class FormTestBase extends UnitTestCase {
   protected $translationManager;
 
   /**
-   * @var \Drupal\Core\DrupalKernelInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\DrupalKernelInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $kernel;
 
   /**
-   * @var \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
+   * @var \PHPUnit\Framework\MockObject\Stub|\Psr\Log\LoggerInterface
    */
   protected $logger;
 
   /**
-   * @var \PHPUnit\Framework\MockObject\MockObject|\Drupal\Core\EventSubscriber\RedirectResponseSubscriber
+   * @var \PHPUnit\Framework\MockObject\Stub|\Drupal\Core\EventSubscriber\RedirectResponseSubscriber
    */
   protected $redirectResponseSubscriber;
 
   /**
    * The mocked theme manager.
    *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Theme\ThemeManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $themeManager;
 
@@ -165,51 +177,60 @@ abstract class FormTestBase extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->moduleHandler = $this->createMock('Drupal\Core\Extension\ModuleHandlerInterface');
+    $this->moduleHandler = $this->createStub(ModuleHandlerInterface::class);
 
-    $this->formCache = $this->createMock('Drupal\Core\Form\FormCacheInterface');
-    $this->cache = $this->createMock('Drupal\Core\Cache\CacheBackendInterface');
-    $this->urlGenerator = $this->createMock('Drupal\Core\Routing\UrlGeneratorInterface');
-    $this->redirectResponseSubscriber = $this->createMock(RedirectResponseSubscriber::class);
+    $this->formCache = $this->createStub(FormCacheInterface::class);
+    $this->cache = $this->createStub(CacheBackendInterface::class);
+    $this->urlGenerator = $this->createStub(UrlGeneratorInterface::class);
+    $this->redirectResponseSubscriber = $this->createStub(RedirectResponseSubscriber::class);
 
     $this->classResolver = $this->getClassResolverStub();
 
-    $this->elementInfo = $this->getMockBuilder('\Drupal\Core\Render\ElementInfoManagerInterface')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->elementInfo->expects($this->any())
+    $this->elementInfo = $this->createStub(ElementInfoManagerInterface::class);
+    $this->elementInfo
       ->method('getInfo')
       ->willReturnCallback([$this, 'getInfo']);
 
-    $this->csrfToken = $this->getMockBuilder('Drupal\Core\Access\CsrfTokenGenerator')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->kernel = $this->getMockBuilder('\Drupal\Core\DrupalKernel')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->account = $this->createMock('Drupal\Core\Session\AccountInterface');
-    $this->themeManager = $this->createMock('Drupal\Core\Theme\ThemeManagerInterface');
+    $this->csrfToken = $this->createStub(CsrfTokenGenerator::class);
+    $this->kernel = $this->createStub(DrupalKernel::class);
+    $this->account = $this->createStub(AccountInterface::class);
+    $this->themeManager = $this->createStub(ThemeManagerInterface::class);
     $this->request = Request::createFromGlobals();
     $this->request->setSession(new Session(new MockArraySessionStorage()));
-    $this->eventDispatcher = $this->createMock('Symfony\Contracts\EventDispatcher\EventDispatcherInterface');
+    $this->eventDispatcher = $this->createStub(EventDispatcherInterface::class);
     $this->requestStack = new RequestStack();
     $this->requestStack->push($this->request);
-    $this->logger = $this->createMock('Drupal\Core\Logger\LoggerChannelInterface');
-    $form_error_handler = $this->createMock('Drupal\Core\Form\FormErrorHandlerInterface');
+    $this->logger = $this->createStub(LoggerChannelInterface::class);
+    $form_error_handler = $this->createStub(FormErrorHandlerInterface::class);
     $this->callableResolver = $this->createStub(CallableResolver::class);
     $this->formValidator = new FormValidator($this->requestStack, $this->getStringTranslationStub(), $this->csrfToken, $this->logger, $form_error_handler, $this->callableResolver);
-    $this->formSubmitter = $this->getMockBuilder('Drupal\Core\Form\FormSubmitter')
-      ->setConstructorArgs([
-        $this->requestStack,
-        $this->urlGenerator,
-        $this->redirectResponseSubscriber,
-        $this->callableResolver,
-      ])
-      ->onlyMethods(['batchGet'])
-      ->getMock();
+    $this->formSubmitter = new StubFormSubmitter(
+      $this->requestStack,
+      $this->urlGenerator,
+      $this->redirectResponseSubscriber,
+      $this->callableResolver,
+    );
     $this->root = dirname(substr(__DIR__, 0, -strlen(__NAMESPACE__)), 2);
 
     $this->formBuilder = new FormBuilder($this->formValidator, $this->formSubmitter, $this->formCache, $this->moduleHandler, $this->eventDispatcher, $this->requestStack, $this->classResolver, $this->elementInfo, $this->themeManager, $this->csrfToken, $this->callableResolver);
+  }
+
+  /**
+   * Reinitializes the CSRF token generator as a mock object.
+   */
+  protected function setUpMockCsrfTokenGenerator(): void {
+    $this->csrfToken = $this->createMock(CsrfTokenGenerator::class);
+    $reflection = new \ReflectionProperty($this->formBuilder, 'csrfToken');
+    $reflection->setValue($this->formBuilder, $this->csrfToken);
+  }
+
+  /**
+   * Reinitializes the form cache as a mock object.
+   */
+  protected function setUpMockFormCacheInterface(): void {
+    $this->formCache = $this->createMock(FormCacheInterface::class);
+    $reflection = new \ReflectionProperty($this->formBuilder, 'formCache');
+    $reflection->setValue($this->formBuilder, $this->formCache);
   }
 
   /**

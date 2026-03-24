@@ -41123,28 +41123,10 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Extension/modules/module_handler_test_all2/module_handler_test_all2.module',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Form\\\\ConfigFormBaseTraitTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Form/ConfigFormBaseTraitTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Core\\\\Form\\\\ConfiguredTrait\\:\\:getEditableConfigNames\\(\\) should return array but return statement is missing\\.$#',
 	'identifier' => 'return.missing',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Form/ConfigFormBaseTraitTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Form\\\\ConfirmFormHelperTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 4,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Form/ConfirmFormHelperTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Form\\\\FormBuilderTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 3,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Form/FormBuilderTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Core\\\\Form\\\\TestForm\\:\\:submitForm\\(\\) has no return type specified\\.$#',
@@ -41157,12 +41139,6 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Form/FormBuilderTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Form\\\\FormCacheTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Form/FormCacheTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Core\\\\Form\\\\PrepareCallbackTestForm\\:\\:submitForm\\(\\) has no return type specified\\.$#',
@@ -41223,18 +41199,6 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Form/FormStateValuesTraitTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Form\\\\FormSubmitterTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Form/FormSubmitterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\Core\\\\Form\\\\FormTestBase\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Form/FormTestBase.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Core\\\\Form\\\\FormTestBase\\:\\:assertFormElement\\(\\) has no return type specified\\.$#',

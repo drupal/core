@@ -24,8 +24,10 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
@@ -131,8 +133,7 @@ class FormBuilderTest extends FormTestBase {
    * Tests the getFormId() method with an injected class name form ID.
    */
   public function testGetFormIdWithInjectedClassName(): void {
-    $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-    \Drupal::setContainer($container);
+    \Drupal::setContainer(new ContainerBuilder());
 
     $form_arg = 'Drupal\Tests\Core\Form\TestFormInjected';
 
@@ -189,12 +190,10 @@ class FormBuilderTest extends FormTestBase {
     $form_id = 'test_form_id';
     $expected_form = self::buildTestFormStructure();
 
-    $response = $this->getMockBuilder($class)
-      ->disableOriginalConstructor()
-      ->getMock();
+    $response = $this->createStub($class);
 
     $form_arg = $this->getMockForm($form_id, $expected_form);
-    $form_arg->expects($this->any())
+    $form_arg
       ->method('submitForm')
       ->willReturnCallback(function ($form, FormStateInterface $form_state) use ($response, $form_state_key): void {
         $form_state->setFormState([$form_state_key => $response]);
@@ -234,17 +233,13 @@ class FormBuilderTest extends FormTestBase {
     $expected_form = self::buildTestFormStructure();
 
     // Set up a response that will be used.
-    $response = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $response = $this->createStub(Response::class);
 
     // Set up a redirect that will not be called.
-    $redirect = $this->getMockBuilder('Symfony\Component\HttpFoundation\RedirectResponse')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $redirect = $this->createStub(RedirectResponse::class);
 
     $form_arg = $this->getMockForm($form_id, $expected_form);
-    $form_arg->expects($this->any())
+    $form_arg
       ->method('submitForm')
       ->willReturnCallback(function ($form, FormStateInterface $form_state) use ($response, $redirect): void {
         // Set both the response and the redirect.
@@ -474,6 +469,8 @@ class FormBuilderTest extends FormTestBase {
    * Tests the getCache() method.
    */
   public function testGetCache(): void {
+    $this->setUpMockFormCacheInterface();
+
     $form_id = 'test_form_id';
     $expected_form = self::buildTestFormStructure();
     $expected_form['#token'] = FALSE;
@@ -573,6 +570,8 @@ class FormBuilderTest extends FormTestBase {
    * Tests that a cached form is deleted after submit.
    */
   public function testFormCacheDeletionCached(): void {
+    $this->setUpMockFormCacheInterface();
+
     $form_id = 'test_form_id';
     $form_build_id = $this->randomMachineName();
 
@@ -603,6 +602,8 @@ class FormBuilderTest extends FormTestBase {
    * Tests that an uncached form does not trigger cache set or delete.
    */
   public function testFormCacheDeletionUncached(): void {
+    $this->setUpMockFormCacheInterface();
+
     $form_id = 'test_form_id';
     $form_build_id = $this->randomMachineName();
 
@@ -919,7 +920,9 @@ class FormBuilderTest extends FormTestBase {
     $form_id = 'test_form_id';
 
     if (is_bool($valid_token)) {
-      $this->csrfToken->expects($this->any())
+      $this->setUpMockCsrfTokenGenerator();
+
+      $this->csrfToken
         ->method('get')
         ->willReturnArgument(0);
       $this->csrfToken->expects($this->atLeastOnce())
