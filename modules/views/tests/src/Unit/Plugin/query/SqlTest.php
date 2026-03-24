@@ -12,7 +12,6 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\Plugin\views\query\DateSqlInterface;
 use Drupal\views\Plugin\views\query\Sql;
-use Drupal\views\Plugin\views\relationship\RelationshipPluginBase;
 use Drupal\views\ResultRow;
 use Drupal\views\ViewEntityInterface;
 use Drupal\views\ViewExecutable;
@@ -330,7 +329,7 @@ class SqlTest extends UnitTestCase {
    */
   protected function setupViewWithRelationships(ViewExecutable $view, $base = 'entity_second'): void {
     // We don't use prophecy, because prophecy enforces methods.
-    $relationship = $this->getMockBuilder(RelationshipPluginBase::class)->disableOriginalConstructor()->getMock();
+    $relationship = new RelationshipPluginBaseStub([], 'test_plugin', []);
     $relationship->definition['base'] = $base;
     $relationship->tableAlias = $base;
     $relationship->alias = $base;
@@ -346,7 +345,7 @@ class SqlTest extends UnitTestCase {
    */
   public function testLoadEntitiesWithRelationship(): void {
     // We don't use prophecy, because prophecy enforces methods.
-    $view = $this->getMockBuilder(ViewExecutable::class)->disableOriginalConstructor()->getMock();
+    $view = $this->createStub(ViewExecutable::class);
     $this->setupViewWithRelationships($view);
 
     $view_entity = $this->prophesize(ViewEntityInterface::class);
@@ -408,7 +407,7 @@ class SqlTest extends UnitTestCase {
    */
   public function testLoadEntitiesWithNonEntityRelationship(): void {
     // We don't use prophecy, because prophecy enforces methods.
-    $view = $this->getMockBuilder(ViewExecutable::class)->disableOriginalConstructor()->getMock();
+    $view = $this->createStub(ViewExecutable::class);
     $this->setupViewWithRelationships($view, 'entity_first_field_data');
 
     $view_entity = $this->prophesize(ViewEntityInterface::class);
@@ -461,9 +460,7 @@ class SqlTest extends UnitTestCase {
    */
   public function testLoadEntitiesWithRevision(): void {
     // We don't use prophecy, because prophecy enforces methods.
-    $view = $this->getMockBuilder(ViewExecutable::class)
-      ->disableOriginalConstructor()
-      ->getMock();
+    $view = $this->createStub(ViewExecutable::class);
 
     $view_entity = $this->prophesize(ViewEntityInterface::class);
     $view_entity->get('base_table')->willReturn('entity_first__revision');
@@ -510,9 +507,7 @@ class SqlTest extends UnitTestCase {
    */
   public function testLoadEntitiesWithRevisionOfSameEntityType(): void {
     // We don't use prophecy, because prophecy enforces methods.
-    $view = $this->getMockBuilder(ViewExecutable::class)
-      ->disableOriginalConstructor()
-      ->getMock();
+    $view = $this->createStub(ViewExecutable::class);
     $this->setupViewWithRelationships($view, 'entity_first__revision');
 
     $view_entity = $this->prophesize(ViewEntityInterface::class);
@@ -574,7 +569,7 @@ class SqlTest extends UnitTestCase {
    */
   public function testLoadEntitiesWithRelationshipAndRevision(): void {
     // We don't use prophecy, because prophecy enforces methods.
-    $view = $this->getMockBuilder(ViewExecutable::class)->disableOriginalConstructor()->getMock();
+    $view = $this->createStub(ViewExecutable::class);
     $this->setupViewWithRelationships($view);
 
     $view_entity = $this->prophesize(ViewEntityInterface::class);

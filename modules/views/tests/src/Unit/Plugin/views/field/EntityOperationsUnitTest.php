@@ -6,10 +6,15 @@ namespace Drupal\Tests\views\Unit\Plugin\views\field;
 
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Routing\RedirectDestinationInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\Tests\views\Traits\ViewsLoggerTestTrait;
+use Drupal\user\Entity\Role;
+use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\field\EntityOperations;
 use Drupal\views\ResultRow;
+use Drupal\views\ViewExecutable;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -25,21 +30,21 @@ class EntityOperationsUnitTest extends UnitTestCase {
   /**
    * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $entityTypeManager;
 
   /**
    * The entity repository.
    *
-   * @var \Drupal\Core\Entity\EntityRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Entity\EntityRepositoryInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $entityRepository;
 
   /**
    * The language manager.
    *
-   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $languageManager;
 
@@ -58,9 +63,9 @@ class EntityOperationsUnitTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
-    $this->entityRepository = $this->createMock(EntityRepositoryInterface::class);
-    $this->languageManager = $this->createMock('\Drupal\Core\Language\LanguageManagerInterface');
+    $this->entityTypeManager = $this->createStub(EntityTypeManagerInterface::class);
+    $this->entityRepository = $this->createStub(EntityRepositoryInterface::class);
+    $this->languageManager = $this->createStub(LanguageManagerInterface::class);
 
     $configuration = ['entity_type' => 'foo', 'entity field' => 'bar'];
     $plugin_id = $this->randomMachineName();
@@ -69,20 +74,25 @@ class EntityOperationsUnitTest extends UnitTestCase {
     ];
     $this->plugin = new EntityOperations($configuration, $plugin_id, $plugin_definition, $this->entityTypeManager, $this->languageManager, $this->entityRepository);
 
-    $redirect_service = $this->createMock('Drupal\Core\Routing\RedirectDestinationInterface');
-    $redirect_service->expects($this->any())
+    $redirect_service = $this->createStub(RedirectDestinationInterface::class);
+    $redirect_service
       ->method('getAsArray')
       ->willReturn(['destination' => 'foobar']);
     $this->plugin->setRedirectDestination($redirect_service);
 
-    $view = $this->getMockBuilder('\Drupal\views\ViewExecutable')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $display = $this->getMockBuilder('\Drupal\views\Plugin\views\display\DisplayPluginBase')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $view = $this->createStub(ViewExecutable::class);
+    $display = $this->createStub(DisplayPluginBase::class);
     $view->display_handler = $display;
     $this->plugin->init($view, $display);
+  }
+
+  /**
+   * Reinitializes the entity type manager as a mock object.
+   */
+  protected function setUpMockEntityTypeManager(): void {
+    $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
+    $reflection = new \ReflectionProperty($this->plugin, 'entityTypeManager');
+    $reflection->setValue($this->plugin, $this->entityTypeManager);
   }
 
   /**
@@ -105,11 +115,10 @@ class EntityOperationsUnitTest extends UnitTestCase {
    * Tests render with destination.
    */
   public function testRenderWithDestination(): void {
+    $this->setUpMockEntityTypeManager();
     $entity_type_id = $this->randomMachineName();
-    $entity = $this->getMockBuilder('\Drupal\user\Entity\Role')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $entity->expects($this->any())
+    $entity = $this->createStub(Role::class);
+    $entity
       ->method('getEntityTypeId')
       ->willReturn($entity_type_id);
 
@@ -155,11 +164,10 @@ class EntityOperationsUnitTest extends UnitTestCase {
    * Tests render without destination.
    */
   public function testRenderWithoutDestination(): void {
+    $this->setUpMockEntityTypeManager();
     $entity_type_id = $this->randomMachineName();
-    $entity = $this->getMockBuilder('\Drupal\user\Entity\Role')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $entity->expects($this->any())
+    $entity = $this->createStub(Role::class);
+    $entity
       ->method('getEntityTypeId')
       ->willReturn($entity_type_id);
 

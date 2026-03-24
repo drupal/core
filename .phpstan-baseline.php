@@ -35650,106 +35650,16 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/views/tests/src/Kernel/ViewsKernelTestBase.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Controller\\\\ViewAjaxControllerTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 9,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Controller/ViewAjaxControllerTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\EventSubscriber\\\\RouteSubscriberTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 6,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/EventSubscriber/RouteSubscriberTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\views\\\\Unit\\\\EventSubscriber\\\\TestRouteSubscriber\\:\\:getApplicableViews\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/views/tests/src/Unit/EventSubscriber/RouteSubscriberTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\Block\\\\ViewsBlockTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 11,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/Block/ViewsBlockTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\Derivative\\\\ViewsLocalTaskTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 16,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/Derivative/ViewsLocalTaskTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\HandlerBaseTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 4,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/HandlerBaseTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\HandlerBaseTest\\:\\:setupDisplay\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/HandlerBaseTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\HandlerBaseTest\\:\\:setupExecutableAndView\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/HandlerBaseTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\HandlerBaseTest\\:\\:setupViewsData\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/HandlerBaseTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\area\\\\EntityTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 6,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/area/EntityTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\area\\\\ViewTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 6,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/area/ViewTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\argument_default\\\\RawTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 2,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/argument_default/RawTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\argument_validator\\\\EntityTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 13,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/argument_validator/EntityTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\display\\\\PathPluginBaseTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 7,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/display/PathPluginBaseTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\field\\\\FieldPluginBaseTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 9,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/field/FieldPluginBaseTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Function Drupal\\\\views\\\\Plugin\\\\views\\\\field\\\\base_path\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/field/FieldPluginBaseTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\field\\\\FieldTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 25,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/field/FieldTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\field\\\\FieldTest\\:\\:providerTestPrepareItemsByDelta\\(\\) has no return type specified\\.$#',
@@ -35788,36 +35698,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/pager/PagerPluginBaseTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\pager\\\\SqlBaseTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/pager/SqlBaseTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\views\\\\display\\\\BlockTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/views/display/BlockTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\views\\\\field\\\\BulkFormTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 4,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/views/field/BulkFormTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\views\\\\field\\\\EntityOperationsUnitTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 3,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/views/field/EntityOperationsUnitTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\views\\\\field\\\\LinkBaseTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 2,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/Plugin/views/field/LinkBaseTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\views\\\\Unit\\\\Plugin\\\\views\\\\query\\\\MysqlDateSqlTest\\:\\:providerTestGetDateFormat\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -35842,22 +35722,10 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/views/tests/src/Unit/PluginBaseTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\ViewExecutableTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 25,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/ViewExecutableTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Cannot unset property Drupal\\\\views\\\\ViewExecutable\\:\\:\\$display_handler because it might have hooks in a subclass\\.$#',
 	'identifier' => 'unset.possiblyHookedProperty',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/views/tests/src/Unit/ViewExecutableTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\ViewsDataTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/ViewsDataTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\views\\\\Unit\\\\ViewsDataTest\\:\\:providerTestGetEmptyKey\\(\\) has no return type specified\\.$#',
@@ -35870,12 +35738,6 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/views/tests/src/Unit/ViewsDataTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views\\\\Unit\\\\ViewsTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/views/tests/src/Unit/ViewsTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\views\\\\Unit\\\\WizardPluginBaseTest\\:\\:providerTestGetSelected\\(\\) has no return type specified\\.$#',
@@ -36440,12 +36302,6 @@ $ignoreErrors[] = [
 	'identifier' => 'isset.variable',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/views_ui/tests/src/FunctionalJavascript/PreviewTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Calling PHPUnit\\\\Framework\\\\TestCase\\:\\:any\\(\\) \\(as Drupal\\\\Tests\\\\views_ui\\\\Unit\\\\ViewListBuilderTest\\:\\:any\\(\\)\\) is forbidden, any\\(\\) will be deprecated in PHPUnit 12\\.5\\.0 and should not be used\\.$#',
-	'identifier' => 'disallowed.method',
-	'count' => 3,
-	'path' => __DIR__ . '/modules/views_ui/tests/src/Unit/ViewListBuilderTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\workflows\\\\Entity\\\\Workflow\\:\\:preSave\\(\\) has no return type specified\\.$#',

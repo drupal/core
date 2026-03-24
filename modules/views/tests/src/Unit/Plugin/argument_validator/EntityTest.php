@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\views\Unit\Plugin\argument_validator;
 
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Tests\Core\Entity\StubEntityBase;
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\Plugin\views\argument_validator\Entity;
+use Drupal\views\Plugin\views\display\DisplayPluginBase;
+use Drupal\views\ViewExecutable;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -36,14 +39,14 @@ class EntityTest extends UnitTestCase {
   /**
    * The entity type manager.
    *
-   * @var \PHPUnit\Framework\MockObject\MockObject|\Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $entityTypeManager;
 
   /**
    * The mocked entity type bundle info used in this test.
    *
-   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $entityTypeBundleInfo;
 
@@ -60,17 +63,14 @@ class EntityTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
-    $this->entityTypeBundleInfo = $this->createMock(EntityTypeBundleInfoInterface::class);
+    $this->entityTypeManager = $this->createStub(EntityTypeManagerInterface::class);
+    $this->entityTypeBundleInfo = $this->createStub(EntityTypeBundleInfoInterface::class);
 
-    $mock_entity = $this->getMockBuilder(StubEntityBase::class)
-      ->disableOriginalConstructor()
-      ->onlyMethods(['bundle', 'access'])
-      ->getMock();
-    $mock_entity->expects($this->any())
+    $mock_entity = $this->createStub(StubEntityBase::class);
+    $mock_entity
       ->method('bundle')
       ->willReturn('test_bundle');
-    $mock_entity->expects($this->any())
+    $mock_entity
       ->method('access')
       ->willReturnMap([
         ['test_op', NULL, FALSE, TRUE],
@@ -78,14 +78,11 @@ class EntityTest extends UnitTestCase {
         ['test_op_3', NULL, FALSE, TRUE],
       ]);
 
-    $mock_entity_bundle_2 = $this->getMockBuilder(StubEntityBase::class)
-      ->disableOriginalConstructor()
-      ->onlyMethods(['bundle', 'access'])
-      ->getMock();
-    $mock_entity_bundle_2->expects($this->any())
+    $mock_entity_bundle_2 = $this->createStub(StubEntityBase::class);
+    $mock_entity_bundle_2
       ->method('bundle')
       ->willReturn('test_bundle_2');
-    $mock_entity_bundle_2->expects($this->any())
+    $mock_entity_bundle_2
       ->method('access')
       ->willReturnMap([
         ['test_op', NULL, FALSE, FALSE],
@@ -93,7 +90,7 @@ class EntityTest extends UnitTestCase {
         ['test_op_3', NULL, FALSE, TRUE],
       ]);
 
-    $storage = $this->createMock('Drupal\Core\Entity\EntityStorageInterface');
+    $storage = $this->createStub(EntityStorageInterface::class);
 
     // Setup values for IDs passed as strings or numbers.
     $value_map = [
@@ -105,21 +102,16 @@ class EntityTest extends UnitTestCase {
       [[2], [2 => $mock_entity_bundle_2]],
       [['2'], [2 => $mock_entity_bundle_2]],
     ];
-    $storage->expects($this->any())
+    $storage
       ->method('loadMultiple')
       ->willReturnMap($value_map);
 
-    $this->entityTypeManager->expects($this->any())
+    $this->entityTypeManager
       ->method('getStorage')
-      ->with('entity_test')
       ->willReturn($storage);
 
-    $this->executable = $this->getMockBuilder('Drupal\views\ViewExecutable')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->display = $this->getMockBuilder('Drupal\views\Plugin\views\display\DisplayPluginBase')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $this->executable = $this->createStub(ViewExecutable::class);
+    $this->display = $this->createStub(DisplayPluginBase::class);
 
     $definition = [
       'entity_type' => 'entity_test',
@@ -208,29 +200,29 @@ class EntityTest extends UnitTestCase {
     $entity_type = $this->createMock('Drupal\Core\Entity\EntityTypeInterface');
     $mock_entity = $this->createMock('Drupal\Core\Entity\EntityInterface');
 
-    $mock_entity->expects($this->any())
+    $mock_entity->expects($this->once())
       ->method('getConfigDependencyKey')
       ->willReturn('config');
-    $mock_entity->expects($this->any())
+    $mock_entity->expects($this->once())
       ->method('getConfigDependencyName')
       ->willReturn('test_bundle');
-    $storage->expects($this->any())
+    $storage->expects($this->once())
       ->method('loadMultiple')
       ->with(['test_bundle'])
       ->willReturn(['test_bundle' => $mock_entity]);
 
-    $entity_type->expects($this->any())
+    $entity_type->expects($this->once())
       ->method('getBundleEntityType')
       ->willReturn('entity_test_bundle');
-    $entity_type_manager->expects($this->any())
+    $entity_type_manager->expects($this->once())
       ->method('getDefinition')
       ->with('entity_test')
       ->willReturn($entity_type);
-    $entity_type_manager->expects($this->any())
+    $entity_type_manager->expects($this->once())
       ->method('hasHandler')
       ->with('entity_test_bundle', 'storage')
       ->willReturn(TRUE);
-    $entity_type_manager->expects($this->any())
+    $entity_type_manager->expects($this->once())
       ->method('getStorage')
       ->with('entity_test_bundle')
       ->willReturn($storage);

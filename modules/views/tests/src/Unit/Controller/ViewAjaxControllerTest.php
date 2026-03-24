@@ -4,16 +4,27 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\views\Unit\Controller;
 
+use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Path\CurrentPathStack;
 use Drupal\Core\Path\PathValidatorInterface;
+use Drupal\Core\Render\ElementInfoManagerInterface;
+use Drupal\Core\Render\PlaceholderGeneratorInterface;
+use Drupal\Core\Render\RenderCacheInterface;
 use Drupal\Core\Render\RenderContext;
 use Drupal\Core\Render\Renderer;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\Routing\RedirectDestinationInterface;
+use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Utility\CallableResolver;
 use Drupal\Core\Utility\UnroutedUrlAssemblerInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\Ajax\ViewAjaxResponse;
 use Drupal\views\Controller\ViewAjaxController;
+use Drupal\views\DisplayPluginCollection;
+use Drupal\views\Entity\View;
 use Drupal\views\ViewExecutable;
+use Drupal\views\ViewExecutableFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -35,14 +46,14 @@ class ViewAjaxControllerTest extends UnitTestCase {
   /**
    * The mocked view entity storage.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Entity\EntityStorageInterface
    */
   protected $viewStorage;
 
   /**
    * The mocked executable factory.
    *
-   * @var \Drupal\views\ViewExecutableFactory|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\views\ViewExecutableFactory
    */
   protected $executableFactory;
 
@@ -56,28 +67,28 @@ class ViewAjaxControllerTest extends UnitTestCase {
   /**
    * The mocked current path.
    *
-   * @var \Drupal\Core\Path\CurrentPathStack|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Path\CurrentPathStack
    */
   protected $currentPath;
 
   /**
    * The redirect destination.
    *
-   * @var \Drupal\Core\Routing\RedirectDestinationInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Routing\RedirectDestinationInterface
    */
   protected $redirectDestination;
 
   /**
    * The renderer.
    *
-   * @var \Drupal\Core\Render\RendererInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Render\RendererInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $renderer;
 
   /**
    * The path validator service.
    *
-   * @var \Drupal\Core\Path\PathValidatorInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Path\PathValidatorInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $pathValidator;
 
@@ -87,29 +98,25 @@ class ViewAjaxControllerTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->viewStorage = $this->createMock('Drupal\Core\Entity\EntityStorageInterface');
-    $this->executableFactory = $this->getMockBuilder('Drupal\views\ViewExecutableFactory')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->renderer = $this->createMock('\Drupal\Core\Render\RendererInterface');
-    $this->renderer->expects($this->any())
+    $this->viewStorage = $this->createStub(EntityStorageInterface::class);
+    $this->executableFactory = $this->createStub(ViewExecutableFactory::class);
+    $this->renderer = $this->createStub(RendererInterface::class);
+    $this->renderer
       ->method('renderRoot')
       ->willReturnCallback(function (array &$elements) {
         $elements['#attached'] = [];
 
         return $elements['#markup'] ?? '';
       });
-    $this->renderer->expects($this->any())
+    $this->renderer
       ->method('executeInRenderContext')
       ->willReturnCallback(function (RenderContext $context, callable $callable) {
         return $callable();
       });
-    $this->currentPath = $this->getMockBuilder('Drupal\Core\Path\CurrentPathStack')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->redirectDestination = $this->createMock('\Drupal\Core\Routing\RedirectDestinationInterface');
-    $this->pathValidator = $this->createMock(PathValidatorInterface::class);
-    $this->pathValidator->expects($this->any())
+    $this->currentPath = $this->createStub(CurrentPathStack::class);
+    $this->redirectDestination = $this->createStub(RedirectDestinationInterface::class);
+    $this->pathValidator = $this->createStub(PathValidatorInterface::class);
+    $this->pathValidator
       ->method('getUrlIfValid')
       /*
        * Use a callback because container is not initialized yet
@@ -123,26 +130,26 @@ class ViewAjaxControllerTest extends UnitTestCase {
           return Url::fromUserInput('/foo');
         }
       });
-    $unroutedUrlAssembler = $this->createMock(UnroutedUrlAssemblerInterface::class);
-    $unroutedUrlAssembler->expects($this->any())
+    $unroutedUrlAssembler = $this->createStub(UnroutedUrlAssemblerInterface::class);
+    $unroutedUrlAssembler
       ->method('assemble')
       ->willReturn('/foo');
 
     $this->viewAjaxController = new ViewAjaxController($this->viewStorage, $this->executableFactory, $this->renderer, $this->currentPath, $this->redirectDestination, $this->pathValidator);
 
-    $element_info_manager = $this->createMock('\Drupal\Core\Render\ElementInfoManagerInterface');
-    $element_info_manager->expects($this->any())
+    $element_info_manager = $this->createMock(ElementInfoManagerInterface::class);
+    $element_info_manager
       ->method('getInfo')
       ->with('status_messages')
       ->willReturn([]);
     $request_stack = new RequestStack();
     $request_stack->push(new Request());
     $this->renderer = new Renderer(
-      $this->createMock(CallableResolver::class),
-      $this->createMock('\Drupal\Core\Theme\ThemeManagerInterface'),
+      $this->createStub(CallableResolver::class),
+      $this->createStub(ThemeManagerInterface::class),
       $element_info_manager,
-      $this->createMock('\Drupal\Core\Render\PlaceholderGeneratorInterface'),
-      $this->createMock('\Drupal\Core\Render\RenderCacheInterface'),
+      $this->createStub(PlaceholderGeneratorInterface::class),
+      $this->createStub(RenderCacheInterface::class),
       $request_stack,
       [
         'required_cache_contexts' => [
@@ -161,6 +168,42 @@ class ViewAjaxControllerTest extends UnitTestCase {
   }
 
   /**
+   * Reinitializes the current path as a mock object.
+   */
+  protected function setUpMockCurrentPath(): void {
+    $this->currentPath = $this->createMock(CurrentPathStack::class);
+    $reflection = new \ReflectionProperty($this->viewAjaxController, 'currentPath');
+    $reflection->setValue($this->viewAjaxController, $this->currentPath);
+  }
+
+  /**
+   * Reinitializes the redirect destination as a mock object.
+   */
+  protected function setUpMockRedirectDestination(): void {
+    $this->redirectDestination = $this->createMock(RedirectDestinationInterface::class);
+    $reflection = new \ReflectionProperty($this->viewAjaxController, 'redirectDestination');
+    $reflection->setValue($this->viewAjaxController, $this->redirectDestination);
+  }
+
+  /**
+   * Reinitializes the view executable factory as a mock object.
+   */
+  protected function setUpMockViewExecutableFactory(): void {
+    $this->executableFactory = $this->createMock(ViewExecutableFactory::class);
+    $reflection = new \ReflectionProperty($this->viewAjaxController, 'executableFactory');
+    $reflection->setValue($this->viewAjaxController, $this->executableFactory);
+  }
+
+  /**
+   * Reinitializes the view storage as a mock object.
+   */
+  protected function setUpMockViewStorage(): void {
+    $this->viewStorage = $this->createMock(EntityStorageInterface::class);
+    $reflection = new \ReflectionProperty($this->viewAjaxController, 'storage');
+    $reflection->setValue($this->viewAjaxController, $this->viewStorage);
+  }
+
+  /**
    * Tests missing view_name and view_display_id.
    */
   public function testMissingViewName(): void {
@@ -173,6 +216,8 @@ class ViewAjaxControllerTest extends UnitTestCase {
    * Tests non-existent view with view_name and view_display_id.
    */
   public function testMissingView(): void {
+    $this->setUpMockViewStorage();
+
     $request = new Request();
     $request->request->set('view_name', 'test_view');
     $request->request->set('view_display_id', 'page_1');
@@ -190,13 +235,14 @@ class ViewAjaxControllerTest extends UnitTestCase {
    * Tests a view without having access to it.
    */
   public function testAccessDeniedView(): void {
+    $this->setUpMockViewExecutableFactory();
+    $this->setUpMockViewStorage();
+
     $request = new Request();
     $request->request->set('view_name', 'test_view');
     $request->request->set('view_display_id', 'page_1');
 
-    $view = $this->getMockBuilder('Drupal\views\Entity\View')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $view = $this->createStub(View::class);
 
     $this->viewStorage->expects($this->once())
       ->method('load')
@@ -223,6 +269,9 @@ class ViewAjaxControllerTest extends UnitTestCase {
    * Tests a valid view without arguments pagers etc.
    */
   public function testAjaxView(): void {
+    $this->setUpMockCurrentPath();
+    $this->setUpMockRedirectDestination();
+
     $request = new Request();
     $request->query->set('view_name', 'test_view');
     $request->query->set('view_display_id', 'page_1');
@@ -260,6 +309,9 @@ class ViewAjaxControllerTest extends UnitTestCase {
    * Tests a valid view without arguments pagers etc.
    */
   public function testInvalidPath(): void {
+    $this->setUpMockCurrentPath();
+    $this->setUpMockRedirectDestination();
+
     $request = new Request();
     $request->query->set('view_name', 'test_view');
     $request->query->set('view_display_id', 'page_1');
@@ -297,6 +349,9 @@ class ViewAjaxControllerTest extends UnitTestCase {
    * Tests a valid view with a view_path with no slash.
    */
   public function testAjaxViewViewPathNoSlash(): void {
+    $this->setUpMockCurrentPath();
+    $this->setUpMockRedirectDestination();
+
     $request = new Request();
     $request->query->set('view_name', 'test_view');
     $request->query->set('view_display_id', 'page_1');
@@ -421,10 +476,8 @@ class ViewAjaxControllerTest extends UnitTestCase {
       ->method('setOption')
       ->with($this->equalTo('pager_element'));
 
-    $display_collection = $this->getMockBuilder('Drupal\views\DisplayPluginCollection')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $display_collection->expects($this->any())
+    $display_collection = $this->createMock(DisplayPluginCollection::class);
+    $display_collection->expects($this->atLeastOnce())
       ->method('get')
       ->with('page_1')
       ->willReturn($display_handler);
@@ -451,9 +504,9 @@ class ViewAjaxControllerTest extends UnitTestCase {
    *   The view executable.
    */
   protected function setupValidMocks($use_ajax = self::USE_AJAX): ViewExecutable {
-    $view = $this->getMockBuilder('Drupal\views\Entity\View')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $this->setUpMockViewExecutableFactory();
+    $this->setUpMockViewStorage();
+    $view = $this->createStub(View::class);
 
     $this->viewStorage->expects($this->once())
       ->method('load')
@@ -466,7 +519,7 @@ class ViewAjaxControllerTest extends UnitTestCase {
     $executable->expects($this->once())
       ->method('access')
       ->willReturn(TRUE);
-    $executable->expects($this->any())
+    $executable->expects($this->once())
       ->method('setDisplay')
       ->willReturn(TRUE);
     $executable->expects($this->atMost(1))
@@ -491,20 +544,12 @@ class ViewAjaxControllerTest extends UnitTestCase {
     // Ensure that the pager element is not set.
     $display_handler->expects($this->never())
       ->method('setOption');
-    $display_handler->expects($this->any())
+    $display_handler
       ->method('ajaxEnabled')
       ->willReturn($use_ajax);
 
-    $display_collection = $this->getMockBuilder('Drupal\views\DisplayPluginCollection')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $display_collection->expects($this->any())
-      ->method('get')
-      ->with('page_1')
-      ->willReturn($display_handler);
-
     $executable->display_handler = $display_handler;
-    $executable->displayHandlers = $display_collection;
+    $executable->displayHandlers = $this->createStub(DisplayPluginCollection::class);
 
     return $executable;
   }

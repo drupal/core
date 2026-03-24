@@ -7,7 +7,9 @@ namespace Drupal\Tests\views\Unit\Plugin\pager;
 use Drupal\Core\Database\Query\Select;
 use Drupal\Core\Database\StatementInterface;
 use Drupal\Tests\UnitTestCase;
+use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\pager\PagerPluginBase;
+use Drupal\views\ViewExecutable;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -22,7 +24,7 @@ class PagerPluginBaseTest extends UnitTestCase {
   /**
    * The mock pager plugin instance.
    *
-   * @var \Drupal\views\Plugin\views\pager\PagerPluginBase|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\views\Plugin\views\pager\PagerPluginBase
    */
   protected $pager;
 
@@ -32,17 +34,10 @@ class PagerPluginBaseTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->pager = $this->getMockBuilder(StubPagerPluginBase::class)
-      ->disableOriginalConstructor()
-      ->onlyMethods([])
-      ->getMock();
+    $this->pager = new StubPagerPluginBase([], 'test_pager', []);
 
-    $view = $this->getMockBuilder('Drupal\views\ViewExecutable')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $display = $this->getMockBuilder('Drupal\views\Plugin\views\display\DisplayPluginBase')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $view = $this->createStub(ViewExecutable::class);
+    $display = $this->createStub(DisplayPluginBase::class);
 
     $options = [
       'items_per_page' => 5,

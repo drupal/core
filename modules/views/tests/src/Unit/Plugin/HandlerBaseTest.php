@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Drupal\Tests\views\Unit\Plugin;
 
 use Drupal\Tests\UnitTestCase;
+use Drupal\views\Entity\View;
+use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\HandlerBase;
+use Drupal\views\ViewExecutable;
+use Drupal\views\ViewsData;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -16,37 +20,29 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Views')]
 class HandlerBaseTest extends UnitTestCase {
 
-  use HandlerTestTrait;
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function setUp(): void {
-    parent::setUp();
-
-    $this->setupViewsData();
-    $this->setupExecutableAndView();
-    $this->setupDisplay();
-  }
-
   /**
    * Tests get entity type for field on base table.
    */
   public function testGetEntityTypeForFieldOnBaseTable(): void {
-    $handler = new TestHandler([], 'test_handler', []);
-    $handler->init($this->executable, $this->display);
+    $view = $this->createMock(View::class);
+    $executable = $this->createStub(ViewExecutable::class);
+    $executable->storage = $view;
+    $viewsData = $this->createMock(ViewsData::class);
 
-    $this->view->expects($this->any())
+    $handler = new TestHandler([], 'test_handler', []);
+    $handler->init($executable, $this->createStub(DisplayPluginBase::class));
+
+    $view->expects($this->once())
       ->method('get')
       ->with('base_table')
       ->willReturn('test_entity_type_table');
-    $this->viewsData->expects($this->any())
+    $viewsData->expects($this->once())
       ->method('get')
       ->with('test_entity_type_table')
       ->willReturn([
         'table' => ['entity type' => 'test_entity_type'],
       ]);
-    $handler->setViewsData($this->viewsData);
+    $handler->setViewsData($viewsData);
 
     $this->assertEquals('test_entity_type', $handler->getEntityType());
   }
@@ -55,12 +51,14 @@ class HandlerBaseTest extends UnitTestCase {
    * Tests get entity type for field with relationship.
    */
   public function testGetEntityTypeForFieldWithRelationship(): void {
+    $display = $this->createMock(DisplayPluginBase::class);
+    $viewsData = $this->createMock(ViewsData::class);
     $handler = new TestHandler([], 'test_handler', []);
 
     $options = ['relationship' => 'test_relationship'];
-    $handler->init($this->executable, $this->display, $options);
+    $handler->init($this->createStub(ViewExecutable::class), $display, $options);
 
-    $this->display->expects($this->atLeastOnce())
+    $display->expects($this->atLeastOnce())
       ->method('getOption')
       ->with('relationships')
       ->willReturn([
@@ -71,12 +69,7 @@ class HandlerBaseTest extends UnitTestCase {
         ],
       ]);
 
-    $this->view->expects($this->any())
-      ->method('get')
-      ->with('base_table')
-      ->willReturn('test_entity_type_table');
-
-    $this->viewsData->expects($this->any())
+    $viewsData->expects($this->atLeastOnce())
       ->method('get')
       ->willReturnMap([
         [
@@ -96,7 +89,7 @@ class HandlerBaseTest extends UnitTestCase {
           ['table' => ['entity type' => 'test_other_entity_type']],
         ],
       ]);
-    $handler->setViewsData($this->viewsData);
+    $handler->setViewsData($viewsData);
 
     $this->assertEquals('test_other_entity_type', $handler->getEntityType());
   }

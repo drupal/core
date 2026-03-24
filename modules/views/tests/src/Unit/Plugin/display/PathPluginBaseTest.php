@@ -4,11 +4,22 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\views\Unit\Plugin\display;
 
+use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Routing\RouteProviderInterface;
+use Drupal\Core\State\StateInterface;
 use Drupal\Tests\UnitTestCase;
+use Drupal\views\Entity\View;
+use Drupal\views\Plugin\views\access\AccessPluginBase;
+use Drupal\views\Plugin\views\argument\ArgumentPluginBase;
 use Drupal\views\Plugin\views\display\PathPluginBase;
+use Drupal\views\Plugin\ViewsPluginManager;
+use Drupal\views\ViewExecutable;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -22,28 +33,28 @@ class PathPluginBaseTest extends UnitTestCase {
   /**
    * The route provider that should be used.
    *
-   * @var \Drupal\Core\Routing\RouteProviderInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Routing\RouteProviderInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $routeProvider;
 
   /**
    * The tested path plugin base.
    *
-   * @var \Drupal\views\Plugin\views\display\PathPluginBase|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\views\Plugin\views\display\PathPluginBase
    */
   protected $pathPlugin;
 
   /**
    * The mocked views access plugin manager.
    *
-   * @var \Drupal\views\Plugin\ViewsPluginManager|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\views\Plugin\ViewsPluginManager|\PHPUnit\Framework\MockObject\Stub
    */
   protected $accessPluginManager;
 
   /**
    * The mocked key value storage.
    *
-   * @var \Drupal\Core\State\StateInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\State\StateInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $state;
 
@@ -53,12 +64,9 @@ class PathPluginBaseTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->routeProvider = $this->createMock('Drupal\Core\Routing\RouteProviderInterface');
-    $this->state = $this->createMock('\Drupal\Core\State\StateInterface');
-    $this->pathPlugin = $this->getMockBuilder('Drupal\views\Plugin\views\display\PathPluginBase')
-      ->setConstructorArgs([[], 'path_base', [], $this->routeProvider, $this->state])
-      ->onlyMethods([])
-      ->getMock();
+    $this->routeProvider = $this->createStub(RouteProviderInterface::class);
+    $this->state = $this->createStub(StateInterface::class);
+    $this->pathPlugin = new PathPluginBaseStub([], 'path_base', [], $this->routeProvider, $this->state);
     $this->setupContainer();
   }
 
@@ -66,18 +74,9 @@ class PathPluginBaseTest extends UnitTestCase {
    * Setup access plugin manager and config factory in the Drupal class.
    */
   public function setupContainer(): void {
-    $this->accessPluginManager = $this->getMockBuilder('\Drupal\views\Plugin\ViewsPluginManager')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $this->accessPluginManager = $this->createStub(ViewsPluginManager::class);
     $container = new ContainerBuilder();
     $container->set('plugin.manager.views.access', $this->accessPluginManager);
-
-    $locator = $this->createMock('\Symfony\Component\DependencyInjection\ServiceLocator');
-    $locator->expects($this->any())
-      ->method('get')
-      ->with('access')
-      ->willReturn($this->accessPluginManager);
-    $container->set('views.plugin_managers', $locator);
 
     $config = [
       'views.settings' => [
@@ -87,23 +86,19 @@ class PathPluginBaseTest extends UnitTestCase {
 
     $container->set('config.factory', $this->getConfigFactoryStub($config));
 
-    $language = $this->createMock('\Drupal\Core\Language\LanguageInterface');
-    $language->expects($this->any())
+    $language = $this->createStub(LanguageInterface::class);
+    $language
       ->method('getId')
       ->willReturn('nl');
 
-    $language_manager = $this->getMockBuilder('Drupal\Core\Language\LanguageManagerInterface')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $language_manager->expects($this->any())
+    $language_manager = $this->createStub(LanguageManagerInterface::class);
+    $language_manager
       ->method('getCurrentLanguage')
       ->willReturn($language);
     $container->set('language_manager', $language_manager);
 
-    $cache = $this->getMockBuilder('Drupal\Core\Cache\CacheBackendInterface')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $cache->expects($this->any())
+    $cache = $this->createStub(CacheBackendInterface::class);
+    $cache
       ->method('get')
       ->willReturn([]);
     $container->set('cache.data', $cache);
@@ -112,11 +107,24 @@ class PathPluginBaseTest extends UnitTestCase {
   }
 
   /**
+   * Initializes a service locator as a mock object.
+   */
+  protected function setUpMockServiceLocator(): void {
+    $locator = $this->createMock(ServiceLocator::class);
+    $locator->expects($this->once())
+      ->method('get')
+      ->with('access')
+      ->willReturn($this->accessPluginManager);
+    \Drupal::getContainer()->set('views.plugin_managers', $locator);
+  }
+
+  /**
    * Tests the collectRoutes method.
    *
    * @see \Drupal\views\Plugin\views\display\PathPluginBase::collectRoutes()
    */
   public function testCollectRoutes(): void {
+    $this->setUpMockServiceLocator();
     [$view] = $this->setupViewExecutableAccessPlugin();
 
     $display = [];
@@ -145,6 +153,7 @@ class PathPluginBaseTest extends UnitTestCase {
    * @see \Drupal\views\Plugin\views\display\PathPluginBase::collectRoutes()
    */
   public function testCollectRoutesWithDisplayReturnResponse(): void {
+    $this->setUpMockServiceLocator();
     [$view] = $this->setupViewExecutableAccessPlugin();
 
     $display = [];
@@ -153,10 +162,7 @@ class PathPluginBaseTest extends UnitTestCase {
     $display['display_options'] = [
       'path' => 'test_route',
     ];
-    $this->pathPlugin = $this->getMockBuilder('Drupal\views\Plugin\views\display\PathPluginBase')
-      ->setConstructorArgs([[], 'path_base', ['returns_response' => TRUE], $this->routeProvider, $this->state])
-      ->onlyMethods([])
-      ->getMock();
+    $this->pathPlugin = new PathPluginBaseStub([], 'path_base', ['returns_response' => TRUE], $this->routeProvider, $this->state);
     $this->pathPlugin->initDisplay($view, $display);
 
     $collection = new RouteCollection();
@@ -172,6 +178,7 @@ class PathPluginBaseTest extends UnitTestCase {
    * @see \Drupal\views\Plugin\views\display\PathPluginBase::collectRoutes()
    */
   public function testCollectRoutesWithArguments(): void {
+    $this->setUpMockServiceLocator();
     [$view] = $this->setupViewExecutableAccessPlugin();
 
     $display = [];
@@ -200,6 +207,7 @@ class PathPluginBaseTest extends UnitTestCase {
    * @see \Drupal\views\Plugin\views\display\PathPluginBase::collectRoutes()
    */
   public function testCollectRoutesWithArgumentsNotSpecifiedInPath(): void {
+    $this->setUpMockServiceLocator();
     [$view] = $this->setupViewExecutableAccessPlugin();
 
     $display = [];
@@ -229,6 +237,7 @@ class PathPluginBaseTest extends UnitTestCase {
    * Tests the collect routes method with an alternative route name in the UI.
    */
   public function testCollectRoutesWithSpecialRouteName(): void {
+    $this->setUpMockServiceLocator();
     [$view] = $this->setupViewExecutableAccessPlugin();
 
     $display = [];
@@ -255,6 +264,8 @@ class PathPluginBaseTest extends UnitTestCase {
    * Tests the alter route method.
    */
   public function testAlterRoute(): void {
+    $this->setUpMockServiceLocator();
+
     $collection = new RouteCollection();
     $collection->add('test_route', new Route('test_route', ['_controller' => 'Drupal\Tests\Core\Controller\TestController::content']));
     $route_2 = new Route('test_route/example', ['_controller' => 'Drupal\Tests\Core\Controller\TestController::content']);
@@ -292,6 +303,8 @@ class PathPluginBaseTest extends UnitTestCase {
    * Tests the altering of a REST route.
    */
   public function testAlterPostRestRoute(): void {
+    $this->setUpMockServiceLocator();
+
     $collection = new RouteCollection();
     $route = new Route('test_route', ['_controller' => 'Drupal\Tests\Core\Controller\TestController::content']);
     $route->setMethods(['POST']);
@@ -330,6 +343,8 @@ class PathPluginBaseTest extends UnitTestCase {
    * Tests the altering of a REST route.
    */
   public function testGetRestRoute(): void {
+    $this->setUpMockServiceLocator();
+
     $collection = new RouteCollection();
     $route = new Route('test_route', ['_controller' => 'Drupal\Tests\Core\Controller\TestController::content']);
     $route->setMethods(['GET']);
@@ -369,6 +384,8 @@ class PathPluginBaseTest extends UnitTestCase {
    * Tests the alter route method with preexisting title callback.
    */
   public function testAlterRouteWithAlterCallback(): void {
+    $this->setUpMockServiceLocator();
+
     $collection = new RouteCollection();
     $collection->add('test_route', new Route(
       'test_route',
@@ -413,13 +430,13 @@ class PathPluginBaseTest extends UnitTestCase {
    * @see \Drupal\views\Plugin\views\display\PathPluginBase::collectRoutes()
    */
   public function testCollectRoutesWithNamedParameters(): void {
+    $this->setUpMockServiceLocator();
+
     /** @var \Drupal\views\ViewExecutable|\PHPUnit\Framework\MockObject\MockObject $view */
     [$view] = $this->setupViewExecutableAccessPlugin();
 
     $view->argument = [];
-    $view->argument['nid'] = $this->getMockBuilder('Drupal\views\Plugin\views\argument\ArgumentPluginBase')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $view->argument['nid'] = $this->createStub(ArgumentPluginBase::class);
 
     $display = [];
     $display['display_plugin'] = 'page';
@@ -446,16 +463,15 @@ class PathPluginBaseTest extends UnitTestCase {
    * Tests altering routes with parameters in the overridden route.
    */
   public function testAlterRoutesWithParameters(): void {
+    $this->setUpMockServiceLocator();
+
     $collection = new RouteCollection();
     $collection->add('test_route', new Route('test_route/{parameter}', ['_controller' => 'Drupal\Tests\Core\Controller\TestController::content']));
 
     [$view] = $this->setupViewExecutableAccessPlugin();
 
     // Manually set up an argument handler.
-    $argument = $this->getMockBuilder('Drupal\views\Plugin\views\argument\ArgumentPluginBase')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $view->argument['test_id'] = $argument;
+    $view->argument['test_id'] = $this->createStub(ArgumentPluginBase::class);
 
     $display = [];
     $display['display_plugin'] = 'page';
@@ -483,16 +499,15 @@ class PathPluginBaseTest extends UnitTestCase {
    * Tests altering routes with parameters and upcasting information.
    */
   public function testAlterRoutesWithParametersAndUpcasting(): void {
+    $this->setUpMockServiceLocator();
+
     $collection = new RouteCollection();
     $collection->add('test_route', new Route('test_route/{parameter}', ['_controller' => 'Drupal\Tests\Core\Controller\TestController::content'], [], ['parameters' => ['taxonomy_term' => 'entity:entity_test']]));
 
     [$view] = $this->setupViewExecutableAccessPlugin();
 
     // Manually set up an argument handler.
-    $argument = $this->getMockBuilder('Drupal\views\Plugin\views\argument\ArgumentPluginBase')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $view->argument['test_id'] = $argument;
+    $view->argument['test_id'] = $this->createStub(ArgumentPluginBase::class);
 
     $display = [];
     $display['display_plugin'] = 'page';
@@ -521,6 +536,8 @@ class PathPluginBaseTest extends UnitTestCase {
    * Tests altering routes with optional parameters in the overridden route.
    */
   public function testAlterRoutesWithOptionalParameters(): void {
+    $this->setUpMockServiceLocator();
+
     $collection = new RouteCollection();
     $collection->add('test_route', new Route('test_route/{parameter}', ['_controller' => 'Drupal\Tests\Core\Controller\TestController::content']));
 
@@ -574,26 +591,20 @@ class PathPluginBaseTest extends UnitTestCase {
    * Returns some mocked view entity, view executable, and access plugin.
    */
   protected function setupViewExecutableAccessPlugin(): array {
-    $view_entity = $this->getMockBuilder('Drupal\views\Entity\View')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $view_entity->expects($this->any())
+    $view_entity = $this->createStub(View::class);
+    $view_entity
       ->method('id')
       ->willReturn('test_id');
-    $view_entity->expects($this->any())
+    $view_entity
       ->method('getCacheTags')
       ->willReturn([]);
 
-    $view = $this->getMockBuilder('Drupal\views\ViewExecutable')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $view = $this->createStub(ViewExecutable::class);
 
     $view->storage = $view_entity;
 
-    $access_plugin = $this->getMockBuilder('Drupal\views\Plugin\views\access\AccessPluginBase')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->accessPluginManager->expects($this->any())
+    $access_plugin = $this->createStub(AccessPluginBase::class);
+    $this->accessPluginManager
       ->method('createInstance')
       ->willReturn($access_plugin);
 

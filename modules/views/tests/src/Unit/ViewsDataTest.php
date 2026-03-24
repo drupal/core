@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\views\Unit;
 
+use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Language\Language;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\Tests\ViewTestData;
 use Drupal\views\ViewsData;
@@ -23,35 +27,21 @@ class ViewsDataTest extends UnitTestCase {
   /**
    * The mocked cache backend.
    *
-   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Cache\CacheBackendInterface
    */
   protected $cacheBackend;
 
   /**
-   * The mocked cache tags invalidator.
-   *
-   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $cacheTagsInvalidator;
-
-  /**
    * The mocked module handler.
    *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
    */
   protected $moduleHandler;
 
   /**
-   * The mocked config factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $configFactory;
-
-  /**
    * The mocked language manager.
    *
-   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $languageManager;
 
@@ -68,16 +58,33 @@ class ViewsDataTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->cacheTagsInvalidator = $this->createMock('Drupal\Core\Cache\CacheTagsInvalidatorInterface');
-    $this->cacheBackend = $this->createMock('Drupal\Core\Cache\CacheBackendInterface');
+    $this->cacheBackend = $this->createStub(CacheBackendInterface::class);
 
-    $this->moduleHandler = $this->createMock('Drupal\Core\Extension\ModuleHandlerInterface');
-    $this->languageManager = $this->createMock('Drupal\Core\Language\LanguageManagerInterface');
-    $this->languageManager->expects($this->any())
+    $this->moduleHandler = $this->createStub(ModuleHandlerInterface::class);
+    $this->languageManager = $this->createStub(LanguageManagerInterface::class);
+    $this->languageManager
       ->method('getCurrentLanguage')
       ->willReturn(new Language(['id' => 'en']));
 
     $this->viewsData = new ViewsData($this->cacheBackend, $this->moduleHandler, $this->languageManager);
+  }
+
+  /**
+   * Reinitializes the cache backend as a mock object.
+   */
+  protected function setUpMockCacheBackend(): void {
+    $this->cacheBackend = $this->createMock(CacheBackendInterface::class);
+    $reflection = new \ReflectionProperty($this->viewsData, 'cacheBackend');
+    $reflection->setValue($this->viewsData, $this->cacheBackend);
+  }
+
+  /**
+   * Reinitializes the module handler as a mock object.
+   */
+  protected function setUpMockModuleHandler(): void {
+    $this->moduleHandler = $this->createMock(ModuleHandlerInterface::class);
+    $reflection = new \ReflectionProperty($this->viewsData, 'moduleHandler');
+    $reflection->setValue($this->viewsData, $this->moduleHandler);
   }
 
   /**
@@ -133,9 +140,10 @@ class ViewsDataTest extends UnitTestCase {
   }
 
   /**
-   * Mocks the basic module handler used for the test.
+   * Reinitializes the module handler as a mock object with an expectation.
    */
-  protected function setupMockedModuleHandler(): void {
+  protected function setUpMockModuleHandlerWithExpectation(): void {
+    $this->setUpMockModuleHandler();
     $this->moduleHandler->expects($this->atLeastOnce())
       ->method('invokeAllWith')
       ->with('views_data')
@@ -148,7 +156,7 @@ class ViewsDataTest extends UnitTestCase {
    * Tests the fetchBaseTables() method.
    */
   public function testFetchBaseTables(): void {
-    $this->setupMockedModuleHandler();
+    $this->setUpMockModuleHandlerWithExpectation();
     $data = $this->viewsData->getAll();
 
     $base_tables = $this->viewsData->fetchBaseTables();
@@ -186,8 +194,9 @@ class ViewsDataTest extends UnitTestCase {
    * Tests fetching all the views data without a static cache.
    */
   public function testGetOnFirstCall(): void {
+    $this->setUpMockCacheBackend();
     // Ensure that the hooks are just invoked once.
-    $this->setupMockedModuleHandler();
+    $this->setUpMockModuleHandlerWithExpectation();
 
     $this->moduleHandler->expects($this->once())
       ->method('alter')
@@ -207,7 +216,8 @@ class ViewsDataTest extends UnitTestCase {
    * Tests the cache of the full and single table data.
    */
   public function testFullAndTableGetCache(): void {
-    $this->getContainerWithCacheTagsInvalidator($this->cacheTagsInvalidator);
+    $this->setUpMockCacheBackend();
+    $this->setUpMockModuleHandler();
     $expected_views_data = $this->viewsDataWithProvider();
     $table_name = 'views_test_data';
     $table_name_2 = 'views_test_data_2';
@@ -253,9 +263,11 @@ class ViewsDataTest extends UnitTestCase {
         return $data === array_shift($sets);
       }));
 
-    $this->cacheTagsInvalidator->expects($this->once())
+    $cacheTagsInvalidator = $this->createMock(CacheTagsInvalidatorInterface::class);
+    $cacheTagsInvalidator->expects($this->once())
       ->method('invalidateTags')
       ->with(['views_data']);
+    $this->getContainerWithCacheTagsInvalidator($cacheTagsInvalidator);
 
     $views_data = $this->viewsData->getAll();
     $this->assertSame($expected_views_data, $views_data);
@@ -286,8 +298,9 @@ class ViewsDataTest extends UnitTestCase {
   public function testFullGetCache(): void {
     $expected_views_data = $this->viewsDataWithProvider();
 
+    $this->setUpMockCacheBackend();
     // Views data should be invoked once.
-    $this->setupMockedModuleHandler();
+    $this->setUpMockModuleHandlerWithExpectation();
 
     $this->moduleHandler->expects($this->once())
       ->method('alter')
@@ -312,8 +325,9 @@ class ViewsDataTest extends UnitTestCase {
     $table_name = 'views_test_data';
     $expected_views_data = $this->viewsDataWithProvider();
 
+    $this->setUpMockCacheBackend();
     // Views data should be invoked once.
-    $this->setupMockedModuleHandler();
+    $this->setUpMockModuleHandlerWithExpectation();
 
     $this->moduleHandler->expects($this->once())
       ->method('alter')
@@ -346,8 +360,9 @@ class ViewsDataTest extends UnitTestCase {
   public function testNonExistingTableGetCache(): void {
     $random_table_name = $this->randomMachineName();
 
+    $this->setUpMockCacheBackend();
     // Views data should be invoked once.
-    $this->setupMockedModuleHandler();
+    $this->setUpMockModuleHandlerWithExpectation();
 
     $this->moduleHandler->expects($this->once())
       ->method('alter')
@@ -376,7 +391,8 @@ class ViewsDataTest extends UnitTestCase {
   public function testCacheCallsWithSameTableMultipleTimes(): void {
     $expected_views_data = $this->viewsDataWithProvider();
 
-    $this->setupMockedModuleHandler();
+    $this->setUpMockCacheBackend();
+    $this->setUpMockModuleHandlerWithExpectation();
 
     $gets = ['views_data:views_test_data:en', 'views_data:en'];
     $this->cacheBackend->expects($this->exactly(count($gets)))
@@ -417,6 +433,8 @@ class ViewsDataTest extends UnitTestCase {
    *   - views_test_data.
    */
   public function testCacheCallsWithSameTableMultipleTimesAndWarmCache(): void {
+    $this->setUpMockCacheBackend();
+    $this->setUpMockModuleHandler();
     $expected_views_data = $this->viewsDataWithProvider();
     $this->moduleHandler->expects($this->never())
       ->method('invokeAllWith');
@@ -447,6 +465,8 @@ class ViewsDataTest extends UnitTestCase {
    *   - views_test_data_2
    */
   public function testCacheCallsWithWarmCacheAndDifferentTable(): void {
+    $this->setUpMockCacheBackend();
+    $this->setUpMockModuleHandler();
     $expected_views_data = $this->viewsDataWithProvider();
     $this->moduleHandler->expects($this->never())
       ->method('invokeAllWith');
@@ -485,6 +505,8 @@ class ViewsDataTest extends UnitTestCase {
    *   - $non_existing_table.
    */
   public function testCacheCallsWithWarmCacheAndInvalidTable(): void {
+    $this->setUpMockCacheBackend();
+    $this->setUpMockModuleHandler();
     $expected_views_data = $this->viewsDataWithProvider();
     $non_existing_table = $this->randomMachineName();
     $this->moduleHandler->expects($this->never())
@@ -525,6 +547,8 @@ class ViewsDataTest extends UnitTestCase {
    *   - $non_existing_table.
    */
   public function testCacheCallsWithWarmCacheForInvalidTable(): void {
+    $this->setUpMockCacheBackend();
+    $this->setUpMockModuleHandler();
     $non_existing_table = $this->randomMachineName();
     $this->moduleHandler->expects($this->never())
       ->method('invokeAllWith');
@@ -553,7 +577,8 @@ class ViewsDataTest extends UnitTestCase {
    */
   public function testCacheCallsWithoutWarmCacheAndGetAllTables(): void {
     $expected_views_data = $this->viewsDataWithProvider();
-    $this->setupMockedModuleHandler();
+    $this->setUpMockCacheBackend();
+    $this->setUpMockModuleHandlerWithExpectation();
 
     // Setup a warm cache backend for a single table.
     $this->cacheBackend->expects($this->once())
@@ -578,6 +603,8 @@ class ViewsDataTest extends UnitTestCase {
    *   - all tables.
    */
   public function testCacheCallsWithWarmCacheAndGetAllTables(): void {
+    $this->setUpMockCacheBackend();
+    $this->setUpMockModuleHandler();
     $expected_views_data = $this->viewsDataWithProvider();
     $this->moduleHandler->expects($this->never())
       ->method('invokeAllWith');
@@ -604,6 +631,8 @@ class ViewsDataTest extends UnitTestCase {
    * @legacy-covers ::get
    */
   public function testCacheCallsWithoutWarmCacheAndGetMultipleTables(): void {
+    $this->setUpMockCacheBackend();
+
     $expected_views_data = $this->viewsDataWithProvider();
     $table_name = 'views_test_data';
     $table_name_2 = 'views_test_data_2';
@@ -671,6 +700,8 @@ class ViewsDataTest extends UnitTestCase {
   public function testFullyLoadedPropertySetAfterDataLoad(): void {
     $expected_views_data = $this->viewsDataWithProvider();
 
+    $this->setUpMockCacheBackend();
+
     // Use reflection to access the protected fullyLoaded property.
     $reflection = new \ReflectionClass($this->viewsData);
     $fullyLoaded_property = $reflection->getProperty('fullyLoaded');
@@ -678,7 +709,7 @@ class ViewsDataTest extends UnitTestCase {
     // Verify fullyLoaded starts as FALSE.
     $this->assertFalse($fullyLoaded_property->getValue($this->viewsData));
 
-    $this->setupMockedModuleHandler();
+    $this->setUpMockModuleHandlerWithExpectation();
 
     $this->moduleHandler->expects($this->once())
       ->method('alter')
@@ -705,6 +736,9 @@ class ViewsDataTest extends UnitTestCase {
    */
   public function testFullyLoadedPropertySetAfterCacheLoad(): void {
     $expected_views_data = $this->viewsDataWithProvider();
+
+    $this->setUpMockCacheBackend();
+    $this->setUpMockModuleHandler();
 
     // Use reflection to access the protected fullyLoaded property.
     $reflection = new \ReflectionClass($this->viewsData);
@@ -740,7 +774,8 @@ class ViewsDataTest extends UnitTestCase {
   public function testFullyLoadedPreventsRedundantLoading(): void {
     $expected_views_data = $this->viewsDataWithProvider();
 
-    $this->setupMockedModuleHandler();
+    $this->setUpMockCacheBackend();
+    $this->setUpMockModuleHandlerWithExpectation();
 
     $this->moduleHandler->expects($this->once())
       ->method('alter')
@@ -777,10 +812,10 @@ class ViewsDataTest extends UnitTestCase {
    * data can be reloaded on the next request.
    */
   public function testClearResetsFullyLoaded(): void {
-    $this->getContainerWithCacheTagsInvalidator($this->cacheTagsInvalidator);
     $expected_views_data = $this->viewsDataWithProvider();
 
-    $this->setupMockedModuleHandler();
+    $this->setUpMockCacheBackend();
+    $this->setUpMockModuleHandlerWithExpectation();
 
     $this->moduleHandler->expects($this->exactly(2))
       ->method('alter')
@@ -792,9 +827,11 @@ class ViewsDataTest extends UnitTestCase {
       ->with("views_data:en")
       ->willReturn(FALSE);
 
-    $this->cacheTagsInvalidator->expects($this->once())
+    $cacheTagsInvalidator = $this->createMock(CacheTagsInvalidatorInterface::class);
+    $cacheTagsInvalidator->expects($this->once())
       ->method('invalidateTags')
       ->with(['views_data']);
+    $this->getContainerWithCacheTagsInvalidator($cacheTagsInvalidator);
 
     // Use reflection to access the protected fullyLoaded property.
     $reflection = new \ReflectionClass($this->viewsData);
@@ -826,13 +863,15 @@ class ViewsDataTest extends UnitTestCase {
     $table_name = 'views_test_data';
     $expected_views_data = $this->viewsDataWithProvider();
 
+    $this->setUpMockCacheBackend();
+
     // Use reflection to access the protected fullyLoaded property.
     $reflection = new \ReflectionClass($this->viewsData);
     $fullyLoaded_property = $reflection->getProperty('fullyLoaded');
 
     $this->assertFalse($fullyLoaded_property->getValue($this->viewsData));
 
-    $this->setupMockedModuleHandler();
+    $this->setUpMockModuleHandlerWithExpectation();
 
     $this->moduleHandler->expects($this->once())
       ->method('alter')
@@ -881,6 +920,9 @@ class ViewsDataTest extends UnitTestCase {
     int $expected_cache_get_count,
     int $expected_cache_set_count,
   ): void {
+    $this->setUpMockCacheBackend();
+    $this->setUpMockModuleHandler();
+
     $expected_views_data = $this->viewsDataWithProvider();
     $table_name = 'views_test_data';
 

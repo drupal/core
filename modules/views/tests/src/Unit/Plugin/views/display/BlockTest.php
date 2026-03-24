@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\views\Unit\Plugin\views\display;
 
+use Drupal\Core\Block\BlockManagerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\Plugin\views\display\Block;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -48,15 +50,12 @@ class BlockTest extends UnitTestCase {
       ->disableOriginalConstructor()
       ->onlyMethods(['executeDisplay', 'setDisplay', 'setItemsPerPage'])
       ->getMock();
-    $this->executable->expects($this->any())
+    $this->executable
       ->method('setDisplay')
       ->with('block_1')
       ->willReturn(TRUE);
 
-    $this->blockDisplay = $this->executable->display_handler = $this->getMockBuilder('Drupal\views\Plugin\views\display\Block')
-      ->disableOriginalConstructor()
-      ->onlyMethods([])
-      ->getMock();
+    $this->blockDisplay = $this->executable->display_handler = new Block([], 'test_plugin', [], $this->createStub(EntityTypeManagerInterface::class), $this->createStub(BlockManagerInterface::class));
 
     $this->blockDisplay->view = $this->executable;
 

@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\views\Unit\Plugin\Derivative;
 
+use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Routing\RouteProviderInterface;
+use Drupal\Core\State\StateInterface;
 use Drupal\Tests\UnitTestCase;
+use Drupal\views\Entity\View;
 use Drupal\views\Plugin\Derivative\ViewsLocalTask;
+use Drupal\views\ViewExecutable;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Routing\Route;
@@ -21,21 +26,21 @@ class ViewsLocalTaskTest extends UnitTestCase {
   /**
    * The mocked route provider.
    *
-   * @var \Drupal\Core\Routing\RouteProviderInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Routing\RouteProviderInterface
    */
   protected $routeProvider;
 
   /**
    * The mocked key value storage.
    *
-   * @var \Drupal\Core\KeyValueStore\KeyValueStoreInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\KeyValueStore\KeyValueStoreInterface
    */
   protected $state;
 
   /**
    * The views storage.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Entity\EntityStorageInterface
    */
   protected $viewStorage;
 
@@ -62,11 +67,38 @@ class ViewsLocalTaskTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->routeProvider = $this->createMock('Drupal\Core\Routing\RouteProviderInterface');
-    $this->state = $this->createMock('Drupal\Core\State\StateInterface');
-    $this->viewStorage = $this->createMock('Drupal\Core\Entity\EntityStorageInterface');
+    $this->routeProvider = $this->createStub(RouteProviderInterface::class);
+    $this->state = $this->createStub(StateInterface::class);
+    $this->viewStorage = $this->createStub(EntityStorageInterface::class);
 
     $this->localTaskDerivative = new TestViewsLocalTask($this->routeProvider, $this->state, $this->viewStorage);
+  }
+
+  /**
+   * Reinitializes the route provider as a mock object.
+   */
+  protected function setUpMockRouteProvider(): void {
+    $this->routeProvider = $this->createMock(RouteProviderInterface::class);
+    $reflection = new \ReflectionProperty($this->localTaskDerivative, 'routeProvider');
+    $reflection->setValue($this->localTaskDerivative, $this->routeProvider);
+  }
+
+  /**
+   * Reinitializes the state as a mock object.
+   */
+  protected function setUpMockState(): void {
+    $this->state = $this->createMock(StateInterface::class);
+    $reflection = new \ReflectionProperty($this->localTaskDerivative, 'state');
+    $reflection->setValue($this->localTaskDerivative, $this->state);
+  }
+
+  /**
+   * Reinitializes the view storage as a mock object.
+   */
+  protected function setUpMockViewStorage(): void {
+    $this->viewStorage = $this->createMock(EntityStorageInterface::class);
+    $reflection = new \ReflectionProperty($this->localTaskDerivative, 'viewStorage');
+    $reflection->setValue($this->localTaskDerivative, $this->viewStorage);
   }
 
   /**
@@ -86,9 +118,9 @@ class ViewsLocalTaskTest extends UnitTestCase {
    * Tests fetching the derivatives on a view with without a local task.
    */
   public function testGetDerivativeDefinitionsWithoutLocalTask(): void {
-    $executable = $this->getMockBuilder('Drupal\views\ViewExecutable')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $this->setUpMockViewStorage();
+
+    $executable = $this->createStub(ViewExecutable::class);
     $display_plugin = $this->getMockBuilder('Drupal\views\Plugin\views\display\PathPluginBase')
       ->onlyMethods(['getOption'])
       ->disableOriginalConstructor()
@@ -99,17 +131,15 @@ class ViewsLocalTaskTest extends UnitTestCase {
       ->willReturn(['type' => 'normal']);
     $executable->display_handler = $display_plugin;
 
-    $storage = $this->getMockBuilder('Drupal\views\Entity\View')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $storage->expects($this->any())
+    $storage = $this->createStub(View::class);
+    $storage
       ->method('id')
       ->willReturn('example_view');
-    $storage->expects($this->any())
+    $storage
       ->method('getExecutable')
       ->willReturn($executable);
 
-    $this->viewStorage->expects($this->any())
+    $this->viewStorage->expects($this->atLeastOnce())
       ->method('load')
       ->with('example_view')
       ->willReturn($storage);
@@ -125,21 +155,20 @@ class ViewsLocalTaskTest extends UnitTestCase {
    * Tests fetching the derivatives on a view with a default local task.
    */
   public function testGetDerivativeDefinitionsWithLocalTask(): void {
-    $executable = $this->getMockBuilder('Drupal\views\ViewExecutable')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $storage = $this->getMockBuilder('Drupal\views\Entity\View')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $storage->expects($this->any())
+    $this->setUpMockState();
+    $this->setUpMockViewStorage();
+
+    $executable = $this->createStub(ViewExecutable::class);
+    $storage = $this->createStub(View::class);
+    $storage
       ->method('id')
       ->willReturn('example_view');
-    $storage->expects($this->any())
+    $storage
       ->method('getExecutable')
       ->willReturn($executable);
     $executable->storage = $storage;
 
-    $this->viewStorage->expects($this->any())
+    $this->viewStorage->expects($this->atLeastOnce())
       ->method('load')
       ->with('example_view')
       ->willReturn($storage);
@@ -182,21 +211,20 @@ class ViewsLocalTaskTest extends UnitTestCase {
    * Tests fetching the derivatives on a view which overrides an existing route.
    */
   public function testGetDerivativeDefinitionsWithOverrideRoute(): void {
-    $executable = $this->getMockBuilder('Drupal\views\ViewExecutable')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $storage = $this->getMockBuilder('Drupal\views\Entity\View')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $storage->expects($this->any())
+    $this->setUpMockState();
+    $this->setUpMockViewStorage();
+
+    $executable = $this->createStub(ViewExecutable::class);
+    $storage = $this->createStub(View::class);
+    $storage
       ->method('id')
       ->willReturn('example_view');
-    $storage->expects($this->any())
+    $storage
       ->method('getExecutable')
       ->willReturn($executable);
     $executable->storage = $storage;
 
-    $this->viewStorage->expects($this->any())
+    $this->viewStorage->expects($this->atLeastOnce())
       ->method('load')
       ->with('example_view')
       ->willReturn($storage);
@@ -231,21 +259,20 @@ class ViewsLocalTaskTest extends UnitTestCase {
    * Tests fetching the derivatives on a view with a default local task.
    */
   public function testGetDerivativeDefinitionsWithDefaultLocalTask(): void {
-    $executable = $this->getMockBuilder('Drupal\views\ViewExecutable')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $storage = $this->getMockBuilder('Drupal\views\Entity\View')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $storage->expects($this->any())
+    $this->setUpMockState();
+    $this->setUpMockViewStorage();
+
+    $executable = $this->createStub(ViewExecutable::class);
+    $storage = $this->createStub(View::class);
+    $storage
       ->method('id')
       ->willReturn('example_view');
-    $storage->expects($this->any())
+    $storage
       ->method('getExecutable')
       ->willReturn($executable);
     $executable->storage = $storage;
 
-    $this->viewStorage->expects($this->any())
+    $this->viewStorage->expects($this->atLeastOnce())
       ->method('load')
       ->with('example_view')
       ->willReturn($storage);
@@ -304,21 +331,21 @@ class ViewsLocalTaskTest extends UnitTestCase {
    * The parent is defined by another module, not views.
    */
   public function testGetDerivativeDefinitionsWithExistingLocalTask(): void {
-    $executable = $this->getMockBuilder('Drupal\views\ViewExecutable')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $storage = $this->getMockBuilder('Drupal\views\Entity\View')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $storage->expects($this->any())
+    $this->setUpMockRouteProvider();
+    $this->setUpMockState();
+    $this->setUpMockViewStorage();
+
+    $executable = $this->createStub(ViewExecutable::class);
+    $storage = $this->createStub(View::class);
+    $storage
       ->method('id')
       ->willReturn('example_view');
-    $storage->expects($this->any())
+    $storage
       ->method('getExecutable')
       ->willReturn($executable);
     $executable->storage = $storage;
 
-    $this->viewStorage->expects($this->any())
+    $this->viewStorage->expects($this->atLeastOnce())
       ->method('load')
       ->with('example_view')
       ->willReturn($storage);
@@ -354,7 +381,7 @@ class ViewsLocalTaskTest extends UnitTestCase {
     // Mock the route provider.
     $route_collection = new RouteCollection();
     $route_collection->add('test_route', new Route('/path'));
-    $this->routeProvider->expects($this->any())
+    $this->routeProvider->expects($this->atLeastOnce())
       ->method('getRoutesByPattern')
       ->with('/path')
       ->willReturn($route_collection);

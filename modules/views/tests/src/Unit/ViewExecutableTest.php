@@ -7,14 +7,25 @@ namespace Drupal\Tests\views\Unit;
 use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Routing\RouteProviderInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\Tests\UnitTestCase;
+use Drupal\views\DisplayPluginCollection;
 use Drupal\views\Entity\View;
+use Drupal\views\Plugin\views\argument\ArgumentPluginBase;
 use Drupal\views\Plugin\views\cache\CachePluginBase;
 use Drupal\views\Plugin\views\cache\None as NoneCache;
+use Drupal\views\Plugin\views\display\DisplayPluginBase;
+use Drupal\views\Plugin\views\display\DisplayPluginInterface;
+use Drupal\views\Plugin\views\display\DisplayRouterInterface;
 use Drupal\views\Plugin\views\pager\None as NonePager;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
+use Drupal\views\Plugin\ViewsPluginManager;
+use Drupal\views\ViewEntityInterface;
 use Drupal\views\ViewExecutable;
+use Drupal\views\ViewExecutableFactory;
+use Drupal\views\ViewsData;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -50,14 +61,14 @@ class ViewExecutableTest extends UnitTestCase {
   /**
    * A mocked display collection.
    *
-   * @var \Drupal\views\DisplayPluginCollection|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\views\DisplayPluginCollection|\PHPUnit\Framework\MockObject\Stub
    */
   protected $displayHandlers;
 
   /**
    * The mocked view executable.
    *
-   * @var \Drupal\views\ViewExecutableFactory|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\views\ViewExecutableFactory|\PHPUnit\Framework\MockObject\Stub
    */
   protected $viewExecutableFactory;
 
@@ -71,58 +82,56 @@ class ViewExecutableTest extends UnitTestCase {
   /**
    * The mocked view entity.
    *
-   * @var \Drupal\views\ViewEntityInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\views\ViewEntityInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $view;
 
   /**
    * The mocked user.
    *
-   * @var \Drupal\Core\Session\AccountInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Session\AccountInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $user;
 
   /**
    * The mocked views data.
    *
-   * @var \Drupal\views\ViewsData|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\views\ViewsData
    */
   protected $viewsData;
 
   /**
    * The mocked display router handler.
    *
-   * @var \Drupal\views\Plugin\views\display\DisplayRouterInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\views\Plugin\views\display\DisplayRouterInterface|\PHPUnit\Framework\MockObject\Stub
    */
   protected $displayHandler;
 
   /**
    * The mocked route provider.
    *
-   * @var \Drupal\Core\Routing\RouteProviderInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Routing\RouteProviderInterface
    */
   protected $routeProvider;
 
   /**
-   * The mocked none cache plugin.
-   *
-   * @var \Drupal\views\Plugin\views\cache\None|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $noneCache;
-
-  /**
    * The mocked cache plugin that returns a successful result.
    *
-   * @var \Drupal\views\Plugin\views\cache\None|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\views\Plugin\views\cache\CachePluginBase|\Prophecy\Prophecy\ObjectProphecy
    */
   protected $successCache;
 
   /**
    * The display plugin manager.
    *
-   * @var \Drupal\views\Plugin\ViewsPluginManager
+   * @var \Drupal\views\Plugin\ViewsPluginManager|\PHPUnit\Framework\MockObject\Stub
    */
   protected $displayPluginManager;
+
+  /**
+   * The cache plugin manager.
+   */
+  protected PluginManagerInterface $cacheManager;
 
   /**
    * {@inheritdoc}
@@ -130,59 +139,62 @@ class ViewExecutableTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->view = $this->createMock('Drupal\views\ViewEntityInterface');
-    $this->user = $this->createMock('Drupal\Core\Session\AccountInterface');
-    $this->viewsData = $this->getMockBuilder('Drupal\views\ViewsData')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->displayHandler = $this->getMockBuilder('Drupal\views\Plugin\views\display\DisplayRouterInterface')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->routeProvider = $this->createMock('Drupal\Core\Routing\RouteProviderInterface');
-    $this->displayHandlers = $this->getMockBuilder('Drupal\views\DisplayPluginCollection')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->displayPluginManager = $this->getMockBuilder('\Drupal\views\Plugin\ViewsPluginManager')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $this->view = $this->createStub(ViewEntityInterface::class);
+    $this->user = $this->createStub(AccountInterface::class);
+    $this->viewsData = $this->createStub(ViewsData::class);
+    $this->displayHandler = $this->createStub(DisplayRouterInterface::class);
+    $this->routeProvider = $this->createStub(RouteProviderInterface::class);
+    $this->displayHandlers = $this->createStub(DisplayPluginCollection::class);
+    $this->displayPluginManager = $this->createStub(ViewsPluginManager::class);
 
     $this->executable = new ViewExecutable($this->view, $this->user, $this->viewsData, $this->routeProvider, $this->displayPluginManager);
     $this->executable->display_handler = $this->displayHandler;
     $this->executable->displayHandlers = $this->displayHandlers;
 
-    $this->viewExecutableFactory = $this->getMockBuilder('Drupal\views\ViewExecutableFactory')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $this->viewExecutableFactory = $this->createStub(ViewExecutableFactory::class);
 
-    $module_handler = $this->getMockBuilder(ModuleHandlerInterface::class)
-      ->getMock();
-
-    $this->noneCache = $this->getMockBuilder(NoneCache::class)
-      ->disableOriginalConstructor()
-      ->getMock();
+    $module_handler = $this->createStub(ModuleHandlerInterface::class);
 
     $success_cache = $this->prophesize(CachePluginBase::class);
     $success_cache->cacheGet('results')->willReturn(TRUE);
     $this->successCache = $success_cache->reveal();
 
-    $cache_manager = $this->prophesize(PluginManagerInterface::class);
-    $cache_manager->createInstance('none')->willReturn($this->noneCache);
+    $this->cacheManager = $this->createStub(PluginManagerInterface::class);
 
     $translation = $this->getStringTranslationStub();
     $container = new ContainerBuilder();
     $container->set('string_translation', $translation);
     $container->set('views.executable', $this->viewExecutableFactory);
     $container->set('module_handler', $module_handler);
-    $container->set('plugin.manager.views.cache', $cache_manager->reveal());
-
-    $locator = $this->createMock('\Symfony\Component\DependencyInjection\ServiceLocator');
-    $locator->expects($this->any())
-      ->method('get')
-      ->with('cache')
-      ->willReturn($cache_manager->reveal());
-    $container->set('views.plugin_managers', $locator);
+    $container->set('plugin.manager.views.cache', $this->cacheManager);
 
     \Drupal::setContainer($container);
+  }
+
+  /**
+   * Reinitializes the cache manager as a mock object.
+   */
+  protected function setUpMockCacheManager(): void {
+    $this->cacheManager = $this->createMock(PluginManagerInterface::class);
+    \Drupal::getContainer()->set('plugin.manager.views.cache', $this->cacheManager);
+  }
+
+  /**
+   * Reinitializes the route provider as a mock object.
+   */
+  protected function setUpMockRouteProvider(): void {
+    $this->routeProvider = $this->createMock(RouteProviderInterface::class);
+    $reflection = new \ReflectionProperty($this->executable, 'routeProvider');
+    $reflection->setValue($this->executable, $this->routeProvider);
+  }
+
+  /**
+   * Reinitializes the views data as a mock object.
+   */
+  protected function setUpMockViewsData(): void {
+    $this->viewsData = $this->createMock(ViewsData::class);
+    $reflection = new \ReflectionProperty($this->executable, 'viewsData');
+    $reflection->setValue($this->executable, $this->viewsData);
   }
 
   /**
@@ -199,16 +211,16 @@ class ViewExecutableTest extends UnitTestCase {
    * Tests get url with path no placeholders.
    */
   public function testGetUrlWithPathNoPlaceholders(): void {
-    $this->displayHandler->expects($this->any())
+    $this->displayHandler
       ->method('getRoutedDisplay')
       ->willReturn($this->displayHandler);
-    $this->displayHandlers->expects($this->any())
+    $this->displayHandlers
       ->method('get')
       ->willReturn($this->displayHandler);
-    $this->displayHandler->expects($this->any())
+    $this->displayHandler
       ->method('getUrlInfo')
       ->willReturn(Url::fromRoute('views.test.page_1'));
-    $this->displayHandler->expects($this->any())
+    $this->displayHandler
       ->method('getPath')
       ->willReturn('test-path');
 
@@ -219,8 +231,8 @@ class ViewExecutableTest extends UnitTestCase {
    * Tests get url without router display.
    */
   public function testGetUrlWithoutRouterDisplay(): void {
-    $this->displayHandler = $this->createMock('Drupal\views\Plugin\views\display\DisplayPluginInterface');
-    $this->displayHandlers->expects($this->any())
+    $this->displayHandler = $this->createStub(DisplayPluginInterface::class);
+    $this->displayHandlers
       ->method('get')
       ->willReturn($this->displayHandler);
     $this->executable->display_handler = $this->displayHandler;
@@ -233,21 +245,23 @@ class ViewExecutableTest extends UnitTestCase {
    * Tests get url with placeholders and args.
    */
   public function testGetUrlWithPlaceholdersAndArgs(): void {
-    $this->displayHandler->expects($this->any())
+    $this->setUpMockRouteProvider();
+
+    $this->displayHandler
       ->method('getRoutedDisplay')
       ->willReturn($this->displayHandler);
-    $this->displayHandlers->expects($this->any())
+    $this->displayHandlers
       ->method('get')
       ->willReturn($this->displayHandler);
-    $this->displayHandler->expects($this->any())
+    $this->displayHandler
       ->method('getUrlInfo')
       ->willReturn(Url::fromRoute('views.test.page_1'));
-    $this->displayHandler->expects($this->any())
+    $this->displayHandler
       ->method('getPath')
       ->willReturn('test-path/%');
 
     $route = new Route('/test-path/{arg_0}');
-    $this->routeProvider->expects($this->any())
+    $this->routeProvider->expects($this->once())
       ->method('getRouteByName')
       ->with('views.test.page_1')
       ->willReturn($route);
@@ -259,21 +273,23 @@ class ViewExecutableTest extends UnitTestCase {
    * Tests get url with placeholders and without args.
    */
   public function testGetUrlWithPlaceholdersAndWithoutArgs(): void {
-    $this->displayHandler->expects($this->any())
+    $this->setUpMockRouteProvider();
+
+    $this->displayHandler
       ->method('getRoutedDisplay')
       ->willReturn($this->displayHandler);
-    $this->displayHandlers->expects($this->any())
+    $this->displayHandlers
       ->method('get')
       ->willReturn($this->displayHandler);
-    $this->displayHandler->expects($this->any())
+    $this->displayHandler
       ->method('getUrlInfo')
       ->willReturn(Url::fromRoute('views.test.page_1'));
-    $this->displayHandler->expects($this->any())
+    $this->displayHandler
       ->method('getPath')
       ->willReturn('test-path/%/%');
 
     $route = new Route('/test-path/{arg_0}/{arg_1}');
-    $this->routeProvider->expects($this->any())
+    $this->routeProvider
       ->method('getRouteByName')
       ->with('views.test.page_1')
       ->willReturn($route);
@@ -285,33 +301,31 @@ class ViewExecutableTest extends UnitTestCase {
    * Tests get url with placeholders and without args and exception value.
    */
   public function testGetUrlWithPlaceholdersAndWithoutArgsAndExceptionValue(): void {
-    $this->displayHandler->expects($this->any())
+    $this->setUpMockRouteProvider();
+
+    $this->displayHandler
       ->method('getRoutedDisplay')
       ->willReturn($this->displayHandler);
-    $this->displayHandlers->expects($this->any())
+    $this->displayHandlers
       ->method('get')
       ->willReturn($this->displayHandler);
-    $this->displayHandler->expects($this->any())
+    $this->displayHandler
       ->method('getUrlInfo')
       ->willReturn(Url::fromRoute('views.test.page_1'));
-    $this->displayHandler->expects($this->any())
+    $this->displayHandler
       ->method('getPath')
       ->willReturn('test-path/%/%');
 
     $route = new Route('/test-path/{arg_0}/{arg_1}');
-    $this->routeProvider->expects($this->any())
+    $this->routeProvider
       ->method('getRouteByName')
       ->with('views.test.page_1')
       ->willReturn($route);
 
-    $argument_handler = $this->getMockBuilder('Drupal\views\Plugin\views\argument\ArgumentPluginBase')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $argument_handler = $this->createStub(ArgumentPluginBase::class);
     $argument_handler->options['exception']['value'] = 'exception_0';
     $this->executable->argument['key_1'] = $argument_handler;
-    $argument_handler = $this->getMockBuilder('Drupal\views\Plugin\views\argument\ArgumentPluginBase')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $argument_handler = $this->createStub(ArgumentPluginBase::class);
     $argument_handler->options['exception']['value'] = 'exception_1';
     $this->executable->argument['key_2'] = $argument_handler;
 
@@ -382,6 +396,8 @@ class ViewExecutableTest extends UnitTestCase {
    */
   #[DataProvider('addHandlerProvider')]
   public function testAddHandler($option, $handler_type): void {
+    $this->setUpMockViewsData();
+
     /** @var \Drupal\views\ViewExecutable|\PHPUnit\Framework\MockObject\MockObject $view */
     /** @var \Drupal\views\Plugin\views\display\DisplayPluginBase|\PHPUnit\Framework\MockObject\MockObject $display */
     [$view, $display] = $this->setupBaseViewAndDisplay();
@@ -423,6 +439,8 @@ class ViewExecutableTest extends UnitTestCase {
    */
   #[DataProvider('addHandlerProvider')]
   public function testAddHandlerWithEntityField($option, $handler_type): void {
+    $this->setUpMockViewsData();
+
     /** @var \Drupal\views\ViewExecutable|\PHPUnit\Framework\MockObject\MockObject $view */
     /** @var \Drupal\views\Plugin\views\display\DisplayPluginBase|\PHPUnit\Framework\MockObject\MockObject $display */
     [$view, $display] = $this->setupBaseViewAndDisplay();
@@ -517,9 +535,7 @@ class ViewExecutableTest extends UnitTestCase {
     $view->displayHandlers = $display_collection;
 
     // Setup the expectations.
-    $cloned_view = $this->getMockBuilder('Drupal\views\ViewExecutable')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $cloned_view = $this->createStub(ViewExecutable::class);
     $this->viewExecutableFactory
       ->method('get')
       ->willReturn($cloned_view);
@@ -567,10 +583,8 @@ class ViewExecutableTest extends UnitTestCase {
 
     $storage = new View($config, 'view');
     $view = new ViewExecutable($storage, $this->user, $this->viewsData, $this->routeProvider, $this->displayPluginManager);
-    $display = $this->getMockBuilder('Drupal\views\Plugin\views\display\DisplayPluginBase')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $display->expects($this->any())
+    $display = $this->createMock(DisplayPluginBase::class);
+    $display
       ->method('getPlugin')
       ->with($this->equalTo('cache'))
       ->willReturn($this->successCache);
@@ -580,13 +594,11 @@ class ViewExecutableTest extends UnitTestCase {
     $view->current_display = 'default';
     $view->display_handler = $display;
     $view->displayHandlers = $this->displayHandlers;
-    $view->displayHandlers->expects($this->any())
+    $view->displayHandlers
       ->method('get')
-      ->with('default')
       ->willReturn($display);
-    $view->displayHandlers->expects($this->any())
+    $view->displayHandlers
       ->method('has')
-      ->with('default')
       ->willReturn(TRUE);
 
     foreach (array_keys($view->getHandlerTypes()) as $type) {
@@ -704,13 +716,12 @@ class ViewExecutableTest extends UnitTestCase {
    * @legacy-covers ::execute
    */
   public function testCacheIsIgnoredDuringPreview(): void {
+    $this->setUpMockCacheManager();
     /** @var \Drupal\views\ViewExecutable|\PHPUnit\Framework\MockObject\MockObject $view */
     $view = current($this->setupBaseViewAndDisplay());
 
     // Pager needs to be set to avoid false test failures.
-    $view->pager = $this->getMockBuilder(NonePager::class)
-      ->disableOriginalConstructor()
-      ->getMock();
+    $view->pager = $this->createStub(NonePager::class);
 
     $query = $this->getMockBuilder(QueryPluginBase::class)
       ->disableOriginalConstructor()
@@ -720,7 +731,11 @@ class ViewExecutableTest extends UnitTestCase {
     $view->built = TRUE;
     $view->live_preview = TRUE;
 
-    $this->noneCache->expects($this->once())->method('cacheGet');
+    $noneCache = $this->createMock(NoneCache::class);
+    $noneCache->expects($this->once())->method('cacheGet');
+    $this->cacheManager->method('createInstance')
+      ->with('none')
+      ->willReturn($noneCache);
     $query->expects($this->once())->method('execute');
 
     $view->execute();
@@ -740,18 +755,14 @@ class ViewExecutableTest extends UnitTestCase {
     /** @var \Drupal\views\Plugin\views\display\DisplayPluginBase|\PHPUnit\Framework\MockObject\MockObject $display */
     [$view, $display] = $this->setupBaseViewAndDisplay();
 
-    $display->expects($this->any())
+    $display
       ->method('isEnabled')
       ->willReturn($display_enabled);
 
     // Pager needs to be set to avoid false test failures.
-    $view->pager = $this->getMockBuilder(NonePager::class)
-      ->disableOriginalConstructor()
-      ->getMock();
+    $view->pager = $this->createStub(NonePager::class);
 
-    $query = $this->getMockBuilder(QueryPluginBase::class)
-      ->disableOriginalConstructor()
-      ->getMock();
+    $query = $this->createStub(QueryPluginBase::class);
 
     $view->query = $query;
     $view->built = TRUE;

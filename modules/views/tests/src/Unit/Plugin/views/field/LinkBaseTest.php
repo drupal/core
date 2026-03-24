@@ -37,8 +37,8 @@ class LinkBaseTest extends UnitTestCase {
     parent::setUp();
     $this->setUpMockLoggerWithMissingEntity();
     $container = \Drupal::getContainer();
-    $container->set('string_translation', $this->createMock(TranslationInterface::class));
-    $container->set('renderer', $this->createMock(RendererInterface::class));
+    $container->set('string_translation', $this->createStub(TranslationInterface::class));
+    $container->set('renderer', $this->createStub(RendererInterface::class));
     \Drupal::setContainer($container);
   }
 
@@ -49,8 +49,8 @@ class LinkBaseTest extends UnitTestCase {
     $row = new ResultRow();
 
     $access = new AccessResultAllowed();
-    $languageManager = $this->createMock(LanguageManagerInterface::class);
-    $languageManager->expects($this->any())
+    $languageManager = $this->createStub(LanguageManagerInterface::class);
+    $languageManager
       ->method('isMultilingual')
       ->willReturn(TRUE);
     $field = $this->getMockBuilder(LinkBase::class)
@@ -58,19 +58,19 @@ class LinkBaseTest extends UnitTestCase {
         ['entity_type' => 'foo', 'entity field' => 'bar'],
         'foo',
         [],
-        $this->createMock(AccessManagerInterface::class),
-        $this->createMock(EntityTypeManagerInterface::class),
-        $this->createMock(EntityRepositoryInterface::class),
+        $this->createStub(AccessManagerInterface::class),
+        $this->createStub(EntityTypeManagerInterface::class),
+        $this->createStub(EntityRepositoryInterface::class),
         $languageManager,
       ])
       ->onlyMethods(['checkUrlAccess', 'getUrlInfo'])
       ->getMock();
-    $field->expects($this->any())
+    $field->expects($this->once())
       ->method('checkUrlAccess')
       ->willReturn($access);
 
-    $view = $this->createMock(ViewExecutable::class);
-    $display = $this->createMock(DisplayPluginBase::class);
+    $view = $this->createStub(ViewExecutable::class);
+    $display = $this->createStub(DisplayPluginBase::class);
 
     $field->init($view, $display);
     $field_built = $field->render($row);

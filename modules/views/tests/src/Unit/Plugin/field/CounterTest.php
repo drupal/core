@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\views\Unit\Plugin\field;
 
+use Drupal\Core\Pager\PagerManagerInterface;
+use Drupal\Core\Pager\PagerParametersInterface;
+use Drupal\Core\Routing\RouteProviderInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\Entity\View;
+use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\field\Counter;
+use Drupal\views\Plugin\views\pager\Full;
+use Drupal\views\Plugin\ViewsPluginManager;
 use Drupal\views\ResultRow;
 use Drupal\views\Tests\ViewTestData;
 use Drupal\views\ViewExecutable;
+use Drupal\views\ViewsData;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -72,24 +80,21 @@ class CounterTest extends UnitTestCase {
     ];
 
     $storage = new View($config, 'view');
-    $user = $this->createMock('Drupal\Core\Session\AccountInterface');
-    $views_data = $this->getMockBuilder('Drupal\views\ViewsData')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $route_provider = $this->createMock('Drupal\Core\Routing\RouteProviderInterface');
-    $display_plugin_manager = $this->getMockBuilder('\Drupal\views\Plugin\ViewsPluginManager')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $user = $this->createStub(AccountInterface::class);
+    $views_data = $this->createStub(ViewsData::class);
+    $route_provider = $this->createStub(RouteProviderInterface::class);
+    $display_plugin_manager = $this->createStub(ViewsPluginManager::class);
     $this->view = new ViewExecutable($storage, $user, $views_data, $route_provider, $display_plugin_manager);
 
-    $this->display = $this->getMockBuilder('Drupal\views\Plugin\views\display\DisplayPluginBase')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $this->display = $this->createStub(DisplayPluginBase::class);
 
-    $this->pager = $this->getMockBuilder('Drupal\views\Plugin\views\pager\Full')
-      ->disableOriginalConstructor()
-      ->onlyMethods([])
-      ->getMock();
+    $this->pager = new Full(
+      [],
+      'test_plugin',
+      [],
+      $this->createStub(PagerManagerInterface::class),
+      $this->createStub(PagerParametersInterface::class),
+    );
 
     $this->view->display_handler = $this->display;
     $this->view->pager = $this->pager;

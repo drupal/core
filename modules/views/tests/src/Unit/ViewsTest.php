@@ -7,12 +7,15 @@ namespace Drupal\Tests\views\Unit;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Routing\RouteProviderInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\Entity\View;
 use Drupal\views\Plugin\ViewsHandlerManager;
 use Drupal\views\Plugin\ViewsPluginManager;
 use Drupal\views\ViewExecutableFactory;
 use Drupal\views\Views;
+use Drupal\views\ViewsData;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -42,16 +45,12 @@ class ViewsTest extends UnitTestCase {
     parent::setUp();
 
     $this->container = new ContainerBuilder();
-    $user = $this->createMock('Drupal\Core\Session\AccountInterface');
+    $user = $this->createStub(AccountInterface::class);
     $request_stack = new RequestStack();
     $request_stack->push(new Request());
-    $views_data = $this->getMockBuilder('Drupal\views\ViewsData')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $route_provider = $this->createMock('Drupal\Core\Routing\RouteProviderInterface');
-    $display_plugin_manager = $this->getMockBuilder('\Drupal\views\Plugin\ViewsPluginManager')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $views_data = $this->createStub(ViewsData::class);
+    $route_provider = $this->createStub(RouteProviderInterface::class);
+    $display_plugin_manager = $this->createStub(ViewsPluginManager::class);
     $this->container->set('views.executable', new ViewExecutableFactory($user, $request_stack, $views_data, $route_provider, $display_plugin_manager));
 
     \Drupal::setContainer($this->container);
@@ -208,13 +207,6 @@ class ViewsTest extends UnitTestCase {
       ->willReturn($definitions);
     $this->container->set('plugin.manager.views.display', $display_manager);
 
-    $locator = $this->createMock('\Symfony\Component\DependencyInjection\ServiceLocator');
-    $locator->expects($this->any())
-      ->method('get')
-      ->with('display')
-      ->willReturn($display_manager);
-    $this->container->set('views.plugin_managers', $locator);
-
     $result = Views::getApplicableViews($applicable_type);
     $this->assertEquals($expected, $result);
   }
@@ -240,7 +232,7 @@ class ViewsTest extends UnitTestCase {
   public function testPluginManagerDeprecation(): void {
     $this->expectUserDeprecationMessage('Drupal\views\Views::pluginManager() is deprecated in drupal:11.4.0 and is removed from drupal:13.0.0. Use \Drupal::service(\'plugin.manager.views.{type}\') for specific plugin types or \Drupal::service(\'views.plugin_managers\')->get($type) for dynamic types. See https://www.drupal.org/node/3566982');
 
-    $plugin_manager = $this->createMock(ViewsPluginManager::class);
+    $plugin_manager = $this->createStub(ViewsPluginManager::class);
 
     $locator = $this->createMock(ServiceLocator::class);
     $locator->expects($this->once())
@@ -260,7 +252,7 @@ class ViewsTest extends UnitTestCase {
   public function testHandlerManagerDeprecation(): void {
     $this->expectUserDeprecationMessage('Drupal\views\Views::handlerManager() is deprecated in drupal:11.4.0 and is removed from drupal:13.0.0. Use \Drupal::service(\'plugin.manager.views.{type}\') for specific handler types or \Drupal::service(\'views.plugin_managers\')->get($type) for dynamic types. See https://www.drupal.org/node/3566982');
 
-    $handler_manager = $this->createMock(ViewsHandlerManager::class);
+    $handler_manager = $this->createStub(ViewsHandlerManager::class);
 
     $locator = $this->createMock(ServiceLocator::class);
     $locator->expects($this->once())

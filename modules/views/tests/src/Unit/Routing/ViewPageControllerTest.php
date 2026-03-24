@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\views\Unit\Routing;
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Routing\RouteMatch;
 use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Tests\UnitTestCase;
@@ -169,7 +170,7 @@ class ViewPageControllerTest extends UnitTestCase {
     $request->attributes->set('view_id', 'test_page_view');
     $request->attributes->set('display_id', 'page_1');
     // Add the argument to the request.
-    $request->attributes->set('test_entity', $this->createMock('Drupal\Core\Entity\EntityInterface'));
+    $request->attributes->set('test_entity', $this->createStub(EntityInterface::class));
     $raw_variables = new InputBag(['test_entity' => 'example_id']);
     $request->attributes->set('_raw_variables', $raw_variables);
     $options = [
