@@ -6,7 +6,7 @@ services:
     autoconfigure: true
     autowire: true
   block_content.uuid_lookup:
-    class: \Drupal\block_content\BlockContentUuidLookup
+    class: Drupal\block_content\BlockContentUuidLookup
     arguments: ['@cache.bootstrap', '@lock', '@entity_type.manager']
     tags:
       - { name: needs_destruction }
