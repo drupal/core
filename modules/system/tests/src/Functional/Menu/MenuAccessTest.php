@@ -376,7 +376,7 @@ class MenuAccessTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function drupalGet($path, array $options = [], array $headers = []) {
+  protected function drupalGet($path, array $options = [], array $headers = []): string {
     $return = parent::drupalGet($path, $options, $headers);
     $this->assertSession()->pageTextNotContains('You do not have any administrative items.');
     return $return;

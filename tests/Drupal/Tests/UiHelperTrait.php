@@ -255,7 +255,7 @@ trait UiHelperTrait {
    *
    * @see \Drupal\Tests\BrowserTestBase::getHttpClient()
    */
-  protected function drupalGet($path, array $options = [], array $headers = []) {
+  protected function drupalGet($path, array $options = [], array $headers = []): string {
     $options['absolute'] = TRUE;
     $url = $this->buildUrl($path, $options);
 

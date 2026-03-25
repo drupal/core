@@ -5,7 +5,7 @@ namespace Drupal\Core\Test\Exception;
 /**
  * Exception thrown when a test class is missing the 'group' metadata.
  *
- * @see \Drupal\Core\Test\TestDiscovery::getTestClasses()
+ * @see \Drupal\Core\Test\PhpUnitTestDiscovery::getTestClasses()
  */
 class MissingGroupException extends \LogicException {
 }

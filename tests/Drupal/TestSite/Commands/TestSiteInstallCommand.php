@@ -273,7 +273,7 @@ class TestSiteInstallCommand extends Command {
   /**
    * {@inheritdoc}
    */
-  protected function installParameters() {
+  protected function installParameters(): array {
     $parameters = $this->installParametersTrait();
     $parameters['parameters']['langcode'] = $this->langcode;
     return $parameters;

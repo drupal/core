@@ -30,7 +30,7 @@ class DemoUmamiProfileTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function installParameters() {
+  protected function installParameters(): array {
     $parameters = parent::installParameters();
     $parameters['forms']['install_configure_form']['site_mail'] = 'admin@example.com';
     return $parameters;

@@ -35,7 +35,7 @@ class TestingProfileInstallTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function installParameters() {
+  protected function installParameters(): array {
     $params = parent::installParameters();
     $params['forms']['install_configure_form']['enable_update_status_module'] = TRUE;
     return $params;

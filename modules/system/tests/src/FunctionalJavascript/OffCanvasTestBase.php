@@ -24,7 +24,7 @@ abstract class OffCanvasTestBase extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function drupalGet($path, array $options = [], array $headers = []) {
+  protected function drupalGet($path, array $options = [], array $headers = []): string {
     $return = parent::drupalGet($path, $options, $headers);
     $this->assertPageLoadComplete();
     return $return;

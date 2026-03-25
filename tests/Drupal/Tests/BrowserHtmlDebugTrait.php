@@ -91,7 +91,7 @@ trait BrowserHtmlDebugTrait {
    * @return string
    *   HTML output headers.
    */
-  protected function getHtmlOutputHeaders() {
+  protected function getHtmlOutputHeaders(): string {
     return $this->formatHtmlOutputHeaders($this->getSession()->getResponseHeaders());
   }
 

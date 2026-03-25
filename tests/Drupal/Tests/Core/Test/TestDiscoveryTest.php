@@ -4,56 +4,37 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Test;
 
-use Composer\Autoload\ClassLoader;
-use Drupal\Core\DependencyInjection\Container;
-use Drupal\Core\DrupalKernel;
-use Drupal\Core\Extension\Extension;
-use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Test\Exception\MissingGroupException;
 use Drupal\Core\Test\PhpUnitTestDiscovery;
 use Drupal\Core\Test\TestDiscovery;
 use Drupal\Tests\UnitTestCase;
-use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
-use PHPUnit\Framework\MockObject\MockObject;
 
 /**
- * Unit tests for TestDiscovery.
+ * Unit tests for test discovery.
  */
+#[CoversClass(PhpUnitTestDiscovery::class)]
 #[CoversClass(TestDiscovery::class)]
 #[Group('Test')]
 class TestDiscoveryTest extends UnitTestCase {
 
   /**
    * Tests test info parser.
-   *
-   * @legacy-covers ::getTestInfo
    */
   #[DataProvider('infoParserProvider')]
   #[RunInSeparateProcess]
-  #[IgnoreDeprecations]
-  public function testTestInfoParser(array $expected, $classname, $doc_comment = NULL): void {
-    try {
-      $info = TestDiscovery::getTestInfo($classname, $doc_comment);
-      $this->assertEquals($expected, $info);
-    }
-    catch (MissingGroupException) {
-      // In case the test class was converted to attributes already, we need to
-      // get the data from PHPUnit discovery instead.
-      $configurationFilePath = $this->root . \DIRECTORY_SEPARATOR . 'core';
-      $phpUnitTestDiscovery = PhpUnitTestDiscovery::instance()->setConfigurationFilePath($configurationFilePath);
-      $classes = $phpUnitTestDiscovery->getTestClasses(NULL, [$expected['type']]);
-      $info = $classes[$expected['group']][$classname];
-      // The 'file' and 'tests_count' keys are additional in PHPUnit, and the
-      // computed 'description' key may differ, but that's irrelevant. Remove
-      // the keys before comparison.
-      unset($info['file'], $info['tests_count'], $info['description'], $expected['description']);
-      $this->assertEquals($expected, $info);
-    }
+  public function testTestInfoParser(array $expected, string $classname): void {
+    $configurationFilePath = $this->root . \DIRECTORY_SEPARATOR . 'core';
+    $phpUnitTestDiscovery = PhpUnitTestDiscovery::instance()->setConfigurationFilePath($configurationFilePath);
+    $classes = $phpUnitTestDiscovery->getTestClasses(NULL, [$expected['type']]);
+    $info = $classes[$expected['group']][$classname];
+    // The 'file' key varies depending on the CI build directory, but that's
+    // rather irrelevant here. Remove the key before comparison.
+    unset($info['file']);
+    $this->assertEquals($expected, $info);
   }
 
   public static function infoParserProvider(): array {
@@ -64,8 +45,9 @@ class TestDiscoveryTest extends UnitTestCase {
         'name' => TestDatabaseTest::class,
         'group' => 'Test',
         'groups' => ['Test', 'simpletest', 'Template'],
-        'description' => 'Tests \Drupal\Core\Test\TestDatabase.',
+        'description' => 'Tests Drupal\Core\Test\TestDatabase.',
         'type' => 'PHPUnit-Unit',
+        'tests_count' => 4,
       ],
       // Classname.
       TestDatabaseTest::class,
@@ -78,8 +60,9 @@ class TestDiscoveryTest extends UnitTestCase {
         'name' => 'Drupal\Tests\Core\DrupalTest',
         'group' => 'DrupalTest',
         'groups' => ['DrupalTest'],
-        'description' => 'Tests \Drupal.',
+        'description' => 'Tests Drupal.',
         'type' => 'PHPUnit-Unit',
+        'tests_count' => 34,
       ],
       // Classname.
       'Drupal\Tests\Core\DrupalTest',
@@ -92,8 +75,9 @@ class TestDiscoveryTest extends UnitTestCase {
         'name' => 'Drupal\Tests\Component\Plugin\PluginBaseTest',
         'group' => 'Plugin',
         'groups' => ['Plugin'],
-        'description' => 'Tests \Drupal\Component\Plugin\PluginBase.',
+        'description' => 'Tests Drupal\Component\Plugin\PluginBase.',
         'type' => 'PHPUnit-Unit-Component',
+        'tests_count' => 7,
       ],
       // Classname.
       'Drupal\Tests\Component\Plugin\PluginBaseTest',
@@ -108,6 +92,7 @@ class TestDiscoveryTest extends UnitTestCase {
         'groups' => ['browsertestbase'],
         'description' => 'Tests BrowserTestBase functionality.',
         'type' => 'PHPUnit-Functional',
+        'tests_count' => 21,
       ],
       // Classname.
       'Drupal\FunctionalTests\BrowserTestBaseTest',
@@ -122,396 +107,45 @@ class TestDiscoveryTest extends UnitTestCase {
         'groups' => ['file'],
         'description' => 'Tests that files referenced in file and image fields are always validated.',
         'type' => 'PHPUnit-Kernel',
+        'tests_count' => 2,
       ],
       // Classname.
       'Drupal\Tests\file\Kernel\FileItemValidationTest',
     ];
 
-    // Test with a different amount of leading spaces.
-    $tests[] = [
-      // Expected result.
-      [
-        'name' => 'Drupal\Tests\ExampleTest',
-        'group' => 'test',
-        'groups' => ['test'],
-        'description' => 'Example test.',
-        'type' => 'PHPUnit-Unit',
-      ],
-      // Classname.
-      'Drupal\Tests\ExampleTest',
-      // Doc block.
-      "/**
-   * Example test.
-   *
-   * @group test
-   */
- ",
-    ];
-
-    // Make sure that a "* @" inside a string does not get parsed as an
-    // annotation.
-    $tests[] = [
-      // Expected result.
-      [
-        'name' => 'Drupal\Tests\ExampleTest',
-        'group' => 'test',
-        'groups' => ['test'],
-        'description' => 'Example test. * @',
-        'type' => 'PHPUnit-Unit',
-      ],
-      // Classname.
-      'Drupal\Tests\ExampleTest',
-      // Doc block.
-      "/**
-   * Example test. * @
-   *
-   * @group test
-   */
- ",
-    ];
-
-    // Multiple @group annotations.
-    $tests[] = [
-      // Expected result.
-      [
-        'name' => 'Drupal\Tests\ExampleTest',
-        'group' => 'test1',
-        'groups' => ['test1', 'test2'],
-        'description' => 'Example test.',
-        'type' => 'PHPUnit-Unit',
-      ],
-      // Classname.
-      'Drupal\Tests\ExampleTest',
-      // Doc block.
-      "/**
- * Example test.
- *
- * @group test1
- * @group test2
- */
- ",
-    ];
-
-    // A great number of @group annotations.
-    $tests['many-group-annotations'] = [
-      // Expected result.
-      [
-        'name' => 'Drupal\Tests\ExampleTest',
-        'group' => 'test1',
-        'groups' => ['test1', 'test2', 'another', 'more', 'many', 'enough', 'whoa'],
-        'description' => 'Example test.',
-        'type' => 'PHPUnit-Unit',
-      ],
-      // Classname.
-      'Drupal\Tests\ExampleTest',
-      // Doc block.
-      "/**
- * Example test.
- *
- * @group test1
- * @group test2
- * @group another
- * @group more
- * @group many
- * @group enough
- * @group whoa
- */
- ",
-    ];
-
-    // Multi-line summary line.
-    $tests[] = [
-      // Expected result.
-      [
-        'name' => 'Drupal\Tests\ExampleTest',
-        'description' => 'Example test. And the summary line continues and there is no gap to the annotation.',
-        'type' => 'PHPUnit-Unit',
-        'group' => 'test',
-        'groups' => ['test'],
-      ],
-      // Classname.
-      'Drupal\Tests\ExampleTest',
-      // Doc block.
-      "/**
- * Example test. And the summary line continues and there is no gap to the
- * annotation.
- *
- * @group test
- */
- ",
-    ];
     return $tests;
   }
 
   /**
-   * @legacy-covers ::getTestInfo
+   * Tests for missing #[Group] attribute.
    */
-  #[IgnoreDeprecations]
+  #[RunInSeparateProcess]
   public function testTestInfoParserMissingGroup(): void {
-    $classname = 'Drupal\KernelTests\field\BulkDeleteTest';
-    $doc_comment = <<<EOT
-/**
- * Bulk delete storages and fields, and clean up afterwards.
- */
-EOT;
     $this->expectException(MissingGroupException::class);
-    $this->expectExceptionMessage('Missing @group annotation in Drupal\KernelTests\field\BulkDeleteTest');
-    TestDiscovery::getTestInfo($classname, $doc_comment);
+    $this->expectExceptionMessage('Missing group metadata in test Drupal\\Tests\\Core\\Foo\\MissingAttributesTest::testNoMetadata');
+    $configurationFilePath = $this->root . \DIRECTORY_SEPARATOR . 'core';
+    $phpUnitTestDiscovery = PhpUnitTestDiscovery::instance()->setConfigurationFilePath($configurationFilePath);
+    $phpUnitTestDiscovery->getTestClasses(NULL, [], $this->root . \DIRECTORY_SEPARATOR . 'core/tests/fixtures/test_driver/MissingAttributesTest.php');
   }
 
   /**
-   * @legacy-covers ::getTestInfo
+   * Tests for missing #[Group] attribute in a test with DataProvider.
    */
-  #[IgnoreDeprecations]
-  public function testTestInfoParserMissingSummary(): void {
-    $classname = 'Drupal\KernelTests\field\BulkDeleteTest';
-    $doc_comment = <<<EOT
-/**
- * @group field
- */
-EOT;
-    $info = TestDiscovery::getTestInfo($classname, $doc_comment);
-    $this->assertEmpty($info['description']);
-  }
-
-  protected function setupVfsWithTestClasses(): void {
-    vfsStream::setup('drupal');
-
-    $test_file = <<<EOF
-<?php
-
-/**
- * Test description
- * @group example
- */
-class FunctionalExampleTest {}
-EOF;
-
-    $test_profile_info = <<<EOF
-name: Testing
-type: profile
-core_version_requirement: '*'
-EOF;
-
-    $test_module_info = <<<EOF
-name: Testing
-type: module
-core_version_requirement: '*'
-EOF;
-
-    vfsStream::create([
-      'modules' => [
-        'test_module' => [
-          'test_module.info.yml' => $test_module_info,
-          'tests' => [
-            'src' => [
-              'Functional' => [
-                'FunctionalExampleTest.php' => $test_file,
-                'FunctionalExampleTest2.php' => str_replace([
-                  'FunctionalExampleTest',
-                  '@group example',
-                ], ['FunctionalExampleTest2', '@group example2'], $test_file),
-              ],
-              'Kernel' => [
-                'KernelExampleTest3.php' => str_replace([
-                  'FunctionalExampleTest',
-                  '@group example',
-                ], [
-                  'KernelExampleTest3',
-                  "@group example2\n * @group kernel\n",
-                ], $test_file),
-                'KernelExampleTestBase.php' => str_replace([
-                  'FunctionalExampleTest',
-                  '@group example',
-                ], ['KernelExampleTestBase', '@group example2'], $test_file),
-                'KernelExampleTrait.php' => str_replace([
-                  'FunctionalExampleTest',
-                  '@group example',
-                ], ['KernelExampleTrait', '@group example2'], $test_file),
-                'KernelExampleInterface.php' => str_replace([
-                  'FunctionalExampleTest',
-                  '@group example',
-                ], ['KernelExampleInterface', '@group example2'], $test_file),
-              ],
-            ],
-          ],
-        ],
-      ],
-      'profiles' => [
-        'test_profile' => [
-          'test_profile.info.yml' => $test_profile_info,
-          'modules' => [
-            'test_profile_module' => [
-              'test_profile_module.info.yml' => $test_module_info,
-              'tests' => [
-                'src' => [
-                  'Kernel' => [
-                    'KernelExampleTest4.php' => str_replace([
-                      'FunctionalExampleTest',
-                      '@group example',
-                    ], ['KernelExampleTest4', '@group example3'], $test_file),
-                  ],
-                ],
-              ],
-            ],
-          ],
-        ],
-      ],
-    ]);
+  #[RunInSeparateProcess]
+  public function testTestInfoParserMissingGroupWithDataProvider(): void {
+    $this->expectException(MissingGroupException::class);
+    $this->expectExceptionMessage('Missing group metadata in test Drupal\\Tests\\Core\\Foo\\MissingAttributesWithDataProviderTest::testNoGroupMetadata#Test#1');
+    $configurationFilePath = $this->root . \DIRECTORY_SEPARATOR . 'core';
+    $phpUnitTestDiscovery = PhpUnitTestDiscovery::instance()->setConfigurationFilePath($configurationFilePath);
+    $phpUnitTestDiscovery->getTestClasses(NULL, [], $this->root . \DIRECTORY_SEPARATOR . 'core/tests/fixtures/test_driver/MissingAttributesWithDataProviderTest.php');
   }
 
   /**
-   * Tests get test classes.
-   */
-  #[IgnoreDeprecations]
-  public function testGetTestClasses(): void {
-    $this->setupVfsWithTestClasses();
-    $extensions = [
-      'test_module' => new Extension('vfs://drupal', 'module', 'modules/test_module/test_module.info.yml'),
-    ];
-    $test_discovery = $this->getTestDiscoveryMock('vfs://drupal', $extensions);
-
-    $result = $test_discovery->getTestClasses();
-    $this->assertCount(3, $result);
-    $this->assertEquals([
-      'example' => [
-        'Drupal\Tests\test_module\Functional\FunctionalExampleTest' => [
-          'name' => 'Drupal\Tests\test_module\Functional\FunctionalExampleTest',
-          'description' => 'Test description',
-          'group' => 'example',
-          'groups' => ['example'],
-          'type' => 'PHPUnit-Functional',
-        ],
-      ],
-      'example2' => [
-        'Drupal\Tests\test_module\Functional\FunctionalExampleTest2' => [
-          'name' => 'Drupal\Tests\test_module\Functional\FunctionalExampleTest2',
-          'description' => 'Test description',
-          'group' => 'example2',
-          'groups' => ['example2'],
-          'type' => 'PHPUnit-Functional',
-        ],
-        'Drupal\Tests\test_module\Kernel\KernelExampleTest3' => [
-          'name' => 'Drupal\Tests\test_module\Kernel\KernelExampleTest3',
-          'description' => 'Test description',
-          'group' => 'example2',
-          'groups' => ['example2', 'kernel'],
-          'type' => 'PHPUnit-Kernel',
-        ],
-      ],
-      'kernel' => [
-        'Drupal\Tests\test_module\Kernel\KernelExampleTest3' => [
-          'name' => 'Drupal\Tests\test_module\Kernel\KernelExampleTest3',
-          'description' => 'Test description',
-          'group' => 'example2',
-          'groups' => ['example2', 'kernel'],
-          'type' => 'PHPUnit-Kernel',
-        ],
-      ],
-    ], $result);
-  }
-
-  /**
-   * Mock a TestDiscovery object to return specific extension values.
-   */
-  protected function getTestDiscoveryMock($app_root, $extensions): MockObject {
-    $class_loader = $this->prophesize(ClassLoader::class);
-    $module_handler = $this->prophesize(ModuleHandlerInterface::class);
-
-    $test_discovery = $this->getMockBuilder(TestDiscovery::class)
-      ->setConstructorArgs([$app_root, $class_loader->reveal(), $module_handler->reveal()])
-      ->onlyMethods(['getExtensions'])
-      ->getMock();
-
-    $test_discovery->expects($this->atLeastOnce())
-      ->method('getExtensions')
-      ->willReturn($extensions);
-
-    return $test_discovery;
-  }
-
-  /**
-   * Tests get test classes with selected types.
-   */
-  #[IgnoreDeprecations]
-  public function testGetTestClassesWithSelectedTypes(): void {
-    $this->setupVfsWithTestClasses();
-    $extensions = [
-      'test_module' => new Extension('vfs://drupal', 'module', 'modules/test_module/test_module.info.yml'),
-      'test_profile_module' => new Extension('vfs://drupal', 'profile', 'profiles/test_profile/modules/test_profile_module/test_profile_module.info.yml'),
-    ];
-    $test_discovery = $this->getTestDiscoveryMock('vfs://drupal', $extensions);
-
-    $result = $test_discovery->getTestClasses(NULL, ['PHPUnit-Kernel']);
-    $this->assertCount(4, $result);
-    $this->assertEquals([
-      'example' => [],
-      'example2' => [
-        'Drupal\Tests\test_module\Kernel\KernelExampleTest3' => [
-          'name' => 'Drupal\Tests\test_module\Kernel\KernelExampleTest3',
-          'description' => 'Test description',
-          'group' => 'example2',
-          'groups' => ['example2', 'kernel'],
-          'type' => 'PHPUnit-Kernel',
-        ],
-      ],
-      'kernel' => [
-        'Drupal\Tests\test_module\Kernel\KernelExampleTest3' => [
-          'name' => 'Drupal\Tests\test_module\Kernel\KernelExampleTest3',
-          'description' => 'Test description',
-          'group' => 'example2',
-          'groups' => ['example2', 'kernel'],
-          'type' => 'PHPUnit-Kernel',
-        ],
-      ],
-      'example3' => [
-        'Drupal\Tests\test_profile_module\Kernel\KernelExampleTest4' => [
-          'name' => 'Drupal\Tests\test_profile_module\Kernel\KernelExampleTest4',
-          'description' => 'Test description',
-          'group' => 'example3',
-          'groups' => ['example3'],
-          'type' => 'PHPUnit-Kernel',
-        ],
-      ],
-    ], $result);
-  }
-
-  /**
-   * @legacy-covers ::getTestClasses
-   */
-  #[IgnoreDeprecations]
-  public function testGetTestsInProfiles(): void {
-    $this->setupVfsWithTestClasses();
-    $class_loader = $this->prophesize(ClassLoader::class);
-
-    $container = new Container();
-    $container->set('kernel', new DrupalKernel('prod', new ClassLoader()));
-    $container->setParameter('site.path', 'sites/default');
-    \Drupal::setContainer($container);
-
-    $test_discovery = new TestDiscovery('vfs://drupal', $class_loader->reveal());
-
-    $result = $test_discovery->getTestClasses('test_profile_module', ['PHPUnit-Kernel']);
-    $expected = [
-      'example3' => [
-        'Drupal\Tests\test_profile_module\Kernel\KernelExampleTest4' => [
-          'name' => 'Drupal\Tests\test_profile_module\Kernel\KernelExampleTest4',
-          'description' => 'Test description',
-          'group' => 'example3',
-          'groups' => ['example3'],
-          'type' => 'PHPUnit-Kernel',
-        ],
-      ],
-    ];
-    $this->assertEquals($expected, $result);
-  }
-
-  /**
-   * Tests get phpunit test suite.
+   * Tests PhpUnitTestDiscovery::getPhpunitTestSuite().
    */
   #[DataProvider('providerTestGetPhpunitTestSuite')]
-  public function testGetPhpunitTestSuite($classname, $expected): void {
-    $this->assertEquals($expected, TestDiscovery::getPhpunitTestSuite($classname));
+  public function testGetPhpunitTestSuite(string $classname, string|false $expected): void {
+    $this->assertEquals($expected, PhpUnitTestDiscovery::getPhpunitTestSuite($classname));
   }
 
   public static function providerTestGetPhpunitTestSuite(): array {
@@ -533,34 +167,6 @@ EOF;
     $data['core-build test'] = ['\Drupal\BuildTests\Framework\Tests\BuildTestTest', 'Build'];
 
     return $data;
-  }
-
-  /**
-   * Ensure that classes are not reflected when the docblock is empty.
-   */
-  #[IgnoreDeprecations]
-  public function testGetTestInfoEmptyDocblock(): void {
-    // If getTestInfo() performed reflection, it won't be able to find the
-    // class we asked it to analyze, so it will throw a ReflectionException.
-    // We want to make sure it didn't do that, because we already did some
-    // analysis and already have an empty docblock. getTestInfo() will throw
-    // MissingGroupException because the annotation is empty.
-    $this->expectException(MissingGroupException::class);
-    TestDiscovery::getTestInfo('Drupal\Tests\ThisTestDoesNotExistTest', '');
-  }
-
-  /**
-   * Ensure TestDiscovery::scanDirectory() ignores certain abstract file types.
-   */
-  #[IgnoreDeprecations]
-  public function testScanDirectoryNoAbstract(): void {
-    $this->setupVfsWithTestClasses();
-    $files = TestDiscovery::scanDirectory('Drupal\\Tests\\test_module\\Kernel\\', vfsStream::url('drupal/modules/test_module/tests/src/Kernel'));
-    $this->assertNotEmpty($files);
-    $this->assertArrayNotHasKey('Drupal\Tests\test_module\Kernel\KernelExampleTestBase', $files);
-    $this->assertArrayNotHasKey('Drupal\Tests\test_module\Kernel\KernelExampleTrait', $files);
-    $this->assertArrayNotHasKey('Drupal\Tests\test_module\Kernel\KernelExampleInterface', $files);
-    $this->assertArrayHasKey('Drupal\Tests\test_module\Kernel\KernelExampleTest3', $files);
   }
 
 }

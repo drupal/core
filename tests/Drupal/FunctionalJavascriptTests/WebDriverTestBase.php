@@ -132,7 +132,7 @@ abstract class WebDriverTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function getMinkDriverArgs() {
+  protected function getMinkDriverArgs(): string|false {
     if ($this->minkDefaultDriverClass === DrupalSelenium2Driver::class) {
       return getenv('MINK_DRIVER_ARGS_WEBDRIVER') ?: parent::getMinkDriverArgs();
     }
@@ -200,7 +200,7 @@ abstract class WebDriverTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function drupalGet($path, array $options = [], array $headers = []) {
+  protected function drupalGet($path, array $options = [], array $headers = []): string {
     $result = parent::drupalGet($path, $options, $headers);
 
     // Wait for all requests to finish.
@@ -244,7 +244,7 @@ EndOfScript;
   /**
    * {@inheritdoc}
    */
-  protected function getHtmlOutputHeaders() {
+  protected function getHtmlOutputHeaders(): string {
     // The webdriver API does not support fetching headers.
     return '';
   }

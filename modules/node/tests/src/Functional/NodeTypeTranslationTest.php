@@ -93,7 +93,7 @@ class NodeTypeTranslationTest extends BrowserTestBase {
    *
    * @see https://www.drupal.org/node/2584603
    */
-  protected function installParameters() {
+  protected function installParameters(): array {
     $parameters = parent::installParameters();
     $parameters['parameters']['langcode'] = $this->defaultLangcode;
     // Create an empty po file so we don't attempt to download one from

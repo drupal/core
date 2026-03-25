@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\Tests;
 
 use Behat\Mink\Driver\BrowserKitDriver;
-use Behat\Mink\Element\Element;
 use Behat\Mink\Exception\Exception as MinkException;
 use Behat\Mink\Mink;
 use Behat\Mink\Selector\SelectorsHandler;
@@ -23,7 +22,6 @@ use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\TestTools\Comparator\MarkupInterfaceComparator;
-use Drupal\TestTools\Extension\DeprecationBridge\ExpectDeprecationTrait;
 use Drupal\TestTools\Extension\Dump\DebugDump;
 use GuzzleHttp\Cookie\CookieJar;
 use PHPUnit\Framework\Attributes\BeforeClass;
@@ -79,7 +77,6 @@ abstract class BrowserTestBase extends TestCase {
   }
   use XdebugRequestTrait;
   use PhpUnitCompatibilityTrait;
-  use ExpectDeprecationTrait;
   use ExtensionListTestTrait;
 
   /**
@@ -308,7 +305,7 @@ abstract class BrowserTestBase extends TestCase {
    * @return string|false
    *   The JSON-encoded argument string. False if it is not set.
    */
-  protected function getMinkDriverArgs() {
+  protected function getMinkDriverArgs(): string|false {
     return getenv('MINK_DRIVER_ARGS');
   }
 
@@ -513,37 +510,6 @@ abstract class BrowserTestBase extends TestCase {
       return $mink_driver->getClient()->getClient();
     }
     throw new \RuntimeException('The Mink client type ' . get_class($mink_driver) . ' does not support getHttpClient().');
-  }
-
-  /**
-   * Helper function to get the options of select field.
-   *
-   * @param \Behat\Mink\Element\NodeElement|string $select
-   *   Name, ID, or Label of select field to assert.
-   * @param \Behat\Mink\Element\Element $container
-   *   (optional) Container element to check against. Defaults to current page.
-   *
-   * @return array
-   *   Associative array of option keys and values.
-   *
-   * @deprecated in drupal:11.2.0 and is removed from drupal:12.0.0. There is
-   *   no direct replacement.
-   *
-   * @see https://www.drupal.org/node/3523039
-   */
-  protected function getOptions($select, ?Element $container = NULL) {
-    @trigger_error(__METHOD__ . 'is deprecated in drupal:11.2.0 and is removed from drupal:12.0.0. There is no direct replacement. See https://www.drupal.org/node/3523039', E_DEPRECATED);
-    if (is_string($select)) {
-      $select = $this->assertSession()->selectExists($select, $container);
-    }
-    $options = [];
-    /** @var \Behat\Mink\Element\NodeElement $option */
-    foreach ($select->findAll('xpath', '//option') as $option) {
-      $label = $option->getText();
-      $value = $option->getAttribute('value') ?: $label;
-      $options[$value] = $label;
-    }
-    return $options;
   }
 
   /**

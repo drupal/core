@@ -43,7 +43,7 @@ class LocaleNonInteractiveInstallTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function installParameters() {
+  protected function installParameters(): array {
     $parameters = parent::installParameters();
     // Install Drupal in German.
     $parameters['parameters']['langcode'] = 'de';

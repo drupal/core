@@ -139,7 +139,7 @@ abstract class InstallerConfigDirectoryTestBase extends InstallerTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function installParameters() {
+  protected function installParameters(): array {
     $parameters = parent::installParameters();
 
     // The options that change configuration are disabled when installing from

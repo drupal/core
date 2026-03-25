@@ -14,7 +14,6 @@ use Drupal\Core\DependencyInjection\ClassResolverInterface;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\StringTranslation\PluralTranslatableMarkup;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\TestTools\Extension\DeprecationBridge\ExpectDeprecationTrait;
 use Drupal\TestTools\Extension\Dump\DebugDump;
 use PHPUnit\Framework\Attributes\BeforeClass;
 use PHPUnit\Framework\MockObject\Stub;
@@ -43,7 +42,6 @@ abstract class UnitTestCase extends TestCase {
   use DrupalTestCaseTrait;
   use PhpUnitCompatibilityTrait;
   use ProphecyTrait;
-  use ExpectDeprecationTrait;
   use RandomGeneratorTrait;
 
   /**

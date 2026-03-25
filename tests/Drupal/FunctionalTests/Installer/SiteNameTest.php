@@ -30,7 +30,7 @@ class SiteNameTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function installParameters() {
+  protected function installParameters(): array {
     $this->siteName = $this->randomMachineName();
     $parameters = parent::installParameters();
     $parameters['forms']['install_configure_form']['site_name'] = $this->siteName;

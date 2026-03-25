@@ -70,7 +70,7 @@ PO;
   /**
    * {@inheritdoc}
    */
-  protected function installParameters() {
+  protected function installParameters(): array {
     $params = parent::installParameters();
     $params['forms']['install_configure_form']['site_name'] = 'SITE_NAME_' . $this->langcode;
     return $params;

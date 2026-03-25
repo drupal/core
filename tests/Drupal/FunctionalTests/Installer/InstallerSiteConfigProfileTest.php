@@ -41,7 +41,7 @@ class InstallerSiteConfigProfileTest extends InstallerTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function installParameters() {
+  protected function installParameters(): array {
     $parameters = parent::installParameters();
 
     // Don't override the site email address, allowing it to default to the one

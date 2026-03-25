@@ -370,7 +370,7 @@ abstract class BuildTestBase extends TestCase {
    * @throws \InvalidArgumentException
    *   Thrown when $request_uri does not start with a slash.
    */
-  public function visit(string $request_uri = '/', $working_dir = NULL) {
+  public function visit(string $request_uri = '/', $working_dir = NULL): Mink {
     if ($request_uri[0] !== '/') {
       throw new \InvalidArgumentException('URI: ' . $request_uri . ' must be relative. Example: /some/path?foo=bar');
     }
@@ -427,7 +427,7 @@ abstract class BuildTestBase extends TestCase {
    * @throws \RuntimeException
    *   Thrown if we were unable to start a web server.
    */
-  protected function instantiateServer($port, $working_dir = NULL) {
+  protected function instantiateServer($port, $working_dir = NULL): Process {
     $finder = new PhpExecutableFinder();
     $working_path = $this->getWorkingPath($working_dir);
     $server = [
