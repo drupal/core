@@ -158,5 +158,11 @@
     },
     "scripts": {
         "pre-autoload-dump": "Drupal\\Composer\\Plugin\\Scaffold\\Plugin::preAutoloadDump"
-    }
+    },
+    "funding": [
+        {
+            "type": "other",
+            "url": "https://www.drupal.org/composer-fund"
+        }
+    ]
 }
