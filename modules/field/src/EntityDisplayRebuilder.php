@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Rebuilds all form and view modes for a passed entity bundle.
  *
- * @see field_field_config_insert()
+ * @see \Drupal\field\Hook\FieldHooks::fieldConfigInsert()
  *
  * @internal
  */

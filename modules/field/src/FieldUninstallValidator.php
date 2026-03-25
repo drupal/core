@@ -85,8 +85,9 @@ class FieldUninstallValidator implements ConfigImportModuleUninstallValidatorInt
    * {@inheritdoc}
    */
   public function validateConfigImport(string $module, StorageInterface $source_storage): array {
-    // The field_config_import_steps_alter() method removes field data prior to
-    // configuration import so the checks in ::validate() are unnecessary.
+    // The \Drupal\field\Hook\FieldHooks::configImportStepsAlter() method
+    // removes the field data prior to the configuration import, so the checks
+    // in :validate() are unnecessary.
     return [];
   }
 

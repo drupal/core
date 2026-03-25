@@ -74,9 +74,9 @@ function field_form_field_config_edit_form_entity_builder($entity_type_id, $enti
 
   // Update handler settings when target_type is changed.
   if ($entity->getFieldStorageDefinition()->getSetting('target_type') !== $previous_field_storage->getSetting('target_type')) {
-    // @see field_field_storage_config_update().
+    // @see \Drupal\options\Hook\OptionsHooks::fieldStorageConfigUpdate().
     $entity->setSetting('handler_settings', []);
-    // @see field_field_config_presave().
+    // @see \Drupal\field\Hook\FieldHooks::fieldConfigPresave().
     \Drupal::moduleHandler()->invoke('field', 'field_config_create', [$entity]);
 
     // Store updated settings in form state so that the form state can be copied

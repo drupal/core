@@ -14,7 +14,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests field storages and fields deletion during config synchronization.
  *
  * @see \Drupal\field\ConfigImporterFieldPurger
- * @see field_config_import_steps_alter()
+ * @see \Drupal\field\Hook\FieldHooks::configImportStepsAlter()
  */
 #[Group('field')]
 #[RunTestsInSeparateProcesses]
