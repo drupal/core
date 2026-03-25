@@ -90,7 +90,8 @@ class LanguageItem extends FieldItemBase implements OptionsProviderInterface {
    */
   public function applyDefaultValue($notify = TRUE) {
     // Default to the site's default language. When language module is enabled,
-    // this behavior is configurable, see language_field_info_alter().
+    // this behavior is configurable.
+    // @see \Drupal\language\Hook\LanguageHooks::fieldInfoAlter().
     $this->setValue(['value' => \Drupal::languageManager()->getDefaultLanguage()->getId()], $notify);
     return $this;
   }
