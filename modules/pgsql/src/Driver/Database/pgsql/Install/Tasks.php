@@ -21,7 +21,7 @@ class Tasks extends InstallTasks {
    *
    * The contrib extension pg_trgm is supposed to be installed.
    *
-   * @see https://www.postgresql.org/docs/16/pgtrgm.html
+   * @see https://www.postgresql.org/docs/18/pgtrgm.html
    */
   const PGSQL_MINIMUM_VERSION = '18';
 

@@ -18,7 +18,7 @@ intended for production use. Read more about how to run Drupal in a production
 environment below.
 
 Prerequisites:
-- PHP 8.3.0 (or greater) (https://php.net).
+- PHP 8.5.0 (or greater) (https://php.net).
 - Composer 2.9.3 (https://getcomposer.org/doc/00-intro.md)
 
 1. Run the following commands
@@ -43,11 +43,12 @@ Drupal requires:
 - A web server with PHP support, for example:
   - Apache 2.4.7 (or greater) (http://httpd.apache.org/).
   - Nginx 1.1 (or greater) (http://nginx.com/).
-- PHP 8.3.0 (or greater) (http://php.net/).
+- PHP 8.5.0 (or greater) (http://php.net/).
 - One of the following databases:
   - MySQL 8.0.0 (or greater) (http://www.mysql.com/).
-  - MariaDB 10.6.0 (or greater) (https://mariadb.org/).
-  - PostgreSQL 16 (or greater) (http://www.postgresql.org/).
+  - MariaDB 10.11.0 (or greater) (https://mariadb.org/). MariaDB is a fully
+    compatible drop-in replacement for MySQL.
+  - PostgreSQL 18 (or greater) (http://www.postgresql.org/).
   - SQLite 3.45 (or greater) (http://www.sqlite.org/).
 - Composer 2.9.3 (https://getcomposer.org/doc/00-intro.md)
 
