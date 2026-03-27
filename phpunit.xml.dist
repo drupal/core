@@ -14,6 +14,7 @@
          failOnRisky="true"
          failOnWarning="true"
          failOnPhpunitWarning="true"
+         failOnPhpunitNotice="true"
          displayDetailsOnTestsThatTriggerErrors="true"
          displayDetailsOnTestsThatTriggerWarnings="true"
          displayDetailsOnTestsThatTriggerDeprecations="true"

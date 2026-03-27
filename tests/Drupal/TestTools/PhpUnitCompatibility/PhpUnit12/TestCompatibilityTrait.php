@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\TestTools\PhpUnitCompatibility\PhpUnit11;
+namespace Drupal\TestTools\PhpUnitCompatibility\PhpUnit12;
 
 /**
  * Drupal's forward compatibility layer with multiple versions of PHPUnit.

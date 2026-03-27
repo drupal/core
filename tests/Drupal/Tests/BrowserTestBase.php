@@ -173,14 +173,6 @@ abstract class BrowserTestBase extends TestCase {
   protected $originalShutdownCallbacks = [];
 
   /**
-   * {@inheritdoc}
-   */
-  public function __construct(string $name) {
-    parent::__construct($name);
-    $this->setRunTestInSeparateProcess(TRUE);
-  }
-
-  /**
    * Registers the dumper CLI handler when the DebugDump extension is enabled.
    */
   #[BeforeClass]

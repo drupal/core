@@ -17,7 +17,6 @@ use Drupal\Core\Security\TrustedCallbackInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\MockObject\Builder\InvocationMocker;
 
 /**
  * Tests Drupal\Core\Render\Renderer.
@@ -1176,12 +1175,9 @@ HTML;
 
   /**
    * Sets up the theme manager for the <details>-tag.
-   *
-   * @return \Drupal\Core\Theme\ThemeManagerInterface|\PHPUnit\Framework\MockObject\Builder\InvocationMocker
-   *   The mocked theme manager.
    */
-  protected function setupThemeManagerForDetails(): InvocationMocker {
-    return $this->themeManager
+  protected function setupThemeManagerForDetails(): void {
+    $this->themeManager
       ->method('render')
       ->willReturnCallback(function ($theme, array $vars): array|string {
         $output = <<<'EOS'
