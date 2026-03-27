@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\syslog\Kernel;
 
+use Drupal\Core\Session\AccountInterface;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\syslog\Logger\SysLog;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -46,7 +47,7 @@ class SyslogTest extends KernelTestBase {
     $request->setSession(new Session(new MockArraySessionStorage()));
     \Drupal::requestStack()->push($request);
 
-    $user = $this->getMockBuilder('Drupal\Core\Session\AccountInterface')->getMock();
+    $user = $this->createStub(AccountInterface::class);
     $user->method('id')->willReturn(42);
     $this->container->set('current_user', $user);
 

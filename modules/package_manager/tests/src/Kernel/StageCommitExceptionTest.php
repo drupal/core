@@ -101,7 +101,7 @@ class StageCommitExceptionTest extends PackageManagerKernelTestBase {
     }
     // PreconditionException requires a preconditions object.
     if ($thrown_class === PreconditionException::class) {
-      array_unshift($throwable_arguments, $this->createMock(PreconditionInterface::class));
+      array_unshift($throwable_arguments, $this->createStub(PreconditionInterface::class));
     }
     LoggingCommitter::setException($thrown_class, ...$throwable_arguments);
 

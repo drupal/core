@@ -169,7 +169,7 @@ class StageEventsTest extends PackageManagerKernelTestBase implements EventSubsc
     $warning = ValidationResult::createWarning([
       $this->t('The path ahead is scary...'),
     ]);
-    $excluded_paths = $this->createMock(PathListInterface::class);
+    $excluded_paths = $this->createStub(PathListInterface::class);
 
     // Status check events can accept both errors and warnings.
     $event = new StatusCheckEvent($stage, $excluded_paths);

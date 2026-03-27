@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Field;
 
+use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldTypeCategoryManagerInterface;
@@ -40,11 +41,11 @@ abstract class BaseFieldDefinitionTestBase extends UnitTestCase {
       ->method('moduleExists')
       ->with($module_name)
       ->willReturn(TRUE);
-    $typed_data_manager = $this->createMock(TypedDataManagerInterface::class);
-    $field_type_category_manager = $this->createMock(FieldTypeCategoryManagerInterface::class);
+    $typed_data_manager = $this->createStub(TypedDataManagerInterface::class);
+    $field_type_category_manager = $this->createStub(FieldTypeCategoryManagerInterface::class);
     $plugin_manager = new FieldTypePluginManager(
       $namespaces,
-      $this->createMock('Drupal\Core\Cache\CacheBackendInterface'),
+      $this->createStub(CacheBackendInterface::class),
       $module_handler,
       $typed_data_manager,
       $field_type_category_manager,

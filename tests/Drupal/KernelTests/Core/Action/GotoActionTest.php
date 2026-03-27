@@ -33,7 +33,7 @@ class GotoActionTest extends KernelTestBase {
    */
   #[DataProvider('providerGotoAction')]
   public function testGotoAction(string $url, string $expected): void {
-    $entity = $this->createMock(EntityInterface::class);
+    $entity = $this->createStub(EntityInterface::class);
     $action = Action::create([
       'id' => 'goto',
       'plugin' => 'action_goto_action',

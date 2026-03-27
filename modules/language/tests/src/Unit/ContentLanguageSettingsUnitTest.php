@@ -29,7 +29,7 @@ class ContentLanguageSettingsUnitTest extends UnitTestCase {
   /**
    * The entity type manager used for testing.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\Stub
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
@@ -57,7 +57,7 @@ class ContentLanguageSettingsUnitTest extends UnitTestCase {
   /**
    * The typed configuration manager used for testing.
    *
-   * @var \Drupal\Core\Config\Entity\ConfigEntityStorage|\PHPUnit\Framework\MockObject\Stub
+   * @var \Drupal\Core\Config\Entity\ConfigEntityStorage
    */
   protected $configEntityStorageInterface;
 
@@ -86,9 +86,27 @@ class ContentLanguageSettingsUnitTest extends UnitTestCase {
   }
 
   /**
+   * Reinitializes the config entity storage as a mock object.
+   */
+  protected function setUpMockConfigEntityStorage(): void {
+    $this->configEntityStorageInterface = $this->createMock(EntityStorageInterface::class);
+    \Drupal::getContainer()->set('config.storage', $this->configEntityStorageInterface);
+  }
+
+  /**
+   * Reinitializes the entity type manager as a mock object.
+   */
+  protected function setUpMockEntityTypeManager(): void {
+    $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
+    \Drupal::getContainer()->set('entity_type.manager', $this->entityTypeManager);
+  }
+
+  /**
    * Tests calculate dependencies.
    */
   public function testCalculateDependencies(): void {
+    $this->setUpMockEntityTypeManager();
+
     // Mock the interfaces necessary to create a dependency on a bundle entity.
     $target_entity_type = $this->createStub(EntityTypeInterface::class);
     $target_entity_type
@@ -258,6 +276,9 @@ class ContentLanguageSettingsUnitTest extends UnitTestCase {
    */
   #[DataProvider('providerLoadByEntityTypeBundle')]
   public function testLoadByEntityTypeBundle($config_id, ?ContentLanguageSettings $existing_config, $expected_langcode, $expected_language_alterable): void {
+    $this->setUpMockConfigEntityStorage();
+    $this->setUpMockEntityTypeManager();
+
     [$type, $bundle] = explode('.', $config_id);
 
     $nullConfig = new ContentLanguageSettings([
@@ -277,13 +298,15 @@ class ContentLanguageSettingsUnitTest extends UnitTestCase {
       ->with('language_content_settings')
       ->willReturn($this->configEntityStorageInterface);
 
-    $entity_type_repository = $this->createStub(EntityTypeRepositoryInterface::class);
-    $entity_type_repository
-      ->method('getEntityTypeFromClass')
-      ->with(ContentLanguageSettings::class)
-      ->willReturn('language_content_settings');
+    if ($existing_config === NULL) {
+      $entity_type_repository = $this->createMock(EntityTypeRepositoryInterface::class);
+      $entity_type_repository->expects($this->atLeastOnce())
+        ->method('getEntityTypeFromClass')
+        ->with(ContentLanguageSettings::class)
+        ->willReturn('language_content_settings');
 
-    \Drupal::getContainer()->set('entity_type.repository', $entity_type_repository);
+      \Drupal::getContainer()->set('entity_type.repository', $entity_type_repository);
+    }
 
     $config = ContentLanguageSettings::loadByEntityTypeBundle($type, $bundle);
 

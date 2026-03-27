@@ -75,7 +75,7 @@ class ConfigNamesMapperTest extends UnitTestCase {
   /**
    * The route provider used for testing.
    *
-   * @var \Drupal\Core\Routing\RouteProviderInterface|\PHPUnit\Framework\MockObject\Stub
+   * @var \Drupal\Core\Routing\RouteProviderInterface
    */
   protected $routeProvider;
 
@@ -110,11 +110,6 @@ class ConfigNamesMapperTest extends UnitTestCase {
 
     $this->baseRoute = new Route('/admin/config/system/site-information');
 
-    $this->routeProvider
-      ->method('getRouteByName')
-      ->with('system.site_information_settings')
-      ->willReturn($this->baseRoute);
-
     $this->configNamesMapper = new TestConfigNamesMapper(
       'system.site_information_settings',
       $this->pluginDefinition,
@@ -127,6 +122,19 @@ class ConfigNamesMapperTest extends UnitTestCase {
       $this->createStub(LanguageManagerInterface::class),
       $this->createStub(EventDispatcherInterface::class)
     );
+  }
+
+  /**
+   * Reinitializes the route provider as a mock object.
+   */
+  protected function setUpMockRouteProvider(): void {
+    $this->routeProvider = $this->createMock(RouteProviderInterface::class);
+    $this->routeProvider->expects($this->atLeastOnce())
+      ->method('getRouteByName')
+      ->with('system.site_information_settings')
+      ->willReturn($this->baseRoute);
+    $reflection = new \ReflectionProperty($this->configNamesMapper, 'routeProvider');
+    $reflection->setValue($this->configNamesMapper, $this->routeProvider);
   }
 
   /**
@@ -167,6 +175,8 @@ class ConfigNamesMapperTest extends UnitTestCase {
    * Tests ConfigNamesMapper::getBaseRoute().
    */
   public function testGetBaseRoute(): void {
+    $this->setUpMockRouteProvider();
+
     $result = $this->configNamesMapper->getBaseRoute();
     $this->assertSame($this->baseRoute, $result);
   }
@@ -205,6 +215,8 @@ class ConfigNamesMapperTest extends UnitTestCase {
    * Tests ConfigNamesMapper::getOverviewRoute().
    */
   public function testGetOverviewRoute(): void {
+    $this->setUpMockRouteProvider();
+
     $expected = new Route('/admin/config/system/site-information/translate',
       [
         '_controller' => '\Drupal\config_translation\Controller\ConfigTranslationController::itemPage',
@@ -257,6 +269,8 @@ class ConfigNamesMapperTest extends UnitTestCase {
    * Tests ConfigNamesMapper::getAddRoute().
    */
   public function testGetAddRoute(): void {
+    $this->setUpMockRouteProvider();
+
     $expected = new Route('/admin/config/system/site-information/translate/{langcode}/add',
       [
         '_form' => '\Drupal\config_translation\Form\ConfigTranslationAddForm',
@@ -295,6 +309,8 @@ class ConfigNamesMapperTest extends UnitTestCase {
    * Tests ConfigNamesMapper::getEditRoute().
    */
   public function testGetEditRoute(): void {
+    $this->setUpMockRouteProvider();
+
     $expected = new Route('/admin/config/system/site-information/translate/{langcode}/edit',
       [
         '_form' => '\Drupal\config_translation\Form\ConfigTranslationEditForm',
@@ -333,6 +349,8 @@ class ConfigNamesMapperTest extends UnitTestCase {
    * Tests ConfigNamesMapper::getRoute().
    */
   public function testGetDeleteRoute(): void {
+    $this->setUpMockRouteProvider();
+
     $expected = new Route('/admin/config/system/site-information/translate/{langcode}/delete',
       [
         '_form' => '\Drupal\config_translation\Form\ConfigTranslationDeleteForm',

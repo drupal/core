@@ -40,7 +40,7 @@ class UserAuthenticationTest extends UnitTestCase {
   /**
    * The mocked password service.
    *
-   * @var \Drupal\Core\Password\PasswordInterface|\PHPUnit\Framework\MockObject\Stub
+   * @var \Drupal\Core\Password\PasswordInterface
    */
   protected $passwordService;
 
@@ -77,12 +77,20 @@ class UserAuthenticationTest extends UnitTestCase {
     $entity_type_manager = $this->createStub(EntityTypeManagerInterface::class);
     $entity_type_manager
       ->method('getStorage')
-      ->with('user')
       ->willReturn($this->userStorage);
 
     $this->passwordService = $this->createStub(PasswordInterface::class);
 
     $this->userAuth = new UserAuthentication($entity_type_manager, $this->passwordService);
+  }
+
+  /**
+   * Reinitializes the password service as a mock object.
+   */
+  protected function setUpMockPasswordService(): void {
+    $this->passwordService = $this->createMock(PasswordInterface::class);
+    $reflection = new \ReflectionProperty($this->userAuth, 'passwordChecker');
+    $reflection->setValue($this->userAuth, $this->passwordService);
   }
 
   /**
@@ -128,11 +136,10 @@ class UserAuthenticationTest extends UnitTestCase {
    * Tests the authenticate method with a correct password.
    */
   public function testAuthenticateWithCorrectPassword(): void {
-    $testUser = $this->createPartialMock(User::class, ['id', 'getPassword']);
     $this->userStorage->expects($this->once())
       ->method('loadByProperties')
       ->with(['name' => $this->username])
-      ->willReturn([$testUser]);
+      ->willReturn([$this->createStub(User::class)]);
 
     $this->passwordService
       ->method('check')
@@ -149,12 +156,12 @@ class UserAuthenticationTest extends UnitTestCase {
    * this regression can't happen again.
    */
   public function testAuthenticateWithZeroPassword(): void {
-    $testUser = $this->createPartialMock(User::class, ['id', 'getPassword']);
+    $this->setUpMockPasswordService();
 
     $this->userStorage->expects($this->once())
       ->method('loadByProperties')
       ->with(['name' => $this->username])
-      ->willReturn([$testUser]);
+      ->willReturn([$this->createStub(User::class)]);
 
     $this->passwordService
       ->method('check')

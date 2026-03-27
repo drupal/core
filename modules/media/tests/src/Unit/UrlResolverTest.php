@@ -35,10 +35,10 @@ class UrlResolverTest extends UnitTestCase {
    */
   protected function createTestableUrlResolver(Client $client): UrlResolver {
     return new class (
-      $this->createMock(ProviderRepositoryInterface::class),
-      $this->createMock(ResourceFetcherInterface::class),
+      $this->createStub(ProviderRepositoryInterface::class),
+      $this->createStub(ResourceFetcherInterface::class),
       $client,
-      $this->createMock(ModuleHandlerInterface::class),
+      $this->createStub(ModuleHandlerInterface::class),
       new NullBackend('default'),
     ) extends UrlResolver {
 

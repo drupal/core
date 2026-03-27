@@ -47,8 +47,8 @@ class RolesRidTest extends UnitTestCase {
         ],
       ]);
 
-    $entity_type = $this->createStub(EntityTypeInterface::class);
-    $entity_type
+    $entity_type = $this->createMock(EntityTypeInterface::class);
+    $entity_type->expects($this->atLeastOnce())
       ->method('getKey')
       ->with('label')
       ->willReturn('label');

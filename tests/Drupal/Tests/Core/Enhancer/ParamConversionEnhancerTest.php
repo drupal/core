@@ -87,7 +87,7 @@ class ParamConversionEnhancerTest extends UnitTestCase {
     ];
     // Set one default to mirror another by reference.
     $defaults['bar'] = &$defaults['id'];
-    $this->paramConverterManager->expects($this->any())
+    $this->paramConverterManager->expects($this->once())
       ->method('convert')
       ->with($this->isArray())
       ->willReturnCallback(function (array $defaults): array {

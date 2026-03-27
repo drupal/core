@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\KernelTests\Core\Theme\Icon;
 
+use Drupal\Core\Form\FormState;
 use Drupal\Core\Theme\Icon\Exception\IconPackConfigErrorException;
 use Drupal\Core\Theme\Icon\IconDefinitionInterface;
 use Drupal\Core\Theme\Icon\Plugin\IconPackManager;
@@ -171,9 +172,7 @@ class IconPackManagerKernelTest extends KernelTestBase {
    * Test the IconPackManager::getExtractorPluginForms method.
    */
   public function testGetExtractorPluginForms(): void {
-    $form_state = $this->getMockBuilder('Drupal\Core\Form\FormState')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $form_state = $this->createStub(FormState::class);
     $form = [];
 
     $this->pluginManagerIconPack->getExtractorPluginForms($form, $form_state);
@@ -223,9 +222,7 @@ class IconPackManagerKernelTest extends KernelTestBase {
    * Test the IconPackManager::getExtractorPluginForms method.
    */
   public function testGetExtractorPluginFormsWithAllowed(): void {
-    $form_state = $this->getMockBuilder('Drupal\Core\Form\FormState')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $form_state = $this->createStub(FormState::class);
     $form = [];
 
     $allowed_icon_pack['test_svg'] = '';

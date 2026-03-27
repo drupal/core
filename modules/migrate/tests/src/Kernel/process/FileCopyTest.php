@@ -228,7 +228,7 @@ class FileCopyTest extends FileTestBase {
 
     $plugin->transform(
       ['http://drupal.org/favicon.ico', '/destination/path'],
-      $this->createMock(MigrateExecutableInterface::class),
+      $this->createStub(MigrateExecutableInterface::class),
       new Row([], []),
       $this->randomMachineName()
     );
@@ -249,7 +249,7 @@ class FileCopyTest extends FileTestBase {
    */
   protected function doTransform($source_path, $destination_path, $configuration = []) {
     // Prepare a mock HTTP client.
-    $this->container->set('http_client', $this->createMock(Client::class));
+    $this->container->set('http_client', $this->createStub(Client::class));
 
     $plugin = FileCopy::create($this->container, $configuration, 'file_copy', []);
     $executable = $this->prophesize(MigrateExecutableInterface::class)->reveal();

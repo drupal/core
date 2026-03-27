@@ -35,7 +35,7 @@ class ConfigurableLanguageManagerSwitchLinksTest extends UnitTestCase {
     // Mock two languages and a URL per language for use in the language switch
     // links.
     foreach (['de', 'en'] as $langcode) {
-      $languages[$langcode] = $this->createMock('\Drupal\Core\Language\LanguageInterface');
+      $languages[$langcode] = $this->createStub(LanguageInterface::class);
       $languages[$langcode]->method('getId')
         ->willReturn($langcode);
 
@@ -45,7 +45,7 @@ class ConfigurableLanguageManagerSwitchLinksTest extends UnitTestCase {
       // calling ::access() on the URL object can suspend the fiber, if entities
       // are loaded as part of the access check. Simulate this in the mock URL
       // object by forcing the fiber to be suspended in ::access();
-      $urls[$langcode] = $this->createMock(Url::class);
+      $urls[$langcode] = $this->createStub(Url::class);
       $urls[$langcode]->method('access')
         ->willReturnCallback(function () {
           if (\Fiber::getCurrent() !== NULL) {
@@ -60,7 +60,8 @@ class ConfigurableLanguageManagerSwitchLinksTest extends UnitTestCase {
       LanguageNegotiationMethodInterface::class,
       LanguageSwitcherInterface::class,
     ]);
-    $negotiationMethod->method('getLanguageSwitchLinks')
+    $negotiationMethod->expects($this->once())
+      ->method('getLanguageSwitchLinks')
       ->willReturnCallback(function () use ($languages, $urls) {
         $links = [];
         foreach ($languages as $langcode => $language) {
@@ -84,18 +85,18 @@ class ConfigurableLanguageManagerSwitchLinksTest extends UnitTestCase {
       ->with('language-test-fiber')
       ->willReturn($negotiationMethod);
 
-    $defaultLanguage = $this->createMock(LanguageDefault::class);
+    $defaultLanguage = $this->createStub(LanguageDefault::class);
     $defaultLanguage->method('get')
       ->willReturn($languages['en']);
 
-    $configFactory = $this->createMock(ConfigFactoryInterface::class);
+    $configFactory = $this->createStub(ConfigFactoryInterface::class);
     $configFactory
       ->method('listAll')
       ->willReturn([]);
     $configFactory->method('loadMultiple')
       ->willReturn([]);
 
-    $requestStack = $this->createMock(RequestStack::class);
+    $requestStack = $this->createStub(RequestStack::class);
     $requestStack->method('getCurrentRequest')
       ->willReturn($this->createStub(Request::class));
 
@@ -118,7 +119,7 @@ class ConfigurableLanguageManagerSwitchLinksTest extends UnitTestCase {
     // be from the original language when the second fiber is running,
     // regardless of whether the first fiber suspended while checking access on
     // the link URLs.
-    $fibers[] = new \Fiber(fn () => $languageManager->getLanguageSwitchLinks(LanguageInterface::TYPE_INTERFACE, $this->createMock(Url::class)));
+    $fibers[] = new \Fiber(fn () => $languageManager->getLanguageSwitchLinks(LanguageInterface::TYPE_INTERFACE, $this->createStub(Url::class)));
     $fibers[] = new \Fiber(fn () => $languageManager->getCurrentLanguage()->getId());
     $return = [];
     // Process fibers until all complete.

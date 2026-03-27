@@ -28,7 +28,7 @@ class SerializedConstraintValidatorTest extends UnitTestCase {
   public function testValidate($value, bool $valid): void {
     $typed_data = new StringData(DataDefinition::create('string'));
     $context = $this->createMock(ExecutionContextInterface::class);
-    $context->expects($this->any())
+    $context
       ->method('getObject')
       ->willReturn($typed_data);
 

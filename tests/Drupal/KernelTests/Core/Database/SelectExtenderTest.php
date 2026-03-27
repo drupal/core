@@ -130,7 +130,7 @@ class SelectExtenderTest extends KernelTestBase {
     $additional_class_loader->addPsr4("Drupal\\core_fake\\Driver\\Database\\CoreFakeWithAllCustomClasses\\", __DIR__ . "/../../../../../tests/fixtures/database_drivers/module/core_fake/src/Driver/Database/CoreFakeWithAllCustomClasses");
     $additional_class_loader->register(TRUE);
 
-    $mock_pdo = $this->createMock(StubPDO::class);
+    $mock_pdo = $this->createStub(StubPDO::class);
     $connection = new StubConnection($mock_pdo, ['namespace' => $namespace]);
 
     // Tests the method \Drupal\Core\Database\Query\Select::extend().

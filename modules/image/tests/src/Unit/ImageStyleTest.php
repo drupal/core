@@ -65,7 +65,6 @@ class ImageStyleTest extends UnitTestCase {
     $effectManager = $this->createStub(ImageEffectManager::class);
     $effectManager
       ->method('createInstance')
-      ->with($image_effect_id)
       ->willReturn($image_effect);
     $default_stubs = ['getImageEffectPluginManager', 'fileDefaultScheme'];
     $image_style = $this->getMockBuilder('\Drupal\image\Entity\ImageStyle')
@@ -99,10 +98,6 @@ class ImageStyleTest extends UnitTestCase {
       ->method('getProvider')
       ->willReturn($provider);
     $this->entityTypeManager = $this->createStub(EntityTypeManagerInterface::class);
-    $this->entityTypeManager
-      ->method('getDefinition')
-      ->with($this->entityTypeId)
-      ->willReturn($this->entityType);
   }
 
   /**
@@ -227,9 +222,7 @@ class ImageStyleTest extends UnitTestCase {
     \Drupal::setContainer($container);
 
     $image_effect_id = $this->randomMachineName();
-    $image_effect = $this->getMockBuilder('\Drupal\image\ImageEffectBase')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $image_effect = $this->createStub(ImageEffectBase::class);
 
     $image_style = $this->getImageStyleMock($image_effect_id, $image_effect, ['buildUri', 'getCacheTagsToInvalidate']);
     $image_style->expects($this->atLeastOnce())

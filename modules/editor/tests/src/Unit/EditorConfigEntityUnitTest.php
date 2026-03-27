@@ -52,7 +52,7 @@ class EditorConfigEntityUnitTest extends UnitTestCase {
   /**
    * The editor plugin manager used for testing.
    *
-   * @var \Drupal\editor\Plugin\EditorManager|\PHPUnit\Framework\MockObject\Stub
+   * @var \Drupal\editor\Plugin\EditorManager|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $editorPluginManager;
 
@@ -85,7 +85,7 @@ class EditorConfigEntityUnitTest extends UnitTestCase {
 
     $this->uuid = $this->createStub(UuidInterface::class);
 
-    $this->editorPluginManager = $this->createStub(EditorManager::class);
+    $this->editorPluginManager = $this->createMock(EditorManager::class);
 
     $container = new ContainerBuilder();
     $container->set('entity_type.manager', $this->entityTypeManager);
@@ -111,7 +111,7 @@ class EditorConfigEntityUnitTest extends UnitTestCase {
       ->method('getDefaultSettings')
       ->willReturn([]);
 
-    $this->editorPluginManager
+    $this->editorPluginManager->expects($this->atLeastOnce())
       ->method('createInstance')
       ->with($this->editorId)
       ->willReturn($plugin);

@@ -80,7 +80,7 @@ class InstallerRedirectTraitTest extends KernelTestBase {
       ->getMock();
 
     // Make sure that the method thinks we are not using the cli.
-    $trait->expects($this->any())
+    $trait->expects($this->once())
       ->method('isCli')
       ->willReturn(FALSE);
 
@@ -92,24 +92,17 @@ class InstallerRedirectTraitTest extends KernelTestBase {
 
     if ($connection) {
       // Mock the database connection.
-      $connection = $this->getMockBuilder(StubConnection::class)
-        ->disableOriginalConstructor()
-        ->onlyMethods(['schema'])
-        ->getMock();
+      $connection = $this->createStub(StubConnection::class);
 
       if ($connection_info) {
         // Mock the database schema class.
-        $schema = $this->getMockBuilder(StubSchema::class)
-          ->disableOriginalConstructor()
-          ->onlyMethods(['tableExists'])
-          ->getMock();
+        $schema = $this->createStub(StubSchema::class);
 
-        $schema->expects($this->any())
+        $schema
           ->method('tableExists')
-          ->with('key_value')
           ->willReturn($key_value_table_exists);
 
-        $connection->expects($this->any())
+        $connection
           ->method('schema')
           ->willReturn($schema);
       }

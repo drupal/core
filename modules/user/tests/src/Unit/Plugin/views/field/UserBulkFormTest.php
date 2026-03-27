@@ -62,8 +62,8 @@ class UserBulkFormTest extends UnitTestCase {
       ->method('loadMultiple')
       ->willReturn($actions);
 
-    $entity_type_manager = $this->createStub(EntityTypeManagerInterface::class);
-    $entity_type_manager
+    $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
+    $entity_type_manager->expects($this->atLeastOnce())
       ->method('getStorage')
       ->with('action')
       ->willReturn($entity_storage);
@@ -76,8 +76,8 @@ class UserBulkFormTest extends UnitTestCase {
 
     $route_match = $this->createStub(ResettableStackedRouteMatchInterface::class);
 
-    $views_data = $this->createStub(ViewsData::class);
-    $views_data
+    $views_data = $this->createMock(ViewsData::class);
+    $views_data->expects($this->atLeastOnce())
       ->method('get')
       ->with('users')
       ->willReturn(['table' => ['entity type' => 'user']]);
@@ -86,8 +86,8 @@ class UserBulkFormTest extends UnitTestCase {
     $container->set('string_translation', $this->getStringTranslationStub());
     \Drupal::setContainer($container);
 
-    $storage = $this->createStub(ViewEntityInterface::class);
-    $storage
+    $storage = $this->createMock(ViewEntityInterface::class);
+    $storage->expects($this->atLeastOnce())
       ->method('get')
       ->with('base_table')
       ->willReturn('users');

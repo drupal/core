@@ -118,8 +118,8 @@ class VendorHardeningPluginTest extends TestCase {
       ->method('getAllCleanupPaths')
       ->willReturn(['drupal/package' => ['tests']]);
 
-    $package = $this->createMock(PackageInterface::class);
-    $package->expects($this->any())
+    $package = $this->createStub(PackageInterface::class);
+    $package
       ->method('getName')
       ->willReturn('drupal/package');
 
@@ -224,9 +224,7 @@ class VendorHardeningPluginTest extends TestCase {
    */
   #[DataProvider('providerFindBinOverlap')]
   public function testFindBinOverlap(array $expected, array $binaries, array $clean_paths): void {
-    $plugin = $this->getMockBuilder(VendorHardeningPlugin::class)
-      ->disableOriginalConstructor()
-      ->getMock();
+    $plugin = $this->createStub(VendorHardeningPlugin::class);
 
     $ref_find_bin_overlap = new \ReflectionMethod($plugin, 'findBinOverlap');
 

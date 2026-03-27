@@ -1282,13 +1282,14 @@ class TransactionTest extends DatabaseTestBase {
    * Tests that mocking transactions works fine.
    */
   public function testMockTransaction(): void {
-    $connection = $this->getMockBuilder(Connection::class)
-      ->disableOriginalConstructor()
-      ->getMock();
-    $this->getMockBuilder(Transaction::class)
+    $connection = $this->createStub(Connection::class);
+    $transaction = $this->getMockBuilder(Transaction::class)
       ->setConstructorArgs([$connection, '', ''])
       ->getMock();
-    $this->assertTrue(TRUE);
+    $transaction->expects($this->once())
+      ->method('name')
+      ->willReturn('foo');
+    $this->assertSame('foo', $transaction->name());
   }
 
   /**

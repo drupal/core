@@ -8,12 +8,15 @@ use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\Core\Access\AccessManagerInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Menu\LocalTaskManager;
 use Drupal\Core\Plugin\Discovery\ContainerDerivativeDiscoveryDecorator;
 use Drupal\Core\Plugin\Discovery\YamlDiscovery;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Routing\RouteProviderInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
@@ -64,39 +67,33 @@ abstract class LocalTaskIntegrationTestBase extends UnitTestCase {
   /**
    * Sets up the local task manager for the test.
    */
-  protected function getLocalTaskManager(array $module_dirs, string $route_name, array $route_params): LocalTaskManager&MockObject {
-    $manager = $this
-      ->getMockBuilder('Drupal\Core\Menu\LocalTaskManager')
-      ->disableOriginalConstructor()
-      ->onlyMethods([])
-      ->getMock();
-
-    $argumentResolver = $this->createStub(ArgumentResolverInterface::class);
-    $property = new \ReflectionProperty('Drupal\Core\Menu\LocalTaskManager', 'argumentResolver');
-    $property->setValue($manager, $argumentResolver);
-
-    // @todo Mock a request with a route.
-    $request_stack = new RequestStack();
-    $property = new \ReflectionProperty('Drupal\Core\Menu\LocalTaskManager', 'requestStack');
-    $property->setValue($manager, $request_stack);
-
-    $accessManager = $this->createStub(AccessManagerInterface::class);
-    $property = new \ReflectionProperty('Drupal\Core\Menu\LocalTaskManager', 'accessManager');
-    $property->setValue($manager, $accessManager);
-
-    $route_provider = $this->createStub(RouteProviderInterface::class);
-    $property = new \ReflectionProperty('Drupal\Core\Menu\LocalTaskManager', 'routeProvider');
-    $property->setValue($manager, $route_provider);
-
+  protected function getLocalTaskManager(array $module_dirs, string $route_name, array $route_params): LocalTaskManager {
     $module_handler = $this->createStub(ModuleHandlerInterface::class);
-    $property = new \ReflectionProperty('Drupal\Core\Menu\LocalTaskManager', 'moduleHandler');
-    $property->setValue($manager, $module_handler);
     // Set all the modules as being existent.
     $module_handler
       ->method('moduleExists')
       ->willReturnCallback(function ($module) use ($module_dirs): bool {
         return isset($module_dirs[$module]);
       });
+
+    $language = $this->createStub(LanguageInterface::class);
+    $language->method('getId')
+      ->willReturn('en');
+    $language_manager = $this->createStub(LanguageManagerInterface::class);
+    $language_manager->method('getCurrentLanguage')
+      ->willReturn($language);
+
+    $manager = new LocalTaskManager(
+      $this->createStub(ArgumentResolverInterface::class),
+      new RequestStack(),
+      $this->createStub(RouteMatchInterface::class),
+      $this->createStub(RouteProviderInterface::class),
+      $module_handler,
+      $this->createStub(CacheBackendInterface::class),
+      $language_manager,
+      $this->createStub(AccessManagerInterface::class),
+      $this->createStub(AccountInterface::class),
+    );
 
     $pluginDiscovery = new YamlDiscovery('links.task', $module_dirs);
     $pluginDiscovery = new ContainerDerivativeDiscoveryDecorator($pluginDiscovery);
@@ -112,8 +109,6 @@ abstract class LocalTaskIntegrationTestBase extends UnitTestCase {
       ->willReturn($this->createStub('Drupal\Core\Menu\LocalTaskInterface'));
     $property = new \ReflectionProperty('Drupal\Core\Menu\LocalTaskManager', 'factory');
     $property->setValue($manager, $factory);
-
-    $manager->setCacheBackend($this->createStub(CacheBackendInterface::class), 'local_task.en', ['local_task']);
 
     return $manager;
   }

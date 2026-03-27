@@ -72,10 +72,9 @@ class InputTest extends KernelTestBase {
   public function testDefaultValueFromConfig(): void {
     // Collect the input values before processing the recipe, using a mocked
     // collector that will always return the default value.
-    $collector = $this->createMock(InputCollectorInterface::class);
-    $collector->expects($this->any())
+    $collector = $this->createStub(InputCollectorInterface::class);
+    $collector
       ->method('collectValue')
-      ->withAnyParameters()
       ->willReturnArgument(2);
 
     $this->recipe->input->collectAll($collector);
@@ -140,7 +139,7 @@ input:
 YAML
     );
     $collector = new ConsoleInputCollector(
-      $this->createMock(InputInterface::class),
+      $this->createStub(InputInterface::class),
       $io,
     );
     $recipe->input->collectAll($collector);
@@ -167,8 +166,8 @@ input:
 YAML
     );
     $collector = new ConsoleInputCollector(
-      $this->createMock(InputInterface::class),
-      $this->createMock(StyleInterface::class),
+      $this->createStub(InputInterface::class),
+      $this->createStub(StyleInterface::class),
     );
 
     $this->expectException(\ArgumentCountError::class);
@@ -268,10 +267,9 @@ config:
 YAML
     );
     // Mock a collector that only returns the default value.
-    $collector = $this->createMock(InputCollectorInterface::class);
-    $collector->expects($this->any())
+    $collector = $this->createStub(InputCollectorInterface::class);
+    $collector
       ->method('collectValue')
-      ->withAnyParameters()
       ->willReturnArgument(2);
     $recipe->input->collectAll($collector);
 
@@ -332,8 +330,8 @@ YAML
    * Tests that the askHidden prompt forwards arguments correctly.
    */
   public function testAskHiddenPromptArgumentsForwarded(): void {
-    $input = $this->createMock(InputInterface::class);
-    $output = $this->createMock(OutputInterface::class);
+    $input = $this->createStub(InputInterface::class);
+    $output = $this->createStub(OutputInterface::class);
     $io = new SymfonyStyle($input, $output);
 
     $recipe = $this->createRecipe(<<<YAML
@@ -384,10 +382,9 @@ YAML
     putenv('SITE_NAME=Input Test');
 
     // Mock a collector that only returns the default value.
-    $collector = $this->createMock(InputCollectorInterface::class);
-    $collector->expects($this->any())
+    $collector = $this->createStub(InputCollectorInterface::class);
+    $collector
       ->method('collectValue')
-      ->withAnyParameters()
       ->willReturnArgument(2);
     $recipe->input->collectAll($collector);
 
@@ -445,7 +442,7 @@ YAML
    * Tests that the ask prompt for integer value doesn't fail with an error.
    */
   public function testAskPromptArgumentsInteger(): void {
-    $input = $this->createMock(InputInterface::class);
+    $input = $this->createStub(InputInterface::class);
     $io = $this->createMock(StyleInterface::class);
     $io->expects($this->once())
       ->method('ask')
