@@ -8,8 +8,6 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\migrate\Attribute\MigrateDestination;
-use Drupal\migrate\MigrateException;
-use Drupal\migrate\Plugin\MigrateIdMapInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Plugin\migrate\destination\EntityConfigBase;
 use Drupal\migrate\Row;
@@ -72,25 +70,6 @@ class EntitySearchPage extends EntityConfigBase {
       $container->get('config.factory'),
       $container->get('module_handler')
     );
-  }
-
-  /**
-   * {@inheritdoc}
-   *
-   * @deprecated in drupal:11.3.0 and is removed from drupal:12.0.0. There is no
-   *   replacement.
-   *
-   * @see https://www.drupal.org/node/3533565
-   */
-  public function import(Row $row, array $old_destination_id_values = []) {
-    @trigger_error(__METHOD__ . '() is deprecated in drupal:11.3.0 and is removed from drupal:12.0.0. There is no replacement. See https://www.drupal.org/node/3533565', E_USER_DEPRECATED);
-    // The search page settings may be for a module not enabled on the
-    // destination so make sure it is enabled for updating search page settings.
-    if ($this->moduleHandler->moduleExists($row->getDestinationProperty('module'))) {
-      return parent::import($row, $old_destination_id_values);
-    }
-    $msg = sprintf("Search module '%s' is not enabled on this site.", $row->getDestinationProperty('module'));
-    throw new MigrateException($msg, 0, NULL, MigrationInterface::MESSAGE_INFORMATIONAL, MigrateIdMapInterface::STATUS_IGNORED);
   }
 
   /**

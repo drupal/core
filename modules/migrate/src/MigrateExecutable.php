@@ -401,10 +401,6 @@ class MigrateExecutable implements MigrateExecutableInterface {
           try {
             $new_value[] = $plugin->transform($scalar_value, $this, $row, $destination);
           }
-          catch (MigrateSkipProcessException $e) {
-            $new_value[] = NULL;
-            $break = TRUE;
-          }
           catch (MigrateException $e) {
             // Prepend the process plugin id to the message.
             $message = sprintf("%s: %s", $plugin->getPluginId(), $e->getMessage());
@@ -423,10 +419,6 @@ class MigrateExecutable implements MigrateExecutableInterface {
         $plugin->reset();
         try {
           $value = $plugin->transform($value, $this, $row, $destination);
-        }
-        catch (MigrateSkipProcessException) {
-          $value = NULL;
-          break;
         }
         catch (MigrateException $e) {
           // Prepend the process plugin id to the message.

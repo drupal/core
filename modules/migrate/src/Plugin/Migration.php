@@ -675,10 +675,6 @@ class Migration extends PluginBase implements MigrationInterface, RequirementsIn
    *   The dependencies for this migration.
    */
   public function getMigrationDependencies() {
-    if (func_num_args() > 0) {
-      @trigger_error('Calling ' . __METHOD__ . ' with the $expand parameter is deprecated in drupal:11.0.0 and is removed drupal:12.0.0. See https://www.drupal.org/node/3442785', E_USER_DEPRECATED);
-    }
-
     $this->migration_dependencies = ($this->migration_dependencies ?: []) + ['required' => [], 'optional' => []];
     if (count($this->migration_dependencies) !== 2 || !is_array($this->migration_dependencies['required']) || !is_array($this->migration_dependencies['optional'])) {
       throw new InvalidPluginDefinitionException($this->id(), "Invalid migration dependencies configuration for migration {$this->id()}");
