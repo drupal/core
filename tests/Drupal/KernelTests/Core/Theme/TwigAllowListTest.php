@@ -30,13 +30,6 @@ class TwigAllowListTest extends KernelTestBase {
   protected $term;
 
   /**
-   * Twig environment.
-   *
-   * @var \Drupal\Core\Template\TwigEnvironment
-   */
-  protected $twig;
-
-  /**
    * {@inheritdoc}
    */
   protected static $modules = [
@@ -115,8 +108,6 @@ class TwigAllowListTest extends KernelTestBase {
         'type' => 'entity_reference_label',
       ])
       ->save();
-    // Boot twig environment.
-    $this->twig = \Drupal::service('twig');
   }
 
   /**

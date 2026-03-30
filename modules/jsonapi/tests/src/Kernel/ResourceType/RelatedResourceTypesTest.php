@@ -44,20 +44,6 @@ class RelatedResourceTypesTest extends JsonapiKernelTestBase {
   protected $resourceTypeRepository;
 
   /**
-   * The JSON:API resource type for `node--foo`.
-   *
-   * @var \Drupal\jsonapi\ResourceType\ResourceType
-   */
-  protected $fooType;
-
-  /**
-   * The JSON:API resource type for `node--bar`.
-   *
-   * @var \Drupal\jsonapi\ResourceType\ResourceType
-   */
-  protected $barType;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {

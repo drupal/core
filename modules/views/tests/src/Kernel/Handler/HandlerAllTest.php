@@ -43,11 +43,6 @@ class HandlerAllTest extends ViewsKernelTestBase {
   ];
 
   /**
-   * {@inheritdoc}
-   */
-  protected $defaultTheme = 'stark';
-
-  /**
    * Tests most of the handlers.
    */
   public function testHandlers(): void {

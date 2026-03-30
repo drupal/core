@@ -35,15 +35,6 @@ class ModuleTest extends ViewsKernelTestBase {
   protected static $modules = ['field', 'user', 'block'];
 
   /**
-   * Stores the last triggered error.
-   *
-   * @var string
-   *
-   * @see \Drupal\views\Tests\ModuleTest::errorHandler()
-   */
-  protected $lastErrorMessage;
-
-  /**
    * Tests the  ViewsHandlerManager::getHandler() method.
    *
    * @see \Drupal\views\Plugin\ViewsHandlerManager::getHandler()

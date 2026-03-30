@@ -33,13 +33,6 @@ class WorkspaceCRUDTest extends KernelTestBase {
   protected $entityTypeManager;
 
   /**
-   * The state service.
-   *
-   * @var \Drupal\Core\State\StateInterface
-   */
-  protected $state;
-
-  /**
    * The workspace replication manager.
    *
    * @var \Drupal\workspaces\WorkspaceManagerInterface
@@ -78,7 +71,6 @@ class WorkspaceCRUDTest extends KernelTestBase {
     $this->createContentType(['type' => 'page']);
 
     $this->entityTypeManager = \Drupal::entityTypeManager();
-    $this->state = \Drupal::state();
     $this->workspaceManager = \Drupal::service('workspaces.manager');
   }
 

@@ -26,19 +26,6 @@ class FileUploadHandlerTest extends KernelTestBase {
   protected static $modules = ['file', 'file_validator_test'];
 
   /**
-   * The file upload handler under test.
-   */
-  protected FileUploadHandler $fileUploadHandler;
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function setUp(): void {
-    parent::setUp();
-    $this->fileUploadHandler = $this->container->get('file.upload_handler');
-  }
-
-  /**
    * Test the lock acquire exception.
    */
   public function testLockAcquireException(): void {

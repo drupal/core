@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\KernelTests\Core\Plugin\Context;
 
-use Drupal\Component\Plugin\ConfigurableInterface;
 use Drupal\Component\Plugin\Context\ContextInterface as ComponentContextInterface;
 use Drupal\Component\Plugin\Definition\ContextAwarePluginDefinitionInterface;
 use Drupal\Component\Plugin\Definition\ContextAwarePluginDefinitionTrait;
@@ -40,13 +39,6 @@ class ContextAwarePluginTraitTest extends KernelTestBase {
   private $plugin;
 
   /**
-   * The configurable plugin instance under test.
-   *
-   * @var \Drupal\KernelTests\Core\Plugin\Context\TestConfigurableContextAwarePlugin
-   */
-  private $configurablePlugin;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -54,7 +46,6 @@ class ContextAwarePluginTraitTest extends KernelTestBase {
     $plugin_definition = new TestContextAwarePluginDefinition();
     $plugin_definition->addContextDefinition('nato_letter', ContextDefinition::create('string'));
     $this->plugin = new TestContextAwarePlugin([], 'the_sisko', $plugin_definition);
-    $this->configurablePlugin = new TestConfigurableContextAwarePlugin([], 'the_sisko', $plugin_definition);
   }
 
   /**
@@ -131,39 +122,6 @@ class TestContextAwarePlugin extends PluginBase implements ContextAwarePluginInt
   public function setContext($name, ComponentContextInterface $context): void {
     $this->setContextTrait($name, $context);
     $this->setContextCalled = TRUE;
-  }
-
-}
-
-/**
- * Configurable context aware plugin test class.
- */
-class TestConfigurableContextAwarePlugin extends PluginBase implements ConfigurableInterface, ContextAwarePluginInterface {
-
-  use ContextAwarePluginTrait;
-
-  /**
-   * {@inheritdoc}
-   */
-  public function defaultConfiguration(): array {
-    return [];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getConfiguration(): array {
-    return [
-      'context' => [
-        'nato_letter' => 'Alpha',
-      ],
-    ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setConfiguration(array $configuration) {
   }
 
 }

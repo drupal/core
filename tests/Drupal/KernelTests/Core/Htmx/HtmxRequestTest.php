@@ -31,11 +31,6 @@ class HtmxRequestTest extends KernelTestBase {
   ];
 
   /**
-   * Class under test.
-   */
-  protected Htmx $htmx;
-
-  /**
    * Injected kernel service.
    */
   protected HttpKernelInterface $httpKernel;

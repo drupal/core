@@ -44,13 +44,6 @@ class DisplayPageTest extends ViewsKernelTestBase {
   ];
 
   /**
-   * The router dumper to get all routes.
-   *
-   * @var \Drupal\Core\Routing\MatcherDumper
-   */
-  protected $routerDumper;
-
-  /**
    * Checks the behavior of the page for access denied/not found behaviors.
    */
   public function testPageResponses(): void {

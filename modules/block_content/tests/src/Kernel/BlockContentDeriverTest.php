@@ -6,7 +6,6 @@ namespace Drupal\Tests\block_content\Kernel;
 
 use Drupal\block_content\Entity\BlockContent;
 use Drupal\block_content\Entity\BlockContentType;
-use Drupal\block_content\Plugin\Derivative\BlockContent as DerivativeBlockContent;
 use Drupal\Component\Plugin\PluginBase;
 use Drupal\KernelTests\KernelTestBase;
 use PHPUnit\Framework\Attributes\Group;
@@ -25,41 +24,12 @@ class BlockContentDeriverTest extends KernelTestBase {
   protected static $modules = ['block', 'block_content', 'system', 'user'];
 
   /**
-   * The definition array of the base plugin.
-   *
-   * @var array
-   */
-  protected $baseDefinition = [
-    'id' => 'block_content',
-    'provider' => 'block_content',
-    'class' => '\Drupal\block_content\Plugin\Block\BlockContentBlock',
-    'deriver' => '\Drupal\block_content\Plugin\Derivative\BlockContent',
-  ];
-
-  /**
-   * The block content storage.
-   *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
-   */
-  protected $blockContentStorage;
-
-  /**
-   * The tested block content derivative class.
-   *
-   * @var \Drupal\block_content\Plugin\Derivative\BlockContent
-   */
-  protected $blockContentDerivative;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('user');
     $this->installEntitySchema('block_content');
-
-    $this->blockContentStorage = \Drupal::entityTypeManager()->getStorage('block_content');
-    $this->blockContentDerivative = new DerivativeBlockContent($this->blockContentStorage);
   }
 
   /**

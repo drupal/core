@@ -28,13 +28,6 @@ class RegistryTest extends KernelTestBase {
   protected static $modules = ['theme_test', 'system'];
 
   /**
-   * The profile to use for this test.
-   *
-   * @var string
-   */
-  protected $profile = 'testing';
-
-  /**
    * Tests the behavior of the theme registry class.
    */
   public function testRaceCondition(): void {

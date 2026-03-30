@@ -58,13 +58,6 @@ class ViewsEntitySchemaSubscriberIntegrationTest extends ViewsKernelTestBase {
   protected $eventDispatcher;
 
   /**
-   * The tested event subscriber of views.
-   *
-   * @var \Drupal\views\EventSubscriber\ViewsEntitySchemaSubscriber
-   */
-  protected $eventSubscriber;
-
-  /**
    * The entity type manager service.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
@@ -85,7 +78,6 @@ class ViewsEntitySchemaSubscriberIntegrationTest extends ViewsKernelTestBase {
     parent::setUp();
 
     $this->eventDispatcher = $this->container->get('event_dispatcher');
-    $this->eventSubscriber = $this->container->get('views.entity_schema_subscriber');
     $this->entityDefinitionUpdateManager = $this->container->get('entity.definition_update_manager');
     $this->entityTypeManager = $this->container->get('entity_type.manager');
     $this->state = $this->container->get('state');

@@ -46,13 +46,6 @@ class FilterEntityReferenceTest extends ViewsKernelTestBase {
   ];
 
   /**
-   * Test host nodes containing the entity reference.
-   *
-   * @var \Drupal\node\NodeInterface[]
-   */
-  protected array $hostNodes;
-
-  /**
    * Test target nodes referenced by the entity reference.
    *
    * @var \Drupal\node\NodeInterface[]
@@ -111,7 +104,7 @@ class FilterEntityReferenceTest extends ViewsKernelTestBase {
     }
 
     // Create a page referencing Article 0 and Article 1.
-    $this->hostNodes[0] = $this->createNode([
+    $this->createNode([
       'type' => 'page',
       'title' => 'Page 0',
       'status' => 1,
@@ -124,7 +117,7 @@ class FilterEntityReferenceTest extends ViewsKernelTestBase {
     ]);
 
     // Create a page referencing Article 1, Article 2, and Article 3.
-    $this->hostNodes[1] = $this->createNode([
+    $this->createNode([
       'type' => 'page',
       'title' => 'Page 1',
       'status' => 1,
@@ -138,7 +131,7 @@ class FilterEntityReferenceTest extends ViewsKernelTestBase {
     ]);
 
     // Create a page referencing nothing.
-    $this->hostNodes[2] = $this->createNode([
+    $this->createNode([
       'type' => 'page',
       'title' => 'Page 2',
       'status' => 1,

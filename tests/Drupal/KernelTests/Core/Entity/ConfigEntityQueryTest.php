@@ -33,13 +33,6 @@ class ConfigEntityQueryTest extends KernelTestBase {
   protected $queryResults;
 
   /**
-   * The query factory used to construct all queries in the test.
-   *
-   * @var \Drupal\Core\Config\Entity\Query\QueryFactory
-   */
-  protected $factory;
-
-  /**
    * The config entity storage used for testing.
    */
   protected ConfigEntityStorageInterface $entityStorage;

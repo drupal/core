@@ -21,13 +21,6 @@ class LocaleTranslationProjectsTest extends KernelTestBase {
   protected static $modules = ['locale', 'locale_test', 'system'];
 
   /**
-   * The module handler used in this test.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
-   */
-  protected $moduleHandler;
-
-  /**
    * The locale project storage used in this test.
    *
    * @var \Drupal\locale\LocaleProjectStorageInterface
@@ -40,7 +33,6 @@ class LocaleTranslationProjectsTest extends KernelTestBase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->moduleHandler = $this->container->get('module_handler');
     $this->projectStorage = $this->container->get('locale.project');
     \Drupal::state()->set('locale.remove_core_project', TRUE);
   }

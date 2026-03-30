@@ -91,13 +91,6 @@ class EntityResourceTest extends JsonapiKernelTestBase {
   protected Node $node4;
 
   /**
-   * A fake request.
-   *
-   * @var \Symfony\Component\HttpFoundation\Request
-   */
-  protected $request;
-
-  /**
    * The EntityResource under test.
    *
    * @var \Drupal\jsonapi\Controller\EntityResource

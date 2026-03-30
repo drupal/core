@@ -11,7 +11,6 @@ use Drupal\shortcut\Entity\ShortcutSet;
 use Drupal\shortcut\ShortcutSetInterface;
 use Drupal\Tests\system\Traits\CacheTestTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
-use Drupal\user\UserInterface;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
@@ -36,11 +35,6 @@ class ShortcutCacheTagsTest extends KernelTestBase {
   ];
 
   /**
-   * User with permission to administer shortcuts.
-   */
-  protected UserInterface $adminUser;
-
-  /**
    * The default shortcut set.
    */
   protected ShortcutSetInterface $shortcutSet;
@@ -54,14 +48,6 @@ class ShortcutCacheTagsTest extends KernelTestBase {
     $this->installEntitySchema('user');
     $this->installEntitySchema('shortcut');
     $this->installEntitySchema('shortcut_set');
-
-    $this->adminUser = $this->createUser([
-      'access toolbar',
-      'access shortcuts',
-      'administer site configuration',
-      'administer shortcuts',
-      'administer themes',
-    ]);
 
     $this->shortcutSet = ShortcutSet::create([
       'id' => 'default',

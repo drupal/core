@@ -22,13 +22,6 @@ class BigPipeInterfacePreviewThemeSuggestionsTest extends KernelTestBase {
   protected static $modules = ['block', 'big_pipe', 'system'];
 
   /**
-   * The block being tested.
-   *
-   * @var \Drupal\block\Entity\BlockInterface
-   */
-  protected $block;
-
-  /**
    * The block storage.
    *
    * @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface

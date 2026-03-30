@@ -33,26 +33,6 @@ class ContentModerationWorkflowConfigTest extends KernelTestBase {
   ];
 
   /**
-   * @var \Drupal\Core\Entity\EntityTypeManager
-   */
-  protected $entityTypeManager;
-
-  /**
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
-
-  /**
-   * @var \Drupal\workflows\Entity\Workflow
-   */
-  protected $workflow;
-
-  /**
-   * @var \Drupal\Core\Config\Entity\ConfigEntityStorage
-   */
-  protected $workflowStorage;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -76,7 +56,6 @@ class ContentModerationWorkflowConfigTest extends KernelTestBase {
       ->addState('test3', 'Test three')
       ->addEntityTypeAndBundle('node', 'example');
     $workflow->save();
-    $this->workflow = $workflow;
 
     $this->copyConfig($this->container->get('config.storage'), $this->container->get('config.storage.sync'));
   }

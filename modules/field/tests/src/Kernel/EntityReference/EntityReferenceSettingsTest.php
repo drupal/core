@@ -45,13 +45,6 @@ class EntityReferenceSettingsTest extends KernelTestBase {
   protected $nodeType;
 
   /**
-   * Testing vocabulary.
-   *
-   * @var \Drupal\taxonomy\Entity\Vocabulary
-   */
-  protected $vocabulary;
-
-  /**
    * An entity bundle that is not stored as a configuration entity.
    *
    * @var string

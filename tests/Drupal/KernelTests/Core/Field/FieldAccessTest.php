@@ -31,16 +31,6 @@ class FieldAccessTest extends KernelTestBase {
   ];
 
   /**
-   * Holds the currently active global user ID that initiated the test run.
-   *
-   * The user ID gets replaced during the test and needs to be kept here so that
-   * it can be restored at the end of the test run.
-   *
-   * @var int
-   */
-  protected $activeUid;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {

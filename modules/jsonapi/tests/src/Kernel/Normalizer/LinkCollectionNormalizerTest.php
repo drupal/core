@@ -40,13 +40,6 @@ class LinkCollectionNormalizerTest extends KernelTestBase {
   protected $serializer;
 
   /**
-   * The subject under test.
-   *
-   * @var \Drupal\jsonapi\Normalizer\LinkCollectionNormalizer
-   */
-  protected $normalizer;
-
-  /**
    * Test users.
    *
    * @var \Drupal\user\UserInterface[]

@@ -33,13 +33,6 @@ class EntityDefinitionUpdateProviderTest extends EntityKernelTestBase {
   protected $entityDefinitionUpdateManager;
 
   /**
-   * The entity field manager.
-   *
-   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
-   */
-  protected $entityFieldManager;
-
-  /**
    * The database connection.
    *
    * @var \Drupal\Core\Database\Connection
@@ -57,7 +50,6 @@ class EntityDefinitionUpdateProviderTest extends EntityKernelTestBase {
   protected function setUp(): void {
     parent::setUp();
     $this->entityDefinitionUpdateManager = $this->container->get('entity.definition_update_manager');
-    $this->entityFieldManager = $this->container->get('entity_field.manager');
     $this->database = $this->container->get('database');
 
     // Install every entity type's schema that wasn't installed in the parent

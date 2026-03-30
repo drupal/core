@@ -32,19 +32,11 @@ class FileRepositoryTest extends FileManagedUnitTestBase {
   protected $fileRepository;
 
   /**
-   * The file system service.
-   *
-   * @var \Drupal\Core\File\FileSystemInterface
-   */
-  protected $fileSystem;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
     $this->fileRepository = $this->container->get('file.repository');
-    $this->fileSystem = $this->container->get('file_system');
   }
 
   /**

@@ -39,13 +39,6 @@ class RequestHandlerTest extends KernelTestBase {
   protected static $modules = ['serialization', 'rest'];
 
   /**
-   * The entity storage.
-   *
-   * @var \Prophecy\Prophecy\ObjectProphecy
-   */
-  protected $entityStorage;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {

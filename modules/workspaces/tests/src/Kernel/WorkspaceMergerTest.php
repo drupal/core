@@ -35,13 +35,6 @@ class WorkspaceMergerTest extends KernelTestBase {
   protected $entityTypeManager;
 
   /**
-   * An array of nodes created before installing the Workspaces module.
-   *
-   * @var \Drupal\node\NodeInterface[]
-   */
-  protected $nodes = [];
-
-  /**
    * {@inheritdoc}
    */
   protected static $modules = [

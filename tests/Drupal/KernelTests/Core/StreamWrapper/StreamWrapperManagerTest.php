@@ -20,21 +20,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 class StreamWrapperManagerTest extends KernelTestBase {
 
   /**
-   * The stream wrapper manager.
-   *
-   * @var \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface
-   */
-  protected $streamWrapperManager;
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function setUp(): void {
-    parent::setUp();
-    $this->streamWrapperManager = \Drupal::service('stream_wrapper_manager');
-  }
-
-  /**
    * Tests uri scheme.
    *
    * @legacy-covers ::getScheme

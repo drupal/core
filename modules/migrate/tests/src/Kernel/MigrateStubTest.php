@@ -45,13 +45,6 @@ class MigrateStubTest extends MigrateTestBase {
   protected $migrateLookup;
 
   /**
-   * The migration plugin manager.
-   *
-   * @var \Drupal\migrate\Plugin\MigrationPluginManagerInterface
-   */
-  protected $migrationPluginManager;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -59,7 +52,6 @@ class MigrateStubTest extends MigrateTestBase {
     $this->setTestLogger();
     $this->migrateStub = $this->container->get('migrate.stub');
     $this->migrateLookup = $this->container->get('migrate.lookup');
-    $this->migrationPluginManager = $this->container->get('plugin.manager.migration');
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');
     $this->installSchema('node', 'node_access');

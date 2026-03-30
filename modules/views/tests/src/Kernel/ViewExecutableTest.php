@@ -58,22 +58,6 @@ class ViewExecutableTest extends ViewsKernelTestBase {
   public static $testViews = ['test_destroy', 'test_executable_displays', 'test_argument_dependency'];
 
   /**
-   * Properties that should be stored in the configuration.
-   *
-   * @var array
-   */
-  protected $configProperties = [
-    'disabled',
-    'name',
-    'description',
-    'tag',
-    'base_table',
-    'label',
-    'core',
-    'display',
-  ];
-
-  /**
    * Properties that should be stored in the executable.
    *
    * @var array

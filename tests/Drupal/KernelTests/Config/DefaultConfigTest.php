@@ -30,11 +30,6 @@ class DefaultConfigTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected static $timeLimit = 500;
-
-  /**
-   * {@inheritdoc}
-   */
   protected static $modules = ['system', 'user', 'path_alias'];
 
   /**

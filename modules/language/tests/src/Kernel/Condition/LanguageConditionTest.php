@@ -24,13 +24,6 @@ class LanguageConditionTest extends KernelTestBase {
   protected $manager;
 
   /**
-   * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
    * {@inheritdoc}
    */
   protected static $modules = ['system', 'language'];

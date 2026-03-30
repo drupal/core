@@ -51,25 +51,11 @@ class NavigationMenuBlockTest extends KernelTestBase {
   ];
 
   /**
-   * The navigation block under test.
-   *
-   * @var \Drupal\navigation\Plugin\Block\NavigationMenuBlock
-   */
-  protected $navigationBlock;
-
-  /**
    * The menu for testing.
    *
    * @var \Drupal\system\MenuInterface
    */
   protected $menu;
-
-  /**
-   * The menu link tree service.
-   *
-   * @var \Drupal\Core\Menu\MenuLinkTree
-   */
-  protected $linkTree;
 
   /**
    * The menu link plugin manager service.
@@ -101,7 +87,6 @@ class NavigationMenuBlockTest extends KernelTestBase {
     $this->container->get('current_user')->setAccount($account);
 
     $this->menuLinkManager = $this->container->get('plugin.manager.menu.link');
-    $this->linkTree = $this->container->get('menu.link_tree');
     $this->blockManager = $this->container->get('plugin.manager.block');
 
     $routes = new RouteCollection();

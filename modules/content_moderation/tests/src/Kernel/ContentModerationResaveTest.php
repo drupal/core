@@ -48,13 +48,6 @@ class ContentModerationResaveTest extends KernelTestBase {
   protected $entityStorage;
 
   /**
-   * The state service.
-   *
-   * @var \Drupal\Core\State\StateInterface
-   */
-  protected $state;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -72,7 +65,6 @@ class ContentModerationResaveTest extends KernelTestBase {
     $entity_type_manager = $this->container->get('entity_type.manager');
     $this->contentModerationStateStorage = $entity_type_manager->getStorage('content_moderation_state');
     $this->entityStorage = $entity_type_manager->getStorage($entity_type_id);
-    $this->state = $this->container->get('state');
   }
 
   /**

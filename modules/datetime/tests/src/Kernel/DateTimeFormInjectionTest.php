@@ -23,13 +23,6 @@ class DateTimeFormInjectionTest extends KernelTestBase implements FormInterface 
   use DependencySerializationTrait;
 
   /**
-   * A Dblog logger instance.
-   *
-   * @var \Psr\Log\LoggerInterface
-   */
-  protected $logger;
-
-  /**
    * {@inheritdoc}
    */
   protected static $modules = ['system', 'datetime'];
