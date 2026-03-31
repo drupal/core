@@ -127,13 +127,10 @@ class SiteConfigureForm extends ConfigFormBase {
       '#weight' => -20,
       '#access' => empty($install_state['config_install_path']),
     ];
-    // Use the default site mail if one is already configured, or fall back to
-    // PHP's configured sendmail_from.
-    $default_site_mail = $this->config('system.site')->get('mail') ?: ini_get('sendmail_from');
     $form['site_information']['site_mail'] = [
       '#type' => 'email',
       '#title' => $this->t('Site email address'),
-      '#default_value' => $default_site_mail,
+      '#default_value' => $this->config('system.site')->get('mail'),
       '#description' => $this->t("Automated emails, such as registration information, will be sent from this address. Use an address ending in your site's domain to help prevent these emails from being flagged as spam."),
       '#required' => TRUE,
       '#weight' => -15,

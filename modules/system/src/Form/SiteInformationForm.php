@@ -5,7 +5,6 @@ namespace Drupal\system\Form;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
-use Drupal\Core\Form\ConfigTarget;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\RedundantEditableConfigNamesTrait;
 use Drupal\Core\Path\PathValidatorInterface;
@@ -96,11 +95,7 @@ class SiteInformationForm extends ConfigFormBase {
     $form['site_information']['site_mail'] = [
       '#type' => 'email',
       '#title' => $this->t('Email address'),
-      '#config_target' => new ConfigTarget(
-        'system.site',
-        'mail',
-        fromConfig: fn($value) => $value ?: ini_get('sendmail_from'),
-      ),
+      '#config_target' => 'system.site:mail',
       '#description' => $this->t("The <em>From</em> address in automated emails sent during registration and new password requests, and other notifications. (Use an address ending in your site's domain to help prevent this email being flagged as spam.)"),
       '#required' => TRUE,
     ];
