@@ -33,7 +33,6 @@ use Symfony\Component\HttpFoundation\Response;
  * @see \Drupal\views\ViewExecutable
  */
 #[Group('views')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class ViewExecutableTest extends ViewsKernelTestBase {
 

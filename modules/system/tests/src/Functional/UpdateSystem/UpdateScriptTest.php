@@ -20,7 +20,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests the update script access and functionality.
  */
 #[Group('Update')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class UpdateScriptTest extends BrowserTestBase {
   use InfoWriterTrait;

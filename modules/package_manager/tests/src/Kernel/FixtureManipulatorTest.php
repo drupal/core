@@ -19,6 +19,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  */
 #[CoversClass(FixtureManipulator::class)]
 #[Group('package_manager')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class FixtureManipulatorTest extends PackageManagerKernelTestBase {
 

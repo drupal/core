@@ -18,7 +18,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Ensures that media UI works correctly.
  */
 #[Group('media')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class MediaUiReferenceWidgetTest extends MediaFunctionalTestBase {
 

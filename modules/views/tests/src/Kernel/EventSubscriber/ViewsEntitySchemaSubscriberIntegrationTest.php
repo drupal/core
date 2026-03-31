@@ -16,7 +16,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests \Drupal\views\EventSubscriber\ViewsEntitySchemaSubscriber.
  */
 #[Group('Views')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class ViewsEntitySchemaSubscriberIntegrationTest extends ViewsKernelTestBase {
 

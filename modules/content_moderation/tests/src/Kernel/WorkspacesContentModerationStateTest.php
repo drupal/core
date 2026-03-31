@@ -22,7 +22,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  */
 #[Group('content_moderation')]
 #[Group('workspaces')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class WorkspacesContentModerationStateTest extends ContentModerationStateTest {
 

@@ -16,7 +16,6 @@ use PHPUnit\Framework\Attributes\TestWith;
  * Tests validation of node_type entities.
  */
 #[Group('node')]
-#[Group('#slow')]
 #[Group('config')]
 #[Group('Validation')]
 #[RunTestsInSeparateProcesses]

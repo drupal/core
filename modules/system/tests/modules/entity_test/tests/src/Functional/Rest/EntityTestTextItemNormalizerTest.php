@@ -18,7 +18,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests EntityTest Text Item Normalizer.
  */
 #[Group('rest')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class EntityTestTextItemNormalizerTest extends EntityTestResourceTestBase {
 

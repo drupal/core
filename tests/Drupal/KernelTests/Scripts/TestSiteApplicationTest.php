@@ -30,7 +30,6 @@ use Symfony\Component\Process\Process;
  * @see \Drupal\TestSite\Commands\TestSiteTearDownCommand
  */
 #[Group('Setup')]
-#[Group('#slow')]
 #[PreserveGlobalState(FALSE)]
 #[CoversNothing]
 #[RunTestsInSeparateProcesses]

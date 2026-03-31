@@ -20,7 +20,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests that the installed config matches the default config.
  */
 #[Group('Config')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class DefaultConfigTest extends KernelTestBase {
 

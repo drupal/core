@@ -13,7 +13,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests how Update Status handles contributed modules and themes.
  */
 #[Group('update')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class UpdateContribTest extends UpdateTestBase {
   use UpdateTestTrait;

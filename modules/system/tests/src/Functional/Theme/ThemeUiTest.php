@@ -14,7 +14,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests the theme UI.
  */
 #[Group('Theme')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class ThemeUiTest extends BrowserTestBase {
   use InfoWriterTrait;

@@ -20,7 +20,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  */
 #[CoversClass(ModerationStateFilter::class)]
 #[Group('content_moderation')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class ViewsModerationStateFilterTest extends ViewTestBase {
 

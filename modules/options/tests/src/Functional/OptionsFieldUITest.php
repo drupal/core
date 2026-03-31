@@ -14,7 +14,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests the Options field UI functionality.
  */
 #[Group('options')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class OptionsFieldUITest extends FieldTestBase {
 

@@ -27,7 +27,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests the entity content source plugin.
  */
 #[Group('migrate')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class ContentEntityTest extends KernelTestBase {
 

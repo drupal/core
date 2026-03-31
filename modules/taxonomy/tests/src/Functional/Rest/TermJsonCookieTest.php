@@ -12,7 +12,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests Term Json Cookie.
  */
 #[Group('rest')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class TermJsonCookieTest extends TermResourceTestBase {
 

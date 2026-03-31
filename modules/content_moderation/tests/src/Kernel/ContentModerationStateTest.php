@@ -27,7 +27,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests links between a content entity and a content_moderation_state entity.
  */
 #[Group('content_moderation')]
-#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class ContentModerationStateTest extends KernelTestBase {
 

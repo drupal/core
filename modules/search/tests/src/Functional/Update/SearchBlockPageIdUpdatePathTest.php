@@ -13,6 +13,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests update path for the search block's `page_id` setting from '' to NULL.
  */
 #[Group('search')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class SearchBlockPageIdUpdatePathTest extends UpdatePathTestBase {
 

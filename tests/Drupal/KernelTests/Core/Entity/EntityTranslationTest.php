@@ -21,6 +21,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests entity translation functionality.
  */
 #[Group('Entity')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class EntityTranslationTest extends EntityLanguageTestBase {
 
