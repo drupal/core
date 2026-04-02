@@ -76,7 +76,6 @@ abstract class BrowserTestBase extends TestCase {
     createUser as drupalCreateUser;
   }
   use XdebugRequestTrait;
-  use PhpUnitCompatibilityTrait;
   use ExtensionListTestTrait;
 
   /**

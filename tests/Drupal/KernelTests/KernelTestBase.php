@@ -25,7 +25,6 @@ use Drupal\Tests\ConfigTestTrait;
 use Drupal\Tests\DrupalTestCaseTrait;
 use Drupal\Tests\ExtensionListTestTrait;
 use Drupal\Tests\HttpKernelUiHelperTrait;
-use Drupal\Tests\PhpUnitCompatibilityTrait;
 use Drupal\Tests\RandomGeneratorTrait;
 use Drupal\Tests\TestRequirementsTrait;
 use Drupal\TestTools\Comparator\MarkupInterfaceComparator;
@@ -104,7 +103,6 @@ abstract class KernelTestBase extends TestCase implements ServiceProviderInterfa
   use ConfigTestTrait;
   use ExtensionListTestTrait;
   use TestRequirementsTrait;
-  use PhpUnitCompatibilityTrait;
   use ProphecyTrait;
   use BrowserHtmlDebugTrait;
   use HttpKernelUiHelperTrait;
