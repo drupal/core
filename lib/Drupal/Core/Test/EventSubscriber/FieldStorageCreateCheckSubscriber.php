@@ -27,21 +27,9 @@ final class FieldStorageCreateCheckSubscriber implements EventSubscriberInterfac
    */
   protected Schema $schema;
 
-  /**
-   * Constructs the FieldStorageCreateCheckSubscriber object.
-   *
-   * @param \Drupal\Core\Database\Connection $connection
-   *   The database connection.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   *   The entity type manager service.
-   * @param bool $throwLogicExceptionOrDeprecationWarning
-   *   When the value is TRUE a LogicException will be thrown, when the value is
-   *   FALSE a deprecation warning will be given. The value defaults to FALSE.
-   */
   public function __construct(
     protected Connection $connection,
     protected EntityTypeManagerInterface $entityTypeManager,
-    private readonly bool $throwLogicExceptionOrDeprecationWarning = FALSE,
   ) {
     $this->schema = $this->connection->schema();
   }
@@ -75,15 +63,10 @@ final class FieldStorageCreateCheckSubscriber implements EventSubscriberInterfac
       if ($storage instanceof SqlEntityStorageInterface) {
         $base_table = $storage->getTableMapping()->getBaseTable();
         if (!$this->schema->tableExists($base_table)) {
-          if ($this->throwLogicExceptionOrDeprecationWarning) {
-            throw new \LogicException(sprintf('Creating the "%s" field storage definition without the entity schema "%s" being installed is not allowed.',
-              $event->getFieldStorageDefinition()->id(),
-              $entity_type_id,
-            ));
-          }
-          else {
-            @trigger_error('Creating the "' . $event->getFieldStorageDefinition()->id() . '" field storage definition without the entity schema "' . $entity_type_id . '" being installed is deprecated in drupal:11.2.0 and will be replaced by a LogicException in drupal:12.0.0. See https://www.drupal.org/node/3493981', E_USER_DEPRECATED);
-          }
+          throw new \LogicException(sprintf('Creating the "%s" field storage definition without the entity schema "%s" being installed is not allowed.',
+            $event->getFieldStorageDefinition()->id(),
+            $entity_type_id,
+          ));
         }
       }
     }

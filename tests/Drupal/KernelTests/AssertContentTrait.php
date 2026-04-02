@@ -400,28 +400,6 @@ trait AssertContentTrait {
   }
 
   /**
-   * Passes if raw text IS NOT found escaped on loaded page, fail otherwise.
-   *
-   * Raw text refers to the raw HTML that the page generated.
-   *
-   * @param string $raw
-   *   Raw (HTML) string to look for.
-   * @param string $message
-   *   (optional) A message to display with the assertion. Do not translate
-   *   messages with t(). Use double quotes and embed variables directly in
-   *   message text, or use sprintf() if necessary. Avoid the use of
-   *   \Drupal\Component\Render\FormattableMarkup unless you cast the object to
-   *   a string. If left blank, a default message will be displayed.
-   */
-  protected function assertNoEscaped($raw, $message = ''): void {
-    @trigger_error(__METHOD__ . '() is deprecated in drupal:11.1.0 and is removed from drupal:12.0.0. There is no replacement. See https://www.drupal.org/node/3476110', E_USER_DEPRECATED);
-    if (!$message) {
-      $message = 'Escaped "' . Html::escape((string) $raw) . '" not found';
-    }
-    $this->assertStringNotContainsString(Html::escape((string) $raw), $this->getRawContent(), $message);
-  }
-
-  /**
    * Passes if the page (with HTML stripped) contains the text.
    *
    * Note that stripping HTML tags also removes their attributes, such as
@@ -565,27 +543,6 @@ trait AssertContentTrait {
     else {
       $this->fail('No title element found on the page.');
     }
-  }
-
-  /**
-   * Pass if the page title is not the given string.
-   *
-   * @param string $title
-   *   The string the title should not be.
-   * @param string $message
-   *   (optional) A message to display with the assertion. Do not translate
-   *   messages with t(). Use double quotes and embed variables directly in
-   *   message text, or use sprintf() if necessary. Avoid the use of
-   *   \Drupal\Component\Render\FormattableMarkup unless you cast the object to
-   *   a string. If left blank, a default message will be displayed.
-   */
-  protected function assertNoTitle($title, $message = '') {
-    @trigger_error(__METHOD__ . '() is deprecated in drupal:11.1.0 and is removed from drupal:12.0.0. There is no replacement. See https://www.drupal.org/node/3476110', E_USER_DEPRECATED);
-    $actual = (string) current($this->xpath('//title'));
-    if (!$message) {
-      $message = sprintf("Page title %s is not equal to %s", var_export($actual, TRUE), var_export($title, TRUE));
-    }
-    $this->assertNotEquals($title, $actual, $message);
   }
 
   /**
@@ -753,51 +710,6 @@ trait AssertContentTrait {
       }
     }
     return $this->assertFieldByXPath($this->constructFieldXpath('name', $name), $value, $message);
-  }
-
-  /**
-   * Asserts that a select option in the current page exists.
-   *
-   * @param string $id
-   *   ID of select field to assert.
-   * @param string $option
-   *   Option to assert.
-   * @param string $message
-   *   (optional) A message to display with the assertion. Do not translate
-   *   messages with t(). Use double quotes and embed variables directly in
-   *   message text, or use sprintf() if necessary. Avoid the use of
-   *   \Drupal\Component\Render\FormattableMarkup unless you cast the object to
-   *   a string. If left blank, a default message will be displayed.
-   */
-  protected function assertOption($id, $option, $message = '') {
-    @trigger_error(__METHOD__ . '() is deprecated in drupal:11.1.0 and is removed from drupal:12.0.0. There is no replacement. See https://www.drupal.org/node/3476110', E_USER_DEPRECATED);
-    $options = $this->xpath('//select[@id=:id]//option[@value=:option]', [':id' => $id, ':option' => $option]);
-    $message = $message ?: sprintf('Option %s for field %s exists.', $options, $id);
-    $this->assertTrue(isset($options[0]), $message);
-  }
-
-  /**
-   * Asserts that a select option in the current page exists.
-   *
-   * @param string $drupal_selector
-   *   The data drupal selector of select field to assert.
-   * @param string $option
-   *   Option to assert.
-   * @param string $message
-   *   (optional) A message to display with the assertion. Do not translate
-   *   messages with t(). Use double quotes and embed variables directly in
-   *   message text, or use sprintf() if necessary. Avoid the use of
-   *   \Drupal\Component\Render\FormattableMarkup unless you cast the object to
-   *   a string. If left blank, a default message will be displayed.
-   */
-  protected function assertOptionWithDrupalSelector($drupal_selector, $option, $message = '') {
-    @trigger_error(__METHOD__ . '() is deprecated in drupal:11.1.0 and is removed from drupal:12.0.0. There is no replacement. See https://www.drupal.org/node/3476110', E_USER_DEPRECATED);
-    $options = $this->xpath(
-      '//select[@data-drupal-selector=:data_drupal_selector]//option[@value=:option]',
-      [':data_drupal_selector' => $drupal_selector, ':option' => $option],
-    );
-    $message = $message ?: sprintf('Option %s for field %s exists.', $option, $drupal_selector);
-    $this->assertTrue(isset($options[0]), $message);
   }
 
   /**
