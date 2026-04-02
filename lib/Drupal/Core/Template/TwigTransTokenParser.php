@@ -27,7 +27,7 @@ class TwigTransTokenParser extends AbstractTokenParser {
   /**
    * {@inheritdoc}
    */
-  public function parse(Token $token) {
+  public function parse(Token $token): Node {
     $lineno = $token->getLine();
     $stream = $this->parser->getStream();
     $body = NULL;
@@ -78,7 +78,7 @@ class TwigTransTokenParser extends AbstractTokenParser {
   /**
    * {@inheritdoc}
    */
-  public function getTag() {
+  public function getTag(): string {
     return 'trans';
   }
 

@@ -9782,12 +9782,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/lib/Drupal/Core/Template/TwigExtension.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Core\\\\Template\\\\TwigExtension\\:\\:getName\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/lib/Drupal/Core/Template/TwigExtension.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Cannot unset property Drupal\\\\Core\\\\Template\\\\TwigNodeVisitor\\:\\:\\$skipRenderVarFunction because it might have hooks in a subclass\\.$#',
 	'identifier' => 'unset.possiblyHookedProperty',
 	'count' => 1,

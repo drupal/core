@@ -13,14 +13,7 @@
 
 # Skip some dependencies' DebugClassLoader forward compatibility warnings, in
 # order to let contrib modules make their necessary fixes first.
-%Method "Twig\\Extension\\ExtensionInterface::[^"]+" might add "array" as a native return type declaration in the future. Do the same in implementation "Drupal\\Core\\Template\\TwigExtension" now to avoid errors or add an explicit @return annotation to suppress this message%
-%Method "Twig\\Loader\\FilesystemLoader::findTemplate\(\)" might add "\?string" as a native return type declaration in the future. Do the same in child class "Drupal\\Core\\Template\\Loader\\FilesystemLoader" now to avoid errors or add an explicit @return annotation to suppress this message%
-%Method "Twig\\Loader\\LoaderInterface::exists\(\)" might add "bool" as a native return type declaration in the future. Do the same in implementation "Drupal\\Core\\Template\\Loader\\StringLoader" now to avoid errors or add an explicit @return annotation to suppress this message%
-%Method "Twig\\Node\\Node::compile\(\)" might add "void" as a native return type declaration in the future. Do the same in child class "Drupal\\Core\\Template\\TwigNodeCheckDeprecations" now to avoid errors or add an explicit @return annotation to suppress this message%
-%Method "Twig\\Node\\Node::compile\(\)" might add "void" as a native return type declaration in the future. Do the same in child class "Drupal\\Core\\Template\\TwigNodeTrans" now to avoid errors or add an explicit @return annotation to suppress this message%
-%Method "Twig\\NodeVisitor\\NodeVisitorInterface::[^"]+" might add "[^"]+" as a native return type declaration in the future. Do the same in implementation "Drupal\\Core\\Template\\RemoveCheckToStringNodeVisitor" now to avoid errors or add an explicit @return annotation to suppress this message%
-%Method "Twig\\NodeVisitor\\NodeVisitorInterface::[^"]+" might add "[^"]+" as a native return type declaration in the future. Do the same in implementation "Drupal\\Core\\Template\\TwigNodeVisitor" now to avoid errors or add an explicit @return annotation to suppress this message%
-%Method "Twig\\TokenParser\\TokenParserInterface::[^"]+" might add "[^"]+" as a native return type declaration in the future. Do the same in implementation "Drupal\\Core\\Template\\TwigTransTokenParser" now to avoid errors or add an explicit @return annotation to suppress this message%
+#(none at the moment)
 
 # Indirect deprecations. These are not in Drupal's remit to fix, but it is
 # worth keeping track of dependencies' issues.

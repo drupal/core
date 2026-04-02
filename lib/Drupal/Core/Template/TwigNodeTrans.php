@@ -51,7 +51,7 @@ class TwigNodeTrans extends Node {
   /**
    * {@inheritdoc}
    */
-  public function compile(Compiler $compiler) {
+  public function compile(Compiler $compiler): void {
     $compiler->addDebugInfo($this);
 
     [$singular, $tokens] = $this->compileString($this->getNode('body'));

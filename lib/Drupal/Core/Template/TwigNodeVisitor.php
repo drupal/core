@@ -76,7 +76,7 @@ class TwigNodeVisitor implements NodeVisitorInterface {
   /**
    * {@inheritdoc}
    */
-  public function getPriority() {
+  public function getPriority(): int {
     // Just above the Optimizer, which is the normal last one.
     return 256;
   }

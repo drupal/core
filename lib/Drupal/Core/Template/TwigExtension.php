@@ -95,7 +95,7 @@ class TwigExtension extends AbstractExtension {
   /**
    * {@inheritdoc}
    */
-  public function getFunctions() {
+  public function getFunctions(): array {
     return [
       // This function will receive a renderable array, if an array is detected.
       new TwigFunction('render_var', [$this, 'renderVar']),
@@ -115,7 +115,7 @@ class TwigExtension extends AbstractExtension {
   /**
    * {@inheritdoc}
    */
-  public function getFilters() {
+  public function getFilters(): array {
     return [
       // Translation filters.
       new TwigFilter('t', 't', ['is_safe' => ['html']]),
@@ -162,7 +162,7 @@ class TwigExtension extends AbstractExtension {
   /**
    * {@inheritdoc}
    */
-  public function getNodeVisitors() {
+  public function getNodeVisitors(): array {
     // The node visitor is needed to wrap all variables with
     // render_var -> TwigExtension->renderVar() function.
     $visitors = [
@@ -182,17 +182,10 @@ class TwigExtension extends AbstractExtension {
   /**
    * {@inheritdoc}
    */
-  public function getTokenParsers() {
+  public function getTokenParsers(): array {
     return [
       new TwigTransTokenParser(),
     ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getName() {
-    return 'drupal_core';
   }
 
   /**

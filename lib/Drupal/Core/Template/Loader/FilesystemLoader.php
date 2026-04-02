@@ -78,7 +78,7 @@ class FilesystemLoader extends TwigFilesystemLoader {
   /**
    * {@inheritdoc}
    */
-  protected function findTemplate($name, $throw = TRUE) {
+  protected function findTemplate($name, $throw = TRUE): ?string {
     $extension = pathinfo($name, PATHINFO_EXTENSION);
     if (!in_array($extension, $this->allowedFileExtensions, TRUE)) {
       if (!$throw) {

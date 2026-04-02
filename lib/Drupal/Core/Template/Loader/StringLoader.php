@@ -28,7 +28,7 @@ class StringLoader implements LoaderInterface {
   /**
    * {@inheritdoc}
    */
-  public function exists($name) {
+  public function exists($name): bool {
     if (str_starts_with($name, '{# inline_template_start #}')) {
       return TRUE;
     }
@@ -55,7 +55,6 @@ class StringLoader implements LoaderInterface {
    * {@inheritdoc}
    */
   public function getSourceContext(string $name): Source {
-    $name = (string) $name;
     return new Source($name, $name);
   }
 

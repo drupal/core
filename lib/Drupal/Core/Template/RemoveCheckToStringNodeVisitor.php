@@ -48,7 +48,7 @@ final class RemoveCheckToStringNodeVisitor implements NodeVisitorInterface {
   /**
    * {@inheritdoc}
    */
-  public function getPriority() {
+  public function getPriority(): int {
     // Runs after sandbox visitor.
     return 1;
   }
