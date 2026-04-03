@@ -13,9 +13,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 #[Block(
   id: "system_main_block",
   admin_label: new TranslatableMarkup("Main page content"),
-  forms: [
-    'settings_tray' => FALSE,
-  ]
 )]
 class SystemMainBlock extends BlockBase implements MainContentBlockPluginInterface {
 

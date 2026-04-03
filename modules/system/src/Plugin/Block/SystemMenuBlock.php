@@ -11,7 +11,6 @@ use Drupal\Core\Menu\MenuLinkTreeInterface;
 use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\system\Form\SystemMenuOffCanvasForm;
 use Drupal\system\Plugin\Derivative\SystemMenuBlock as SystemMenuBlockDeriver;
 
 /**
@@ -22,9 +21,6 @@ use Drupal\system\Plugin\Derivative\SystemMenuBlock as SystemMenuBlockDeriver;
   admin_label: new TranslatableMarkup("Menu"),
   category: new TranslatableMarkup("Menus"),
   deriver: SystemMenuBlockDeriver::class,
-  forms: [
-    'settings_tray' => SystemMenuOffCanvasForm::class,
-  ]
 )]
 class SystemMenuBlock extends BlockBase implements ContainerFactoryPluginInterface {
 

@@ -9,6 +9,8 @@ use Drupal\settings_tray\Block\BlockEntitySettingTrayForm;
 use Drupal\Core\Url;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\settings_tray\Form\SystemBrandingOffCanvasForm;
+use Drupal\settings_tray\Form\SystemMenuOffCanvasForm;
 
 /**
  * Hook implementations for settings_tray.
@@ -143,7 +145,14 @@ class SettingsTrayHooks {
       // If a block plugin does not define its own 'settings_tray' form, use the
       // plugin class itself.
       if (!isset($definition['forms']['settings_tray'])) {
-        $definition['forms']['settings_tray'] = $definition['class'];
+        $definition['forms']['settings_tray'] = match ($definition['id']) {
+          'help_block' => FALSE,
+          'page_title_block' => FALSE,
+          'system_branding_block' => SystemBrandingOffCanvasForm::class,
+          'system_main_block' => FALSE,
+          'system_menu_block' => SystemMenuOffCanvasForm::class,
+          default => $definition['class'],
+        };
       }
     }
   }

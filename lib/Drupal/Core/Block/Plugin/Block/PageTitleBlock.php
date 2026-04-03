@@ -13,9 +13,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 #[Block(
   id: "page_title_block",
   admin_label: new TranslatableMarkup("Page title"),
-  forms: [
-    'settings_tray' => FALSE,
-  ]
 )]
 class PageTitleBlock extends BlockBase implements TitleBlockPluginInterface {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\system\Form;
+namespace Drupal\settings_tray\Form;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Config\ConfigFactoryInterface;

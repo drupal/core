@@ -11,7 +11,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
-use Drupal\system\Form\SystemBrandingOffCanvasForm;
 
 /**
  * Provides a block to display 'Site branding' elements.
@@ -19,7 +18,6 @@ use Drupal\system\Form\SystemBrandingOffCanvasForm;
 #[Block(
   id: "system_branding_block",
   admin_label: new TranslatableMarkup("Site branding"),
-  forms: ['settings_tray' => SystemBrandingOffCanvasForm::class]
 )]
 class SystemBrandingBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
