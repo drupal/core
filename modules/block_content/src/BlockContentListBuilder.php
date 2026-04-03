@@ -48,9 +48,7 @@ class BlockContentListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function getOperations(EntityInterface $entity/* , ?CacheableMetadata $cacheability = NULL */) {
-    $args = func_get_args();
-    $cacheability = $args[1] ?? new CacheableMetadata();
+  public function getOperations(EntityInterface $entity, ?CacheableMetadata $cacheability = NULL) {
     $operations = parent::getOperations($entity, $cacheability);
     // The 'View' operation doesn't make sense for content blocks.
     unset($operations['view']);

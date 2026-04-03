@@ -33,9 +33,7 @@ class ImageStyleListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  protected function getDefaultOperations(EntityInterface $entity/* , ?CacheableMetadata $cacheability = NULL */) {
-    $args = func_get_args();
-    $cacheability = $args[1] ?? new CacheableMetadata();
+  protected function getDefaultOperations(EntityInterface $entity, CacheableMetadata $cacheability) {
     $flush = [
       'title' => $this->t('Flush'),
       'weight' => 200,

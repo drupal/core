@@ -45,9 +45,7 @@ class CommentTypeListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  protected function getDefaultOperations(EntityInterface $entity/* , ?CacheableMetadata $cacheability = NULL */) {
-    $args = func_get_args();
-    $cacheability = $args[1] ?? new CacheableMetadata();
+  protected function getDefaultOperations(EntityInterface $entity, CacheableMetadata $cacheability) {
     $operations = parent::getDefaultOperations($entity, $cacheability);
     // Place the edit operation after the operations added by
     // FieldUiHooks::entityOperation() which have the weights 15, 20, 25.

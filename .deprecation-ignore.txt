@@ -20,10 +20,6 @@
 %Method "Iterator::[^"]+" might add "void" as a native return type declaration in the future. Do the same in implementation "org\\bovigo\\vfs\\vfsStreamContainerIterator" now to avoid errors or add an explicit @return annotation to suppress this message%
 %The "SebastianBergmann\\Comparator\\ObjectComparator" class is considered internal This class is not covered by the backward compatibility promise for sebastian/comparator%
 
-# Drupal 12.
-%.*::getDefaultOperations\(\) will require a new "\Drupal\Core\Cache\CacheableMetadata|null \$cacheability" argument in the next major version of its parent class%
-%.*::getOperations\(\) will require a new "\Drupal\Core\Cache\CacheableMetadata|null \$cacheability" argument in the next major version of its interface%
-
 # Drupal 13.
 %The "cache.backend.memory" service is deprecated in drupal:11.3.0 and is removed from drupal:13.0.0. Use cache.backend.memory.memory instead. See https://www.drupal.org/node/3546856%
 %The "cache.static" service is deprecated in drupal:11.3.0 and is removed from drupal:13.0.0. Use the cache.memory bin instead. See https://www.drupal.org/node/3546856%

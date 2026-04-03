@@ -77,9 +77,7 @@ class EntityDisplayModeListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function getOperations(EntityInterface $entity/* , ?CacheableMetadata $cacheability = NULL */) {
-    $args = func_get_args();
-    $cacheability = $args[1] ?? new CacheableMetadata();
+  public function getOperations(EntityInterface $entity, ?CacheableMetadata $cacheability = NULL) {
     // Make the edit form render in a dialog, like the add form.
     // The edit form also contains an option to delete the view mode, which
     // also spawns a dialog. Rather than have nested dialogs, we allow the

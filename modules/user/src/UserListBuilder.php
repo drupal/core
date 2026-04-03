@@ -152,9 +152,7 @@ class UserListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function getOperations(EntityInterface $entity/* , ?CacheableMetadata $cacheability = NULL */) {
-    $args = func_get_args();
-    $cacheability = $args[1] ?? new CacheableMetadata();
+  public function getOperations(EntityInterface $entity, ?CacheableMetadata $cacheability = NULL) {
     $operations = parent::getOperations($entity, $cacheability);
     if (isset($operations['edit'])) {
       $destination = $this->redirectDestination->getAsArray();

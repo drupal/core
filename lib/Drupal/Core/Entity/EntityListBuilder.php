@@ -129,9 +129,8 @@ class EntityListBuilder extends EntityHandlerBase implements EntityListBuilderIn
   /**
    * {@inheritdoc}
    */
-  public function getOperations(EntityInterface $entity/* , ?CacheableMetadata $cacheability = NULL */) {
-    $args = func_get_args();
-    $cacheability = $args[1] ?? new CacheableMetadata();
+  public function getOperations(EntityInterface $entity, ?CacheableMetadata $cacheability = NULL) {
+    $cacheability ??= new CacheableMetadata();
     $operations = $this->getDefaultOperations($entity, $cacheability);
     $operations += $this->moduleHandler()->invokeAll('entity_operation', [$entity, $cacheability]);
     $this->moduleHandler->alter('entity_operation', $operations, $entity, $cacheability);
@@ -145,21 +144,15 @@ class EntityListBuilder extends EntityHandlerBase implements EntityListBuilderIn
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The entity the operations are for.
-   * phpcs:disable Drupal.Commenting
-   * @todo Uncomment new method parameters before drupal:12.0.0.
-   * @see https://www.drupal.org/project/drupal/issues/3533078
-   * @param \Drupal\Core\Cache\CacheableMetadata|null $cacheability
+   * @param \Drupal\Core\Cache\CacheableMetadata $cacheability
    *   The cacheable metadata to add to if your operations vary by or depend on
    *   something.
-   * phpcs:enable
    *
    * @return array
    *   The array structure is identical to the return value of
    *   self::getOperations().
    */
-  protected function getDefaultOperations(EntityInterface $entity/* , ?CacheableMetadata $cacheability = NULL */) {
-    $args = func_get_args();
-    $cacheability = $args[1] ?? new CacheableMetadata();
+  protected function getDefaultOperations(EntityInterface $entity, CacheableMetadata $cacheability) {
     $operations = [];
     $variables = [
       '@entity_label' => $entity->label() ?? '',

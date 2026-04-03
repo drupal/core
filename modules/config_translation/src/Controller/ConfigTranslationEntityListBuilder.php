@@ -81,9 +81,7 @@ class ConfigTranslationEntityListBuilder extends ConfigEntityListBuilder impleme
   /**
    * {@inheritdoc}
    */
-  public function getOperations(EntityInterface $entity/* , ?CacheableMetadata $cacheability = NULL */) {
-    $args = func_get_args();
-    $cacheability = $args[1] ?? new CacheableMetadata();
+  public function getOperations(EntityInterface $entity, ?CacheableMetadata $cacheability = NULL) {
     $operations = parent::getOperations($entity, $cacheability);
     foreach (array_keys($operations) as $operation) {
       // This is a translation UI for translators. Show the translation
