@@ -6,6 +6,7 @@ namespace Drupal\Tests\field_ui\Unit;
 
 use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
+use Drupal\Core\Field\FieldTypePluginManagerInterface;
 use Drupal\Core\Render\ElementInfoManagerInterface;
 use Drupal\Core\TempStore\PrivateTempStore;
 use Drupal\Core\TypedData\TypedDataManagerInterface;
@@ -40,7 +41,8 @@ class FieldConfigEditFormTest extends UnitTestCase {
     $temp_store = $this->createStub(PrivateTempStore::class);
     $element_info_manager = $this->createStub(ElementInfoManagerInterface::class);
     $entity_display_repository = $this->createStub(EntityDisplayRepositoryInterface::class);
-    $this->fieldConfigEditForm = new FieldConfigEditForm($entity_type_bundle_info, $typed_data, $entity_display_repository, $temp_store, $element_info_manager);
+    $field_type_plugin_manager = $this->createStub(FieldTypePluginManagerInterface::class);
+    $this->fieldConfigEditForm = new FieldConfigEditForm($entity_type_bundle_info, $typed_data, $entity_display_repository, $temp_store, $element_info_manager, $field_type_plugin_manager);
   }
 
   /**
