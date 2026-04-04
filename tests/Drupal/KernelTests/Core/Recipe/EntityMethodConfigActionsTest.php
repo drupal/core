@@ -14,7 +14,6 @@ use Drupal\entity_test\Entity\EntityTestBundle;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\block\Traits\BlockCreationTrait;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\TestWith;
 
@@ -271,7 +270,6 @@ class EntityMethodConfigActionsTest extends KernelTestBase {
   /**
    * Tests that the simpleConfigUpdate action cannot be used on entities.
    */
-  #[IgnoreDeprecations]
   public function testSimpleConfigUpdateFailsOnEntities(): void {
     $view_display = $this->container->get(EntityDisplayRepositoryInterface::class)
       ->getViewDisplay('entity_test_with_bundle', 'test');
