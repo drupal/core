@@ -68,6 +68,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/../composer/Plugin/Scaffold/Operations/AppendOp.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$code of class RuntimeException constructor expects int, array given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/../composer/Plugin/Scaffold/Operations/ReplaceOp.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Composer\\\\Plugin\\\\Scaffold\\\\Operations\\\\ScaffoldFileCollection\\:\\:filterFiles\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -158,6 +164,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/includes/form.inc',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$set_id of function _batch_populate_queue expects string, int\\<0, max\\> given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/includes/form.inc',
+];
+$ignoreErrors[] = [
 	'message' => '#^Variable \\$new_set_index might not be defined\\.$#',
 	'identifier' => 'variable.undefined',
 	'count' => 1,
@@ -210,6 +222,18 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/includes/update.inc',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$callback of function set_error_handler expects \\(callable\\(int, string, string, int\\)\\: bool\\)\\|null, \'_drupal_error…\' given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/includes/utility.inc',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$callback of function set_error_handler expects \\(callable\\(int, string, string, int\\)\\: bool\\)\\|null, \'_drupal_error…\' given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/install.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\:\\:setContainer\\(\\) has no return type specified\\.$#',
@@ -1556,6 +1580,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/lib/Drupal/Core/Asset/LibraryDiscoveryCollector.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$cid of method Drupal\\\\Core\\\\Cache\\\\CacheCollector\\:\\:__construct\\(\\) expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Asset/LibraryDiscoveryCollector.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Asset\\\\LibraryDiscoveryParser\\:\\:isValidUri\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -2864,6 +2894,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/lib/Drupal/Core/Config/ConfigInstaller.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$dependency of method Drupal\\\\Core\\\\Config\\\\ConfigInstaller\\:\\:installOptionalConfig\\(\\) expects array, string given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Config/ConfigInstaller.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Config\\\\ConfigInstallerInterface\\:\\:checkConfigurationToInstall\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -3050,6 +3086,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/lib/Drupal/Core/Config/Entity/ConfigEntityStorage.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity of method Drupal\\\\Core\\\\Config\\\\Entity\\\\ConfigEntityStorage\\:\\:updateFromStorageRecord\\(\\) expects Drupal\\\\Core\\\\Config\\\\Entity\\\\ConfigEntityInterface, Drupal\\\\Core\\\\Entity\\\\EntityInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Config/Entity/ConfigEntityStorage.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Config\\\\Entity\\\\ConfigEntityType\\:\\:checkStorageClass\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -3065,6 +3107,12 @@ $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Config\\\\Entity\\\\ConfigEntityUpdater\\:\\:doOne\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Config/Entity/ConfigEntityUpdater.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity of method Drupal\\\\Core\\\\Config\\\\Entity\\\\ConfigEntityUpdater\\:\\:doOne\\(\\) expects Drupal\\\\Core\\\\Config\\\\Entity\\\\ConfigEntityInterface, Drupal\\\\Core\\\\Entity\\\\EntityInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
 	'path' => __DIR__ . '/lib/Drupal/Core/Config/Entity/ConfigEntityUpdater.php',
 ];
 $ignoreErrors[] = [
@@ -3140,6 +3188,30 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/lib/Drupal/Core/Config/Entity/Query/QueryFactory.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity_type of method Drupal\\\\Core\\\\Config\\\\Entity\\\\Query\\\\QueryFactory\\:\\:deleteConfigKeyStore\\(\\) expects Drupal\\\\Core\\\\Config\\\\Entity\\\\ConfigEntityTypeInterface, Drupal\\\\Core\\\\Entity\\\\EntityTypeInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Config/Entity/Query/QueryFactory.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity_type of method Drupal\\\\Core\\\\Config\\\\Entity\\\\Query\\\\QueryFactory\\:\\:updateConfigKeyStore\\(\\) expects Drupal\\\\Core\\\\Config\\\\Entity\\\\ConfigEntityTypeInterface, Drupal\\\\Core\\\\Entity\\\\EntityTypeInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Config/Entity/Query/QueryFactory.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$config of method Drupal\\\\Core\\\\Config\\\\Entity\\\\Query\\\\QueryFactory\\:\\:deleteConfigKeyStore\\(\\) expects Drupal\\\\Core\\\\Config\\\\Config, Drupal\\\\Core\\\\Config\\\\StorableConfigBase given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Config/Entity/Query/QueryFactory.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$config of method Drupal\\\\Core\\\\Config\\\\Entity\\\\Query\\\\QueryFactory\\:\\:updateConfigKeyStore\\(\\) expects Drupal\\\\Core\\\\Config\\\\Config, Drupal\\\\Core\\\\Config\\\\StorableConfigBase given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Config/Entity/Query/QueryFactory.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Config\\\\ExportStorageManager\\:\\:replaceStorageContents\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -3190,6 +3262,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Config\\\\Plugin\\\\Validation\\\\Constraint\\\\ConfigExistsConstraintValidator\\:\\:create\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Config/Plugin/Validation/Constraint/ConfigExistsConstraintValidator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$data of static method Drupal\\\\Core\\\\Config\\\\Schema\\\\TypeResolver\\:\\:resolveDynamicTypeName\\(\\) expects array, object\\|null given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/lib/Drupal/Core/Config/Plugin/Validation/Constraint/ConfigExistsConstraintValidator.php',
 ];
@@ -3560,6 +3638,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/lib/Drupal/Core/Database/Query/Select.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$type of method Drupal\\\\Core\\\\Database\\\\Query\\\\Select\\:\\:addJoin\\(\\) expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Database/Query/Select.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Database\\\\Query\\\\SelectExtender\\:\\:__call\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -3702,6 +3786,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/lib/Drupal/Core/Datetime/Entity/DateFormat.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$storage of method Drupal\\\\Core\\\\DefaultContent\\\\ContentExportCommand\\:\\:loadEntities\\(\\) expects Drupal\\\\Core\\\\Entity\\\\ContentEntityStorageInterface, Drupal\\\\Core\\\\Entity\\\\EntityStorageInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/DefaultContent/ContentExportCommand.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\DependencyInjection\\\\Compiler\\\\TaggedHandlersPass\\:\\:processServiceCollectorPass\\(\\) has no return type specified\\.$#',
@@ -3946,6 +4036,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\DrupalKernel\\:\\:updateModules\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/DrupalKernel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$callback of function set_error_handler expects \\(callable\\(int, string, string, int\\)\\: bool\\)\\|null, \'_drupal_error…\' given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/lib/Drupal/Core/DrupalKernel.php',
 ];
@@ -4408,6 +4504,18 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Entity\\\\ContentEntityStorageBase\\:\\:setStaticCache\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Entity/ContentEntityStorageBase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity of method Drupal\\\\Core\\\\Entity\\\\ContentEntityStorageBase\\:\\:initFieldValues\\(\\) expects Drupal\\\\Core\\\\Entity\\\\ContentEntityInterface, Drupal\\\\Core\\\\Entity\\\\EntityInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Entity/ContentEntityStorageBase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity of method Drupal\\\\Core\\\\Entity\\\\ContentEntityStorageBase\\:\\:purgeFieldItems\\(\\) expects Drupal\\\\Core\\\\Entity\\\\ContentEntityInterface, Drupal\\\\Core\\\\Entity\\\\FieldableEntityInterface given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/lib/Drupal/Core/Entity/ContentEntityStorageBase.php',
 ];
@@ -5720,6 +5828,18 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/lib/Drupal/Core/Entity/Sql/SqlContentEntityStorage.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity of method Drupal\\\\Core\\\\Entity\\\\Sql\\\\SqlContentEntityStorage\\:\\:mapToStorageRecord\\(\\) expects Drupal\\\\Core\\\\Entity\\\\ContentEntityInterface, Drupal\\\\Core\\\\Entity\\\\EntityInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Entity/Sql/SqlContentEntityStorage.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity_type of method Drupal\\\\Core\\\\Entity\\\\Sql\\\\SqlContentEntityStorage\\:\\:getCustomTableMapping\\(\\) expects Drupal\\\\Core\\\\Entity\\\\ContentEntityTypeInterface, Drupal\\\\Core\\\\Entity\\\\EntityTypeInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
+	'path' => __DIR__ . '/lib/Drupal/Core/Entity/Sql/SqlContentEntityStorage.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Variable \\$transaction in isset\\(\\) always exists and is not nullable\\.$#',
 	'identifier' => 'isset.variable',
 	'count' => 2,
@@ -5944,6 +6064,24 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Entity\\\\Sql\\\\SqlContentEntityStorageSchema\\:\\:updateSharedTableSchema\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Entity/Sql/SqlContentEntityStorageSchema.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity_type of method Drupal\\\\Core\\\\Entity\\\\Sql\\\\SqlContentEntityStorageSchema\\:\\:getEntitySchema\\(\\) expects Drupal\\\\Core\\\\Entity\\\\ContentEntityTypeInterface, Drupal\\\\Core\\\\Entity\\\\EntityTypeInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 4,
+	'path' => __DIR__ . '/lib/Drupal/Core/Entity/Sql/SqlContentEntityStorageSchema.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity_type of method Drupal\\\\Core\\\\Entity\\\\Sql\\\\SqlContentEntityStorageSchema\\:\\:getEntitySchemaData\\(\\) expects Drupal\\\\Core\\\\Entity\\\\ContentEntityTypeInterface, Drupal\\\\Core\\\\Entity\\\\EntityTypeInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
+	'path' => __DIR__ . '/lib/Drupal/Core/Entity/Sql/SqlContentEntityStorageSchema.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$entity_type of method Drupal\\\\Core\\\\Entity\\\\Sql\\\\SqlContentEntityStorageSchema\\:\\:getDedicatedTableSchema\\(\\) expects Drupal\\\\Core\\\\Entity\\\\ContentEntityTypeInterface\\|null, Drupal\\\\Core\\\\Entity\\\\EntityTypeInterface given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/lib/Drupal/Core/Entity/Sql/SqlContentEntityStorageSchema.php',
 ];
@@ -6904,6 +7042,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Field\\\\Plugin\\\\Field\\\\FieldType\\\\DecimalItem\\:\\:preSave\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Field/Plugin/Field/FieldType/DecimalItem.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$num of function round expects float\\|int, string given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/lib/Drupal/Core/Field/Plugin/Field/FieldType/DecimalItem.php',
 ];
@@ -8240,6 +8384,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/lib/Drupal/Core/Menu/MenuActiveTrail.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$cid of method Drupal\\\\Core\\\\Cache\\\\CacheCollector\\:\\:__construct\\(\\) expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Menu/MenuActiveTrail.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Menu\\\\MenuLinkBase\\:\\:deleteLink\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -8396,6 +8546,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/lib/Drupal/Core/Menu/MenuTreeStorage.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$menu_name of method Drupal\\\\Core\\\\Menu\\\\MenuTreeStorage\\:\\:loadLinks\\(\\) expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Menu/MenuTreeStorage.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Variable \\$transaction in isset\\(\\) always exists and is not nullable\\.$#',
 	'identifier' => 'isset.variable',
 	'count' => 1,
@@ -8424,6 +8580,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/lib/Drupal/Core/Menu/Plugin/Block/LocalTasksBlock.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$data of static method Drupal\\\\Core\\\\Config\\\\Schema\\\\TypeResolver\\:\\:resolveDynamicTypeName\\(\\) expects array, object\\|null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Menu/Plugin/Validation/Constraint/MenuLinkDepthConstraintValidator.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Menu\\\\StaticMenuLinkOverrides\\:\\:deleteMultipleOverrides\\(\\) has no return type specified\\.$#',
@@ -8558,6 +8720,24 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/lib/Drupal/Core/Plugin/Context/ContextHandler.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$callback of function array_filter expects \\(callable\\(Drupal\\\\Component\\\\Plugin\\\\Context\\\\ContextInterface\\)\\: bool\\)\\|null, Closure\\(Drupal\\\\Core\\\\Plugin\\\\Context\\\\ContextInterface\\)\\: bool given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Plugin/Context/ContextHandler.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$definition of method Drupal\\\\Core\\\\Plugin\\\\Context\\\\ContextHandler\\:\\:getMatchingContexts\\(\\) expects Drupal\\\\Core\\\\Plugin\\\\Context\\\\ContextDefinitionInterface, Drupal\\\\Core\\\\TypedData\\\\DataDefinitionInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Plugin/Context/ContextHandler.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$requirements of method Drupal\\\\Core\\\\Plugin\\\\Context\\\\ContextHandler\\:\\:checkRequirements\\(\\) expects array\\<Drupal\\\\Core\\\\TypedData\\\\DataDefinitionInterface\\>, array\\<Drupal\\\\Component\\\\Plugin\\\\Context\\\\ContextDefinitionInterface\\> given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Plugin/Context/ContextHandler.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Plugin\\\\Context\\\\ContextHandlerInterface\\:\\:applyContextMapping\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -8674,6 +8854,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Plugin\\\\Discovery\\\\DirectoryWithMetadataDiscovery\\:\\:getDirectoryIterator\\(\\) return type with generic class RecursiveIteratorIterator does not specify its types\\: T$#',
 	'identifier' => 'missingType.generics',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Plugin/Discovery/DirectoryWithMetadataDiscovery.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$flags of class RecursiveIteratorIterator constructor expects 0\\|16, 4096 given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/lib/Drupal/Core/Plugin/Discovery/DirectoryWithMetadataDiscovery.php',
 ];
@@ -8946,6 +9132,18 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/lib/Drupal/Core/Queue/QueueWorkerManager.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$definition of method Drupal\\\\Core\\\\Recipe\\\\InputConfigurator\\:\\:getDefaultValue\\(\\) expects Drupal\\\\Core\\\\TypedData\\\\DataDefinition, Drupal\\\\Core\\\\TypedData\\\\DataDefinitionInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Recipe/InputConfigurator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#6 \\$install_profile of class Drupal\\\\Core\\\\Recipe\\\\RecipeConfigInstaller constructor expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Recipe/RecipeRunner.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Render\\\\BubbleableMetadata\\:\\:applyTo\\(\\) has no return type specified\\.$#',
@@ -9716,10 +9914,28 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/lib/Drupal/Core/Template/Attribute.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$value of method Drupal\\\\Core\\\\Template\\\\Attribute\\:\\:offsetSet\\(\\) expects Drupal\\\\Core\\\\Template\\\\AttributeValueBase, array given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
+	'path' => __DIR__ . '/lib/Drupal/Core/Template/Attribute.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$value of method Drupal\\\\Core\\\\Template\\\\Attribute\\:\\:offsetSet\\(\\) expects Drupal\\\\Core\\\\Template\\\\AttributeValueBase, array\\|string given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Template/Attribute.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Template\\\\AttributeValueBase\\:\\:value\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/lib/Drupal/Core/Template/AttributeValueBase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$expr of class Drupal\\\\Core\\\\Template\\\\TwigSimpleCheckToStringNode constructor expects Twig\\\\Node\\\\Expression\\\\AbstractExpression, Twig\\\\Node\\\\Node given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Template/RemoveCheckToStringNodeVisitor.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Constructor of class Drupal\\\\Core\\\\Template\\\\TwigEnvironment has an unused parameter \\$root\\.$#',
@@ -9780,6 +9996,18 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/lib/Drupal/Core/Test/PerformanceTestRecorder.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$array of function uksort contains unresolvable type\\.$#',
+	'identifier' => 'argument.unresolvableType',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Test/PhpUnitTestDiscovery.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$class_loader of class Drupal\\\\Core\\\\DrupalKernel constructor expects Composer\\\\Autoload\\\\ClassLoader, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Test/TestKernel.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Constructor of class Drupal\\\\Core\\\\Test\\\\TestRunnerKernel has an unused parameter \\$allow_dumping\\.$#',
@@ -10340,8 +10568,20 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/EntityBundleExistsConstraintValidator.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$data of static method Drupal\\\\Core\\\\Config\\\\Schema\\\\TypeResolver\\:\\:resolveDynamicTypeName\\(\\) expects array, object\\|null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/EntityBundleExistsConstraintValidator.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Core\\\\Validation\\\\Plugin\\\\Validation\\\\Constraint\\\\UniqueFieldValueValidator\\:\\:create\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/UniqueFieldValueValidator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$array of function key expects array\\|object, string given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/lib/Drupal/Core/Validation/Plugin/Validation/Constraint/UniqueFieldValueValidator.php',
 ];
@@ -10356,6 +10596,24 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/basic_auth/tests/modules/basic_auth_test/src/BasicAuthTestController.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$username of method Drupal\\\\Tests\\\\basic_auth\\\\Functional\\\\BasicAuthTest\\:\\:basicAuthGet\\(\\) expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/basic_auth/tests/src/Functional/BasicAuthTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$password of method Drupal\\\\Tests\\\\basic_auth\\\\Functional\\\\BasicAuthTest\\:\\:basicAuthGet\\(\\) expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/basic_auth/tests/src/Functional/BasicAuthTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$value of class Symfony\\\\Component\\\\HttpFoundation\\\\Cookie constructor expects string\\|null, true given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/big_pipe/src/Controller/BigPipeController.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\big_pipe\\\\EventSubscriber\\\\HtmlResponseBigPipeSubscriber\\:\\:onRespond\\(\\) has no return type specified\\.$#',
@@ -10514,6 +10772,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/block/src/BlockAccessControlHandler.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$access of method Drupal\\\\block\\\\BlockAccessControlHandler\\:\\:mergeCacheabilityFromConditions\\(\\) expects Drupal\\\\Core\\\\Access\\\\AccessResult, Drupal\\\\Core\\\\Access\\\\AccessResultInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/block/src/BlockAccessControlHandler.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\block\\\\BlockForm\\:\\:form\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -10614,6 +10878,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/block/src/Form/BlockDeleteForm.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$callback of function uasort expects callable\\(Drupal\\\\Core\\\\Entity\\\\EntityInterface, Drupal\\\\Core\\\\Entity\\\\EntityInterface\\)\\: int, Closure\\(Drupal\\\\block\\\\BlockInterface, Drupal\\\\block\\\\BlockInterface\\)\\: int\\<\\-1, 1\\> given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/block/src/Plugin/ConfigAction/PlaceBlock.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\block_test\\\\BlockRenderAlterContent\\:\\:preRender\\(\\) has no return type specified\\.$#',
@@ -10824,6 +11094,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/block_content/src/Plugin/Block/BlockContentBlock.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$callback of function array_filter expects \\(callable\\(Drupal\\\\Core\\\\Entity\\\\EntityInterface\\)\\: bool\\)\\|null, Closure\\(Drupal\\\\block_content\\\\BlockContentInterface\\)\\: bool given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/block_content/src/Plugin/EntityReferenceSelection/BlockContentSelection.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\block_content\\\\Routing\\\\RouteSubscriber\\:\\:alterRoutes\\(\\) has no return type specified\\.$#',
@@ -11138,6 +11414,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/ckeditor5/src/Plugin/Editor/CKEditor5.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$editor_form_state of method Drupal\\\\ckeditor5\\\\Plugin\\\\Editor\\\\CKEditor5\\:\\:getEventualEditorWithPrimedFilterFormat\\(\\) expects Drupal\\\\Core\\\\Form\\\\SubformStateInterface, Drupal\\\\Core\\\\Form\\\\FormStateInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 4,
+	'path' => __DIR__ . '/modules/ckeditor5/src/Plugin/Editor/CKEditor5.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\ckeditor5\\\\Plugin\\\\Validation\\\\Constraint\\\\CKEditor5MediaAndFilterSettingsInSyncConstraintValidator\\:\\:create\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -11306,6 +11588,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/ckeditor5/tests/src/Kernel/CKEditor5PluginManagerTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$baseDir of static method org\\\\bovigo\\\\vfs\\\\vfsStream\\:\\:create\\(\\) expects org\\\\bovigo\\\\vfs\\\\vfsStreamDirectory\\|null, org\\\\bovigo\\\\vfs\\\\vfsStreamContent given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/ckeditor5/tests/src/Kernel/CKEditor5PluginManagerTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\comment\\\\CommentForm\\:\\:flagViolations\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -11326,6 +11614,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\comment\\\\CommentForm\\:\\:save\\(\\) should return int but return statement is missing\\.$#',
 	'identifier' => 'return.missing',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/comment/src/CommentForm.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$comment of method Drupal\\\\comment\\\\CommentForm\\:\\:getStatusMessage\\(\\) expects Drupal\\\\comment\\\\CommentInterface, Drupal\\\\Core\\\\Entity\\\\ContentEntityInterface\\|Drupal\\\\Core\\\\Entity\\\\RevisionLogInterface given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/comment/src/CommentForm.php',
 ];
@@ -12242,6 +12536,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/content_moderation/src/EntityOperations.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$content_moderation_state of static method Drupal\\\\content_moderation\\\\Entity\\\\ContentModerationState\\:\\:updateOrCreateFromEntity\\(\\) expects Drupal\\\\content_moderation\\\\Entity\\\\ContentModerationState, Drupal\\\\content_moderation\\\\Entity\\\\ContentModerationStateInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/content_moderation/src/EntityOperations.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\content_moderation\\\\EntityTypeInfo\\:\\:bundleFormRedirect\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -12272,10 +12572,22 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/content_moderation/src/EntityTypeInfo.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$type of method Drupal\\\\content_moderation\\\\EntityTypeInfo\\:\\:addModerationToEntityType\\(\\) expects Drupal\\\\Core\\\\Entity\\\\ContentEntityTypeInterface, Drupal\\\\Core\\\\Entity\\\\EntityTypeInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/content_moderation/src/EntityTypeInfo.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\content_moderation\\\\EventSubscriber\\\\ConfigImportSubscriber\\:\\:onConfigImporterValidate\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/content_moderation/src/EventSubscriber/ConfigImportSubscriber.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(Drupal\\\\workflows\\\\StateInterface\\)\\: mixed\\)\\|null, Closure\\(Drupal\\\\content_moderation\\\\ContentModerationState\\)\\: \\(string\\|null\\) given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/content_moderation/src/EventSubscriber/WorkspaceSubscriber.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\content_moderation\\\\Form\\\\ContentModerationConfigureEntityTypesForm\\:\\:getTitle\\(\\) has no return type specified\\.$#',
@@ -12368,6 +12680,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/content_moderation/src/Plugin/Field/ModerationStateFieldItemList.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity of method Drupal\\\\content_moderation\\\\Plugin\\\\Field\\\\ModerationStateFieldItemList\\:\\:loadContentModerationStateRevision\\(\\) expects Drupal\\\\Core\\\\Entity\\\\ContentEntityInterface, Drupal\\\\Core\\\\Entity\\\\FieldableEntityInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/content_moderation/src/Plugin/Field/ModerationStateFieldItemList.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\content_moderation\\\\Plugin\\\\Validation\\\\Constraint\\\\ModerationStateConstraintValidator\\:\\:create\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -12440,6 +12758,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/content_moderation/src/Routing/ContentModerationRouteSubscriber.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$callback of function array_filter expects \\(callable\\(Drupal\\\\workflows\\\\TransitionInterface\\)\\: bool\\)\\|null, Closure\\(Drupal\\\\workflows\\\\Transition\\)\\: bool given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/content_moderation/src/StateTransitionValidation.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\content_moderation\\\\Functional\\\\ModerationStateTestBase\\:\\:createContentTypeFromUi\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -12492,6 +12816,18 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/content_moderation/tests/src/Kernel/ContentModerationStateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$revision_id of method Drupal\\\\Tests\\\\content_moderation\\\\Kernel\\\\ContentModerationStateTest\\:\\:reloadEntity\\(\\) expects bool\\|int, string given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/content_moderation/tests/src/Kernel/ContentModerationStateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity of method Drupal\\\\Tests\\\\content_moderation\\\\Kernel\\\\ContentModerationSyncingTest\\:\\:getAllRevisionNames\\(\\) expects Drupal\\\\entity_test\\\\Entity\\\\EntityTestMulRevPub, Drupal\\\\block_content\\\\Entity\\\\BlockContent\\|null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/content_moderation/tests/src/Kernel/ContentModerationSyncingTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\content_moderation\\\\Kernel\\\\EntityStateChangeValidationTest\\:\\:transitionAccessValidationTestCases\\(\\) has no return type specified\\.$#',
@@ -12552,6 +12888,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/content_moderation/tests/src/Unit/LatestRevisionCheckTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$bundle_info of class Drupal\\\\content_moderation\\\\ModerationInformation constructor expects Drupal\\\\Core\\\\Entity\\\\EntityTypeBundleInfoInterface, Drupal\\\\Core\\\\Entity\\\\EntityTypeManagerInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 4,
+	'path' => __DIR__ . '/modules/content_moderation/tests/src/Unit/ModerationInformationTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\content_moderation\\\\Unit\\\\StateTransitionValidationTest\\:\\:userTransitionsProvider\\(\\) has no return type specified\\.$#',
@@ -12680,6 +13022,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/content_translation/src/Controller/ContentTranslationController.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity of method Drupal\\\\content_translation\\\\Controller\\\\ContentTranslationController\\:\\:prepareTranslation\\(\\) expects Drupal\\\\Core\\\\Entity\\\\ContentEntityInterface, Drupal\\\\Core\\\\Entity\\\\RevisionableInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/content_translation/src/Controller/ContentTranslationController.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Variable \\$source_name might not be defined\\.$#',
 	'identifier' => 'variable.undefined',
 	'count' => 1,
@@ -12728,6 +13076,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/content_translation/tests/src/Functional/ContentTranslationLanguageChangeTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity of method Drupal\\\\Tests\\\\content_translation\\\\Functional\\\\ContentTranslationPendingRevisionTestBase\\:\\:getEditUrl\\(\\) expects Drupal\\\\Core\\\\Entity\\\\ContentEntityInterface, Drupal\\\\Core\\\\Entity\\\\EntityInterface\\|null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/content_translation/tests/src/Functional/ContentTranslationOutdatedRevisionTranslationTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\content_translation\\\\Functional\\\\ContentTranslationPendingRevisionTestBase\\:\\:enableContentModeration\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -12750,6 +13104,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/content_translation/tests/src/Functional/ContentTranslationPendingRevisionTestBase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity of method Drupal\\\\Tests\\\\content_translation\\\\Functional\\\\ContentTranslationPendingRevisionTestBase\\:\\:loadRevisionTranslation\\(\\) expects Drupal\\\\Core\\\\Entity\\\\ContentEntityInterface, Drupal\\\\Core\\\\Entity\\\\EntityInterface\\|null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 9,
+	'path' => __DIR__ . '/modules/content_translation/tests/src/Functional/ContentTranslationRevisionTranslationDeletionTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\content_translation\\\\Functional\\\\ContentTranslationTestBase\\:\\:enableTranslation\\(\\) has no return type specified\\.$#',
@@ -12869,6 +13229,12 @@ $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\content_translation\\\\Functional\\\\ContentTranslationUITestBase\\:\\:getNewEntityValues\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
+	'path' => __DIR__ . '/modules/content_translation/tests/src/Functional/ContentTranslationUITestBase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$translation of method Drupal\\\\Tests\\\\content_translation\\\\Functional\\\\ContentTranslationUITestBase\\:\\:getValue\\(\\) expects Drupal\\\\Core\\\\Entity\\\\EntityInterface, Drupal\\\\Core\\\\TypedData\\\\TranslatableInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
 	'path' => __DIR__ . '/modules/content_translation/tests/src/Functional/ContentTranslationUITestBase.php',
 ];
 $ignoreErrors[] = [
@@ -13040,6 +13406,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/datetime_range/src/Plugin/Field/FieldWidget/DateRangeWidgetBase.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$query of method Drupal\\\\dblog\\\\Controller\\\\DbLogController\\:\\:addFilterToQuery\\(\\) expects Drupal\\\\Core\\\\Database\\\\Query\\\\SelectInterface, Drupal\\\\Core\\\\Database\\\\Query\\\\ExtendableInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/dblog/src/Controller/DbLogController.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\dblog\\\\Form\\\\DblogClearLogConfirmForm\\:\\:submitForm\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -13114,6 +13486,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\dblog\\\\Functional\\\\DbLogTest\\:\\:generateLogEntries\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/dblog/tests/src/Functional/DbLogTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$severity of method Drupal\\\\Tests\\\\dblog\\\\Functional\\\\DbLogTest\\:\\:filterLogsEntries\\(\\) expects string\\|null, int\\<0, max\\> given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/dblog/tests/src/Functional/DbLogTest.php',
 ];
@@ -13194,6 +13572,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/editor/tests/modules/editor_test/src/Plugin/Editor/UnicornEditor.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$expected of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) contains unresolvable type\\.$#',
+	'identifier' => 'argument.unresolvableType',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/editor/tests/src/Kernel/EditorManagerTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\editor\\\\Unit\\\\EditorXssFilter\\\\StandardTest\\:\\:providerTestFilterXss\\(\\) has no return type specified\\.$#',
@@ -13412,10 +13796,22 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/field/tests/src/Functional/Views/FieldTestBase.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$expected of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSameSize\\(\\) expects Countable\\|iterable, string given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/field/tests/src/Kernel/BulkDeleteTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Variable \\$values might not be defined\\.$#',
 	'identifier' => 'variable.undefined',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/field/tests/src/Kernel/FieldAttachStorageTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$field_definition of method Drupal\\\\Tests\\\\field\\\\Kernel\\\\FieldDefinitionIntegrityTest\\:\\:checkDisplayOption\\(\\) expects Drupal\\\\Core\\\\Field\\\\BaseFieldDefinition, Drupal\\\\Core\\\\Field\\\\FieldDefinitionInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
+	'path' => __DIR__ . '/modules/field/tests/src/Kernel/FieldDefinitionIntegrityTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\field\\\\Kernel\\\\FieldKernelTestBase\\:\\:assertFieldValues\\(\\) has no return type specified\\.$#',
@@ -13434,6 +13830,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/field/tests/src/Kernel/FieldKernelTestBase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$element of static method Drupal\\\\Core\\\\Field\\\\Plugin\\\\Field\\\\FieldType\\\\NumericItemBase\\:\\:validateMinAndMaxConfig\\(\\) expects array\\<array\\>, array\\<string, float\\|int\\|list\\<list\\<string\\>\\>\\|string\\> given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/field/tests/src/Kernel/Number/NumberItemTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\field\\\\Unit\\\\DependencyFieldItem\\:\\:calculateDependencies\\(\\) has no return type specified\\.$#',
@@ -13634,6 +14036,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/field_ui/src/Form/FieldConfigEditForm.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$field_config of method Drupal\\\\field_ui\\\\Form\\\\FieldConfigEditForm\\:\\:getTypedData\\(\\) expects Drupal\\\\field\\\\FieldConfigInterface, Drupal\\\\Core\\\\Entity\\\\EntityInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/field_ui/src/Form/FieldConfigEditForm.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\field_ui\\\\Form\\\\FieldStorageAddForm\\:\\:rebuildWithOptions\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -13826,6 +14234,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/file/src/EventSubscriber/FileEventSubscriber.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#4 \\$field_type of function file_get_file_references expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/file/src/FileAccessControlHandler.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\file\\\\FileInterface\\:\\:setFileUri\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -13902,6 +14316,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/file/src/FileUsage/FileUsageInterface.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#4 \\$field_type of function file_get_file_references expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/file/src/Hook/FileDownloadHook.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Variable \\$rows in empty\\(\\) always exists and is not falsy\\.$#',
@@ -14138,6 +14558,18 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/file/tests/src/Functional/FileFieldTestBase.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$string of static method Drupal\\\\Component\\\\Serialization\\\\Json\\:\\:decode\\(\\) expects string, Psr\\\\Http\\\\Message\\\\StreamInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/file/tests/src/Functional/FileFieldWidgetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#4 \\$new_revision of method Drupal\\\\Tests\\\\file\\\\Functional\\\\FileFieldTestBase\\:\\:uploadNodeFile\\(\\) expects bool, int given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/file/tests/src/Functional/FileFieldWidgetTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\file\\\\Functional\\\\FileManagedTestBase\\:\\:assertDifferentFile\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -14330,6 +14762,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/filter/filter.module',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$match of function _filter_url_escape_comments expects array, string given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
+	'path' => __DIR__ . '/modules/filter/filter.module',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\filter\\\\Element\\\\TextFormat\\:\\:currentUser\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -14456,6 +14894,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/filter/src/Form/FilterDisableForm.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$logger of static method Drupal\\\\Core\\\\Utility\\\\Error\\:\\:logException\\(\\) expects Psr\\\\Log\\\\LoggerInterface, string given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/filter/src/Plugin/Filter/EntityLinks.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\filter\\\\Plugin\\\\Filter\\\\FilterHtml\\:\\:filterElementAttributes\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -14464,6 +14908,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\filter\\\\Plugin\\\\Filter\\\\FilterHtml\\:\\:setConfiguration\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/filter/src/Plugin/Filter/FilterHtml.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$element of method Drupal\\\\filter\\\\Plugin\\\\Filter\\\\FilterHtml\\:\\:filterElementAttributes\\(\\) expects DOMElement, DOMNameSpaceNode\\|DOMNode given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/filter/src/Plugin/Filter/FilterHtml.php',
 ];
@@ -14592,6 +15042,12 @@ $ignoreErrors[] = [
 	'identifier' => 'empty.variable',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/help/tests/src/Functional/HelpTopicTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$module_handler of class Drupal\\\\help\\\\HelpTopicTwigLoader constructor expects Drupal\\\\Core\\\\Extension\\\\ModuleHandlerInterface, Drupal\\\\Core\\\\Extension\\\\ThemeHandlerInterface\\|Prophecy\\\\Prophecy\\\\ObjectProphecy given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/help/tests/src/Unit/HelpTopicTwigLoaderTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\help\\\\Unit\\\\HelpTopicTwigTest\\:\\:getTwigMock\\(\\) has no return type specified\\.$#',
@@ -14870,6 +15326,18 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/image/src/Plugin/ImageEffect/RotateImageEffect.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$min of function rand expects int, float given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/image/src/Plugin/ImageEffect/RotateImageEffect.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$max of function rand expects int, float given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/image/src/Plugin/ImageEffect/RotateImageEffect.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\image\\\\Plugin\\\\ImageEffect\\\\ScaleImageEffect\\:\\:submitConfigurationForm\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -14954,6 +15422,18 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/image/tests/src/Functional/ImageFieldTestBase.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$min_resolution of method Drupal\\\\Tests\\\\image\\\\Functional\\\\ImageFieldValidateTest\\:\\:getFieldSettings\\(\\) expects array\\<int\\>, array\\<string, int\\|null\\> given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
+	'path' => __DIR__ . '/modules/image/tests/src/Functional/ImageFieldValidateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$max_resolution of method Drupal\\\\Tests\\\\image\\\\Functional\\\\ImageFieldValidateTest\\:\\:getFieldSettings\\(\\) expects array\\<int\\>, array\\<string, int\\|null\\> given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
+	'path' => __DIR__ . '/modules/image/tests/src/Functional/ImageFieldValidateTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Variable \\$image_that_is_too_small_file might not be defined\\.$#',
 	'identifier' => 'variable.undefined',
 	'count' => 2,
@@ -14993,6 +15473,12 @@ $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\image\\\\Unit\\\\ImageStyleTest\\:\\:fileDefaultScheme\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
+	'path' => __DIR__ . '/modules/image/tests/src/Unit/ImageStyleTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$image_effect of method Drupal\\\\Tests\\\\image\\\\Unit\\\\ImageStyleTest\\:\\:getImageStyleMock\\(\\) expects Drupal\\\\image\\\\ImageEffectInterface&PHPUnit\\\\Framework\\\\MockObject\\\\MockObject, Drupal\\\\image\\\\ImageEffectBase&PHPUnit\\\\Framework\\\\MockObject\\\\Stub given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 5,
 	'path' => __DIR__ . '/modules/image/tests/src/Unit/ImageStyleTest.php',
 ];
 $ignoreErrors[] = [
@@ -15062,6 +15548,18 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/jsonapi/src/Access/TemporaryQueryGuard.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(Drupal\\\\Core\\\\TypedData\\\\ComplexDataDefinitionInterface\\)\\: mixed\\)\\|null, Closure\\(Drupal\\\\Core\\\\Field\\\\TypedData\\\\FieldItemDataDefinitionInterface\\)\\: mixed given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/Context/FieldResolver.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$definitions of method Drupal\\\\jsonapi\\\\Context\\\\FieldResolver\\:\\:getRelatableResourceTypes\\(\\) expects array\\<Drupal\\\\Core\\\\Field\\\\TypedData\\\\FieldItemDataDefinitionInterface\\>, array\\<Drupal\\\\Core\\\\TypedData\\\\ComplexDataDefinitionInterface\\> given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/Context/FieldResolver.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Variable \\$reason in empty\\(\\) always exists and is not falsy\\.$#',
 	'identifier' => 'empty.variable',
 	'count' => 1,
@@ -15089,6 +15587,60 @@ $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\jsonapi\\\\Controller\\\\EntityResource\\:\\:validate\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/Controller/EntityResource.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity of method Drupal\\\\jsonapi\\\\Controller\\\\EntityResource\\:\\:entityExists\\(\\) expects Drupal\\\\Core\\\\Entity\\\\EntityInterface, array given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/Controller/EntityResource.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity of static method Drupal\\\\jsonapi\\\\Controller\\\\EntityResource\\:\\:validate\\(\\) expects Drupal\\\\Core\\\\Entity\\\\EntityInterface, array given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/Controller/EntityResource.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$received_resource_identifiers of static method Drupal\\\\jsonapi\\\\Controller\\\\EntityResource\\:\\:relationshipResponseRequiresBody\\(\\) expects array, Drupal\\\\Core\\\\Field\\\\EntityReferenceFieldItemListInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/Controller/EntityResource.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$entity of static method Drupal\\\\jsonapi\\\\JsonApiResource\\\\ResourceObject\\:\\:createFromEntity\\(\\) expects Drupal\\\\Core\\\\Entity\\\\EntityInterface, array given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/Controller/EntityResource.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$includes of method Drupal\\\\jsonapi\\\\Controller\\\\EntityResource\\:\\:respondWithCollection\\(\\) expects Drupal\\\\jsonapi\\\\JsonApiResource\\\\IncludedData, Drupal\\\\jsonapi\\\\JsonApiResource\\\\Data given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/Controller/EntityResource.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$origin of method Drupal\\\\jsonapi\\\\Controller\\\\EntityResource\\:\\:updateEntityField\\(\\) expects Drupal\\\\Core\\\\Entity\\\\EntityInterface, array given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/Controller/EntityResource.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$resource_identifiers of method Drupal\\\\jsonapi\\\\Controller\\\\EntityResource\\:\\:doPatchIndividualRelationship\\(\\) expects array\\<Drupal\\\\jsonapi\\\\JsonApiResource\\\\ResourceIdentifier\\>, Drupal\\\\Core\\\\Field\\\\EntityReferenceFieldItemListInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/Controller/EntityResource.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$resource_identifiers of method Drupal\\\\jsonapi\\\\Controller\\\\EntityResource\\:\\:doPatchMultipleRelationship\\(\\) expects array\\<Drupal\\\\jsonapi\\\\JsonApiResource\\\\ResourceIdentifier\\>, Drupal\\\\Core\\\\Field\\\\EntityReferenceFieldItemListInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/Controller/EntityResource.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$includes of method Drupal\\\\jsonapi\\\\Controller\\\\EntityResource\\:\\:buildWrappedResponse\\(\\) expects Drupal\\\\jsonapi\\\\JsonApiResource\\\\IncludedData, Drupal\\\\jsonapi\\\\JsonApiResource\\\\Data given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 5,
 	'path' => __DIR__ . '/modules/jsonapi/src/Controller/EntityResource.php',
 ];
 $ignoreErrors[] = [
@@ -15212,6 +15764,24 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/jsonapi/src/JsonApiResource/LabelOnlyResourceObject.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$array of function array_reduce expects array\\<Drupal\\\\jsonapi\\\\JsonApiResource\\\\Link\\>, Drupal\\\\jsonapi\\\\JsonApiResource\\\\Link given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
+	'path' => __DIR__ . '/modules/jsonapi/src/JsonApiResource/LinkCollection.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$links of class Drupal\\\\jsonapi\\\\JsonApiResource\\\\LinkCollection constructor expects array\\<Drupal\\\\jsonapi\\\\JsonApiResource\\\\Link\\>, array\\<string, list\\<Drupal\\\\jsonapi\\\\JsonApiResource\\\\Link\\>\\> given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/JsonApiResource/LinkCollection.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$deserialization_target_class of class Drupal\\\\jsonapi\\\\ResourceType\\\\ResourceType constructor expects class\\-string, string given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/JsonApiResource/ResourceIdentifier.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\jsonapi\\\\JsonapiServiceProvider\\:\\:alter\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -15308,8 +15878,20 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/jsonapi/src/Normalizer/JsonApiDocumentTopLevelNormalizer.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(Drupal\\\\jsonapi\\\\JsonApiResource\\\\ResourceIdentifierInterface\\)\\: mixed\\)\\|null, Closure\\(Symfony\\\\Component\\\\HttpKernel\\\\Exception\\\\HttpExceptionInterface\\)\\: mixed given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/Normalizer/JsonApiDocumentTopLevelNormalizer.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\jsonapi\\\\Normalizer\\\\LinkCollectionNormalizer\\:\\:normalize\\(\\) return type with generic class ArrayObject does not specify its types\\: TKey, TValue$#',
 	'identifier' => 'missingType.generics',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/Normalizer/LinkCollectionNormalizer.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, Drupal\\\\jsonapi\\\\JsonApiResource\\\\Link given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/jsonapi/src/Normalizer/LinkCollectionNormalizer.php',
 ];
@@ -15370,6 +15952,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\jsonapi\\\\ResourceType\\\\ResourceType\\:\\:setRelatableResourceTypes\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/src/ResourceType/ResourceType.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$callback of function array_filter expects \\(callable\\(string\\)\\: bool\\)\\|null, Closure\\(Drupal\\\\jsonapi\\\\ResourceType\\\\ResourceTypeField\\)\\: bool given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/jsonapi/src/ResourceType/ResourceType.php',
 ];
@@ -15452,6 +16040,18 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/jsonapi/src/Serializer/Serializer.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$route_name of static method Drupal\\\\Tests\\\\jsonapi_response_validator\\\\Unit\\\\EventSubscriber\\\\ResourceResponseValidatorTest\\:\\:createRequest\\(\\) expects string, bool given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/tests/modules/jsonapi_response_validator/tests/src/Unit/EventSubscriber/ResourceResponseValidatorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$resource_type of static method Drupal\\\\Tests\\\\jsonapi_response_validator\\\\Unit\\\\EventSubscriber\\\\ResourceResponseValidatorTest\\:\\:createRequest\\(\\) expects Drupal\\\\jsonapi\\\\ResourceType\\\\ResourceType, string given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/tests/modules/jsonapi_response_validator/tests/src/Unit/EventSubscriber/ResourceResponseValidatorTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\jsonapi_test_data_type\\\\Normalizer\\\\StringNormalizer\\:\\:normalize\\(\\) return type with generic class ArrayObject does not specify its types\\: TKey, TValue$#',
 	'identifier' => 'missingType.generics',
 	'count' => 1,
@@ -15492,6 +16092,18 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/jsonapi/tests/modules/jsonapi_test_resource_type_building/src/EventSubscriber/ResourceTypeBuildEventSubscriber.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$view_permission of method Drupal\\\\Tests\\\\jsonapi\\\\Functional\\\\BlockContentTest\\:\\:doTestCollectionFilterAccessForPublishableEntities\\(\\) expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/tests/src/Functional/BlockContentTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$file_contents of method Drupal\\\\Tests\\\\jsonapi\\\\Functional\\\\FileUploadTest\\:\\:fileRequest\\(\\) expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/tests/src/Functional/FileUploadTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\jsonapi\\\\Functional\\\\InternalEntitiesTest\\:\\:jsonapiGet\\(\\) has no return type specified\\.$#',
@@ -15626,6 +16238,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/jsonapi/tests/src/Functional/ResourceTestBase.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$string of static method Drupal\\\\Component\\\\Serialization\\\\Json\\:\\:decode\\(\\) expects string, Psr\\\\Http\\\\Message\\\\StreamInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/tests/src/Functional/ResourceTestBase.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Variable \\$created_entity might not be defined\\.$#',
 	'identifier' => 'variable.undefined',
 	'count' => 1,
@@ -15648,6 +16266,24 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/jsonapi/tests/src/Functional/TermTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$string of static method Drupal\\\\Component\\\\Serialization\\\\Json\\:\\:decode\\(\\) expects string, Psr\\\\Http\\\\Message\\\\StreamInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/tests/src/Functional/TermTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$account of method Drupal\\\\Tests\\\\jsonapi\\\\Functional\\\\UserTest\\:\\:sendDeleteRequestForUser\\(\\) expects Drupal\\\\user\\\\UserInterface, Drupal\\\\Core\\\\Entity\\\\EntityInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 4,
+	'path' => __DIR__ . '/modules/jsonapi/tests/src/Functional/UserTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity of method Drupal\\\\Tests\\\\jsonapi\\\\Functional\\\\ResourceTestBase\\:\\:normalize\\(\\) expects Drupal\\\\Core\\\\Entity\\\\EntityInterface, Drupal\\\\Core\\\\Session\\\\AccountInterface\\|null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/tests/src/Functional/UserTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\jsonapi\\\\Kernel\\\\Context\\\\FieldResolverTest\\:\\:resolveInternalEntityQueryPathErrorProvider\\(\\) has no return type specified\\.$#',
@@ -15688,6 +16324,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\jsonapi\\\\Kernel\\\\Normalizer\\\\LinkCollectionNormalizerTest\\:\\:getNormalizer\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/jsonapi/tests/src/Kernel/Normalizer/LinkCollectionNormalizerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$deserialization_target_class of class Drupal\\\\jsonapi\\\\ResourceType\\\\ResourceType constructor expects class\\-string, string given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/jsonapi/tests/src/Kernel/Normalizer/LinkCollectionNormalizerTest.php',
 ];
@@ -15826,6 +16468,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\language\\\\Config\\\\LanguageConfigFactoryOverride\\:\\:onConfigSave\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/language/src/Config/LanguageConfigFactoryOverride.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$config of method Drupal\\\\Core\\\\Config\\\\ConfigFactoryOverrideBase\\:\\:filterOverride\\(\\) expects Drupal\\\\Core\\\\Config\\\\Config, Drupal\\\\Core\\\\Config\\\\StorableConfigBase given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/language/src/Config/LanguageConfigFactoryOverride.php',
 ];
@@ -16104,6 +16752,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/language/src/HttpKernel/PathProcessorLanguage.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity of method Drupal\\\\Core\\\\Entity\\\\EntityAccessControlHandler\\:\\:checkAccess\\(\\) expects Drupal\\\\Core\\\\Entity\\\\EntityInterface, Drupal\\\\Core\\\\Language\\\\LanguageInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
+	'path' => __DIR__ . '/modules/language/src/LanguageAccessControlHandler.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\language\\\\LanguageListBuilder\\:\\:submitForm\\(\\) has no return type specified\\.$#',
@@ -16502,6 +17156,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/layout_builder/src/Form/ConfigureBlockFormBase.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$block of method Drupal\\\\layout_builder\\\\Form\\\\ConfigureBlockFormBase\\:\\:getPluginForm\\(\\) expects Drupal\\\\Core\\\\Block\\\\BlockPluginInterface, Drupal\\\\Component\\\\Plugin\\\\PluginInspectionInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/layout_builder/src/Form/ConfigureBlockFormBase.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\layout_builder\\\\Form\\\\ConfigureSectionForm\\:\\:submitForm\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -16576,6 +17236,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\layout_builder\\\\Form\\\\OverridesEntityForm\\:\\:redirectOnSubmit\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/layout_builder/src/Form/OverridesEntityForm.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$section_storage of method Drupal\\\\layout_builder\\\\Form\\\\OverridesEntityForm\\:\\:buildMessage\\(\\) expects Drupal\\\\layout_builder\\\\OverridesSectionStorageInterface, Drupal\\\\layout_builder\\\\SectionStorageInterface\\|null given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/layout_builder/src/Form/OverridesEntityForm.php',
 ];
@@ -16790,8 +17456,20 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/layout_builder/src/Plugin/SectionStorage/DefaultsSectionStorage.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$definition of method Drupal\\\\layout_builder\\\\Plugin\\\\SectionStorage\\\\SectionStorageBase\\:\\:buildLayoutRoutes\\(\\) expects Drupal\\\\layout_builder\\\\SectionStorage\\\\SectionStorageDefinition, array\\|Drupal\\\\Component\\\\Plugin\\\\Definition\\\\PluginDefinitionInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/layout_builder/src/Plugin/SectionStorage/DefaultsSectionStorage.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\layout_builder\\\\Plugin\\\\SectionStorage\\\\OverridesSectionStorage\\:\\:buildRoutes\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/layout_builder/src/Plugin/SectionStorage/OverridesSectionStorage.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$definition of method Drupal\\\\layout_builder\\\\Plugin\\\\SectionStorage\\\\SectionStorageBase\\:\\:buildLayoutRoutes\\(\\) expects Drupal\\\\layout_builder\\\\SectionStorage\\\\SectionStorageDefinition, array\\|Drupal\\\\Component\\\\Plugin\\\\Definition\\\\PluginDefinitionInterface given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/layout_builder/src/Plugin/SectionStorage/OverridesSectionStorage.php',
 ];
@@ -16892,6 +17570,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/layout_builder/tests/modules/layout_builder_test/src/Plugin/SectionStorage/SimpleConfigSectionStorage.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$definition of method Drupal\\\\layout_builder_test\\\\Plugin\\\\SectionStorage\\\\SimpleConfigSectionStorage\\:\\:buildLayoutRoutes\\(\\) expects Drupal\\\\layout_builder\\\\SectionStorage\\\\SectionStorageDefinition, array\\|Drupal\\\\Component\\\\Plugin\\\\Definition\\\\PluginDefinitionInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/layout_builder/tests/modules/layout_builder_test/src/Plugin/SectionStorage/SimpleConfigSectionStorage.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\layout_builder_test\\\\Plugin\\\\SectionStorage\\\\TestStateBasedSectionStorage\\:\\:buildRoutes\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -16942,6 +17626,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\layout_builder\\\\Functional\\\\LayoutSectionTest\\:\\:providerTestLayoutSectionFormatter\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/layout_builder/tests/src/Functional/LayoutSectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$expected_content of method Drupal\\\\Tests\\\\layout_builder\\\\Functional\\\\LayoutSectionTest\\:\\:assertLayoutSection\\(\\) expects array\\|string, null given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/layout_builder/tests/src/Functional/LayoutSectionTest.php',
 ];
@@ -17066,6 +17756,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/layout_builder/tests/src/FunctionalJavascript/LayoutBuilderDisableInteractionsTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$exception of static method Drupal\\\\FunctionalJavascriptTests\\\\JSWebAssert\\:\\:isExceptionNotClickable\\(\\) expects WebDriver\\\\Exception, Exception given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/layout_builder/tests/src/FunctionalJavascript/LayoutBuilderDisableInteractionsTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\layout_builder\\\\FunctionalJavascript\\\\LayoutBuilderTest\\:\\:sortableAfter\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -17170,6 +17866,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\layout_builder\\\\Kernel\\\\LayoutEntityHelperTraitTest\\:\\:providerTestOriginalEntityUsesDefaultStorage\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/layout_builder/tests/src/Kernel/LayoutEntityHelperTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$array of function array_keys expects array, Drupal\\\\layout_builder\\\\SectionStorageInterface\\|null given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/layout_builder/tests/src/Kernel/LayoutEntityHelperTraitTest.php',
 ];
@@ -17822,6 +18524,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/locale/tests/src/Functional/LocalePluralFormatTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$translated_string of static method Drupal\\\\Core\\\\StringTranslation\\\\PluralTranslatableMarkup\\:\\:createFromTranslatedString\\(\\) expects string, Drupal\\\\Core\\\\StringTranslation\\\\TranslatableMarkup given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/locale/tests/src/Functional/LocalePluralFormatTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\locale\\\\Functional\\\\LocaleUpdateBase\\:\\:addLanguage\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -17862,6 +18570,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/locale/tests/src/Functional/LocaleUpdateCronTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$language_manager of class Drupal\\\\locale\\\\LocaleDefaultConfigStorage constructor expects Drupal\\\\language\\\\ConfigurableLanguageManagerInterface, Drupal\\\\Core\\\\Language\\\\LanguageManagerInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/locale/tests/src/Kernel/LocaleDefaultConfigStorageTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\locale\\\\Unit\\\\LocaleLookupTest\\:\\:getCidProvider\\(\\) has no return type specified\\.$#',
@@ -18404,6 +19118,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/media/tests/src/Kernel/MediaEmbedFilterTranslationTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$expected of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) contains unresolvable type\\.$#',
+	'identifier' => 'argument.unresolvableType',
+	'count' => 2,
+	'path' => __DIR__ . '/modules/media/tests/src/Kernel/MediaSourceTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\media\\\\Unit\\\\ResourceTest\\:\\:setDimensionsTestCases\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -18496,6 +19216,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\media_library\\\\MediaLibraryState\\:\\:validateRequiredParameters\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/media_library/src/MediaLibraryState.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#4 \\$remaining_slots of static method Drupal\\\\media_library\\\\MediaLibraryState\\:\\:create\\(\\) expects int, string\\|null given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/media_library/src/MediaLibraryState.php',
 ];
@@ -18866,6 +19592,18 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/menu_ui/tests/src/Functional/MenuUiTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$item of method Drupal\\\\Tests\\\\menu_ui\\\\Functional\\\\MenuUiTest\\:\\:deleteMenuLink\\(\\) expects Drupal\\\\menu_link_content\\\\Entity\\\\MenuLinkContent, Drupal\\\\menu_link_content\\\\MenuLinkContentInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/menu_ui/tests/src/Functional/MenuUiTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$item of method Drupal\\\\Tests\\\\menu_ui\\\\Functional\\\\MenuUiTest\\:\\:verifyMenuLink\\(\\) expects Drupal\\\\menu_link_content\\\\Entity\\\\MenuLinkContent, Drupal\\\\menu_link_content\\\\MenuLinkContentInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/menu_ui/tests/src/Functional/MenuUiTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\menu_ui\\\\FunctionalJavascript\\\\MenuUiJavascriptTest\\:\\:assertMenuLink\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -18900,6 +19638,12 @@ $ignoreErrors[] = [
 	'identifier' => 'class.notFound',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/migrate/src/Audit/IdAuditor.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$query of method Drupal\\\\migrate\\\\Controller\\\\MigrateMessageController\\:\\:addFilterToQuery\\(\\) expects Drupal\\\\Core\\\\Database\\\\Query\\\\SelectInterface, Drupal\\\\Core\\\\Database\\\\Query\\\\ExtendableInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/migrate/src/Controller/MigrateMessageController.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\migrate\\\\Event\\\\EventBase\\:\\:logMessage\\(\\) has no return type specified\\.$#',
@@ -19008,6 +19752,18 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/migrate/src/MigrateMessageInterface.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$finder of static method Drupal\\\\migrate\\\\Plugin\\\\Discovery\\\\StaticReflectionParser\\:\\:getParentParser\\(\\) expects Doctrine\\\\Common\\\\Reflection\\\\ClassFinderInterface, Drupal\\\\Component\\\\ClassFinder\\\\ClassFinderInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/migrate/src/Plugin/Discovery/AnnotatedClassDiscoveryAutomatedProviders.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$finder of static method Drupal\\\\migrate\\\\Plugin\\\\Discovery\\\\StaticReflectionParser\\:\\:getParentParser\\(\\) expects Doctrine\\\\Common\\\\Reflection\\\\ClassFinderInterface, Drupal\\\\Component\\\\ClassFinder\\\\ClassFinderInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/migrate/src/Plugin/Discovery/AttributeDiscoveryWithAnnotationsAutomatedProviders.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\migrate\\\\Plugin\\\\MigrateDestinationInterface\\:\\:rollback\\(\\) has no return type specified\\.$#',
@@ -19454,6 +20210,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/migrate/src/Plugin/migrate/process/MigrationLookup.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$save_to_map of class Drupal\\\\migrate\\\\MigrateSkipRowException constructor expects bool, int given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/migrate/src/Plugin/migrate/process/MigrationLookup.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\migrate\\\\Plugin\\\\migrate\\\\source\\\\SourcePluginBase\\:\\:fetchNextRow\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -19560,6 +20322,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/migrate/tests/src/Kernel/MigrateDumpAlterInterface.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$entity_id of method Drupal\\\\Tests\\\\migrate\\\\Kernel\\\\MigrateEntityContentBaseTest\\:\\:validateStub\\(\\) expects string, int\\<min, \\-1\\>\\|int\\<1, max\\> given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/migrate/tests/src/Kernel/MigrateEntityContentBaseTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Cannot unset property Drupal\\\\Tests\\\\migrate\\\\Kernel\\\\MigrateTestBase\\:\\:\\$migrateMessages because it might have hooks in a subclass\\.$#',
@@ -19988,6 +20756,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/mysql/src/Driver/Database/mysql/Schema.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$required of static method Drupal\\\\Component\\\\Utility\\\\Environment\\:\\:checkMemoryLimit\\(\\) expects string, \\(float\\|int\\) given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/mysql/tests/src/Kernel/mysql/LargeQueryTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Variable \\$string_ascii_check might not be defined\\.$#',
 	'identifier' => 'variable.undefined',
 	'count' => 1,
@@ -20000,10 +20774,22 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/mysql/tests/src/Kernel/mysql/SchemaTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$required of static method Drupal\\\\Component\\\\Utility\\\\Environment\\:\\:checkMemoryLimit\\(\\) expects string, \\(float\\|int\\) given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/mysqli/tests/src/Kernel/mysqli/LargeQueryTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\navigation\\\\Form\\\\LayoutForm\\:\\:redirectOnSubmit\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/navigation/src/Form/LayoutForm.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$file of method Drupal\\\\navigation\\\\Form\\\\SettingsForm\\:\\:adjustLogoDimensions\\(\\) expects Drupal\\\\file\\\\Entity\\\\File, array\\|Drupal\\\\file\\\\FileInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/navigation/src/Form/SettingsForm.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\navigation\\\\Plugin\\\\SectionStorage\\\\NavigationSectionStorage\\:\\:buildLayoutRoutes\\(\\) has no return type specified\\.$#',
@@ -20014,6 +20800,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\navigation\\\\Plugin\\\\SectionStorage\\\\NavigationSectionStorage\\:\\:setContext\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/navigation/src/Plugin/SectionStorage/NavigationSectionStorage.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$definition of method Drupal\\\\navigation\\\\Plugin\\\\SectionStorage\\\\NavigationSectionStorage\\:\\:buildLayoutRoutes\\(\\) expects Drupal\\\\layout_builder\\\\SectionStorage\\\\SectionStorageDefinition, array\\|Drupal\\\\Component\\\\Plugin\\\\Definition\\\\PluginDefinitionInterface given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/navigation/src/Plugin/SectionStorage/NavigationSectionStorage.php',
 ];
@@ -20390,6 +21182,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/node/src/Plugin/Search/NodeSearch.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$query of method Drupal\\\\node\\\\Plugin\\\\Search\\\\NodeSearch\\:\\:addNodeRankings\\(\\) expects Drupal\\\\Core\\\\Database\\\\Query\\\\SelectExtender, Drupal\\\\Core\\\\Database\\\\Query\\\\ExtendableInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/node/src/Plugin/Search/NodeSearch.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\node\\\\Plugin\\\\views\\\\argument\\\\Type\\:\\:node_type\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -20570,6 +21368,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/node/tests/src/Functional/NodeTranslationUITest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$node of method Drupal\\\\Tests\\\\node\\\\Functional\\\\NodeTranslationUITest\\:\\:doTestAlternateHreflangLinks\\(\\) expects Drupal\\\\node\\\\Entity\\\\Node, Drupal\\\\Core\\\\Entity\\\\EntityInterface\\|null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/node/tests/src/Functional/NodeTranslationUITest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\node\\\\Functional\\\\NodeTypeTest\\:\\:assertBreadcrumb\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -20616,6 +21420,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/node/tests/src/Kernel/NodeAccessTestBase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$expected of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) contains unresolvable type\\.$#',
+	'identifier' => 'argument.unresolvableType',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/node/tests/src/Kernel/NodeTokenReplaceTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Function _options_values_in_use\\(\\) has no return type specified\\.$#',
@@ -20726,6 +21536,24 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/options/tests/src/Kernel/Views/OptionsTestBase.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(Drupal\\\\Core\\\\StringTranslation\\\\TranslatableMarkup\\)\\: mixed\\)\\|null, Closure\\(string, array\\=, array\\=\\)\\: Drupal\\\\Core\\\\StringTranslation\\\\TranslatableMarkup given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/package_manager/src/Validator/SandboxDatabaseUpdatesValidator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$stage of method Drupal\\\\Tests\\\\package_manager\\\\Kernel\\\\PackageManagerKernelTestBase\\:\\:assertStatusCheckResults\\(\\) expects Drupal\\\\Tests\\\\package_manager\\\\Kernel\\\\TestSandboxManager\\|null, Drupal\\\\package_manager\\\\SandboxManagerBase given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 4,
+	'path' => __DIR__ . '/modules/package_manager/tests/src/Kernel/LockFileValidatorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$expected of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) contains unresolvable type\\.$#',
+	'identifier' => 'argument.unresolvableType',
+	'count' => 3,
+	'path' => __DIR__ . '/modules/package_manager/tests/src/Unit/ProcessOutputCallbackTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\page_cache\\\\StackMiddleware\\\\PageCache\\:\\:set\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -20748,6 +21576,12 @@ $ignoreErrors[] = [
 	'identifier' => 'return.missing',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/path/src/PathAliasForm.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$entity of method Drupal\\\\Core\\\\Entity\\\\EntityListBuilder\\:\\:buildOperations\\(\\) expects Drupal\\\\Core\\\\Entity\\\\EntityInterface, Drupal\\\\Core\\\\Path\\\\Entity\\\\PathAlias given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/path/src/PathAliasListBuilder.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\path\\\\Plugin\\\\Field\\\\FieldType\\\\PathFieldItemList\\:\\:computeValue\\(\\) has no return type specified\\.$#',
@@ -20924,6 +21758,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/pgsql/src/Driver/Database/pgsql/Connection.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$locale of function setlocale expects array\\|string\\|null, int given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
+	'path' => __DIR__ . '/modules/pgsql/src/Driver/Database/pgsql/Connection.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\pgsql\\\\Driver\\\\Database\\\\pgsql\\\\Install\\\\Tasks\\:\\:checkBinaryOutput\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -21044,6 +21884,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/pgsql/src/Driver/Database/pgsql/Schema.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$table_alias of method Drupal\\\\Core\\\\Database\\\\Query\\\\Select\\:\\:addField\\(\\) expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/pgsql/src/Driver/Database/pgsql/Select.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Variable \\$table_field might not be defined\\.$#',
 	'identifier' => 'variable.undefined',
 	'count' => 1,
@@ -21066,6 +21912,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/phpass/tests/src/Unit/PasswordVerifyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$callback of function uasort expects callable\\(Drupal\\\\Core\\\\Entity\\\\EntityInterface, Drupal\\\\Core\\\\Entity\\\\EntityInterface\\)\\: int, \'\\\\\\\\Drupal\\\\\\\\responsive…\' given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/responsive_image/src/Plugin/Field/FieldFormatter/ResponsiveImageFormatter.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Variable \\$responsive_image_styles in empty\\(\\) always exists and is not falsy\\.$#',
@@ -21326,6 +22178,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/rest/tests/src/Functional/EntityResource/EntityResourceTestBase.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$expected of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) contains unresolvable type\\.$#',
+	'identifier' => 'argument.unresolvableType',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/rest/tests/src/Functional/EntityResource/EntityResourceTestBase.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Variable \\$created_entity might not be defined\\.$#',
 	'identifier' => 'variable.undefined',
 	'count' => 4,
@@ -21334,6 +22192,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\rest\\\\Functional\\\\FileUploadResourceTestBase\\:\\:assertResponseData\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/rest/tests/src/Functional/FileUploadResourceTestBase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$file_contents of method Drupal\\\\Tests\\\\rest\\\\Functional\\\\FileUploadResourceTestBase\\:\\:fileRequest\\(\\) expects string, null given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/rest/tests/src/Functional/FileUploadResourceTestBase.php',
 ];
@@ -21736,6 +22600,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\search\\\\SearchQuery\\:\\:parseWord\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/search/src/SearchQuery.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$field of method Drupal\\\\Core\\\\Database\\\\Query\\\\SelectExtender\\:\\:condition\\(\\) expects Drupal\\\\Core\\\\Database\\\\Query\\\\ConditionInterface\\|string, array\\<Drupal\\\\Core\\\\Database\\\\Query\\\\ConditionInterface\\> given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/search/src/SearchQuery.php',
 ];
@@ -22550,6 +23420,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/system/src/Controller/DbUpdateController.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$severity of method Drupal\\\\system\\\\Controller\\\\DbUpdateController\\:\\:requirements\\(\\) expects int, Drupal\\\\Core\\\\Extension\\\\Requirement\\\\RequirementSeverity\\:\\:Error\\|Drupal\\\\Core\\\\Extension\\\\Requirement\\\\RequirementSeverity\\:\\:Warning given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/system/src/Controller/DbUpdateController.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\system\\\\Controller\\\\LinksetController\\:\\:processCustomLinkAttributes\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -22888,6 +23764,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\system\\\\Plugin\\\\ImageToolkit\\\\GDToolkit\\:\\:submitConfigurationForm\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/system/src/Plugin/ImageToolkit/GDToolkit.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$callback of function array_filter expects \\(callable\\(1\\|2\\|4\\|32\\|256\\)\\: bool\\)\\|null, Closure\\(mixed\\)\\: int given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/system/src/Plugin/ImageToolkit/GDToolkit.php',
 ];
@@ -23350,6 +24232,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/system/tests/modules/dialog_renderer_test/src/Form/TestForm.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$content of class Drupal\\\\Core\\\\Ajax\\\\OpenModalDialogCommand constructor expects array\\|string, Drupal\\\\Component\\\\Render\\\\MarkupInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/system/tests/modules/dialog_renderer_test/src/Render/MainContent/WideModalRenderer.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\display_variant_test\\\\EventSubscriber\\\\TestPageDisplayVariantSubscriber\\:\\:onSelectPageDisplayVariant\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -23689,6 +24577,18 @@ $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\entity_test\\\\Plugin\\\\Field\\\\FieldType\\\\FieldTestItem\\:\\:preSave\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
+	'path' => __DIR__ . '/modules/system/tests/modules/entity_test/src/Plugin/Field/FieldType/FieldTestItem.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$definition of method Drupal\\\\Core\\\\Field\\\\FieldItemBase\\:\\:__construct\\(\\) expects Drupal\\\\Core\\\\TypedData\\\\ComplexDataDefinitionInterface, Drupal\\\\Core\\\\TypedData\\\\DataDefinitionInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/system/tests/modules/entity_test/src/Plugin/Field/FieldType/FieldTestItem.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$values of method Drupal\\\\Core\\\\Field\\\\FieldItemBase\\:\\:setValue\\(\\) expects array\\|null, string given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
 	'path' => __DIR__ . '/modules/system/tests/modules/entity_test/src/Plugin/Field/FieldType/FieldTestItem.php',
 ];
 $ignoreErrors[] = [
@@ -25534,6 +26434,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/system/tests/src/Functional/SecurityAdvisories/SecurityAdvisoryTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$password of method Drupal\\\\Tests\\\\system\\\\Functional\\\\Session\\\\SessionAuthenticationTest\\:\\:basicAuthGet\\(\\) expects string, Drupal\\\\Core\\\\Field\\\\FieldItemListInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 4,
+	'path' => __DIR__ . '/modules/system/tests/src/Functional/Session/SessionAuthenticationTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\system\\\\Functional\\\\System\\\\CronRunTest\\:\\:cronRun\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -25556,6 +26462,12 @@ $ignoreErrors[] = [
 	'identifier' => 'variable.undefined',
 	'count' => 2,
 	'path' => __DIR__ . '/modules/system/tests/src/Functional/Theme/ThemeUiTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$update_url of method Drupal\\\\Tests\\\\system\\\\Functional\\\\UpdateSystem\\\\UpdatePathWithBrokenRoutingTest\\:\\:runUpdates\\(\\) expects string\\|null, Drupal\\\\Core\\\\Url given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/system/tests/src/Functional/UpdateSystem/UpdatePathWithBrokenRoutingTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\system\\\\Functional\\\\UpdateSystem\\\\UpdateScriptTest\\:\\:getSystemSchema\\(\\) has no return type specified\\.$#',
@@ -25648,6 +26560,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/system/tests/src/Kernel/Form/FormElementMaxlengthTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$string of static method Drupal\\\\Component\\\\Utility\\\\Xss\\:\\:filter\\(\\) expects string, int given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/system/tests/src/Kernel/Token/TokenReplaceKernelTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\system\\\\Unit\\\\Menu\\\\MenuLinkTreeTest\\:\\:providerTestBuildCacheability\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -25724,6 +26642,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/taxonomy/src/Form/VocabularyResetForm.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$node of method Drupal\\\\taxonomy\\\\Hook\\\\TaxonomyHooks\\:\\:buildNodeIndex\\(\\) expects Drupal\\\\node\\\\NodeInterface, Drupal\\\\Core\\\\Entity\\\\EntityInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
+	'path' => __DIR__ . '/modules/taxonomy/src/Hook/TaxonomyHooks.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\taxonomy\\\\Plugin\\\\Validation\\\\Constraint\\\\TaxonomyTermHierarchyConstraintValidator\\:\\:create\\(\\) has no return type specified\\.$#',
@@ -25972,6 +26896,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/taxonomy/src/TermForm.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$term of method Drupal\\\\taxonomy\\\\TermForm\\:\\:getParentIds\\(\\) expects Drupal\\\\taxonomy\\\\TermInterface, Drupal\\\\Core\\\\Entity\\\\ContentEntityInterface\\|Drupal\\\\Core\\\\Entity\\\\RevisionLogInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/taxonomy/src/TermForm.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\taxonomy\\\\TermStorage\\:\\:resetCache\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -25980,6 +26910,18 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\taxonomy\\\\TermStorage\\:\\:resetWeights\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/taxonomy/src/TermStorage.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$term of method Drupal\\\\taxonomy\\\\TermStorage\\:\\:getParents\\(\\) expects Drupal\\\\taxonomy\\\\TermInterface, Drupal\\\\Core\\\\Entity\\\\EntityInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/taxonomy/src/TermStorage.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$term of method Drupal\\\\taxonomy\\\\TermStorage\\:\\:getParents\\(\\) expects Drupal\\\\taxonomy\\\\TermInterface, Drupal\\\\Core\\\\Entity\\\\EntityInterface\\|null given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/taxonomy/src/TermStorage.php',
 ];
@@ -26530,6 +27472,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/user/src/Entity/Role.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$callback of function uasort expects callable\\(Drupal\\\\Core\\\\Entity\\\\EntityInterface, Drupal\\\\Core\\\\Entity\\\\EntityInterface\\)\\: int, array\\{class\\-string\\<static\\(Drupal\\\\user\\\\Entity\\\\Role\\)\\>, \'sort\'\\} given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/user/src/Entity/Role.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\user\\\\Entity\\\\User\\:\\:postDelete\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -27004,6 +27952,18 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/user/src/RegisterForm.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$account of function user_login_finalize expects Drupal\\\\user\\\\UserInterface, Drupal\\\\Core\\\\Entity\\\\ContentEntityInterface\\|Drupal\\\\Core\\\\Entity\\\\RevisionLogInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/user/src/RegisterForm.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$account of function _user_mail_notify expects Drupal\\\\Core\\\\Session\\\\AccountInterface, Drupal\\\\Core\\\\Entity\\\\ContentEntityInterface\\|Drupal\\\\Core\\\\Entity\\\\RevisionLogInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 3,
+	'path' => __DIR__ . '/modules/user/src/RegisterForm.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\user\\\\RoleForm\\:\\:form\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -27160,6 +28120,18 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/user/tests/src/Functional/UserLoginHttpTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$name of method Drupal\\\\Tests\\\\user\\\\Functional\\\\UserLoginHttpTest\\:\\:loginRequest\\(\\) expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
+	'path' => __DIR__ . '/modules/user/tests/src/Functional/UserLoginHttpTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$pass of method Drupal\\\\Tests\\\\user\\\\Functional\\\\UserLoginHttpTest\\:\\:loginRequest\\(\\) expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
+	'path' => __DIR__ . '/modules/user/tests/src/Functional/UserLoginHttpTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Variable \\$name in isset\\(\\) always exists and is not nullable\\.$#',
 	'identifier' => 'isset.variable',
 	'count' => 1,
@@ -27181,6 +28153,12 @@ $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\user\\\\Functional\\\\UserLoginTest\\:\\:assertMailString\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
+	'path' => __DIR__ . '/modules/user/tests/src/Functional/UserLoginTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$account of method Drupal\\\\Tests\\\\user\\\\Functional\\\\UserLoginTest\\:\\:assertFailedLogin\\(\\) expects Drupal\\\\user\\\\Entity\\\\User, Drupal\\\\user\\\\UserInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 8,
 	'path' => __DIR__ . '/modules/user/tests/src/Functional/UserLoginTest.php',
 ];
 $ignoreErrors[] = [
@@ -31948,6 +32926,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/views/src/Plugin/views/join/CastedIntFieldJoin.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$table of method Drupal\\\\views\\\\Plugin\\\\views\\\\join\\\\JoinPluginBase\\:\\:joinAddExtra\\(\\) expects array, string given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/views/src/Plugin/views/join/CastedIntFieldJoin.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\views\\\\Plugin\\\\views\\\\join\\\\FieldOrLanguageJoin\\:\\:joinAddExtra\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -31962,6 +32946,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\views\\\\Plugin\\\\views\\\\join\\\\JoinPluginBase\\:\\:joinAddExtra\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/views/src/Plugin/views/join/JoinPluginBase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$table of method Drupal\\\\views\\\\Plugin\\\\views\\\\join\\\\JoinPluginBase\\:\\:joinAddExtra\\(\\) expects array, string given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/views/src/Plugin/views/join/JoinPluginBase.php',
 ];
@@ -34018,6 +35008,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/views/tests/src/Functional/Handler/HandlerTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$node of method Drupal\\\\Tests\\\\views\\\\Functional\\\\Plugin\\\\DisplayFeedTranslationTest\\:\\:checkFeedResults\\(\\) expects Drupal\\\\node\\\\Entity\\\\Node, Drupal\\\\node\\\\NodeInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
+	'path' => __DIR__ . '/modules/views/tests/src/Functional/Plugin/DisplayFeedTranslationTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\views\\\\Functional\\\\Plugin\\\\FilterTest\\:\\:viewsData\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -34154,6 +35150,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/views/tests/src/Kernel/Handler/FieldDateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$name of method Drupal\\\\Tests\\\\views\\\\Kernel\\\\Handler\\\\FieldEntityLinkTest\\:\\:createUser\\(\\) expects string\\|null, false given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/views/tests/src/Kernel/Handler/FieldEntityLinkTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\views\\\\Kernel\\\\Handler\\\\FieldFieldAccessTestBase\\:\\:assertFieldAccess\\(\\) has no return type specified\\.$#',
@@ -34648,6 +35650,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/views_ui/src/Form/BreakLockForm.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$title of method Drupal\\\\views_ui\\\\Hook\\\\ViewsUiThemeHooks\\:\\:viewPreviewSectionHandlerLinks\\(\\) expects string\\|Stringable\\|false, true given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 5,
+	'path' => __DIR__ . '/modules/views_ui/src/Hook/ViewsUiThemeHooks.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\views_ui\\\\ViewAddForm\\:\\:cancel\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -34824,6 +35832,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\views_ui\\\\ViewFormBase\\:\\:prepareEntity\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/modules/views_ui/src/ViewFormBase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$view of method Drupal\\\\views_ui\\\\ViewFormBase\\:\\:getDisplayTabs\\(\\) expects Drupal\\\\views_ui\\\\ViewUI, Drupal\\\\Core\\\\Entity\\\\EntityInterface given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/views_ui/src/ViewFormBase.php',
 ];
@@ -35281,6 +36295,12 @@ $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\workflows\\\\Unit\\\\WorkflowStateTransitionOperationsAccessCheckTest\\:\\:invalidOperationNameTestCases\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
+	'path' => __DIR__ . '/modules/workflows/tests/src/Unit/WorkflowStateTransitionOperationsAccessCheckTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$route_name of class Drupal\\\\Core\\\\Routing\\\\RouteMatch constructor expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 4,
 	'path' => __DIR__ . '/modules/workflows/tests/src/Unit/WorkflowStateTransitionOperationsAccessCheckTest.php',
 ];
 $ignoreErrors[] = [
@@ -36208,6 +37228,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/KernelTests/Core/Action/EmailActionTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$library_definitions of method Drupal\\\\KernelTests\\\\Core\\\\Asset\\\\ResolvedLibraryDefinitionsFilesMatchTest\\:\\:verifyLibraryFilesExist\\(\\) expects array\\<array\\>, array\\<Drupal\\\\Core\\\\Extension\\\\Extension\\> given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/Drupal/KernelTests/Core/Asset/ResolvedLibraryDefinitionsFilesMatchTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Variable \\$found might not be defined\\.$#',
 	'identifier' => 'variable.undefined',
 	'count' => 1,
@@ -36259,6 +37285,12 @@ $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\KernelTests\\\\Core\\\\Config\\\\Storage\\\\ConfigStorageTestBase\\:\\:update\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/KernelTests/Core/Config/Storage/ConfigStorageTestBase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$expected of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) contains unresolvable type\\.$#',
+	'identifier' => 'argument.unresolvableType',
+	'count' => 3,
 	'path' => __DIR__ . '/tests/Drupal/KernelTests/Core/Config/Storage/ConfigStorageTestBase.php',
 ];
 $ignoreErrors[] = [
@@ -36382,6 +37414,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/KernelTests/Core/Datetime/Element/TimezoneTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$expected of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) contains unresolvable type\\.$#',
+	'identifier' => 'argument.unresolvableType',
+	'count' => 16,
+	'path' => __DIR__ . '/tests/Drupal/KernelTests/Core/DrupalKernel/DrupalKernelRequestStackTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\KernelTests\\\\Core\\\\Element\\\\PathElementFormTest\\:\\:submitForm\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -36392,6 +37430,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/KernelTests/Core/Element/PathElementFormTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$base_field_definition of static method Drupal\\\\Core\\\\Field\\\\Entity\\\\BaseFieldOverride\\:\\:createFromBaseFieldDefinition\\(\\) expects Drupal\\\\Core\\\\Field\\\\BaseFieldDefinition, Drupal\\\\Core\\\\Field\\\\FieldDefinitionInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/KernelTests/Core/Entity/BaseFieldOverrideValidationTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\KernelTests\\\\Core\\\\Entity\\\\Element\\\\EntityAutocompleteElementFormTest\\:\\:submitForm\\(\\) has no return type specified\\.$#',
@@ -36434,6 +37478,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/KernelTests/Core/Entity/EntityLanguageTestBase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$array of function sort expects TArray of array\\<T\\>, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/Drupal/KernelTests/Core/Entity/EntityTranslationTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Variable \\$e might not be defined\\.$#',
@@ -36494,6 +37544,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/KernelTests/Core/Form/TriggeringElementProgrammedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$callback of function set_error_handler expects \\(callable\\(int, string, string, int\\)\\: bool\\)\\|null, Closure\\(\\)\\: void given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/KernelTests/Core/Image/GdToolkitPngImageManipulationTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\KernelTests\\\\Core\\\\KeyValueStore\\\\StorageTestBase\\:\\:createStorage\\(\\) has no return type specified\\.$#',
@@ -36560,6 +37616,12 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/KernelTests/Core/Queue/QueueSerializationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$baseDir of static method org\\\\bovigo\\\\vfs\\\\vfsStream\\:\\:copyFromFileSystem\\(\\) expects org\\\\bovigo\\\\vfs\\\\vfsStreamDirectory\\|null, org\\\\bovigo\\\\vfs\\\\vfsStreamContent given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/KernelTests/Core/Recipe/ConfigConfiguratorTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\KernelTests\\\\Core\\\\Render\\\\Element\\\\ActionsTest\\:\\:submitForm\\(\\) has no return type specified\\.$#',
@@ -37109,6 +38171,18 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/Component/Annotation/Doctrine/Fixtures/ClassWithValidAnnotationTarget.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$expected of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) expects class\\-string\\<\\\\Drupal\\\\Component\\\\DateTimePlus\\>, string given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Component/Datetime/DateTimePlusTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$settings of static method Drupal\\\\Component\\\\Datetime\\\\DateTimePlus\\:\\:createFromDateTime\\(\\) expects array, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Component/Datetime/DateTimePlusTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Component\\\\DependencyInjection\\\\ContainerTest\\:\\:getCollection\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -37217,10 +38291,28 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/Component/DependencyInjection/PhpArrayContainerTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$prefix of static method Drupal\\\\Component\\\\FileCache\\\\FileCacheFactory\\:\\:setPrefix\\(\\) expects string, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Component/FileCache/FileCacheFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$callback of function set_error_handler expects \\(callable\\(int, string, string, int\\)\\: bool\\)\\|null, Closure\\(int, string\\)\\: void given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Component/PhpStorage/FileStorageTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Component\\\\PhpStorage\\\\PhpStorageTestBase\\:\\:additionalAssertCRUD\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/Tests/Component/PhpStorage/PhpStorageTestBase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\$deriver of class Drupal\\\\Tests\\\\Component\\\\Plugin\\\\Attribute\\\\PluginStub constructor expects class\\-string\\|null, string given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Component/Plugin/Attribute/PluginTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Component\\\\Plugin\\\\Discovery\\\\DiscoveryCachedTraitMockableClass\\:\\:getDefinition\\(\\) has no return type specified\\.$#',
@@ -37379,6 +38471,18 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/Component/ProxyBuilder/ProxyBuilderTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$callback of function set_error_handler expects \\(callable\\(int, string, string, int\\)\\: bool\\)\\|null, array\\{\\$this\\(Drupal\\\\Tests\\\\Component\\\\Render\\\\FormattableMarkupTest\\), \'errorHandler\'\\} given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Component/Render/FormattableMarkupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$flags of static method Drupal\\\\Component\\\\Serialization\\\\YamlPecl\\:\\:applyBooleanCallbacks\\(\\) expects int, null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Component/Serialization/YamlPeclTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Component\\\\Serialization\\\\YamlTestBase\\:\\:providerBoolTest\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -37405,6 +38509,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Component\\\\Utility\\\\TestStaticMethodClass\\:\\:access\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Component/Utility/ArgumentsResolverTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$objects of class Drupal\\\\Component\\\\Utility\\\\ArgumentsResolver constructor expects array\\<object\\>, array\\<string, string\\> given\\.$#',
+	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/Tests/Component/Utility/ArgumentsResolverTest.php',
 ];
@@ -37517,6 +38627,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Batch/BatchBuilderTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$container of class Drupal\\\\Core\\\\Cache\\\\Context\\\\CacheContextsManager constructor expects Symfony\\\\Component\\\\DependencyInjection\\\\ContainerInterface, PHPUnit\\\\Framework\\\\MockObject\\\\Stub given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Cache/Context/CacheContextsManagerTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Core\\\\Config\\\\Checkpoint\\\\CheckpointStorageTest\\:\\:replaceStorageContents\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -37565,10 +38681,22 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Config/StorageCopyTraitTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$storage of static method Drupal\\\\Tests\\\\Core\\\\Config\\\\StorageCopyTraitTest\\:\\:toArray\\(\\) expects Drupal\\\\Core\\\\Config\\\\MemoryStorage, Drupal\\\\Core\\\\Config\\\\StorageInterface given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Config/StorageCopyTraitTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Core\\\\Controller\\\\MockContainerInjection\\:\\:getResult\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Controller/ControllerResolverTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$identifier_quotes of class Drupal\\\\Tests\\\\Core\\\\Database\\\\Stub\\\\StubConnection constructor expects array\\<string\\>\\|null, array\\<int, int\\|string\\> given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Database/ConnectionTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Core\\\\Database\\\\Stub\\\\StubConnection\\:\\:createDatabase\\(\\) has no return type specified\\.$#',
@@ -37721,6 +38849,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Entity/EntityResolverManagerTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$mock of method Drupal\\\\Tests\\\\UnitTestCase\\:\\:setupMockIterator\\(\\) expects Iterator&PHPUnit\\\\Framework\\\\MockObject\\\\Stub, Drupal\\\\Core\\\\Field\\\\FieldItemListInterface&PHPUnit\\\\Framework\\\\MockObject\\\\Stub given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Entity/EntityViewBuilderTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Core\\\\EventSubscriber\\\\ActiveLinkResponseFilterTest\\:\\:providerTestSetLinkActiveClass\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -37853,11 +38987,29 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Form/FormValidatorTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$expected of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) contains unresolvable type\\.$#',
+	'identifier' => 'argument.unresolvableType',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Form/SubformStateTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Call to deprecated method getConfig\\(\\) of class GuzzleHttp\\\\Client\\:
 Client\\:\\:getConfig will be removed in guzzlehttp/guzzle\\:8\\.0\\.$#',
 	'identifier' => 'method.deprecated',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Http/ClientFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$mock_plugin of method Drupal\\\\Tests\\\\Core\\\\Menu\\\\LocalTaskManagerTest\\:\\:getLocalTasksForRouteResult\\(\\) expects PHPUnit\\\\Framework\\\\MockObject\\\\MockObject, Drupal\\\\Core\\\\Menu\\\\LocalTaskInterface&PHPUnit\\\\Framework\\\\MockObject\\\\Stub given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Menu/LocalTaskManagerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$mock_plugin of method Drupal\\\\Tests\\\\Core\\\\Menu\\\\LocalTaskManagerTest\\:\\:setupFactory\\(\\) expects PHPUnit\\\\Framework\\\\MockObject\\\\MockObject, Drupal\\\\Core\\\\Menu\\\\LocalTaskInterface&PHPUnit\\\\Framework\\\\MockObject\\\\Stub given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Menu/LocalTaskManagerTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Core\\\\Plugin\\\\CategorizingPluginManager\\:\\:processDefinitionCategory\\(\\) has no return type specified\\.$#',
@@ -38052,6 +39204,42 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Routing/AccessAwareRouterTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$callback of function set_error_handler expects \\(callable\\(int, string, string, int\\)\\: bool\\)\\|null, array\\{\\$this\\(Drupal\\\\Tests\\\\Core\\\\Security\\\\RequestSanitizerTest\\), \'errorHandler\'\\} given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Security/RequestSanitizerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$callback of function set_error_handler expects \\(callable\\(int, string, string, int\\)\\: bool\\)\\|null, array\\{\\$this\\(Drupal\\\\Tests\\\\Core\\\\StringTranslation\\\\TranslatableMarkupTest\\), \'errorHandler\'\\} given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/StringTranslation/TranslatableMarkupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$string of class Drupal\\\\Core\\\\StringTranslation\\\\TranslatableMarkup constructor expects string, Drupal\\\\Component\\\\Render\\\\FormattableMarkup given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/StringTranslation/TranslatableMarkupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$string of class Drupal\\\\Core\\\\StringTranslation\\\\TranslatableMarkup constructor expects string, Drupal\\\\Core\\\\StringTranslation\\\\TranslatableMarkup given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/StringTranslation/TranslatableMarkupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$a of static method Drupal\\\\Core\\\\Template\\\\AttributeHelper\\:\\:mergeCollections\\(\\) expects array\\|Drupal\\\\Core\\\\Template\\\\Attribute, string given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Template/AttributeHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$b of static method Drupal\\\\Core\\\\Template\\\\AttributeHelper\\:\\:mergeCollections\\(\\) expects array\\|Drupal\\\\Core\\\\Template\\\\Attribute, string given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Template/AttributeHelperTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\Core\\\\Test\\\\AssertContentTraitTest\\:\\:assertThemeOutput\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -38100,6 +39288,18 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Test/AssertContentTraitTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$constraint of method JsonSchema\\\\Constraints\\\\BaseConstraint\\:\\:addError\\(\\) expects JsonSchema\\\\ConstraintError, string given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Theme/Component/ComponentValidatorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$callback of function set_error_handler expects \\(callable\\(int, string, string, int\\)\\: bool\\)\\|null, Closure\\(int, string\\)\\: void given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Theme/Icon/IconFinderTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Function Drupal\\\\Core\\\\Theme\\\\get_defined_functions\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -38116,6 +39316,12 @@ $ignoreErrors[] = [
 	'identifier' => 'includeOnce.fileNotFound',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Update/UpdateRegistryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$expected of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) contains unresolvable type\\.$#',
+	'identifier' => 'argument.unresolvableType',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/Drupal/Tests/Core/Utility/PhpRequirementsTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Call to deprecated method getConfig\\(\\) of interface GuzzleHttp\\\\ClientInterface\\:
@@ -38171,6 +39377,18 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/themes/claro/src/ClaroPreRender.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$array of function array_key_first expects array, Drupal\\\\Core\\\\Template\\\\AttributeValueBase\\|null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/themes/claro/src/Hook/ClaroHooks.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$array of function array_key_first expects array, Drupal\\\\Core\\\\Template\\\\AttributeValueBase\\|null given\\.$#',
+	'identifier' => 'argument.type',
+	'count' => 1,
+	'path' => __DIR__ . '/themes/default_admin/src/Hook/PreprocessHooks.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\olivero\\\\OliveroPreRender\\:\\:textFormat\\(\\) has no return type specified\\.$#',

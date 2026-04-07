@@ -10,6 +10,7 @@ parameters:
 
   level: 1
 
+  checkFunctionArgumentTypes: true
   checkInternalClassCaseSensitivity: true
 
   parallel:
@@ -61,13 +62,16 @@ parameters:
     - identifier: missingType.iterableValue
 
 rules:
+  # The rules below are Drupal custom ones.
   - Drupal\PHPStan\Rules\ComponentTestDoesNotExtendCoreTest
   - Drupal\PHPStan\Rules\TestClassClassMetadata
   - Drupal\PHPStan\Rules\TestClassMethodMetadata
-  - PHPStan\Rules\Functions\MissingFunctionReturnTypehintRule
-  - PHPStan\Rules\Methods\MissingMethodReturnTypehintRule
+  # ----------------------------------------------------------
   # The rule below can be removed when we increase level to 2.
   - PHPStan\Rules\Classes\AccessPrivateConstantThroughStaticRule
+  # The rules below can be removed when we increase level to 6.
+  - PHPStan\Rules\Functions\MissingFunctionReturnTypehintRule
+  - PHPStan\Rules\Methods\MissingMethodReturnTypehintRule
 
 services:
   errorFormatter.multiplex:
