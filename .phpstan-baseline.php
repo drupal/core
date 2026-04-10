@@ -14750,12 +14750,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/filter/filter.module',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$match of function _filter_url_escape_comments expects array, string given\\.$#',
-	'identifier' => 'argument.type',
-	'count' => 2,
-	'path' => __DIR__ . '/modules/filter/filter.module',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\filter\\\\Element\\\\TextFormat\\:\\:currentUser\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
