@@ -43,3 +43,4 @@ services:
   Drupal\locale\EventSubscriber\ConfigSubscriber: ~
   Drupal\locale\LocaleSource: ~
   Drupal\locale\LocaleFetch: ~
+  Drupal\locale\File\LocaleFileManager: ~
