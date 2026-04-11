@@ -124,7 +124,7 @@ abstract class StatementBase implements \Iterator, StatementInterface {
   /**
    * {@inheritdoc}
    */
-  abstract public function execute($args = [], $options = []);
+  abstract public function execute(?array $args = [], array $options = []);
 
   /**
    * Dispatches an event informing that the statement execution begins.
@@ -207,9 +207,7 @@ abstract class StatementBase implements \Iterator, StatementInterface {
   /**
    * {@inheritdoc}
    */
-  public function setFetchMode($mode, $a1 = NULL, $a2 = []) {
-    assert($mode instanceof FetchAs);
-
+  public function setFetchMode(FetchAs $mode, string|int|null $a1 = NULL, array $a2 = []) {
     $this->fetchMode = $mode;
     switch ($mode) {
       case FetchAs::ClassObject:
@@ -240,8 +238,13 @@ abstract class StatementBase implements \Iterator, StatementInterface {
   /**
    * {@inheritdoc}
    */
-  public function fetch($mode = NULL, $cursorOrientation = NULL, $cursorOffset = NULL) {
-    assert($mode === NULL || $mode instanceof FetchAs);
+  public function fetch(?FetchAs $mode = NULL, $cursorOrientation = NULL, $cursorOffset = NULL) {
+    if ($cursorOrientation !== NULL) {
+      @trigger_error("Passing the \$cursorOrientation value to " . __METHOD__ . "() is deprecated in drupal:11.4.0 and will be removed in drupal:12.0.0. There is no replacement. See https://www.drupal.org/node/3551924", E_USER_DEPRECATED);
+    }
+    if ($cursorOffset !== NULL) {
+      @trigger_error("Passing the \$cursorOffset value to " . __METHOD__ . "() is deprecated in drupal:11.4.0 and will be removed in drupal:12.0.0. There is no replacement. See https://www.drupal.org/node/3551924", E_USER_DEPRECATED);
+    }
 
     $fetchOptions = match(func_num_args()) {
       0 => $this->fetchOptions,
@@ -296,7 +299,7 @@ abstract class StatementBase implements \Iterator, StatementInterface {
   /**
    * {@inheritdoc}
    */
-  public function fetchField($index = 0) {
+  public function fetchField(int $index = 0) {
     $column = $this->result->fetch(FetchAs::Column, ['column' => $index]);
 
     if ($column === FALSE) {
@@ -311,9 +314,7 @@ abstract class StatementBase implements \Iterator, StatementInterface {
   /**
    * {@inheritdoc}
    */
-  public function fetchAll($mode = NULL, $columnIndex = NULL, $constructorArguments = NULL) {
-    assert($mode === NULL || $mode instanceof FetchAs);
-
+  public function fetchAll(?FetchAs $mode = NULL, ?int $columnIndex = NULL, ?array $constructorArguments = NULL) {
     $fetchMode = $mode ?? $this->fetchMode;
     if (isset($columnIndex)) {
       $this->fetchOptions['column'] = $columnIndex;
@@ -332,16 +333,14 @@ abstract class StatementBase implements \Iterator, StatementInterface {
   /**
    * {@inheritdoc}
    */
-  public function fetchCol($index = 0) {
+  public function fetchCol(int $index = 0) {
     return $this->fetchAll(FetchAs::Column, $index);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function fetchAllAssoc($key, $fetch = NULL) {
-    assert($fetch === NULL || $fetch instanceof FetchAs);
-
+  public function fetchAllAssoc(string $key, ?FetchAs $fetch = NULL) {
     $result = $this->result->fetchAllAssoc($key, $fetch ?? $this->fetchMode, $this->fetchOptions);
     $this->markResultsetFetchingComplete();
     return $result;
@@ -350,7 +349,7 @@ abstract class StatementBase implements \Iterator, StatementInterface {
   /**
    * {@inheritdoc}
    */
-  public function fetchAllKeyed($keyIndex = 0, $valueIndex = 1) {
+  public function fetchAllKeyed(int $keyIndex = 0, int $valueIndex = 1) {
     $result = $this->result->fetchAllKeyed($keyIndex, $valueIndex);
     $this->markResultsetFetchingComplete();
     return $result;
