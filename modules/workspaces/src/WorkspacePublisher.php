@@ -100,6 +100,7 @@ class WorkspacePublisher implements WorkspacePublisherInterface {
           }
         }
       });
+      $transaction->commitOrRelease();
     }
     catch (\Exception $e) {
       if (isset($transaction)) {
