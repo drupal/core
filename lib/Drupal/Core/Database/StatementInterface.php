@@ -88,21 +88,11 @@ interface StatementInterface extends \Traversable {
    * @param \Drupal\Core\Database\Statement\FetchAs|null $mode
    *   (Optional) one of the cases of the FetchAs enum. If not specified,
    *   defaults to what is specified by setFetchMode().
-   * @param int|null $cursor_orientation
-   *   (deprecated) Not implemented in all database drivers, don't use. The
-   *   $cursor_orientation parameter is deprecated in drupal:11.4.0 and will be
-   *   removed in drupal:12.0.0. There is no replacement.
-   * @param int|null $cursor_offset
-   *   (deprecated) Not implemented in all database drivers, don't use. The
-   *   $cursor_offset parameter is deprecated in drupal:11.4.0 and will be
-   *   removed in drupal:12.0.0. There is no replacement.
    *
    * @return array|object|false
    *   A result, formatted according to $mode, or FALSE on failure.
-   *
-   * @see https://www.drupal.org/node/3551924
    */
-  public function fetch(?FetchAs $mode = NULL, $cursor_orientation = NULL, $cursor_offset = NULL);
+  public function fetch(?FetchAs $mode = NULL);
 
   /**
    * Returns a single column value from the next record of a result set.

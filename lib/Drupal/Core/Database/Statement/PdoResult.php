@@ -67,12 +67,6 @@ class PdoResult extends ResultBase {
     if (!empty($fetchOptions)) {
       $this->setFetchMode($mode, $fetchOptions);
     }
-    if (isset($fetchOptions['cursor_orientation'])) {
-      if (isset($fetchOptions['cursor_offset'])) {
-        return $this->clientFetch($mode, $fetchOptions['cursor_orientation'], $fetchOptions['cursor_offset']);
-      }
-      return $this->clientFetch($mode, $fetchOptions['cursor_orientation']);
-    }
     return $this->clientFetch($mode);
   }
 
