@@ -15,6 +15,8 @@ use Drupal\Core\Render\RendererInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -27,17 +29,13 @@ class MailManagerTest extends UnitTestCase {
 
   /**
    * The cache backend to use.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $cache;
+  protected CacheBackendInterface&Stub $cache;
 
   /**
    * The module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $moduleHandler;
+  protected ModuleHandlerInterface&Stub $moduleHandler;
 
   /**
    * The configuration factory.
@@ -48,17 +46,13 @@ class MailManagerTest extends UnitTestCase {
 
   /**
    * The plugin discovery.
-   *
-   * @var \Drupal\Component\Plugin\Discovery\DiscoveryInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $discovery;
+  protected DiscoveryInterface&Stub $discovery;
 
   /**
    * The renderer.
-   *
-   * @var \Drupal\Core\Render\RendererInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $renderer;
+  protected RendererInterface&MockObject $renderer;
 
   /**
    * The mail manager under test.

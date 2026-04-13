@@ -11,6 +11,8 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Route;
@@ -25,7 +27,7 @@ class CsrfAccessCheckTest extends UnitTestCase {
   /**
    * The mock CSRF token generator.
    */
-  protected CsrfTokenGenerator $csrfToken;
+  protected CsrfTokenGenerator&MockObject $csrfToken;
 
   /**
    * The access checker.
@@ -35,12 +37,12 @@ class CsrfAccessCheckTest extends UnitTestCase {
   /**
    * The mock route match.
    */
-  protected RouteMatchInterface $routeMatch;
+  protected RouteMatchInterface&MockObject $routeMatch;
 
   /**
    * The stub parameter bag.
    */
-  protected ParameterBagInterface $parameterBag;
+  protected ParameterBagInterface&Stub $parameterBag;
 
   /**
    * {@inheritdoc}

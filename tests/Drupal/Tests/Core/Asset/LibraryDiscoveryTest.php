@@ -8,6 +8,7 @@ use Drupal\Core\Asset\LibraryDiscoveryCollector;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Tests Drupal\Core\Asset\LibraryDiscoveryCollector.
@@ -18,10 +19,8 @@ class LibraryDiscoveryTest extends UnitTestCase {
 
   /**
    * The tested library discovery service.
-   *
-   * @var \Drupal\Core\Asset\LibraryDiscoveryCollector
    */
-  protected $libraryDiscovery;
+  protected LibraryDiscoveryCollector&MockObject $libraryDiscovery;
 
   /**
    * Test library data.

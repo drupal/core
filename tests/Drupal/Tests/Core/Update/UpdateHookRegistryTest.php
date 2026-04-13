@@ -10,6 +10,7 @@ use Drupal\Core\Update\UpdateHookRegistry;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * Simulates a hook_update_N function.
@@ -67,19 +68,19 @@ function under_test_update_1234_failed(): void {
 class UpdateHookRegistryTest extends UnitTestCase {
 
   /**
-   * @var \Drupal\Core\KeyValueStore\KeyValueStoreInterface|\PHPUnit\Framework\MockObject\Stub
+   * The key/value store.
    */
-  protected $keyValueStore;
+  protected KeyValueStoreInterface&Stub $keyValueStore;
 
   /**
-   * @var \Drupal\Core\KeyValueStore\KeyValueFactoryInterface|\PHPUnit\Framework\MockObject\Stub
+   * The key/value factory.
    */
-  protected $keyValueFactory;
+  protected KeyValueFactoryInterface&Stub $keyValueFactory;
 
   /**
-   * @var \Drupal\Core\KeyValueStore\KeyValueStoreInterface|\PHPUnit\Framework\MockObject\Stub
+   * The equivalent updates store.
    */
-  protected KeyValueStoreInterface $equivalentUpdatesStore;
+  protected KeyValueStoreInterface&Stub $equivalentUpdatesStore;
 
   /**
    * {@inheritdoc}

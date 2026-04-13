@@ -19,6 +19,7 @@ use Drupal\path_alias\AliasManager;
 use Drupal\path_alias\PathProcessor\AliasPathProcessor;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -36,10 +37,8 @@ class PathProcessorTest extends UnitTestCase {
 
   /**
    * The language manager stub used to construct a PathProcessorLanguage object.
-   *
-   * @var \Drupal\language\ConfigurableLanguageManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $languageManager;
+  protected ConfigurableLanguageManagerInterface&Stub $languageManager;
 
   /**
    * {@inheritdoc}

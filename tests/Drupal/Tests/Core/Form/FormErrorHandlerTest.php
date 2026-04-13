@@ -21,17 +21,13 @@ class FormErrorHandlerTest extends UnitTestCase {
 
   /**
    * The form error handler.
-   *
-   * @var \Drupal\Core\Form\FormErrorHandler|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $formErrorHandler;
+  protected FormErrorHandler $formErrorHandler;
 
   /**
    * The messenger.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $messenger;
+  protected MessengerInterface $messenger;
 
   /**
    * {@inheritdoc}

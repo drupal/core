@@ -8,6 +8,7 @@ use Drupal\Core\EventSubscriber\PsrResponseSubscriber;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,10 +32,8 @@ class PsrResponseSubscriberTest extends UnitTestCase {
 
   /**
    * The tested path root subscriber.
-   *
-   * @var \Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $httpFoundationFactoryMock;
+  protected HttpFoundationFactoryInterface&Stub $httpFoundationFactoryMock;
 
   /**
    * {@inheritdoc}

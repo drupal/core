@@ -29,7 +29,7 @@ class UserSessionTest extends UnitTestCase {
    * @return \Drupal\Core\Session\AccountInterface
    *   The created user session.
    */
-  protected function createUserSession(array $rids = [], $authenticated = FALSE) {
+  protected function createUserSession(array $rids = [], $authenticated = FALSE): UserSession {
     array_unshift($rids, $authenticated ? RoleInterface::AUTHENTICATED_ID : RoleInterface::ANONYMOUS_ID);
     return new UserSession(['roles' => $rids]);
   }

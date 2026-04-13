@@ -146,7 +146,7 @@ class WebAssert extends MinkWebAssert {
    * @throws \Behat\Mink\Exception\ElementNotFoundException
    *   When the element doesn't exist.
    */
-  public function buttonExists($button, ?TraversableElement $container = NULL) {
+  public function buttonExists(string|int|float|bool $button, ?TraversableElement $container = NULL) {
     if (!is_string($button)) {
       // @todo Trigger deprecation in
       //   https://www.drupal.org/project/drupal/issues/3421105.
@@ -224,7 +224,12 @@ class WebAssert extends MinkWebAssert {
    * @throws \Behat\Mink\Exception\ElementNotFoundException
    *   When the element doesn't exist.
    */
-  public function optionExists($select, $option, ?TraversableElement $container = NULL) {
+  public function optionExists($select, string|int|float|bool $option, ?TraversableElement $container = NULL) {
+    if (!is_string($option)) {
+      // @todo Trigger deprecation in
+      //   https://www.drupal.org/project/drupal/issues/3421105.
+      $option = (string) $option;
+    }
     $container = $container ?: $this->session->getPage();
     $select_field = $container->find('named', [
       'select',
@@ -257,7 +262,12 @@ class WebAssert extends MinkWebAssert {
    * @throws \Behat\Mink\Exception\ElementNotFoundException
    *   When the select element doesn't exist.
    */
-  public function optionNotExists($select, $option, ?TraversableElement $container = NULL): void {
+  public function optionNotExists($select, string|int|float|bool $option, ?TraversableElement $container = NULL): void {
+    if (!is_string($option)) {
+      // @todo Trigger deprecation in
+      //   https://www.drupal.org/project/drupal/issues/3421105.
+      $option = (string) $option;
+    }
     $container = $container ?: $this->session->getPage();
     $select_field = $container->find('named', [
       'select',
@@ -951,7 +961,7 @@ class WebAssert extends MinkWebAssert {
   /**
    * {@inheritdoc}
    */
-  public function responseHeaderEquals($name, $value): void {
+  public function responseHeaderEquals(string|int|float|bool $name, string|int|float|bool|null $value): void {
     if (!is_string($name)) {
       // @todo Trigger deprecation in
       //   https://www.drupal.org/project/drupal/issues/3421105.
@@ -972,7 +982,7 @@ class WebAssert extends MinkWebAssert {
   /**
    * {@inheritdoc}
    */
-  public function pageTextContains($text): void {
+  public function pageTextContains(string|int|float|bool $text): void {
     if (!is_string($text)) {
       // @todo Trigger deprecation in
       //   https://www.drupal.org/project/drupal/issues/3421105.
@@ -984,7 +994,7 @@ class WebAssert extends MinkWebAssert {
   /**
    * {@inheritdoc}
    */
-  public function fieldValueEquals(string $field, $value, ?TraversableElement $container = NULL): void {
+  public function fieldValueEquals(string $field, string|int|float|bool $value, ?TraversableElement $container = NULL): void {
     if (!is_string($value)) {
       // @todo Trigger deprecation in
       //   https://www.drupal.org/project/drupal/issues/3421105.

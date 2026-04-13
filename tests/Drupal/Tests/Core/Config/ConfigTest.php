@@ -15,6 +15,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -35,31 +36,23 @@ class ConfigTest extends UnitTestCase {
 
   /**
    * Storage.
-   *
-   * @var \Drupal\Core\Config\StorageInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $storage;
+  protected StorageInterface&Stub $storage;
 
   /**
    * Event Dispatcher.
-   *
-   * @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $eventDispatcher;
+  protected EventDispatcherInterface&Stub $eventDispatcher;
 
   /**
    * Typed Config.
-   *
-   * @var \Drupal\Core\Config\TypedConfigManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $typedConfig;
+  protected TypedConfigManagerInterface&Stub $typedConfig;
 
   /**
    * The mocked cache tags invalidator.
-   *
-   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface
    */
-  protected $cacheTagsInvalidator;
+  protected CacheTagsInvalidatorInterface&Stub $cacheTagsInvalidator;
 
   /**
    * {@inheritdoc}

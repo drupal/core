@@ -7,9 +7,11 @@ namespace Drupal\Tests\Core\Routing;
 use Drupal\Component\EventDispatcher\Event;
 use Drupal\Core\Routing\PreloadableRouteProviderInterface;
 use Drupal\Core\Routing\RoutePreloader;
+use Drupal\Core\State\StateInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\Routing\Route;
@@ -23,18 +25,14 @@ use Symfony\Component\Routing\RouteCollection;
 class RoutePreloaderTest extends UnitTestCase {
 
   /**
-   * The mocked preloadable route provider.
-   *
-   * @var \Drupal\Core\Routing\PreloadableRouteProviderInterface
+   * The preloadable route provider.
    */
-  protected $routeProvider;
+  protected PreloadableRouteProviderInterface $routeProvider;
 
   /**
    * The mocked state.
-   *
-   * @var \Drupal\Core\State\StateInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $state;
+  protected StateInterface&MockObject $state;
 
   /**
    * The tested preloader.

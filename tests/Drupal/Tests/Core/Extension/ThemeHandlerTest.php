@@ -11,6 +11,7 @@ use Drupal\Core\Extension\ThemeHandler;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * Tests Drupal\Core\Extension\ThemeHandler.
@@ -28,10 +29,8 @@ class ThemeHandlerTest extends UnitTestCase {
 
   /**
    * The theme listing service.
-   *
-   * @var \Drupal\Core\Extension\ThemeExtensionList|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $themeList;
+  protected ThemeExtensionList&Stub $themeList;
 
   /**
    * The tested theme handler.

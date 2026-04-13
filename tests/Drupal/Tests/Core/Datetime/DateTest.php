@@ -19,6 +19,8 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -30,11 +32,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class DateTest extends UnitTestCase {
 
   /**
-   * The mocked entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The entity type manager.
    */
-  protected $entityTypeManager;
+  protected EntityTypeManagerInterface&Stub $entityTypeManager;
 
   /**
    * The mocked language manager.
@@ -44,18 +44,14 @@ class DateTest extends UnitTestCase {
   protected $languageManager;
 
   /**
-   * The mocked string translation.
-   *
-   * @var \Drupal\Core\StringTranslation\TranslationInterface|\PHPUnit\Framework\MockObject\Stub
+   * The string translation.
    */
-  protected $stringTranslation;
+  protected TranslationInterface&Stub $stringTranslation;
 
   /**
-   * The mocked string translation.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack|\PHPUnit\Framework\MockObject\Stub
+   * The string translation.
    */
-  protected $requestStack;
+  protected RequestStack&Stub $requestStack;
 
   /**
    * The mocked date formatter class.
@@ -66,10 +62,8 @@ class DateTest extends UnitTestCase {
 
   /**
    * The date formatter class where methods can be stubbed.
-   *
-   * @var \Drupal\Core\Datetime\DateFormatter|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $dateFormatterStub;
+  protected DateFormatter&MockObject $dateFormatterStub;
 
   /**
    * {@inheritdoc}

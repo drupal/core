@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Enhancer;
 
+use Drupal\Core\ParamConverter\ParamConverterManagerInterface;
 use Drupal\Core\Routing\Enhancer\ParamConversionEnhancer;
 use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Route;
@@ -26,9 +28,9 @@ class ParamConversionEnhancerTest extends UnitTestCase {
   protected $paramConversionEnhancer;
 
   /**
-   * @var \Drupal\Core\ParamConverter\ParamConverterManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * The mocked converter manager.
    */
-  protected $paramConverterManager;
+  protected ParamConverterManagerInterface&MockObject $paramConverterManager;
 
   /**
    * {@inheritdoc}

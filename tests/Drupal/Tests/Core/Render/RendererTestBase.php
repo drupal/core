@@ -21,6 +21,7 @@ use Drupal\Core\Security\TrustedCallbackInterface;
 use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Core\Utility\CallableResolver;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -64,35 +65,29 @@ abstract class RendererTestBase extends UnitTestCase {
   protected $requestStack;
 
   /**
-   * @var \Drupal\Core\Cache\VariationCacheFactoryInterface
+   * The variation cache factory.
    */
-  protected $cacheFactory;
+  protected VariationCacheFactoryInterface&Stub $cacheFactory;
 
   /**
-   * @var \Drupal\Core\Cache\Context\CacheContextsManager
+   * The cache contexts manager.
    */
-  protected $cacheContextsManager;
+  protected CacheContextsManager&Stub $cacheContextsManager;
 
   /**
-   * The mocked controller resolver.
-   *
-   * @var \Drupal\Core\Utility\CallableResolver
+   * The controller resolver.
    */
-  protected $callableResolver;
+  protected CallableResolver&Stub $callableResolver;
 
   /**
-   * The mocked theme manager.
-   *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface
+   * The theme manager.
    */
-  protected $themeManager;
+  protected ThemeManagerInterface&Stub $themeManager;
 
   /**
-   * The mocked element info.
-   *
-   * @var \Drupal\Core\Render\ElementInfoManagerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The element info.
    */
-  protected $elementInfo;
+  protected ElementInfoManagerInterface&Stub $elementInfo;
 
   /**
    * @var \Drupal\Core\Cache\VariationCacheInterface

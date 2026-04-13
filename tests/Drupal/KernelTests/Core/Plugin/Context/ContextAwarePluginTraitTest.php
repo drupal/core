@@ -33,10 +33,8 @@ class ContextAwarePluginTraitTest extends KernelTestBase {
 
   /**
    * The plugin instance under test.
-   *
-   * @var \Drupal\KernelTests\Core\Plugin\Context\TestContextAwarePlugin
    */
-  private $plugin;
+  private TestContextAwarePlugin $plugin;
 
   /**
    * {@inheritdoc}

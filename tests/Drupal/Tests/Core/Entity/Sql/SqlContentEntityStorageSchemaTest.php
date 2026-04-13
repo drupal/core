@@ -22,6 +22,8 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * Tests Drupal\Core\Entity\Sql\SqlContentEntityStorageSchema.
@@ -32,10 +34,8 @@ class SqlContentEntityStorageSchemaTest extends UnitTestCase {
 
   /**
    * The mocked DB schema handler.
-   *
-   * @var \Drupal\Core\Database\Schema|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $dbSchemaHandler;
+  protected Schema&MockObject $dbSchemaHandler;
 
   /**
    * The mocked entity type manager used in this test.
@@ -52,11 +52,9 @@ class SqlContentEntityStorageSchemaTest extends UnitTestCase {
   protected $entityFieldManager;
 
   /**
-   * The mocked entity last installed schema repository used in this test.
-   *
-   * @var \Drupal\Core\Entity\EntityLastInstalledSchemaRepositoryInterface|\PHPUnit\Framework\MockObject\Stub
+   * The entity last installed schema repository used in this test.
    */
-  protected $entityLastInstalledSchemaRepository;
+  protected EntityLastInstalledSchemaRepositoryInterface&Stub $entityLastInstalledSchemaRepository;
 
   /**
    * The mocked entity type used in this test.
@@ -66,11 +64,9 @@ class SqlContentEntityStorageSchemaTest extends UnitTestCase {
   protected $entityType;
 
   /**
-   * The mocked SQL storage used in this test.
-   *
-   * @var \Drupal\Core\Entity\Sql\SqlContentEntityStorage
+   * The SQL storage used in this test.
    */
-  protected $storage;
+  protected SqlContentEntityStorage&Stub $storage;
 
   /**
    * The mocked field definitions used in this test.
@@ -81,10 +77,8 @@ class SqlContentEntityStorageSchemaTest extends UnitTestCase {
 
   /**
    * The storage schema handler used in this test.
-   *
-   * @var \Drupal\Core\Entity\Sql\SqlContentEntityStorageSchema|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $storageSchema;
+  protected SqlContentEntityStorageSchema&MockObject $storageSchema;
 
   /**
    * {@inheritdoc}
@@ -1393,7 +1387,7 @@ class SqlContentEntityStorageSchemaTest extends UnitTestCase {
     $connection = $this->createStub(Connection::class);
     $connection
       ->method('schema')
-      ->willReturn($this->dbSchemaHandler);
+      ->willReturn($this->dbSchemaHandler ?? NULL);
 
     $this->entityLastInstalledSchemaRepository
       ->method('getLastInstalledDefinition')

@@ -82,7 +82,7 @@ class Fixtures extends FixturesBase {
    * @return \Drupal\Composer\Plugin\Scaffold\Operations\ReplaceOp
    *   A replace operation object.
    */
-  public function replaceOp($project_name, $source): ReplaceOp {
+  public function replaceOp(string $project_name, $source): ReplaceOp {
     $source_path = $this->sourcePath($project_name, $source);
     return new ReplaceOp($source_path, TRUE);
   }
@@ -99,7 +99,7 @@ class Fixtures extends FixturesBase {
    * @return \Drupal\Composer\Plugin\Scaffold\Operations\AppendOp
    *   An append operation object.
    */
-  public function appendOp($project_name, $source): AppendOp {
+  public function appendOp(string $project_name, $source): AppendOp {
     $source_path = $this->sourcePath($project_name, $source);
     return new AppendOp(NULL, $source_path);
   }

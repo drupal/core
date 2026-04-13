@@ -140,7 +140,7 @@ class RendererBubblingTest extends RendererTestBase {
    * ::testBubblingWithPrerender() already tests the common case.
    */
   #[DataProvider('providerTestContextBubblingEdgeCases')]
-  public function testContextBubblingEdgeCases(array $element, array $expected_top_level_contexts, $expected_cache_item): void {
+  public function testContextBubblingEdgeCases(array $element, array $expected_top_level_contexts, array $expected_cache_item): void {
     $this->setUpRequest();
     $this->setUpMemoryCache();
     $this->cacheContextsManager

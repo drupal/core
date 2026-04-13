@@ -15,6 +15,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldTypePluginManager;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\TypedData\Exception\MissingDataException;
 use Drupal\Core\TypedData\TraversableTypedDataInterface;
 use Drupal\Core\TypedData\TypedDataManagerInterface;
@@ -23,6 +24,8 @@ use Drupal\Tests\Core\Entity\ContentEntityBaseMockableClass;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\Validator\Constraint;
 
 /**
@@ -54,23 +57,18 @@ class EntityAdapterUnitTest extends UnitTestCase {
 
   /**
    * The entity type used for testing.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $entityType;
+  protected EntityTypeInterface&Stub $entityType;
 
   /**
    * The entity type manager used for testing.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $entityTypeManager;
+  protected EntityTypeManagerInterface&MockObject $entityTypeManager;
 
   /**
-   *
-   * @var \Drupal\Core\Entity\EntityFieldManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * The entity field manager.
    */
-  protected $entityFieldManager;
+  protected EntityFieldManagerInterface&MockObject $entityFieldManager;
 
   /**
    * The type ID of the entity under test.
@@ -81,38 +79,28 @@ class EntityAdapterUnitTest extends UnitTestCase {
 
   /**
    * The typed data manager used for testing.
-   *
-   * @var \Drupal\Core\TypedData\TypedDataManager|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $typedDataManager;
+  protected TypedDataManagerInterface&MockObject $typedDataManager;
 
   /**
    * The field item list returned by the typed data manager.
-   *
-   * @var \Drupal\Core\Field\FieldItemListInterface
    */
-  protected $fieldItemList;
+  protected FieldItemListInterface&Stub $fieldItemList;
 
   /**
    * The field type manager used for testing.
-   *
-   * @var \Drupal\Core\Field\FieldTypePluginManager|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $fieldTypePluginManager;
+  protected FieldTypePluginManager&Stub $fieldTypePluginManager;
 
   /**
    * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $languageManager;
+  protected LanguageManagerInterface&MockObject $languageManager;
 
   /**
    * The UUID generator used for testing.
-   *
-   * @var \Drupal\Component\Uuid\UuidInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $uuid;
+  protected UuidInterface&Stub $uuid;
 
   /**
    * The entity ID.

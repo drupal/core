@@ -11,6 +11,7 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Routing\RedirectDestinationInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\StringTranslation\TranslationInterface;
@@ -21,6 +22,8 @@ use Drupal\user\RoleInterface;
 use Drupal\user\RoleStorageInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * Tests Drupal\Core\Entity\EntityListBuilder.
@@ -31,31 +34,23 @@ class EntityListBuilderTest extends UnitTestCase {
 
   /**
    * The entity type used for testing.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $entityType;
+  protected EntityTypeInterface&Stub $entityType;
 
   /**
    * The module handler used for testing.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $moduleHandler;
+  protected ModuleHandlerInterface&MockObject $moduleHandler;
 
   /**
    * The translation manager used for testing.
-   *
-   * @var \Drupal\Core\StringTranslation\TranslationInterface
    */
-  protected $translationManager;
+  protected TranslationInterface&Stub $translationManager;
 
   /**
    * The role storage used for testing.
-   *
-   * @var \Drupal\user\RoleStorageInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $roleStorage;
+  protected RoleStorageInterface&Stub $roleStorage;
 
   /**
    * The service container used for testing.
@@ -66,17 +61,13 @@ class EntityListBuilderTest extends UnitTestCase {
 
   /**
    * The entity used to construct the EntityListBuilder.
-   *
-   * @var \Drupal\user\RoleInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $role;
+  protected RoleInterface&Stub $role;
 
   /**
    * The redirect destination service.
-   *
-   * @var \Drupal\Core\Routing\RedirectDestinationInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $redirectDestination;
+  protected RedirectDestinationInterface&MockObject $redirectDestination;
 
   /**
    * The EntityListBuilder object to test.

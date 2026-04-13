@@ -9,8 +9,8 @@ use Behat\Mink\Mink;
 use Behat\Mink\Session;
 use Composer\InstalledVersions;
 use Drupal\Component\FileSystem\FileSystem as DrupalFilesystem;
-use Drupal\Tests\DrupalTestCaseTrait;
 use Drupal\Tests\DrupalTestBrowser;
+use Drupal\Tests\DrupalTestCaseTrait;
 use Drupal\TestTools\Extension\RequiresComposerTrait;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem as SymfonyFilesystem;
@@ -69,11 +69,9 @@ abstract class BuildTestBase extends TestCase {
    *
    * Use getWorkspaceDirectory() to access this information.
    *
-   * @var string
-   *
    * @see self::getWorkspaceDirectory()
    */
-  private $workspaceDir;
+  private string $workspaceDir;
 
   /**
    * The process that's running the HTTP server.
@@ -109,19 +107,15 @@ abstract class BuildTestBase extends TestCase {
    * Our native host name, used by PHP when it starts up the server.
    *
    * Requests should always be made to 'localhost', and not this IP address.
-   *
-   * @var string
    */
-  private static $hostName = '127.0.0.1';
+  private static string $hostName = '127.0.0.1';
 
   /**
    * Port that will be tested.
    *
    * Generated internally. Use getPortNumber().
-   *
-   * @var int
    */
-  private $hostPort;
+  private ?int $hostPort = NULL;
 
   /**
    * A list of ports used by the test.
@@ -132,23 +126,19 @@ abstract class BuildTestBase extends TestCase {
    *
    * @var \Symfony\Component\Lock\LockInterface[]
    */
-  private $portLocks = [];
+  private array $portLocks = [];
 
   /**
    * The Mink session manager.
-   *
-   * @var \Behat\Mink\Mink
    */
-  private $mink;
+  private ?Mink $mink = NULL;
 
   /**
    * The most recent command process.
    *
-   * @var \Symfony\Component\Process\Process
-   *
    * @see ::executeCommand()
    */
-  private $commandProcess;
+  private ?Process $commandProcess = NULL;
 
   /**
    * The PHP executable finder.

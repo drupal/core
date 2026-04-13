@@ -12,6 +12,7 @@ use Drupal\Core\Plugin\Discovery\ContainerDerivativeDiscoveryDecorator;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -22,11 +23,9 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 class DerivativeDiscoveryDecoratorTest extends UnitTestCase {
 
   /**
-   * The mock main discovery object.
-   *
-   * @var \Drupal\Component\Plugin\Discovery\DiscoveryInterface
+   * The main discovery object.
    */
-  protected $discoveryMain;
+  protected DiscoveryInterface&Stub $discoveryMain;
 
   /**
    * {@inheritdoc}

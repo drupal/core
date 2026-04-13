@@ -18,6 +18,7 @@ use Drupal\node\NodeInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * Tests the default menu link tree manipulators.
@@ -27,32 +28,24 @@ use PHPUnit\Framework\Attributes\Group;
 class DefaultMenuLinkTreeManipulatorsTest extends UnitTestCase {
 
   /**
-   * The mocked access manager.
-   *
-   * @var \Drupal\Core\Access\AccessManagerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The access manager.
    */
-  protected $accessManager;
+  protected AccessManagerInterface&Stub $accessManager;
 
   /**
-   * The mocked current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface|\PHPUnit\Framework\MockObject\Stub
+   * The current user.
    */
-  protected $currentUser;
+  protected AccountInterface&Stub $currentUser;
 
   /**
-   * The mocked entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The entity type manager.
    */
-  protected $entityTypeManager;
+  protected EntityTypeManagerInterface&Stub $entityTypeManager;
 
   /**
-   * The mocked module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The module handler.
    */
-  protected $moduleHandler;
+  protected ModuleHandlerInterface&Stub $moduleHandler;
 
   /**
    * The default menu link tree manipulators.

@@ -12,6 +12,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -29,18 +30,14 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class RedirectResponseSubscriberTest extends UnitTestCase {
 
   /**
-   * The mocked request context.
-   *
-   * @var \Drupal\Core\Routing\RequestContext|\PHPUnit\Framework\MockObject\Stub
+   * The request context.
    */
-  protected $requestContext;
+  protected RequestContext&Stub $requestContext;
 
   /**
-   * The mocked request context.
-   *
-   * @var \Drupal\Core\Utility\UnroutedUrlAssemblerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The request context.
    */
-  protected $urlAssembler;
+  protected UnroutedUrlAssemblerInterface&Stub $urlAssembler;
 
   /**
    * The mocked logger closure.

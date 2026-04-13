@@ -12,6 +12,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
@@ -25,25 +26,19 @@ use Symfony\Component\Routing\Route;
 class TitleResolverTest extends UnitTestCase {
 
   /**
-   * The mocked controller resolver.
-   *
-   * @var \Drupal\Core\Controller\ControllerResolverInterface|\PHPUnit\Framework\MockObject\Stub
+   * The controller resolver stub.
    */
-  protected $controllerResolver;
+  protected ControllerResolverInterface&Stub $controllerResolver;
 
   /**
-   * The mocked translation manager.
-   *
-   * @var \Drupal\Core\StringTranslation\TranslationInterface|\PHPUnit\Framework\MockObject\Stub
+   * The translation manager stub.
    */
-  protected $translationManager;
+  protected TranslationInterface&Stub $translationManager;
 
   /**
-   * The mocked argument resolver.
-   *
-   * @var \Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface|\PHPUnit\Framework\MockObject\Stub
+   * The argument resolver stub.
    */
-  protected $argumentResolver;
+  protected ArgumentResolverInterface&Stub $argumentResolver;
 
   /**
    * The actual tested title resolver.

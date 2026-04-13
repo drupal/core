@@ -13,6 +13,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Tests the CsrfTokenGenerator class.
@@ -30,17 +31,13 @@ class CsrfTokenGeneratorTest extends UnitTestCase {
 
   /**
    * The mock private key instance.
-   *
-   * @var \Drupal\Core\PrivateKey|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $privateKey;
+  protected PrivateKey&MockObject $privateKey;
 
   /**
    * The mock session metadata bag.
-   *
-   * @var \Drupal\Core\Session\MetadataBag|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $sessionMetadata;
+  protected MetadataBag&MockObject $sessionMetadata;
 
   /**
    * {@inheritdoc}

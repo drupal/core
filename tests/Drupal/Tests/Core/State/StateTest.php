@@ -23,7 +23,7 @@ use PHPUnit\Framework\Attributes\Group;
 class StateTest extends UnitTestCase {
 
   /**
-   * The mocked key value store.
+   * The key value store.
    */
   protected KeyValueStoreInterface $keyValueStorage;
 

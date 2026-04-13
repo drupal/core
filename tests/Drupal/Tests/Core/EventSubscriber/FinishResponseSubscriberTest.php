@@ -14,6 +14,7 @@ use Drupal\Core\PageCache\ResponsePolicyInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -28,46 +29,34 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 class FinishResponseSubscriberTest extends UnitTestCase {
 
   /**
-   * The mock Kernel.
-   *
-   * @var \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit\Framework\MockObject\Stub
+   * The Kernel.
    */
-  protected $kernel;
+  protected HttpKernelInterface&Stub $kernel;
 
   /**
-   * The mock language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The language manager.
    */
-  protected $languageManager;
+  protected LanguageManagerInterface&Stub $languageManager;
 
   /**
-   * The mock request policy.
-   *
-   * @var \Drupal\Core\PageCache\RequestPolicyInterface|\PHPUnit\Framework\MockObject\Stub
+   * The request policy.
    */
-  protected $requestPolicy;
+  protected RequestPolicyInterface&Stub $requestPolicy;
 
   /**
-   * The mock response policy.
-   *
-   * @var \Drupal\Core\PageCache\ResponsePolicyInterface|\PHPUnit\Framework\MockObject\Stub
+   * The response policy.
    */
-  protected $responsePolicy;
+  protected ResponsePolicyInterface&Stub $responsePolicy;
 
   /**
-   * The mock cache contexts manager.
-   *
-   * @var \Drupal\Core\Cache\Context\CacheContextsManager|\PHPUnit\Framework\MockObject\Stub
+   * The cache contexts manager.
    */
-  protected $cacheContextsManager;
+  protected CacheContextsManager&Stub $cacheContextsManager;
 
   /**
-   * The mock time service.
-   *
-   * @var \Drupal\Component\Datetime\TimeInterface|\PHPUnit\Framework\MockObject\Stub
+   * The time service.
    */
-  protected $time;
+  protected TimeInterface&Stub $time;
 
   protected function setUp(): void {
     parent::setUp();

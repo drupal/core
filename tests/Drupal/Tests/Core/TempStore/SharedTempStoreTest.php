@@ -14,6 +14,7 @@ use Drupal\Core\Test\TestKernel;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -26,18 +27,14 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class SharedTempStoreTest extends UnitTestCase {
 
   /**
-   * The mock key value expirable backend.
-   *
-   * @var \Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface
+   * The key value expirable backend.
    */
-  protected $keyValue;
+  protected KeyValueStoreExpirableInterface&Stub $keyValue;
 
   /**
    * The mock lock backend.
-   *
-   * @var \Drupal\Core\Lock\LockBackendInterface
    */
-  protected $lock;
+  protected LockBackendInterface&Stub $lock;
 
   /**
    * The temp store.

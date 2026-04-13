@@ -31,7 +31,7 @@ class SimplePageVariantTest extends UnitTestCase {
    * @return \Drupal\Core\Render\Plugin\DisplayVariant\SimplePageVariant
    *   A test display variant plugin.
    */
-  public function setUpDisplayVariant($configuration = [], $definition = []) {
+  public function setUpDisplayVariant($configuration = [], $definition = []): SimplePageVariant {
     $container = new Container();
     $cache_context_manager = $this->createStub(CacheContextsManager::class);
     $container->set('cache_contexts_manager', $cache_context_manager);

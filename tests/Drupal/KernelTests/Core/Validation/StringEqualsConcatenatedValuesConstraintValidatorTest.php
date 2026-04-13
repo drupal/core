@@ -97,7 +97,7 @@ class StringEqualsConcatenatedValuesConstraintValidatorTest extends KernelTestBa
    * @see \Drupal\Core\Validation\Plugin\Validation\Constraint\StringEqualsConcatenatedValuesConstraint
    */
   #[DataProvider('valueTypesProvider')]
-  public function testValueTypes($first_value, $second_value, $result, $invalid_result): void {
+  public function testValueTypes(string|int|bool $first_value, string|int|bool $second_value, string $result, string $invalid_result): void {
     $editable_config = \Drupal::configFactory()->getEditable('config_test.validation');
     $editable_config->set('string_concat_value_1', $first_value);
     $editable_config->set('string_concat_value_2', $second_value);

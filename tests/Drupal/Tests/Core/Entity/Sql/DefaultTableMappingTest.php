@@ -24,10 +24,8 @@ class DefaultTableMappingTest extends UnitTestCase {
 
   /**
    * The entity type definition.
-   *
-   * @var \Drupal\Core\Entity\ContentEntityTypeInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $entityType;
+  protected ContentEntityTypeInterface&Stub $entityType;
 
   /**
    * {@inheritdoc}

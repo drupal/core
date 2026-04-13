@@ -24,6 +24,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * Tests Drupal\Core\Utility\LinkGenerator.
@@ -40,18 +41,14 @@ class LinkGeneratorTest extends UnitTestCase {
   protected $linkGenerator;
 
   /**
-   * The mocked URL generator.
-   *
-   * @var \Drupal\Core\Routing\UrlGenerator
+   * The URL generator.
    */
-  protected $urlGenerator;
+  protected UrlGenerator&Stub $urlGenerator;
 
   /**
-   * The mocked module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   * The module handler.
    */
-  protected $moduleHandler;
+  protected ModuleHandlerInterface&Stub $moduleHandler;
 
   /**
    * Contains the LinkGenerator default options.

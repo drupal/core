@@ -28,6 +28,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Prophecy\Argument;
 
 /**
@@ -45,11 +46,9 @@ class SqlContentEntityStorageTest extends UnitTestCase {
   protected $entityStorage;
 
   /**
-   * The mocked entity type used in this test.
-   *
-   * @var \Drupal\Core\Entity\ContentEntityTypeInterface
+   * The entity type used in this test.
    */
-  protected $entityType;
+  protected ContentEntityTypeInterface&Stub $entityType;
 
   /**
    * An array of field definitions used for this test, keyed by field name.
@@ -66,11 +65,9 @@ class SqlContentEntityStorageTest extends UnitTestCase {
   protected $entityTypeManager;
 
   /**
-   * The mocked entity type bundle info used in this test.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface|\PHPUnit\Framework\MockObject\Stub
+   * The entity type bundle info used in this test.
    */
-  protected $entityTypeBundleInfo;
+  protected EntityTypeBundleInfoInterface&Stub $entityTypeBundleInfo;
 
   /**
    * The mocked entity field manager used in this test.
@@ -95,31 +92,23 @@ class SqlContentEntityStorageTest extends UnitTestCase {
 
   /**
    * The module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $moduleHandler;
+  protected ModuleHandlerInterface&Stub $moduleHandler;
 
   /**
    * The cache backend to use.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $cache;
+  protected CacheBackendInterface&Stub $cache;
 
   /**
    * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $languageManager;
+  protected LanguageManagerInterface&Stub $languageManager;
 
   /**
    * The database connection to use.
-   *
-   * @var \Drupal\Core\Database\Connection|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $connection;
+  protected Connection&Stub $connection;
 
   /**
    * {@inheritdoc}

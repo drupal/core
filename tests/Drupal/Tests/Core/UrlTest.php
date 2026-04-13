@@ -22,6 +22,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\InvalidParameterException;
@@ -42,24 +43,18 @@ class UrlTest extends UnitTestCase {
 
   /**
    * The URL generator.
-   *
-   * @var \Drupal\Core\Routing\UrlGeneratorInterface
    */
-  protected $urlGenerator;
+  protected UrlGeneratorInterface&Stub $urlGenerator;
 
   /**
    * The path alias manager.
-   *
-   * @var \Drupal\path_alias\AliasManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $pathAliasManager;
+  protected AliasManagerInterface&Stub $pathAliasManager;
 
   /**
    * The router.
-   *
-   * @var \Drupal\Tests\Core\Routing\TestRouterInterface
    */
-  protected $router;
+  protected TestRouterInterface&Stub $router;
 
   /**
    * An array of values to use for the test.
@@ -69,11 +64,9 @@ class UrlTest extends UnitTestCase {
   protected $map;
 
   /**
-   * The mocked path validator.
-   *
-   * @var \Drupal\Core\Path\PathValidatorInterface
+   * The path validator.
    */
-  protected $pathValidator;
+  protected PathValidatorInterface&Stub $pathValidator;
 
   /**
    * {@inheritdoc}

@@ -14,6 +14,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Route;
@@ -27,9 +28,9 @@ use Symfony\Component\Routing\RouterInterface;
 class AccessAwareRouterTest extends UnitTestCase {
 
   /**
-   * @var \Symfony\Component\Routing\RouterInterface|\PHPUnit\Framework\MockObject\MockObject
+   * The router.
    */
-  protected RouterInterface|MockObject $router;
+  protected RouterInterface&MockObject $router;
 
   /**
    * @var \Symfony\Component\Routing\Route
@@ -42,14 +43,14 @@ class AccessAwareRouterTest extends UnitTestCase {
   protected $coreRouter;
 
   /**
-   * @var \Drupal\Core\Access\AccessManagerInterface
+   * The access manager.
    */
-  protected $accessManager;
+  protected AccessManagerInterface&Stub $accessManager;
 
   /**
-   * @var \Drupal\Core\Session\AccountInterface
+   * The account.
    */
-  protected $currentUser;
+  protected AccountInterface&Stub $currentUser;
 
   /**
    * @var \Drupal\Core\Routing\AccessAwareRouter

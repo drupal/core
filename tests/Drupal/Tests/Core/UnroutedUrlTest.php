@@ -13,6 +13,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
@@ -25,17 +26,13 @@ class UnroutedUrlTest extends UnitTestCase {
 
   /**
    * The URL assembler.
-   *
-   * @var \Drupal\Core\Utility\UnroutedUrlAssemblerInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $urlAssembler;
+  protected UnroutedUrlAssemblerInterface&Stub $urlAssembler;
 
   /**
    * The router.
-   *
-   * @var \Drupal\Tests\Core\Routing\TestRouterInterface
    */
-  protected $router;
+  protected TestRouterInterface&Stub $router;
 
   /**
    * An unrouted, external URL to test.

@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\EventSubscriber;
 
-use Drupal\Core\EventSubscriber\ModuleRouteSubscriber;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\EventSubscriber\ModuleRouteSubscriber;
 use Drupal\Core\Routing\RouteBuildEvent;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -22,11 +23,9 @@ use Symfony\Component\Routing\RouteCollection;
 class ModuleRouteSubscriberTest extends UnitTestCase {
 
   /**
-   * The mock module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The module handler.
    */
-  protected $moduleHandler;
+  protected ModuleHandlerInterface&Stub $moduleHandler;
 
   /**
    * {@inheritdoc}

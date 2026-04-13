@@ -1195,7 +1195,7 @@ class RendererTest extends RendererTestBase {
       // ::renderInIsolation() calls without either having been completed.
       $fibers = [];
       foreach ([0, 1] as $key) {
-        $fibers[] = new \Fiber(static fn () => $fiber_callback());
+        $fibers[] = new \Fiber(static fn (): MarkupInterface|string => $fiber_callback());
       }
       while ($fibers) {
         foreach ($fibers as $key => $fiber) {

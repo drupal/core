@@ -13,6 +13,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
@@ -27,32 +28,24 @@ use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 class PathValidatorTest extends UnitTestCase {
 
   /**
-   * The mocked access aware router.
-   *
-   * @var \Drupal\Core\Routing\AccessAwareRouterInterface
+   * The access aware router stub.
    */
-  protected $accessAwareRouter;
+  protected AccessAwareRouterInterface&Stub $accessAwareRouter;
 
   /**
-   * The mocked access unaware router.
-   *
-   * @var \Symfony\Component\Routing\Matcher\UrlMatcherInterface
+   * The access unaware router stub.
    */
-  protected $accessUnawareRouter;
+  protected UrlMatcherInterface&Stub $accessUnawareRouter;
 
   /**
-   * The mocked account.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
+   * The account stub.
    */
-  protected $account;
+  protected AccountInterface&Stub $account;
 
   /**
-   * The path processor.
-   *
-   * @var \Drupal\Core\PathProcessor\InboundPathProcessorInterface
+   * The path processor stub.
    */
-  protected $pathProcessor;
+  protected InboundPathProcessorInterface&Stub $pathProcessor;
 
   /**
    * The tested path validator.

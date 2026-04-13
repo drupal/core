@@ -34,7 +34,7 @@ class CssCollectionOptimizerLazyUnitTest extends UnitTestCase {
   /**
    * The file URL generator mock.
    */
-  protected FileUrlGeneratorInterface|MockObject $fileUrlGenerator;
+  protected FileUrlGeneratorInterface&MockObject $fileUrlGenerator;
 
   /**
    * {@inheritdoc}

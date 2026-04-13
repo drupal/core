@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Drupal\Tests\Core\ParamConverter;
 
 use Drupal\Core\ParamConverter\ParamConverterManager;
+use Drupal\Core\ParamConverter\ParamConverterInterface;
 use Drupal\Core\ParamConverter\ParamNotConvertedException;
 use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
@@ -33,7 +35,7 @@ class ParamConverterManagerTest extends UnitTestCase {
     $converter->expects($this->never())
       ->method('convert');
 
-    $manager = new ParamConverterManager(new ServiceLocator([$name => fn() => $converter]));
+    $manager = new ParamConverterManager(new ServiceLocator([$name => fn(): ParamConverterInterface&MockObject => $converter]));
     $this->assertInstanceOf($class, $manager->getConverter($name));
   }
 
@@ -77,7 +79,7 @@ class ParamConverterManagerTest extends UnitTestCase {
       ->method('applies')
       ->with($this->anything(), 'id', $this->anything())
       ->willReturn(TRUE);
-    $manager = new ParamConverterManager(new ServiceLocator(['applied' => fn() => $converter]));
+    $manager = new ParamConverterManager(new ServiceLocator(['applied' => fn(): ParamConverterInterface&MockObject => $converter]));
 
     $route = new Route($path);
     if ($parameters) {
@@ -140,7 +142,7 @@ class ParamConverterManagerTest extends UnitTestCase {
       ->with(1, $this->isArray(), 'id', $this->isArray())
       ->willReturn('something_better!');
 
-    $manager = new ParamConverterManager(new ServiceLocator(['test_convert' => fn() => $converter]));
+    $manager = new ParamConverterManager(new ServiceLocator(['test_convert' => fn(): ParamConverterInterface&MockObject => $converter]));
     $result = $manager->convert($defaults);
 
     $this->assertEquals($expected, $result);
@@ -160,8 +162,8 @@ class ParamConverterManagerTest extends UnitTestCase {
 
     $instantiated = FALSE;
     $manager = new ParamConverterManager(new ServiceLocator([
-      'converter1' => fn() => $converter,
-      'converter2' => function () use (&$instantiated, $converter) {
+      'converter1' => fn(): ParamConverterInterface&MockObject => $converter,
+      'converter2' => function () use (&$instantiated, $converter): ParamConverterInterface&MockObject {
         $instantiated = TRUE;
         return $converter;
       },
@@ -231,7 +233,7 @@ class ParamConverterManagerTest extends UnitTestCase {
       ->with(1, $this->isArray(), 'id', $this->isArray())
       ->willReturn(NULL);
 
-    $manager = new ParamConverterManager(new ServiceLocator(['test_convert' => fn() => $converter]));
+    $manager = new ParamConverterManager(new ServiceLocator(['test_convert' => fn(): ParamConverterInterface&MockObject => $converter]));
 
     $this->expectException(ParamNotConvertedException::class);
     $this->expectExceptionMessage('The "id" parameter was not converted for the path "/test/{id}" (route name: "test_route")');

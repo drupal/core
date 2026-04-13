@@ -16,10 +16,8 @@ class SortTest extends TestCase {
 
   /**
    * The path of phpcs.xml.dist file.
-   *
-   * @var string
    */
-  private $filePath;
+  private string $filePath;
 
   /**
    * {@inheritdoc}

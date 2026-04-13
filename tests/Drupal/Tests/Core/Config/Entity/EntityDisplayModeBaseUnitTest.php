@@ -12,6 +12,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * Tests Drupal\Core\Entity\EntityDisplayModeBase.
@@ -29,17 +30,19 @@ class EntityDisplayModeBaseUnitTest extends UnitTestCase {
 
   /**
    * The entity type used for testing.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $entityInfo;
+  protected EntityTypeInterface&Stub $entityInfo;
 
   /**
    * The entity type manager used for testing.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   *   Could actually be EntityTypeManagerInterface&MockObject or
+   *   EntityTypeManagerInterface&Stub.
+   *
+   * @todo split the variable to allow proper type.
    */
-  protected $entityTypeManager;
+  protected EntityTypeManagerInterface $entityTypeManager;
 
   /**
    * The ID of the type of the entity under test.
@@ -50,10 +53,8 @@ class EntityDisplayModeBaseUnitTest extends UnitTestCase {
 
   /**
    * The UUID generator used for testing.
-   *
-   * @var \Drupal\Component\Uuid\UuidInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $uuid;
+  protected UuidInterface&Stub $uuid;
 
   /**
    * {@inheritdoc}

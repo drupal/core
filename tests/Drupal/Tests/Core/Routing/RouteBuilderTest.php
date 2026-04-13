@@ -9,6 +9,7 @@ use Drupal\Core\Controller\ControllerResolverInterface;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Discovery\YamlDiscovery;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Routing\MatcherDumperInterface;
 use Drupal\Core\Routing\RouteBuilder;
 use Drupal\Core\Routing\RouteBuildEvent;
@@ -17,6 +18,8 @@ use Drupal\Core\Routing\RoutingEvents;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Prophecy\Argument;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
@@ -36,18 +39,14 @@ class RouteBuilderTest extends UnitTestCase {
   protected $routeBuilder;
 
   /**
-   * The mocked matcher dumper.
-   *
-   * @var \Drupal\Core\Routing\MatcherDumperInterface
+   * The matcher dumper.
    */
-  protected $dumper;
+  protected MatcherDumperInterface&Stub $dumper;
 
   /**
    * The mocked lock backend.
-   *
-   * @var \Drupal\Core\Lock\LockBackendInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $lock;
+  protected LockBackendInterface&MockObject $lock;
 
   /**
    * The mocked event dispatcher.
@@ -58,29 +57,23 @@ class RouteBuilderTest extends UnitTestCase {
 
   /**
    * The mocked YAML discovery.
-   *
-   * @var \Drupal\Core\Discovery\YamlDiscovery|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $yamlDiscovery;
+  protected YamlDiscovery&MockObject $yamlDiscovery;
 
   /**
    * The module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
    */
-  protected $moduleHandler;
+  protected ModuleHandlerInterface&Stub $moduleHandler;
 
   /**
    * The controller resolver.
-   *
-   * @var \Drupal\Core\Controller\ControllerResolverInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $controllerResolver;
+  protected ControllerResolverInterface&Stub $controllerResolver;
 
   /**
-   * @var \Drupal\Core\Access\CheckProviderInterface
+   * The check provider.
    */
-  protected $checkProvider;
+  protected CheckProviderInterface $checkProvider;
 
   /**
    * {@inheritdoc}

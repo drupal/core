@@ -6,10 +6,12 @@ namespace Drupal\Tests\Core\Asset;
 
 use Drupal\Core\Asset\LibraryDependencyResolver;
 use Drupal\Core\Asset\LibraryDiscoveryCollector;
+use Drupal\Core\Asset\LibraryDiscoveryInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Tests Drupal\Core\Asset\LibraryDependencyResolver.
@@ -27,10 +29,8 @@ class LibraryDependencyResolverTest extends UnitTestCase {
 
   /**
    * The mocked library discovery service.
-   *
-   * @var \Drupal\Core\Asset\LibraryDiscoveryInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $libraryDiscovery;
+  protected LibraryDiscoveryInterface&MockObject $libraryDiscovery;
 
   /**
    * Test library data.

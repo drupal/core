@@ -192,10 +192,8 @@ class NaughtyRecursiveLogger implements LoggerInterface {
 
   /**
    * The logger channel.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannel
    */
-  protected $channel;
+  protected LoggerChannel $channel;
 
   /**
    * The message to log.

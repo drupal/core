@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\Core\Asset;
 
 use Drupal\Core\Asset\LibraryDiscoveryCollector;
+use Drupal\Core\Asset\LibraryDiscoveryParser;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Lock\LockBackendInterface;
@@ -14,6 +15,8 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\IgnoreDeprecations;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * Tests Drupal\Core\Asset\LibraryDiscoveryCollector.
@@ -23,25 +26,19 @@ use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 class LibraryDiscoveryCollectorTest extends UnitTestCase {
 
   /**
-   * The mock cache backend.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface
+   * The cache backend.
    */
-  protected $cache;
+  protected CacheBackendInterface&Stub $cache;
 
   /**
-   * The mock lock backend.
-   *
-   * @var \Drupal\Core\Lock\LockBackendInterface
+   * The lock backend.
    */
-  protected $lock;
+  protected LockBackendInterface&Stub $lock;
 
   /**
    * The mock library discovery parser.
-   *
-   * @var \Drupal\Core\Asset\LibraryDiscoveryParser|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $libraryDiscoveryParser;
+  protected LibraryDiscoveryParser&MockObject $libraryDiscoveryParser;
 
   /**
    * The library discovery collector under test.
@@ -51,11 +48,9 @@ class LibraryDiscoveryCollectorTest extends UnitTestCase {
   protected $libraryDiscoveryCollector;
 
   /**
-   * The mocked theme manager.
-   *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface
+   * The theme manager.
    */
-  protected $themeManager;
+  protected ThemeManagerInterface&Stub $themeManager;
 
   /**
    * Test library data.
@@ -92,10 +87,8 @@ class LibraryDiscoveryCollectorTest extends UnitTestCase {
 
   /**
    * The active theme.
-   *
-   * @var \Drupal\Core\Theme\ActiveTheme|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $activeTheme;
+  protected ActiveTheme&MockObject $activeTheme;
 
   /**
    * {@inheritdoc}

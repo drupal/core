@@ -13,6 +13,7 @@ use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -24,24 +25,18 @@ class ContextTest extends UnitTestCase {
 
   /**
    * The mocked context definition object.
-   *
-   * @var \Drupal\Core\Plugin\Context\ContextDefinitionInterface
    */
-  protected $contextDefinition;
+  protected ContextDefinitionInterface&Stub $contextDefinition;
 
   /**
    * The mocked Typed Data manager.
-   *
-   * @var \Drupal\Core\TypedData\TypedDataManager
    */
-  protected $typedDataManager;
+  protected TypedDataManagerInterface&Stub $typedDataManager;
 
   /**
    * The mocked Typed Data object.
-   *
-   * @var \Drupal\Core\TypedData\TypedDataInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $typedData;
+  protected TypedDataInterface&Stub $typedData;
 
   /**
    * {@inheritdoc}

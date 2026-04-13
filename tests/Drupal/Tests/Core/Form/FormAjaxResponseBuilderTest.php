@@ -9,11 +9,13 @@ use Drupal\Core\Ajax\AlertCommand;
 use Drupal\Core\Form\FormAjaxResponseBuilder;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\MainContent\MainContentRendererInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Utility\CallableResolver;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -26,14 +28,14 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class FormAjaxResponseBuilderTest extends UnitTestCase {
 
   /**
-   * @var \Drupal\Core\Render\MainContent\MainContentRendererInterface|\PHPUnit\Framework\MockObject\MockObject
+   * The main content renderer mock.
    */
-  protected $renderer;
+  protected MainContentRendererInterface&MockObject $renderer;
 
   /**
-   * @var \Drupal\Core\Routing\RouteMatchInterface|\PHPUnit\Framework\MockObject\Stub
+   * The route match.
    */
-  protected $routeMatch;
+  protected RouteMatchInterface&Stub $routeMatch;
 
   /**
    * @var \Drupal\Core\Form\FormAjaxResponseBuilder

@@ -11,6 +11,7 @@ use Drupal\Core\Asset\AttachedAssetsInterface;
 use Drupal\Core\Asset\JsCollectionGrouper;
 use Drupal\Core\Asset\LibraryDependencyResolver;
 use Drupal\Core\Asset\LibraryDiscoveryCollector;
+use Drupal\Core\Asset\LibraryDiscoveryInterface;
 use Drupal\Core\Cache\MemoryBackend;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Extension\ThemeHandlerInterface;
@@ -22,6 +23,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * Tests Drupal\Core\Asset\AssetResolver.
@@ -38,63 +40,53 @@ class AssetResolverTest extends UnitTestCase {
   protected $assetResolver;
 
   /**
-   * The mocked library discovery service.
-   *
-   * @var \Drupal\Core\Asset\LibraryDiscoveryInterface|\PHPUnit\Framework\MockObject\Stub
+   * The library discovery service.
    */
-  protected $libraryDiscovery;
+  protected LibraryDiscoveryInterface&Stub $libraryDiscovery;
 
   /**
-   * The mocked library dependency resolver.
+   * The library dependency resolver.
    *
-   * @var \Drupal\Core\Asset\LibraryDependencyResolverInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Asset\LibraryDependencyResolverInterface
    */
   protected $libraryDependencyResolver;
 
   /**
-   * The mocked module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The module handler.
    */
-  protected $moduleHandler;
+  protected ModuleHandlerInterface&Stub $moduleHandler;
 
   /**
-   * The mocked theme manager.
-   *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The theme manager.
    */
-  protected $themeManager;
+  protected ThemeManagerInterface&Stub $themeManager;
 
   /**
-   * The mocked language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The language manager.
    */
-  protected $languageManager;
+  protected LanguageManagerInterface&Stub $languageManager;
 
   /**
    * The cache backend to use.
    *
-   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Cache\CacheBackendInterface
    */
   protected $cache;
 
   /**
-   * The mocked theme handler.
-   *
-   * @var \Drupal\Core\Extension\ThemeHandlerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The theme handler.
    */
-  protected $themeHandler;
+  protected ThemeHandlerInterface&Stub $themeHandler;
 
   /**
-   * A mocked English language object.
+   * A English language object.
    */
-  protected LanguageInterface $english;
+  protected LanguageInterface&Stub $english;
 
   /**
-   * A mocked Japanese language object.
+   * A Japanese language object.
    */
-  protected LanguageInterface $japanese;
+  protected LanguageInterface&Stub $japanese;
   /**
    * An array of library definitions.
    */

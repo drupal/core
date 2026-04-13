@@ -10,7 +10,7 @@ use Drupal\Core\PreWarm\PreWarmableInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * Tests Drupal\Core\PreWarm\CachePreWarmer.
@@ -20,9 +20,9 @@ use PHPUnit\Framework\MockObject\MockObject;
 class CachePreWarmerTest extends UnitTestCase {
 
   /**
-   * @var \Drupal\Core\DependencyInjection\ClassResolverInterface|\PHPUnit\Framework\MockObject\Stub
+   * The class resolver.
    */
-  protected MockObject|ClassResolverInterface $classResolver;
+  protected ClassResolverInterface&Stub $classResolver;
 
   /**
    * @var \SplObjectStorage<\Drupal\Core\PreWarm\PreWarmableInterface|\PHPUnit\Framework\MockObject\MockObject>

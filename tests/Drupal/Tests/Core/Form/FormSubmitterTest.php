@@ -33,23 +33,19 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class FormSubmitterTest extends UnitTestCase {
 
   /**
-   * The mocked URL generator.
-   *
-   * @var \Drupal\Core\Routing\UrlGeneratorInterface
+   * The URL generator.
    */
-  protected $urlGenerator;
+  protected UrlGeneratorInterface&Stub $urlGenerator;
 
   /**
-   * The mocked unrouted URL assembler.
-   *
-   * @var \Drupal\Core\Utility\UnroutedUrlAssemblerInterface
+   * The unrouted URL assembler.
    */
-  protected $unroutedUrlAssembler;
+  protected UnroutedUrlAssemblerInterface&Stub $unroutedUrlAssembler;
 
   /**
-   * @var \PHPUnit\Framework\MockObject\Stub|\Drupal\Core\EventSubscriber\RedirectResponseSubscriber
+   * The redirect response subscriber mock.
    */
-  protected $redirectResponseSubscriber;
+  protected RedirectResponseSubscriber&Stub $redirectResponseSubscriber;
 
   /**
    * The callable resolver.

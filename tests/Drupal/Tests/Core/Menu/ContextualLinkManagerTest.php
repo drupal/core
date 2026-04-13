@@ -19,6 +19,8 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Prophecy\Argument;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -38,17 +40,13 @@ class ContextualLinkManagerTest extends UnitTestCase {
 
   /**
    * The mocked plugin discovery.
-   *
-   * @var \Drupal\Component\Plugin\Discovery\DiscoveryInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $pluginDiscovery;
+  protected DiscoveryInterface&MockObject $pluginDiscovery;
 
   /**
    * The cache backend used in the test.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface
    */
-  protected $cacheBackend;
+  protected CacheBackendInterface&Stub $cacheBackend;
 
   /**
    * The mocked module handler.
@@ -58,18 +56,14 @@ class ContextualLinkManagerTest extends UnitTestCase {
   protected $moduleHandler;
 
   /**
-   * The mocked access manager.
-   *
-   * @var \Drupal\Core\Access\AccessManagerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The access manager.
    */
-  protected $accessManager;
+  protected AccessManagerInterface&Stub $accessManager;
 
   /**
-   * The mocked account.
-   *
-   * @var \Drupal\Core\Session\AccountInterface|\PHPUnit\Framework\MockObject\Stub
+   * The account.
    */
-  protected $account;
+  protected AccountInterface&Stub $account;
 
   /**
    * {@inheritdoc}

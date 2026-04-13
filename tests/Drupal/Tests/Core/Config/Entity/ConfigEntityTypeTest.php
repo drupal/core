@@ -149,7 +149,7 @@ class ConfigEntityTypeTest extends UnitTestCase {
    * Tests get properties to export.
    */
   #[DataProvider('providerGetPropertiesToExport')]
-  public function testGetPropertiesToExport($definition, $expected): void {
+  public function testGetPropertiesToExport(array $definition, $expected): void {
     $entity_type = $this->setUpConfigEntityType($definition);
     $properties_to_export = $entity_type->getPropertiesToExport();
     $this->assertSame($expected, $properties_to_export);

@@ -33,6 +33,7 @@ use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Prophecy\Argument;
 
 /**
@@ -45,23 +46,23 @@ class ConfigEntityBaseUnitTest extends UnitTestCase {
   /**
    * The entity under test.
    *
-   * @var \Drupal\Core\Config\Entity\ConfigEntityBase|\PHPUnit\Framework\MockObject\MockObject
+   * @var object
+   *   Could be StubConfigEntity or
+   *   ConfigEntityBaseWithPluginCollections&MockObject.
+   *
+   * @todo split the variable to allow proper type.
    */
   protected $entity;
 
   /**
    * The entity type used for testing.
-   *
-   * @var \Drupal\Core\Config\Entity\ConfigEntityTypeInterface
    */
-  protected $entityType;
+  protected ConfigEntityTypeInterface&Stub $entityType;
 
   /**
    * The entity type manager used for testing.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $entityTypeManager;
+  protected EntityTypeManagerInterface&Stub $entityTypeManager;
 
   /**
    * The ID of the type of the entity under test.
@@ -72,10 +73,8 @@ class ConfigEntityBaseUnitTest extends UnitTestCase {
 
   /**
    * The UUID generator used for testing.
-   *
-   * @var \Drupal\Component\Uuid\UuidInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $uuid;
+  protected UuidInterface&Stub $uuid;
 
   /**
    * The provider of the entity type.
@@ -84,10 +83,8 @@ class ConfigEntityBaseUnitTest extends UnitTestCase {
 
   /**
    * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $languageManager;
+  protected LanguageManagerInterface&Stub $languageManager;
 
   /**
    * The entity ID.
@@ -97,18 +94,14 @@ class ConfigEntityBaseUnitTest extends UnitTestCase {
   protected $id;
 
   /**
-   * The mocked cache backend.
-   *
-   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface|\PHPUnit\Framework\MockObject\Stub
+   * The cache backend.
    */
-  protected $cacheTagsInvalidator;
+  protected CacheTagsInvalidatorInterface&Stub $cacheTagsInvalidator;
 
   /**
-   * The mocked typed config manager.
-   *
-   * @var \Drupal\Core\Config\TypedConfigManagerInterface
+   * The typed config manager.
    */
-  protected $typedConfigManager;
+  protected TypedConfigManagerInterface&Stub $typedConfigManager;
 
   /**
    * The module handler.

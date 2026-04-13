@@ -23,6 +23,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * Tests Drupal\Core\Entity\Entity\Access\EntityFormDisplayAccessControlHandler.
@@ -40,31 +41,23 @@ class EntityFormDisplayAccessControlHandlerTest extends UnitTestCase {
 
   /**
    * The mock module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
    */
-  protected $moduleHandler;
+  protected ModuleHandlerInterface&Stub $moduleHandler;
 
   /**
    * The mock account without field storage config access.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
    */
-  protected $anon;
+  protected AccountInterface&Stub $anon;
 
   /**
    * The mock account with EntityFormDisplay access.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
    */
-  protected $member;
+  protected AccountInterface&Stub $member;
 
   /**
    * The mock account with EntityFormDisplay access via parent access check.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
    */
-  protected $parentMember;
+  protected AccountInterface&Stub $parentMember;
 
   /**
    * The EntityFormDisplay entity used for testing.

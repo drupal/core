@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Config;
 
+use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ConfigFactory;
+use Drupal\Core\Config\StorageInterface;
 use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -29,31 +33,23 @@ class ConfigFactoryTest extends UnitTestCase {
 
   /**
    * Storage.
-   *
-   * @var \Drupal\Core\Config\StorageInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $storage;
+  protected StorageInterface&MockObject $storage;
 
   /**
    * Event Dispatcher.
-   *
-   * @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $eventDispatcher;
+  protected EventDispatcherInterface&Stub $eventDispatcher;
 
   /**
    * Typed Config.
-   *
-   * @var \Drupal\Core\Config\TypedConfigManagerInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $typedConfig;
+  protected TypedConfigManagerInterface&Stub $typedConfig;
 
   /**
    * The mocked cache tags invalidator.
-   *
-   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $cacheTagsInvalidator;
+  protected CacheTagsInvalidatorInterface&MockObject $cacheTagsInvalidator;
 
   /**
    * {@inheritdoc}

@@ -21,6 +21,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Prophecy\Argument;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -36,10 +37,8 @@ class UrlGeneratorTest extends UnitTestCase {
 
   /**
    * The route provider.
-   *
-   * @var \Drupal\Core\Routing\RouteProviderInterface
    */
-  protected $provider;
+  protected RouteProviderInterface $provider;
 
   /**
    * The URL generator to test.
@@ -50,17 +49,13 @@ class UrlGeneratorTest extends UnitTestCase {
 
   /**
    * The alias manager.
-   *
-   * @var \Drupal\path_alias\AliasManager|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $aliasManager;
+  protected AliasManager&Stub $aliasManager;
 
   /**
-   * The mock route processor manager.
-   *
-   * @var \Drupal\Core\RouteProcessor\RouteProcessorManager
+   * The route processor manager.
    */
-  protected $routeProcessorManager;
+  protected RouteProcessorManager&Stub $routeProcessorManager;
 
   /**
    * The request stack.
@@ -614,7 +609,7 @@ class UrlGeneratorTest extends UnitTestCase {
 
     $path_processor->expects($this->atLeastOnce())
       ->method('processOutbound')
-      ->willReturnCallback(function ($path, &$options = []) {
+      ->willReturnCallback(function ($path, array &$options = []) {
         // Assert that 'route_name' exists in options and is the expected value.
         $this->assertArrayHasKey('route_name', $options);
         $this->assertEquals('test_1', $options['route_name']);

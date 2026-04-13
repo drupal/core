@@ -9,6 +9,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * Tests \Drupal\Core\Session\WriteSafeSessionHandler.
@@ -19,10 +20,8 @@ class WriteSafeSessionHandlerTest extends UnitTestCase {
 
   /**
    * The wrapped session handler.
-   *
-   * @var \SessionHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $wrappedSessionHandler;
+  protected \SessionHandlerInterface&Stub $wrappedSessionHandler;
 
   /**
    * The write safe session handler.

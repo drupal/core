@@ -15,6 +15,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -34,24 +35,18 @@ class FormCacheTest extends UnitTestCase {
 
   /**
    * The expirable key value factory.
-   *
-   * @var \Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface
    */
-  protected $keyValueExpirableFactory;
+  protected KeyValueExpirableFactory $keyValueExpirableFactory;
 
   /**
    * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
    */
-  protected $account;
+  protected AccountInterface&Stub $account;
 
   /**
    * The CSRF token generator.
-   *
-   * @var \Drupal\Core\Access\CsrfTokenGenerator
    */
-  protected $csrfToken;
+  protected CsrfTokenGenerator&Stub $csrfToken;
 
   /**
    * The mocked module handler.
@@ -62,38 +57,28 @@ class FormCacheTest extends UnitTestCase {
 
   /**
    * The expirable key value store used by form cache.
-   *
-   * @var \Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface
    */
-  protected $formCacheStore;
+  protected KeyValueStoreExpirableInterface&Stub $formCacheStore;
 
   /**
    * The expirable key value store used by form state cache.
-   *
-   * @var \Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface
    */
-  protected $formStateCacheStore;
+  protected KeyValueStoreExpirableInterface&Stub $formStateCacheStore;
 
   /**
    * The logger channel.
-   *
-   * @var \Psr\Log\LoggerInterface
    */
-  protected $logger;
+  protected LoggerInterface&Stub $logger;
 
   /**
    * The request stack.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
-  protected $requestStack;
+  protected RequestStack&Stub $requestStack;
 
   /**
    * A policy rule determining the cacheability of a request.
-   *
-   * @var \Drupal\Core\PageCache\RequestPolicyInterface
    */
-  protected $requestPolicy;
+  protected RequestPolicyInterface&Stub $requestPolicy;
 
   /**
    * {@inheritdoc}

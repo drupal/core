@@ -25,6 +25,7 @@ use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Core\Utility\CallableResolver;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\MockObject\Stub;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -51,44 +52,34 @@ abstract class FormTestBase extends UnitTestCase {
   protected $formValidator;
 
   /**
-   * @var \Drupal\Core\Form\FormSubmitterInterface
+   * The form submitter.
    */
-  protected $formSubmitter;
+  protected StubFormSubmitter $formSubmitter;
 
   /**
    * The mocked URL generator.
-   *
-   * @var \Drupal\Core\Routing\UrlGeneratorInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $urlGenerator;
+  protected UrlGeneratorInterface&Stub $urlGenerator;
 
   /**
    * The mocked module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $moduleHandler;
+  protected ModuleHandlerInterface&Stub $moduleHandler;
 
   /**
    * The form cache.
-   *
-   * @var \Drupal\Core\Form\FormCacheInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $formCache;
+  protected FormCacheInterface&Stub $formCache;
 
   /**
    * The cache backend to use.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $cache;
+  protected CacheBackendInterface&Stub $cache;
 
   /**
    * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $account;
+  protected AccountInterface&Stub $account;
 
   /**
    * The controller resolver.
@@ -99,10 +90,8 @@ abstract class FormTestBase extends UnitTestCase {
 
   /**
    * The CSRF token generator.
-   *
-   * @var \Drupal\Core\Access\CsrfTokenGenerator
    */
-  protected $csrfToken;
+  protected CsrfTokenGenerator&Stub $csrfToken;
 
   /**
    * The request.
@@ -127,17 +116,13 @@ abstract class FormTestBase extends UnitTestCase {
 
   /**
    * The element info manager.
-   *
-   * @var \Drupal\Core\Render\ElementInfoManagerInterface
    */
-  protected $elementInfo;
+  protected ElementInfoManagerInterface&Stub $elementInfo;
 
   /**
    * The event dispatcher.
-   *
-   * @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $eventDispatcher;
+  protected EventDispatcherInterface&Stub $eventDispatcher;
 
   /**
    * @var \Drupal\Core\StringTranslation\TranslationInterface|\PHPUnit\Framework\MockObject\MockObject
@@ -145,26 +130,24 @@ abstract class FormTestBase extends UnitTestCase {
   protected $translationManager;
 
   /**
-   * @var \Drupal\Core\DrupalKernelInterface|\PHPUnit\Framework\MockObject\Stub
+   * The Drupal kernel.
    */
-  protected $kernel;
+  protected DrupalKernel&Stub $kernel;
 
   /**
-   * @var \PHPUnit\Framework\MockObject\Stub|\Psr\Log\LoggerInterface
+   * The logger.
    */
-  protected $logger;
+  protected LoggerInterface&Stub $logger;
 
   /**
-   * @var \PHPUnit\Framework\MockObject\Stub|\Drupal\Core\EventSubscriber\RedirectResponseSubscriber
+   * The redirect response subscriber.
    */
-  protected $redirectResponseSubscriber;
+  protected RedirectResponseSubscriber&Stub $redirectResponseSubscriber;
 
   /**
-   * The mocked theme manager.
-   *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The theme manager.
    */
-  protected $themeManager;
+  protected ThemeManagerInterface&Stub $themeManager;
 
   /**
    * The callable resolver.

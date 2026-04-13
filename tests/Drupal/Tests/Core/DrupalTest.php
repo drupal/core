@@ -25,10 +25,8 @@ class DrupalTest extends UnitTestCase {
 
   /**
    * The mock container.
-   *
-   * @var \Symfony\Component\DependencyInjection\ContainerBuilder|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $container;
+  protected ContainerBuilder $container;
 
   /**
    * {@inheritdoc}

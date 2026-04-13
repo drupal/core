@@ -17,9 +17,13 @@ abstract class LazyPluginCollectionTestBase extends UnitTestCase {
   /**
    * The mocked plugin manager.
    *
-   * @var \Drupal\Component\Plugin\PluginManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Component\Plugin\PluginManagerInterface
+   *   Could actually be PluginManagerInterface&MockObject or
+   *   PluginManagerInterface&Stub.
+   *
+   * @todo split the variable to allow proper type.
    */
-  protected $pluginManager;
+  protected PluginManagerInterface $pluginManager;
 
   /**
    * The tested plugin collection.

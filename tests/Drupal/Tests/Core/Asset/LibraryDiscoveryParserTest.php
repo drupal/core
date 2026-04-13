@@ -11,6 +11,7 @@ use Drupal\Core\Asset\Exception\LibraryDefinitionMissingLicenseException;
 use Drupal\Core\Asset\LibrariesDirectoryFileFinder;
 use Drupal\Core\Asset\LibraryDiscoveryParser;
 use Drupal\Core\Extension\ExtensionPathResolver;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\StreamWrapper\StreamWrapperManagerInterface;
 use Drupal\Core\Theme\ActiveTheme;
 use Drupal\Core\Theme\ComponentPluginManager;
@@ -21,6 +22,8 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * Tests Drupal\Core\Asset\LibraryDiscoveryParser.
@@ -45,24 +48,18 @@ class LibraryDiscoveryParserTest extends UnitTestCase {
 
   /**
    * The mocked module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $moduleHandler;
+  protected ModuleHandlerInterface&MockObject $moduleHandler;
 
   /**
-   * The mocked theme manager.
-   *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The theme manager.
    */
-  protected $themeManager;
+  protected ThemeManagerInterface&Stub $themeManager;
 
   /**
-   * The mocked active theme.
-   *
-   * @var \Drupal\Core\Theme\ActiveTheme|\PHPUnit\Framework\MockObject\Stub
+   * The active theme.
    */
-  protected $activeTheme;
+  protected ActiveTheme&Stub $activeTheme;
 
   /**
    * The mocked lock backend.
@@ -72,32 +69,24 @@ class LibraryDiscoveryParserTest extends UnitTestCase {
   protected $lock;
 
   /**
-   * The mocked stream wrapper manager.
-   *
-   * @var \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface
+   * The stream wrapper manager.
    */
-  protected $streamWrapperManager;
+  protected StreamWrapperManagerInterface&Stub $streamWrapperManager;
 
   /**
-   * The mocked libraries directory file finder.
-   *
-   * @var \Drupal\Core\Asset\LibrariesDirectoryFileFinder
+   * The libraries directory file finder.
    */
-  protected $librariesDirectoryFileFinder;
+  protected LibrariesDirectoryFileFinder&Stub $librariesDirectoryFileFinder;
 
   /**
-   * The mocked extension path resolver.
-   *
-   * @var \Drupal\Core\Extension\ExtensionPathResolver|\PHPUnit\Framework\MockObject\MockObject
+   * The extension path resolver.
    */
-  protected $extensionPathResolver;
+  protected ExtensionPathResolver&Stub $extensionPathResolver;
 
   /**
-   * The mocked extension path resolver.
-   *
-   * @var \Drupal\Core\Theme\ComponentPluginManager|\PHPUnit\Framework\MockObject\Stub
+   * The extension path resolver.
    */
-  protected $componentPluginManager;
+  protected ComponentPluginManager&Stub $componentPluginManager;
 
   /**
    * {@inheritdoc}

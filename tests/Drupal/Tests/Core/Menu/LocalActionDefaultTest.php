@@ -7,9 +7,11 @@ namespace Drupal\Tests\Core\Menu;
 use Drupal\Core\Menu\LocalActionDefault;
 use Drupal\Core\Routing\RouteProviderInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -51,10 +53,8 @@ class LocalActionDefaultTest extends UnitTestCase {
 
   /**
    * The mocked translator.
-   *
-   * @var \Drupal\Core\StringTranslation\TranslationInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $stringTranslation;
+  protected TranslationInterface&MockObject $stringTranslation;
 
   /**
    * {@inheritdoc}

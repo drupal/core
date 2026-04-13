@@ -23,6 +23,8 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Prophecy\Argument;
 use Prophecy\Prophet;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,66 +40,48 @@ class LocalActionManagerTest extends UnitTestCase {
 
   /**
    * The mocked argument resolver.
-   *
-   * @var \Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $argumentResolver;
+  protected ArgumentResolverInterface&MockObject $argumentResolver;
 
   /**
-   * The mocked request.
-   *
-   * @var \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\Stub
+   * The request.
    */
-  protected $request;
+  protected Request&Stub $request;
 
   /**
-   * The mocked module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The module handler.
    */
-  protected $moduleHandler;
+  protected ModuleHandlerInterface&Stub $moduleHandler;
 
   /**
-   * The mocked router provider.
-   *
-   * @var \Drupal\Core\Routing\RouteProviderInterface|\PHPUnit\Framework\MockObject\Stub
+   * The router provider.
    */
-  protected $routeProvider;
+  protected RouteProviderInterface&Stub $routeProvider;
 
   /**
-   * The mocked cache backend.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\Stub
+   * The cache backend.
    */
-  protected $cacheBackend;
+  protected CacheBackendInterface&Stub $cacheBackend;
 
   /**
-   * The mocked access manager.
-   *
-   * @var \Drupal\Core\Access\AccessManagerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The access manager.
    */
-  protected $accessManager;
+  protected AccessManagerInterface&Stub $accessManager;
 
   /**
-   * The mocked account.
-   *
-   * @var \Drupal\Core\Session\AccountInterface|\PHPUnit\Framework\MockObject\Stub
+   * The account.
    */
-  protected $account;
+  protected AccountInterface&Stub $account;
 
   /**
-   * The mocked factory.
-   *
-   * @var \Drupal\Component\Plugin\Factory\FactoryInterface|\PHPUnit\Framework\MockObject\Stub
+   * The factory.
    */
-  protected $factory;
+  protected FactoryInterface&Stub $factory;
 
   /**
-   * The mocked plugin discovery.
-   *
-   * @var \Drupal\Component\Plugin\Discovery\DiscoveryInterface|\PHPUnit\Framework\MockObject\Stub
+   * The plugin discovery.
    */
-  protected $discovery;
+  protected DiscoveryInterface&Stub $discovery;
 
   /**
    * The tested local action manager.

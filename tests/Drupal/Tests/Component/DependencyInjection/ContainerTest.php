@@ -1078,7 +1078,7 @@ class MockInstantiationService {
   /**
    * @var mixed[]
    */
-  protected $arguments;
+  protected array $arguments;
 
   /**
    * Construct a mock instantiation service.

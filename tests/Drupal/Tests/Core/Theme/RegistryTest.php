@@ -16,6 +16,7 @@ use Drupal\Core\Theme\Registry;
 use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\theme_test\Hook\ThemeTestHooks;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
@@ -33,60 +34,44 @@ class RegistryTest extends UnitTestCase {
   protected $registry;
 
   /**
-   * The mocked cache backend.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\Stub
+   * The cache backend.
    */
-  protected $cache;
+  protected CacheBackendInterface&Stub $cache;
 
   /**
-   * The mocked lock backend.
-   *
-   * @var \Drupal\Core\Lock\LockBackendInterface|\PHPUnit\Framework\MockObject\Stub
+   * The lock backend.
    */
-  protected $lock;
+  protected LockBackendInterface&Stub $lock;
 
   /**
-   * The mocked module handler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   * The module handler.
    */
-  protected $moduleHandler;
+  protected ModuleHandlerInterface&Stub $moduleHandler;
 
   /**
-   * The mocked theme handler.
-   *
-   * @var \Drupal\Core\Extension\ThemeHandlerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The theme handler.
    */
-  protected $themeHandler;
+  protected ThemeHandlerInterface&Stub $themeHandler;
 
   /**
-   * The mocked cache backend.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\Stub
+   * The cache backend.
    */
-  protected $runtimeCache;
+  protected CacheBackendInterface&Stub $runtimeCache;
 
   /**
    * The theme manager.
-   *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface
    */
-  protected $themeManager;
+  protected ThemeManagerInterface&Stub $themeManager;
 
   /**
    * The module list.
-   *
-   * @var \Drupal\Core\Extension\ModuleExtensionList
    */
-  protected $moduleList;
+  protected ModuleExtensionList&Stub $moduleList;
 
   /**
    * The kernel.
-   *
-   * @var \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit\Framework\MockObject\Stub
    */
-  protected $kernel;
+  protected HttpKernelInterface&Stub $kernel;
 
   /**
    * They key value factory.

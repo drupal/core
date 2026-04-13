@@ -8,8 +8,10 @@ use Drupal\Core\Cache\Context\SessionCacheContext;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Tests Drupal\Core\Cache\Context\SessionCacheContext.
@@ -34,10 +36,8 @@ class SessionCacheContextTest extends UnitTestCase {
 
   /**
    * The session object.
-   *
-   * @var \Symfony\Component\HttpFoundation\Session\SessionInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $session;
+  protected SessionInterface&MockObject $session;
 
   /**
    * {@inheritdoc}

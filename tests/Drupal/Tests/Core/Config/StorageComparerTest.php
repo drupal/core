@@ -11,6 +11,7 @@ use Drupal\Core\Config\StorageInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Tests Drupal\Core\Config\StorageComparer.
@@ -20,14 +21,14 @@ use PHPUnit\Framework\Attributes\Group;
 class StorageComparerTest extends UnitTestCase {
 
   /**
-   * @var \Drupal\Core\Config\StorageInterface|\PHPUnit\Framework\MockObject\MockObject
+   * Source storage.
    */
-  protected $sourceStorage;
+  protected StorageInterface&MockObject $sourceStorage;
 
   /**
-   * @var \Drupal\Core\Config\StorageInterface|\PHPUnit\Framework\MockObject\MockObject
+   * Target storage.
    */
-  protected $targetStorage;
+  protected StorageInterface&MockObject $targetStorage;
 
   /**
    * The storage comparer to test.

@@ -17,6 +17,8 @@ use Drupal\Core\Url;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,10 +37,8 @@ class CustomPageExceptionHtmlSubscriberTest extends UnitTestCase {
 
   /**
    * The mocked HTTP kernel.
-   *
-   * @var \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $kernel;
+  protected HttpKernelInterface&MockObject $kernel;
 
   /**
    * The mocked config factory.
@@ -49,10 +49,8 @@ class CustomPageExceptionHtmlSubscriberTest extends UnitTestCase {
 
   /**
    * The mocked logger.
-   *
-   * @var \Psr\Log\LoggerInterface
    */
-  protected $logger;
+  protected LoggerInterface&Stub $logger;
 
   /**
    * The PHP error log settings before the test.
@@ -69,25 +67,19 @@ class CustomPageExceptionHtmlSubscriberTest extends UnitTestCase {
   protected $customPageSubscriber;
 
   /**
-   * The mocked redirect.destination service.
-   *
-   * @var \Drupal\Core\Routing\RedirectDestinationInterface|\PHPUnit\Framework\MockObject\Stub
+   * The redirect.destination service.
    */
-  protected $redirectDestination;
+  protected RedirectDestinationInterface&Stub $redirectDestination;
 
   /**
-   * The mocked access unaware router.
-   *
-   * @var \Symfony\Component\Routing\Matcher\UrlMatcherInterface|\PHPUnit\Framework\MockObject\Stub
+   * The access unaware router.
    */
-  protected $accessUnawareRouter;
+  protected UrlMatcherInterface&Stub $accessUnawareRouter;
 
   /**
    * The access manager.
-   *
-   * @var \Drupal\Core\Access\AccessManagerInterface
    */
-  protected $accessManager;
+  protected AccessManagerInterface&Stub $accessManager;
 
   /**
    * {@inheritdoc}

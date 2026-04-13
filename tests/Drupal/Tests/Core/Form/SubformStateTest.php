@@ -224,7 +224,7 @@ class SubformStateTest extends UnitTestCase {
    * Tests set values broken.
    */
   #[DataProvider('providerTestSetValuesBroken')]
-  public function testSetValuesBroken($parents, $new_values, $expected): void {
+  public function testSetValuesBroken(array $parents, array $new_values, $expected): void {
     $this->expectException(\UnexpectedValueException::class);
     $this->testSetValues($parents, $new_values, $expected);
   }

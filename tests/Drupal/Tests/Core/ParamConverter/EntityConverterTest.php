@@ -19,6 +19,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Route;
 
@@ -31,18 +32,14 @@ use Symfony\Component\Routing\Route;
 class EntityConverterTest extends UnitTestCase {
 
   /**
-   * The mocked entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * The entity type manager.
    */
-  protected $entityTypeManager;
+  protected EntityTypeManagerInterface&Stub $entityTypeManager;
 
   /**
-   * The mocked entities repository.
-   *
-   * @var \Drupal\Core\Entity\EntityRepositoryInterface
+   * The entities repository.
    */
-  protected $entityRepository;
+  protected EntityRepositoryInterface&Stub $entityRepository;
 
   /**
    * The tested entity converter.

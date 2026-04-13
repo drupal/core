@@ -11,6 +11,7 @@ use Drupal\Core\Url;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * Test all header-related Htmx public methods.
@@ -27,7 +28,7 @@ class HtmxHeadersTest extends UnitTestCase {
   /**
    * Mocked Url object.
    */
-  protected Url $url;
+  protected Url&Stub $url;
 
   /**
    * {@inheritdoc}

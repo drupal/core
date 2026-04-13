@@ -8,6 +8,7 @@ use Drupal\Core\Extension\RequiredModuleUninstallValidator;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Tests Drupal\Core\Extension\RequiredModuleUninstallValidator.
@@ -17,9 +18,9 @@ use PHPUnit\Framework\Attributes\Group;
 class RequiredModuleUninstallValidatorTest extends UnitTestCase {
 
   /**
-   * @var \Drupal\Core\Extension\RequiredModuleUninstallValidator|\PHPUnit\Framework\MockObject\MockObject
+   * The required module uninstall validator.
    */
-  protected $uninstallValidator;
+  protected RequiredModuleUninstallValidator&MockObject $uninstallValidator;
 
   /**
    * {@inheritdoc}

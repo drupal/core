@@ -8,12 +8,15 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Form\EventSubscriber\FormAjaxSubscriber;
 use Drupal\Core\Form\Exception\BrokenPostRequestException;
 use Drupal\Core\Form\FormAjaxException;
+use Drupal\Core\Form\FormAjaxResponseBuilderInterface;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -33,14 +36,14 @@ class FormAjaxSubscriberTest extends UnitTestCase {
   protected $subscriber;
 
   /**
-   * @var \Drupal\Core\Form\FormAjaxResponseBuilderInterface|\PHPUnit\Framework\MockObject\MockObject
+   * The form AJAX response builder mock.
    */
-  protected $formAjaxResponseBuilder;
+  protected FormAjaxResponseBuilderInterface&MockObject $formAjaxResponseBuilder;
 
   /**
-   * @var \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit\Framework\MockObject\Stub
+   * The HTTP kernel mock.
    */
-  protected $httpKernel;
+  protected HttpKernelInterface&Stub $httpKernel;
 
   /**
    * The mocked string translation.
@@ -50,11 +53,9 @@ class FormAjaxSubscriberTest extends UnitTestCase {
   protected $stringTranslation;
 
   /**
-   * The mocked messenger.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface
+   * The messenger.
    */
-  protected $messenger;
+  protected MessengerInterface&Stub $messenger;
 
   /**
    * The event used to derive the response.

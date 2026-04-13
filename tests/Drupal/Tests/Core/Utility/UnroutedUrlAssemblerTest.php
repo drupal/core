@@ -13,6 +13,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\TestWith;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -46,10 +47,8 @@ class UnroutedUrlAssemblerTest extends UnitTestCase {
 
   /**
    * The mocked outbound path processor.
-   *
-   * @var \Drupal\Core\PathProcessor\OutboundPathProcessorInterface
    */
-  protected $pathProcessor;
+  protected OutboundPathProcessorInterface&Stub $pathProcessor;
 
   /**
    * {@inheritdoc}

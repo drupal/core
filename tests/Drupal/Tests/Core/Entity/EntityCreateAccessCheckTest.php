@@ -15,6 +15,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\InputBag;
 
 /**
@@ -26,11 +27,9 @@ use Symfony\Component\HttpFoundation\InputBag;
 class EntityCreateAccessCheckTest extends UnitTestCase {
 
   /**
-   * The mocked entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\Stub
+   * The entity type manager.
    */
-  public $entityTypeManager;
+  public EntityTypeManagerInterface&Stub $entityTypeManager;
 
   /**
    * {@inheritdoc}

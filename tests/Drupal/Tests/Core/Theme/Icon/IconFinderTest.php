@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\Theme\Icon;
 
+// cspell:ignore corge grault garply quux plugh
+
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Theme\Icon\IconFinder;
 use Drupal\Tests\UnitTestCase;
-// cspell:ignore corge grault garply quux plugh
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;

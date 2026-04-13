@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\Core\TempStore;
 
+use Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface;
 use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\TempStore\Lock;
@@ -12,6 +13,8 @@ use Drupal\Core\TempStore\TempStoreException;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -23,18 +26,14 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class PrivateTempStoreTest extends UnitTestCase {
 
   /**
-   * The mock key value expirable backend.
-   *
-   * @var \Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface|\PHPUnit\Framework\MockObject\MockObject
+   * The mocked key value expirable backend.
    */
-  protected $keyValue;
+  protected KeyValueStoreExpirableInterface&MockObject $keyValue;
 
   /**
-   * The mock lock backend.
-   *
-   * @var \Drupal\Core\Lock\LockBackendInterface
+   * The lock backend.
    */
-  protected $lock;
+  protected LockBackendInterface&Stub $lock;
 
   /**
    * The temp store.
@@ -45,10 +44,8 @@ class PrivateTempStoreTest extends UnitTestCase {
 
   /**
    * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface|\PHPUnit\Framework\MockObject\MockObject
    */
-  protected $currentUser;
+  protected AccountProxyInterface&Stub $currentUser;
 
   /**
    * The request stack.
