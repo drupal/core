@@ -47,13 +47,6 @@ class MigrateSourceTest extends MigrateTestCase {
   protected $row = ['test_sourceid1' => '1', 'timestamp' => 500];
 
   /**
-   * Test source ids.
-   *
-   * @var array
-   */
-  protected $sourceIds = ['test_sourceid1' => 'test_sourceid1'];
-
-  /**
    * The migration entity.
    *
    * @var \Drupal\migrate\Plugin\MigrationInterface

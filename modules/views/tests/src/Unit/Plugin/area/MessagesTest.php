@@ -17,13 +17,6 @@ use PHPUnit\Framework\Attributes\Group;
 class MessagesTest extends UnitTestCase {
 
   /**
-   * The view executable object.
-   *
-   * @var \Drupal\views\ViewExecutable
-   */
-  protected $view;
-
-  /**
    * The message handler.
    *
    * @var \Drupal\views\Plugin\views\area\Messages

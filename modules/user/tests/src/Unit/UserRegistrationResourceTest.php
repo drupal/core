@@ -24,21 +24,12 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 #[Group('user')]
 class UserRegistrationResourceTest extends UnitTestCase {
 
-  const ERROR_MESSAGE = "Unprocessable Entity: validation failed.\nproperty_path: message\nproperty_path_2: message_2\n";
-
   /**
    * Class to be tested.
    *
    * @var \Drupal\user\Plugin\rest\resource\UserRegistrationResource
    */
   protected $testClass;
-
-  /**
-   * A reflection of self::$testClass.
-   *
-   * @var \ReflectionClass
-   */
-  protected $reflection;
 
   /**
    * A user settings config instance.
@@ -83,7 +74,6 @@ class UserRegistrationResourceTest extends UnitTestCase {
     $this->passwordGenerator = $this->prophesize(PasswordGeneratorInterface::class)->reveal();
 
     $this->testClass = new UserRegistrationResource([], 'plugin_id', '', [], $this->logger, $this->userSettings->reveal(), $this->currentUser->reveal(), $this->passwordGenerator);
-    $this->reflection = new \ReflectionClass($this->testClass);
   }
 
   /**

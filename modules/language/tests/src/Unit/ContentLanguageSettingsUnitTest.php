@@ -34,13 +34,6 @@ class ContentLanguageSettingsUnitTest extends UnitTestCase {
   protected $entityTypeManager;
 
   /**
-   * The ID of the type of the entity under test.
-   *
-   * @var string
-   */
-  protected $entityTypeId;
-
-  /**
    * The UUID generator used for testing.
    *
    * @var \Drupal\Component\Uuid\UuidInterface|\PHPUnit\Framework\MockObject\Stub
@@ -66,8 +59,6 @@ class ContentLanguageSettingsUnitTest extends UnitTestCase {
    */
   protected function setUp(): void {
     parent::setUp();
-
-    $this->entityTypeId = $this->randomMachineName();
 
     $this->entityTypeManager = $this->createStub(EntityTypeManagerInterface::class);
 

@@ -36,13 +36,6 @@ class TimestampItemNormalizerTest extends UnitTestCase {
   protected $normalizer;
 
   /**
-   * The test TimestampItem.
-   *
-   * @var \Drupal\Core\Field\Plugin\Field\FieldType\TimestampItem
-   */
-  protected $item;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {

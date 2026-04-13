@@ -41,13 +41,6 @@ class FormErrorHandlerTest extends UnitTestCase {
   protected $renderer;
 
   /**
-   * The link generator.
-   *
-   * @var \Drupal\Core\Utility\LinkGeneratorInterface|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $linkGenerator;
-
-  /**
    * Form for testing.
    *
    * @var array

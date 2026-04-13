@@ -22,13 +22,6 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 class SubProcessTest extends MigrateProcessTestCase {
 
   /**
-   * The sub_process plugin being tested.
-   *
-   * @var \Drupal\migrate\Plugin\migrate\process\SubProcess
-   */
-  protected $plugin;
-
-  /**
    * The default migration configuration.
    *
    * @var array

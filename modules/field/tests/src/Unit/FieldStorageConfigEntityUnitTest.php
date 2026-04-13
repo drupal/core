@@ -33,13 +33,6 @@ class FieldStorageConfigEntityUnitTest extends UnitTestCase {
   protected $entityTypeManager;
 
   /**
-   * The ID of the type of the entity under test.
-   *
-   * @var string
-   */
-  protected $entityTypeId;
-
-  /**
    * The UUID generator used for testing.
    *
    * @var \Drupal\Component\Uuid\UuidInterface|\PHPUnit\Framework\MockObject\Stub

@@ -58,20 +58,6 @@ class AliasManagerTest extends UnitTestCase {
   protected $cache;
 
   /**
-   * The internal cache key used by the alias manager.
-   *
-   * @var string
-   */
-  protected $cacheKey = 'preload-paths:key';
-
-  /**
-   * The cache key passed to the alias manager.
-   *
-   * @var string
-   */
-  protected $path = 'key';
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {

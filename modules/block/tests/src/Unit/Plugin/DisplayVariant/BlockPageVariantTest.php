@@ -41,13 +41,6 @@ class BlockPageVariantTest extends UnitTestCase {
   protected $blockViewBuilder;
 
   /**
-   * The plugin context handler.
-   *
-   * @var \Drupal\Core\Plugin\Context\ContextHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $contextHandler;
-
-  /**
    * Sets up a display variant plugin for testing.
    *
    * @param array $configuration

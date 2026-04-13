@@ -21,7 +21,6 @@ use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\Core\Url;
-use Drupal\Core\Utility\LinkGeneratorInterface;
 use Drupal\system\PathBasedBreadcrumbBuilder;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -475,23 +474,11 @@ class PathBasedBreadcrumbBuilderTest extends UnitTestCase {
 class TestPathBasedBreadcrumbBuilder extends PathBasedBreadcrumbBuilder {
 
   /**
-   * The test link generator.
-   */
-  protected LinkGeneratorInterface $linkGenerator;
-
-  /**
    * {@inheritdoc}
    */
   public function setStringTranslation(TranslationInterface $string_translation) {
     $this->stringTranslation = $string_translation;
     return $this;
-  }
-
-  /**
-   * Sets the link generator.
-   */
-  public function setLinkGenerator(LinkGeneratorInterface $link_generator): void {
-    $this->linkGenerator = $link_generator;
   }
 
 }

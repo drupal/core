@@ -32,13 +32,6 @@ class SearchPluginCollectionTest extends UnitTestCase {
   protected $searchPluginCollection;
 
   /**
-   * Stores all setup plugin instances.
-   *
-   * @var \Drupal\search\Plugin\SearchInterface[]
-   */
-  protected $pluginInstances;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
