@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\FunctionalJavascriptTests;
 
+use Behat\Mink\Session;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\WebAssert;
@@ -52,7 +53,7 @@ abstract class WebDriverTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function initMink() {
+  protected function initMink(): Session {
     if (!is_a($this->minkDefaultDriverClass, DrupalSelenium2Driver::class, TRUE)) {
       throw new \UnexpectedValueException(sprintf("%s has to be an instance of %s", $this->minkDefaultDriverClass, DrupalSelenium2Driver::class));
     }
@@ -73,7 +74,7 @@ abstract class WebDriverTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function installModulesFromClassProperty(ContainerInterface $container) {
+  protected function installModulesFromClassProperty(ContainerInterface $container): void {
     self::$modules = [
       'js_testing_ajax_request_test',
       'js_testing_log_test',
@@ -87,7 +88,7 @@ abstract class WebDriverTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function initFrontPage() {
+  protected function initFrontPage(): void {
     parent::initFrontPage();
     // Set a standard window size so that all javascript tests start with the
     // same viewport.
@@ -154,7 +155,7 @@ abstract class WebDriverTestBase extends BrowserTestBase {
    *
    * @see \Behat\Mink\Driver\DriverInterface::evaluateScript()
    */
-  protected function assertJsCondition(string $condition, int $timeout = 10000, $message = '') {
+  protected function assertJsCondition(string $condition, int $timeout = 10000, $message = ''): void {
     $message = $message ?: "JavaScript condition met:\n" . $condition;
     $result = $this->getSession()->getDriver()->wait($timeout, $condition);
     $this->assertTrue($result, $message);
@@ -175,7 +176,7 @@ abstract class WebDriverTestBase extends BrowserTestBase {
    * @throws \Behat\Mink\Exception\DriverException
    *   When the operation cannot be done.
    */
-  protected function createScreenshot($filename, $set_background_color = TRUE) {
+  protected function createScreenshot($filename, $set_background_color = TRUE): void {
     $session = $this->getSession();
     if ($set_background_color) {
       $session->executeScript("document.body.style.backgroundColor = 'white';");

@@ -33,7 +33,7 @@ abstract class PerformanceTestBase extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function prepareEnvironment() {
+  protected function prepareEnvironment(): void {
     parent::prepareEnvironment();
     $db = Database::getConnection();
     $test_file_name = (new \ReflectionClass($this))->getFileName();
@@ -46,7 +46,7 @@ abstract class PerformanceTestBase extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function installModulesFromClassProperty(ContainerInterface $container) {
+  protected function installModulesFromClassProperty(ContainerInterface $container): void {
     $this->doInstallModulesFromClassProperty($container);
   }
 

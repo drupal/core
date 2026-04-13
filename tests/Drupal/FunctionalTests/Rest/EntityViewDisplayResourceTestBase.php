@@ -36,7 +36,7 @@ abstract class EntityViewDisplayResourceTestBase extends ConfigEntityResourceTes
   /**
    * {@inheritdoc}
    */
-  protected function setUpAuthorization($method) {
+  protected function setUpAuthorization($method): void {
     $this->grantPermissionsToTestedRole(['administer node display']);
   }
 

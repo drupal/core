@@ -22,7 +22,7 @@ abstract class ConfigAfterInstallerTestBase extends InstallerTestBase {
    * @param array $skipped_config
    *   An array of skipped config.
    */
-  protected function assertInstalledConfig(array $skipped_config) {
+  protected function assertInstalledConfig(array $skipped_config): void {
     $this->addToAssertionCount(1);
     /** @var \Drupal\Core\Config\StorageInterface $active_config_storage */
     $active_config_storage = $this->container->get('config.storage');

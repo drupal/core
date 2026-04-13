@@ -39,7 +39,7 @@ class AjaxFormPageCacheTest extends WebDriverTestBase {
   /**
    * Return the build id of the current form.
    */
-  protected function getFormBuildId() {
+  protected function getFormBuildId(): string {
     // Ensure the hidden 'form_build_id' field is unique.
     $this->assertSession()->elementsCount('xpath', '//input[@name="form_build_id"]', 1);
     return $this->assertSession()->hiddenFieldExists('form_build_id')->getValue();

@@ -10946,12 +10946,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/block/tests/src/Functional/BlockUiTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\block\\\\Functional\\\\BlockWeightUpdateTest\\:\\:setDatabaseDumpFiles\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/block/tests/src/Functional/BlockWeightUpdateTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\block\\\\Functional\\\\BlockWeightUpdateTest\\:\\:testRunUpdates\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -13766,12 +13760,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/field/tests/src/Functional/MultipleWidgetFormTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\field\\\\Functional\\\\ReEnableModuleFieldTest\\:\\:cronRun\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/field/tests/src/Functional/ReEnableModuleFieldTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\field\\\\Functional\\\\Views\\\\FieldTestBase\\:\\:setUpFieldStorages\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -14994,12 +14982,6 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/help/tests/modules/help_topics_twig_tester/src/HelpTestTwigNodeVisitor.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\help\\\\Functional\\\\HelpTopicSearchTest\\:\\:cronRun\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/help/tests/src/Functional/HelpTopicSearchTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\help\\\\Functional\\\\HelpTopicTest\\:\\:assertBreadcrumb\\(\\) has no return type specified\\.$#',
@@ -18546,12 +18528,6 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/locale/tests/src/Functional/LocaleUpdateBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\locale\\\\Functional\\\\LocaleUpdateCronTest\\:\\:cronRun\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/locale/tests/src/Functional/LocaleUpdateCronTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Parameter \\#2 \\$language_manager of class Drupal\\\\locale\\\\LocaleDefaultConfigStorage constructor expects Drupal\\\\language\\\\ConfigurableLanguageManagerInterface, Drupal\\\\Core\\\\Language\\\\LanguageManagerInterface given\\.$#',
@@ -22610,52 +22586,10 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/search/tests/modules/search_extra_type/src/Plugin/Search/SearchExtraTypeSearch.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\search\\\\Functional\\\\SearchCommentTest\\:\\:cronRun\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/search/tests/src/Functional/SearchCommentTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\search\\\\Functional\\\\SearchNumberMatchingTest\\:\\:cronRun\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/search/tests/src/Functional/SearchNumberMatchingTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\search\\\\Functional\\\\SearchNumbersTest\\:\\:cronRun\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/search/tests/src/Functional/SearchNumbersTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\search\\\\Functional\\\\SearchRankingTest\\:\\:cronRun\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/search/tests/src/Functional/SearchRankingTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\search\\\\Functional\\\\Update\\\\SearchBlockPageIdUpdatePathTest\\:\\:setDatabaseDumpFiles\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/search/tests/src/Functional/Update/SearchBlockPageIdUpdatePathTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\search\\\\Functional\\\\Update\\\\SearchBlockPageIdUpdatePathTest\\:\\:testRunUpdates\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/search/tests/src/Functional/Update/SearchBlockPageIdUpdatePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\search\\\\Functional\\\\views\\\\ViewsIntegrationTest\\:\\:cronRun\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/search/tests/src/Functional/views/ViewsIntegrationTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\search\\\\Functional\\\\views\\\\ViewsMultilingualTest\\:\\:cronRun\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/search/tests/src/Functional/views/ViewsMultilingualTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\search\\\\Kernel\\\\SearchMatchTest\\:\\:getText\\(\\) has no return type specified\\.$#',
@@ -26422,22 +26356,10 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/system/tests/src/Functional/Render/HtmlResponseAttachmentsTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\system\\\\Functional\\\\SecurityAdvisories\\\\SecurityAdvisoryTest\\:\\:cronRun\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/system/tests/src/Functional/SecurityAdvisories/SecurityAdvisoryTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Parameter \\#3 \\$password of method Drupal\\\\Tests\\\\system\\\\Functional\\\\Session\\\\SessionAuthenticationTest\\:\\:basicAuthGet\\(\\) expects string, Drupal\\\\Core\\\\Field\\\\FieldItemListInterface given\\.$#',
 	'identifier' => 'argument.type',
 	'count' => 4,
 	'path' => __DIR__ . '/modules/system/tests/src/Functional/Session/SessionAuthenticationTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\system\\\\Functional\\\\System\\\\CronRunTest\\:\\:cronRun\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/system/tests/src/Functional/System/CronRunTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\system\\\\Functional\\\\System\\\\SiteMaintenanceTest\\:\\:assertMailPattern\\(\\) has no return type specified\\.$#',
@@ -27256,12 +27178,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/update/tests/src/Functional/UpdateContribTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\update\\\\Functional\\\\UpdateMiscTest\\:\\:cronRun\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/update/tests/src/Functional/UpdateMiscTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\update\\\\Functional\\\\UpdateSemverContribSecurityAvailabilityTest\\:\\:securityUpdateAvailabilityProvider\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -27290,12 +27206,6 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/update/tests/src/Functional/UpdateSemverCoreTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\update\\\\Functional\\\\UpdateSemverTestBase\\:\\:cronRun\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/update/tests/src/Functional/UpdateSemverTestBase.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\update\\\\Functional\\\\UpdateSemverTestBase\\:\\:refreshUpdateStatus\\(\\) has no return type specified\\.$#',
@@ -36922,12 +36832,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/profiles/demo_umami/modules/demo_umami_content/tests/src/Functional/UninstallDefaultContentTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\Tests\\\\demo_umami\\\\Functional\\\\DemoUmamiProfileTest\\:\\:assertConfigDiff\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/profiles/demo_umami/tests/src/Functional/DemoUmamiProfileTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\Tests\\\\standard\\\\FunctionalJavascript\\\\StandardPerformanceTest\\:\\:refreshVariables\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -36952,184 +36856,16 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/scripts/run-tests.sh',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Variable \\$project_stabilities might not be defined\\.$#',
-	'identifier' => 'variable.undefined',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/BuildTests/Composer/Template/ComposerProjectTemplatesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\BuildTests\\\\Framework\\\\BuildTestBase\\:\\:standUpServer\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/BuildTests/Framework/BuildTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\BuildTests\\\\Framework\\\\BuildTestBase\\:\\:stopServer\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/BuildTests/Framework/BuildTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalJavascriptTests\\\\Ajax\\\\AjaxFormPageCacheTest\\:\\:getFormBuildId\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalJavascriptTests/Ajax/AjaxFormPageCacheTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\FunctionalJavascriptTests\\\\Ajax\\\\AjaxMaintenanceModeTest\\:\\:attachFileField\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/FunctionalJavascriptTests/Ajax/AjaxMaintenanceModeTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalJavascriptTests\\\\JSWebAssert\\:\\:waitOnAutocomplete\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalJavascriptTests/JSWebAssert.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalJavascriptTests\\\\PerformanceTestBase\\:\\:installModulesFromClassProperty\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalJavascriptTests/PerformanceTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalJavascriptTests\\\\PerformanceTestBase\\:\\:prepareEnvironment\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalJavascriptTests/PerformanceTestBase.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\FunctionalJavascriptTests\\\\Tests\\\\DrupalSelenium2DriverTest\\:\\:attachFileField\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/FunctionalJavascriptTests/Tests/DrupalSelenium2DriverTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalJavascriptTests\\\\WebDriverTestBase\\:\\:assertJsCondition\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalJavascriptTests/WebDriverTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalJavascriptTests\\\\WebDriverTestBase\\:\\:createScreenshot\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalJavascriptTests/WebDriverTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalJavascriptTests\\\\WebDriverTestBase\\:\\:initFrontPage\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalJavascriptTests/WebDriverTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalJavascriptTests\\\\WebDriverTestBase\\:\\:initMink\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalJavascriptTests/WebDriverTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalJavascriptTests\\\\WebDriverTestBase\\:\\:installModulesFromClassProperty\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalJavascriptTests/WebDriverTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\BrowserTestBaseTest\\:\\:cronRun\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/BrowserTestBaseTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\ConfigAfterInstallerTestBase\\:\\:assertConfigDiff\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Installer/ConfigAfterInstallerTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\ConfigAfterInstallerTestBase\\:\\:assertInstalledConfig\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Installer/ConfigAfterInstallerTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\InstallerConfigDirectoryTestBase\\:\\:prepareEnvironment\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Installer/InstallerConfigDirectoryTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\InstallerConfigDirectoryTestBase\\:\\:setUpProfile\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Installer/InstallerConfigDirectoryTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\InstallerExistingConfigSyncDirectoryMultilingualTest\\:\\:setUpProfile\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Installer/InstallerExistingConfigSyncDirectoryMultilingualTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\InstallerSiteConfigProfileTest\\:\\:setUpSite\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Installer/InstallerSiteConfigProfileTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\InstallerTestBase\\:\\:initFrontPage\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Installer/InstallerTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\InstallerTestBase\\:\\:refreshVariables\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Installer/InstallerTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\InstallerTestBase\\:\\:setUpLanguage\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Installer/InstallerTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\InstallerTestBase\\:\\:setUpProfile\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Installer/InstallerTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\InstallerTestBase\\:\\:setUpRequirementsProblem\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Installer/InstallerTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\InstallerTestBase\\:\\:setUpSettings\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Installer/InstallerTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\InstallerTestBase\\:\\:setUpSite\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Installer/InstallerTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\InstallerTestBase\\:\\:visitInstaller\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Installer/InstallerTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Installer\\\\MinimalInstallerTest\\:\\:assertConfigDiff\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Installer/MinimalInstallerTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\FunctionalTests\\\\MailCaptureTest\\:\\:assertMailPattern\\(\\) has no return type specified\\.$#',
@@ -37142,60 +36878,6 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/MailCaptureTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Update\\\\UpdatePathTestBase\\:\\:doInstall\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Update/UpdatePathTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Update\\\\UpdatePathTestBase\\:\\:initFrontPage\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Update/UpdatePathTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Update\\\\UpdatePathTestBase\\:\\:prepareSettings\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Update/UpdatePathTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Update\\\\UpdatePathTestBase\\:\\:replaceUser1\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Update/UpdatePathTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Update\\\\UpdatePathTestBase\\:\\:runDbTasks\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Update/UpdatePathTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Update\\\\UpdatePathTestBase\\:\\:runUpdates\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Update/UpdatePathTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Update\\\\UpdatePathTestBase\\:\\:setDatabaseDumpFiles\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Update/UpdatePathTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\FunctionalTests\\\\Update\\\\UpdatePathTestBase\\:\\:testDatabaseLoaded\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/FunctionalTests/Update/UpdatePathTestBase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\KernelTests\\\\Config\\\\DefaultConfigTest\\:\\:assertConfigDiff\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/Drupal/KernelTests/Config/DefaultConfigTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\KernelTests\\\\Core\\\\Action\\\\EmailActionTest\\:\\:assertMailPattern\\(\\) has no return type specified\\.$#',

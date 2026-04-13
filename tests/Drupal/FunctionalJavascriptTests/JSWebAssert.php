@@ -241,7 +241,7 @@ JS);
    * @return \Behat\Mink\Element\NodeElement|null
    *   The page element node if found, NULL if not.
    */
-  public function waitForButton($locator, int $timeout = 10000) {
+  public function waitForButton($locator, int $timeout = 10000): ?NodeElement {
     return $this->waitForElement('named', ['button', $locator], $timeout);
   }
 
@@ -256,7 +256,7 @@ JS);
    * @return \Behat\Mink\Element\NodeElement|null
    *   The page element node if found, NULL if not.
    */
-  public function waitForLink($locator, int $timeout = 10000) {
+  public function waitForLink($locator, int $timeout = 10000): ?NodeElement {
     return $this->waitForElement('named', ['link', $locator], $timeout);
   }
 
@@ -271,7 +271,7 @@ JS);
    * @return \Behat\Mink\Element\NodeElement|null
    *   The page element node if found, NULL if not.
    */
-  public function waitForField($locator, int $timeout = 10000) {
+  public function waitForField($locator, int $timeout = 10000): ?NodeElement {
     return $this->waitForElement('named', ['field', $locator], $timeout);
   }
 
@@ -286,7 +286,7 @@ JS);
    * @return \Behat\Mink\Element\NodeElement|null
    *   The page element node if found, NULL if not.
    */
-  public function waitForId($id, int $timeout = 10000) {
+  public function waitForId($id, int $timeout = 10000): ?NodeElement {
     return $this->waitForElement('named', ['id', $id], $timeout);
   }
 
@@ -295,7 +295,7 @@ JS);
    *
    * @see https://api.jqueryui.com/autocomplete/#option-delay
    */
-  public function waitOnAutocomplete() {
+  public function waitOnAutocomplete(): ?NodeElement {
     // Wait for the autocomplete to be visible.
     return $this->waitForElementVisible('css', '.ui-autocomplete li');
   }

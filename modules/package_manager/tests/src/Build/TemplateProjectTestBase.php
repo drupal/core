@@ -145,7 +145,7 @@ abstract class TemplateProjectTestBase extends QuickStartTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function instantiateServer($port, $working_dir = NULL): Process {
+  protected function instantiateServer(int $port, ?string $working_dir = NULL): Process {
     $working_dir = $working_dir ?: $this->webRoot;
     $finder = new PhpExecutableFinder();
     $working_path = $this->getWorkingPath($working_dir);

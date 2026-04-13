@@ -140,7 +140,7 @@ abstract class UpdatePathTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function doInstall() {
+  protected function doInstall(): void {
     $this->runDbTasks();
     // Allow classes to set database dump files.
     $this->setDatabaseDumpFiles();
@@ -167,19 +167,19 @@ abstract class UpdatePathTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function initFrontPage() {
+  protected function initFrontPage(): void {
     // Do nothing as Drupal is not installed yet.
   }
 
   /**
    * Set database dump files to be used.
    */
-  abstract protected function setDatabaseDumpFiles();
+  abstract protected function setDatabaseDumpFiles(): void;
 
   /**
    * Add settings that are missed since the installer isn't run.
    */
-  protected function prepareSettings() {
+  protected function prepareSettings(): void {
     parent::prepareSettings();
 
     // Generate a hash salt.
@@ -212,14 +212,14 @@ abstract class UpdatePathTestBase extends BrowserTestBase {
   /**
    * Helper function to run pending database updates.
    */
-  protected function runUpdates() {
+  protected function runUpdates(): void {
     $this->doRunUpdates($this->updateUrl);
   }
 
   /**
    * Runs the install database tasks for the driver used by the test runner.
    */
-  protected function runDbTasks() {
+  protected function runDbTasks(): void {
     // Create a minimal container so that t() works.
     // @see install_begin_request()
     $container = new ContainerBuilder();
@@ -243,7 +243,7 @@ abstract class UpdatePathTestBase extends BrowserTestBase {
   /**
    * Replace User 1 with the user created here.
    */
-  protected function replaceUser1() {
+  protected function replaceUser1(): void {
     // We try not to save content entities in hook_update_N() because the schema
     // might be out of sync, or hook invocations might rely on other schemas
     // that also aren't updated yet. Hence we are directly updating the database
@@ -261,7 +261,7 @@ abstract class UpdatePathTestBase extends BrowserTestBase {
   /**
    * Tests that the database was properly loaded.
    */
-  protected function testDatabaseLoaded() {
+  protected function testDatabaseLoaded(): void {
     // Set a value in the cache to prove caches are cleared.
     \Drupal::service('cache.default')->set(__CLASS__, 'Test');
 

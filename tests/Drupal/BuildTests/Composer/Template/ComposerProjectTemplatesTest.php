@@ -110,6 +110,7 @@ class ComposerProjectTemplatesTest extends ComposerBuildTestBase {
 
     $minimum_stability_order_index = $stability_order_indexes[static::MINIMUM_STABILITY];
 
+    $project_stabilities = [];
     $exclude = [
       'drupal/core',
       'drupal/core-composer-scaffold',
