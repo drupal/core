@@ -277,8 +277,8 @@ class AutowireTest extends KernelTestBase {
    * @return string[]
    *   An array of filenames.
    */
-  private function getCoreServiceFiles() {
-    $filenames = array_map(fn($module) => "core/modules/{$module[0]}/{$module[0]}.services.yml", $this->coreModuleListDataProvider());
+  private function getCoreServiceFiles(): array {
+    $filenames = array_map(fn(array $module): string => "core/modules/{$module[0]}/{$module[0]}.services.yml", $this->coreModuleListDataProvider());
     $filenames[] = 'core/core.services.yml';
     return array_filter($filenames, 'file_exists');
   }

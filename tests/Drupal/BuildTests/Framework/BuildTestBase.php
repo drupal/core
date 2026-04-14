@@ -76,12 +76,10 @@ abstract class BuildTestBase extends TestCase {
   /**
    * The process that's running the HTTP server.
    *
-   * @var \Symfony\Component\Process\Process
-   *
    * @see self::standUpServer()
    * @see self::stopServer()
    */
-  private $serverProcess = NULL;
+  private ?Process $serverProcess = NULL;
 
   /**
    * Default to destroying build artifacts after a test finishes.

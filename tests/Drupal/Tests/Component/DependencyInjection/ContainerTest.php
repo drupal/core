@@ -1093,7 +1093,7 @@ class MockInstantiationService {
    * @return mixed[]
    *   Return the passed arguments.
    */
-  public function getArguments() {
+  public function getArguments(): array {
     return $this->arguments;
   }
 

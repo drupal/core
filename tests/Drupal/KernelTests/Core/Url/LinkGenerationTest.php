@@ -28,7 +28,7 @@ class LinkGenerationTest extends KernelTestBase {
    * @see ::testHookLinkAlter()
    */
   #[Hook('link_alter')]
-  public function linkAlter(&$variables): void {
+  public function linkAlter(array &$variables): void {
     if (\Drupal::state()->get('link_generation_test_link_alter', FALSE)) {
       // Add text to the end of links.
       if (\Drupal::state()->get('link_generation_test_link_alter_safe', FALSE)) {

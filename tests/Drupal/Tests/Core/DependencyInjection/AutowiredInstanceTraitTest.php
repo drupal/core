@@ -136,7 +136,7 @@ class AutowireTestClass {
   }
 
   #[Required]
-  public function setNamedService(#[Autowire(service: 'setter.service')] $service): void {
+  public function setNamedService(#[Autowire(service: 'setter.service')] \stdClass $service): void {
     $this->setterNamedService = $service;
   }
 

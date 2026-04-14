@@ -177,7 +177,7 @@ class DrupalKernelTest extends KernelTestBase {
 
     $build_only = array_filter(
       array_keys($container->getParameterBag()->all()),
-      fn(string $name) => str_starts_with($name, '.'),
+      fn(string $name): bool => str_starts_with($name, '.'),
     );
     $this->assertEmpty($build_only, sprintf(
       'Dot-prefixed build parameters should not be in the compiled container, but found: %s',

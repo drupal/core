@@ -33,7 +33,7 @@ class CacheContextsManagerTest extends UnitTestCase {
     $container = $this->createMock(DrupalContainer::class);
     $container->expects($this->exactly($expected_container_calls))
       ->method('get')
-      ->willReturnCallback(fn($service_id) => match ($service_id) {
+      ->willReturnCallback(fn($service_id): FooCacheContext|BazCacheContext|NoOptimizeCacheContext => match ($service_id) {
         'cache_context.a' => new FooCacheContext(),
         'cache_context.a.b' => new FooCacheContext(),
         'cache_context.a.b.c' => new BazCacheContext(),

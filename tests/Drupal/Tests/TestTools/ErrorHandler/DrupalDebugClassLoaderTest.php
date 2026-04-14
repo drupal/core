@@ -55,7 +55,7 @@ class DrupalDebugClassLoaderTest extends TestCase {
    */
   private function getReturnTypeDeprecations(string $class): array {
     $deprecations = $this->loader->checkAnnotations(new \ReflectionClass($class), $class);
-    return array_values(array_filter($deprecations, fn($d) => str_contains($d, 'might add')));
+    return array_values(array_filter($deprecations, fn($d): bool => str_contains($d, 'might add')));
   }
 
 }

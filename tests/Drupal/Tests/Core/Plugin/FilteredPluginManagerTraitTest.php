@@ -116,15 +116,15 @@ class TestFilteredPluginManager extends PluginManagerBase implements FilteredPlu
     $this->contextHandler = $context_handler;
   }
 
-  protected function contextHandler() {
+  protected function contextHandler(): ContextHandlerInterface {
     return $this->contextHandler;
   }
 
-  protected function moduleHandler() {
+  protected function moduleHandler(): ModuleHandlerInterface {
     return $this->moduleHandler;
   }
 
-  protected function themeManager() {
+  protected function themeManager(): ThemeManagerInterface {
     return $this->themeManager;
   }
 
@@ -132,7 +132,7 @@ class TestFilteredPluginManager extends PluginManagerBase implements FilteredPlu
     return 'the_type';
   }
 
-  public function getDefinitions() {
+  public function getDefinitions(): array {
     return $this->definitions;
   }
 
