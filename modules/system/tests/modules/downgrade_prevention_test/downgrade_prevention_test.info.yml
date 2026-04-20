@@ -1,4 +1,4 @@
-name: '10.4 downgrade prevention test'
+name: '11.4 downgrade prevention test'
 type: module
 description: 'Support module for testing that an update hook prevents a downgrade.'
 package: Testing

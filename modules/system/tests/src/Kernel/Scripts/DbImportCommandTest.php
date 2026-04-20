@@ -59,7 +59,7 @@ class DbImportCommandTest extends KernelTestBase {
     $command = new DbImportCommand();
     $command_tester = new CommandTester($command);
     $command_tester->execute([
-      'script' => __DIR__ . '/../../../fixtures/update/drupal-10.3.0.bare.standard.php.gz',
+      'script' => __DIR__ . '/../../../fixtures/update/drupal-11.3.0.bare.standard.php.gz',
       '--database' => $this->databasePrefix,
     ]);
 

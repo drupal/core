@@ -8,7 +8,7 @@
 declare(strict_types=1);
 
 /**
- * A hook_update_N that is equivalent update to 10400.
+ * A hook_update_N that is equivalent update to 11102.
  */
-function downgrade_prevention_test_update_11102(): void {
+function downgrade_prevention_test_update_12001(): void {
 }
