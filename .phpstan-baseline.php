@@ -10808,12 +10808,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/modules/block/src/BlockListBuilder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\block\\\\BlockListBuilder\\:\\:systemRegionList\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/block/src/BlockListBuilder.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Drupal\\\\block\\\\BlockListBuilder\\:\\:validateForm\\(\\) has no return type specified\\.$#',
 	'identifier' => 'missingType.return',
 	'count' => 1,
@@ -10860,12 +10854,6 @@ $ignoreErrors[] = [
 	'identifier' => 'missingType.return',
 	'count' => 1,
 	'path' => __DIR__ . '/modules/block/src/EventSubscriber/BlockPageDisplayVariantSubscriber.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Drupal\\\\block\\\\Form\\\\BlockDeleteForm\\:\\:systemRegionList\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/modules/block/src/Form/BlockDeleteForm.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Parameter \\#2 \\$callback of function uasort expects callable\\(Drupal\\\\Core\\\\Entity\\\\EntityInterface, Drupal\\\\Core\\\\Entity\\\\EntityInterface\\)\\: int, Closure\\(Drupal\\\\block\\\\BlockInterface, Drupal\\\\block\\\\BlockInterface\\)\\: int\\<\\-1, 1\\> given\\.$#',
