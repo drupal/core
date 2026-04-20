@@ -37,15 +37,15 @@ class PhpUnitApiGetTestClassesTest extends KernelTestBase {
    */
   public static function argumentsProvider(): \Generator {
     yield 'All tests' => ['suites' => []];
-    yield 'Testsuite: functional-javascript' => ['suites' => ['PHPUnit-FunctionalJavascript']];
-    yield 'Testsuite: functional' => ['suites' => ['PHPUnit-Functional']];
-    yield 'Testsuite: kernel' => ['suites' => ['PHPUnit-Kernel']];
-    yield 'Testsuite: unit' => ['suites' => ['PHPUnit-Unit']];
-    yield 'Testsuite: unit-component' => ['suites' => ['PHPUnit-Unit-Component']];
-    yield 'Testsuite: build' => ['suites' => ['PHPUnit-Build']];
+    yield 'Testsuite: functional-javascript' => ['suites' => ['functional-javascript']];
+    yield 'Testsuite: functional' => ['suites' => ['functional']];
+    yield 'Testsuite: kernel' => ['suites' => ['kernel']];
+    yield 'Testsuite: unit' => ['suites' => ['unit']];
+    yield 'Testsuite: unit-component' => ['suites' => ['unit-component']];
+    yield 'Testsuite: build' => ['suites' => ['build']];
     yield 'Extension: system' => ['suites' => [], 'extension' => 'system'];
     yield 'Extension: system, testsuite: unit' => [
-      'suites' => ['PHPUnit-Unit'],
+      'suites' => ['unit'],
       'extension' => 'system',
     ];
     yield 'Extension: system, directory' => [
@@ -54,7 +54,7 @@ class PhpUnitApiGetTestClassesTest extends KernelTestBase {
       'directory' => 'core/modules/system/tests/src',
     ];
     yield 'Extension: system, testsuite: unit, directory' => [
-      'suites' => ['PHPUnit-Unit'],
+      'suites' => ['unit'],
       'extension' => 'system',
       'directory' => 'core/modules/system/tests/src',
     ];

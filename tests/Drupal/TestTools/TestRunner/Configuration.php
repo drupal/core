@@ -198,7 +198,7 @@ final class Configuration {
       'types',
       NULL,
       InputOption::VALUE_REQUIRED,
-      'Runs just tests from the specified test type, for example run-tests.sh --types "PHPUnit-Unit,PHPUnit-Kernel"',
+      'Runs just tests from the specified test type, for example run-tests.sh --types "unit,kernel"',
     ));
     $inputDefinition->addOption(new InputOption(
       'directory',

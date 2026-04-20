@@ -37,16 +37,16 @@ class TestDiscoveryTest extends UnitTestCase {
     $this->assertEquals($expected, $info);
   }
 
-  public static function infoParserProvider(): array {
+  public static function infoParserProvider(): \Generator {
     // A module provided unit test.
-    $tests[] = [
+    yield 'module provided unit test' => [
       // Expected result.
       [
         'name' => TestDatabaseTest::class,
         'group' => 'Test',
         'groups' => ['Test', 'simpletest', 'Template'],
         'description' => 'Tests Drupal\Core\Test\TestDatabase.',
-        'type' => 'PHPUnit-Unit',
+        'type' => 'unit',
         'tests_count' => 4,
       ],
       // Classname.
@@ -54,14 +54,14 @@ class TestDiscoveryTest extends UnitTestCase {
     ];
 
     // A core unit test.
-    $tests[] = [
+    yield 'core unit test' => [
       // Expected result.
       [
         'name' => 'Drupal\Tests\Core\DrupalTest',
         'group' => 'DrupalTest',
         'groups' => ['DrupalTest'],
         'description' => 'Tests Drupal.',
-        'type' => 'PHPUnit-Unit',
+        'type' => 'unit',
         'tests_count' => 34,
       ],
       // Classname.
@@ -69,14 +69,14 @@ class TestDiscoveryTest extends UnitTestCase {
     ];
 
     // A component unit test.
-    $tests[] = [
+    yield 'component unit test' => [
       // Expected result.
       [
         'name' => 'Drupal\Tests\Component\Plugin\PluginBaseTest',
         'group' => 'Plugin',
         'groups' => ['Plugin'],
         'description' => 'Tests Drupal\Component\Plugin\PluginBase.',
-        'type' => 'PHPUnit-Unit-Component',
+        'type' => 'unit-component',
         'tests_count' => 7,
       ],
       // Classname.
@@ -84,14 +84,14 @@ class TestDiscoveryTest extends UnitTestCase {
     ];
 
     // Functional PHPUnit test.
-    $tests[] = [
+    yield 'functional test' => [
       // Expected result.
       [
         'name' => 'Drupal\FunctionalTests\BrowserTestBaseTest',
         'group' => 'browsertestbase',
         'groups' => ['browsertestbase'],
         'description' => 'Tests BrowserTestBase functionality.',
-        'type' => 'PHPUnit-Functional',
+        'type' => 'functional',
         'tests_count' => 21,
       ],
       // Classname.
@@ -99,21 +99,19 @@ class TestDiscoveryTest extends UnitTestCase {
     ];
 
     // Kernel PHPUnit test.
-    $tests['phpunit-kernel'] = [
+    yield 'kernel test' => [
       // Expected result.
       [
         'name' => 'Drupal\Tests\file\Kernel\FileItemValidationTest',
         'group' => 'file',
         'groups' => ['file'],
         'description' => 'Tests that files referenced in file and image fields are always validated.',
-        'type' => 'PHPUnit-Kernel',
+        'type' => 'kernel',
         'tests_count' => 2,
       ],
       // Classname.
       'Drupal\Tests\file\Kernel\FileItemValidationTest',
     ];
-
-    return $tests;
   }
 
   /**
@@ -148,25 +146,25 @@ class TestDiscoveryTest extends UnitTestCase {
     $this->assertEquals($expected, PhpUnitTestDiscovery::getPhpunitTestSuite($classname));
   }
 
-  public static function providerTestGetPhpunitTestSuite(): array {
-    $data = [];
-    $data['simpletest-web test'] = ['\Drupal\rest\Tests\NodeTest', FALSE];
-    $data['module-unittest'] = [static::class, 'Unit'];
-    $data['module-kernel test'] = ['\Drupal\KernelTests\Core\Theme\TwigMarkupInterfaceTest', 'Kernel'];
-    $data['module-functional test'] = ['\Drupal\FunctionalTests\BrowserTestBaseTest', 'Functional'];
-    $data['module-functional javascript test'] = [
+  public static function providerTestGetPhpunitTestSuite(): \Generator {
+    yield 'simpletest-web test' => ['\Drupal\rest\Tests\NodeTest', FALSE];
+    yield 'module-unittest' => [static::class, 'unit'];
+    yield 'module-kernel test' => ['\Drupal\KernelTests\Core\Theme\TwigMarkupInterfaceTest', 'kernel'];
+    yield 'module-functional test' => ['\Drupal\FunctionalTests\BrowserTestBaseTest', 'functional'];
+    yield 'module-functional javascript test' => [
       '\Drupal\Tests\toolbar\FunctionalJavascript\ToolbarIntegrationTest',
-      'FunctionalJavascript',
+      'functional-javascript',
     ];
-    $data['core-unittest'] = ['\Drupal\Tests\ComposerIntegrationTest', 'Unit'];
-    $data['core-unittest2'] = ['Drupal\Tests\Core\DrupalTest', 'Unit'];
-    $data['core-script-test'] = ['Drupal\KernelTests\Scripts\TestSiteApplicationTest', 'Kernel'];
-    $data['core-kernel test'] = ['\Drupal\KernelTests\KernelTestBaseTest', 'Kernel'];
-    $data['core-functional test'] = ['\Drupal\FunctionalTests\ExampleTest', 'Functional'];
-    $data['core-functional javascript test'] = ['\Drupal\FunctionalJavascriptTests\ExampleTest', 'FunctionalJavascript'];
-    $data['core-build test'] = ['\Drupal\BuildTests\Framework\Tests\BuildTestTest', 'Build'];
-
-    return $data;
+    yield 'core-unittest' => ['\Drupal\Tests\ComposerIntegrationTest', 'unit'];
+    yield 'core-unittest2' => ['Drupal\Tests\Core\DrupalTest', 'unit'];
+    yield 'core-script-test' => ['Drupal\KernelTests\Scripts\TestSiteApplicationTest', 'kernel'];
+    yield 'core-kernel test' => ['\Drupal\KernelTests\KernelTestBaseTest', 'kernel'];
+    yield 'core-functional test' => ['\Drupal\FunctionalTests\ExampleTest', 'functional'];
+    yield 'core-functional javascript test' => [
+      '\Drupal\FunctionalJavascriptTests\ExampleTest',
+      'functional-javascript',
+    ];
+    yield 'core-build test' => ['\Drupal\BuildTests\Framework\Tests\BuildTestTest', 'build'];
   }
 
 }
