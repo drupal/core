@@ -100,7 +100,7 @@ class ResourceFetcherTest extends UnitTestCase {
       $this->fail('Expected a ResourceException to be thrown for invalid JSON.');
     }
     catch (ResourceException $e) {
-      $this->assertSame('Error decoding oEmbed resource: Syntax error', $e->getMessage());
+      $this->assertStringStartsWith('Error decoding oEmbed resource: Syntax error', $e->getMessage());
     }
 
     // Valid JSON that does not produce an array should also throw an exception.

@@ -32,6 +32,7 @@ final class PhpRequirements {
    */
   private static $phpEolDates = [
     '8.5' => '2029-12-31',
+    '8.6' => '2030-12-31',
   ];
 
   /**
