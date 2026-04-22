@@ -7,6 +7,7 @@ services:
     autowire: true
   node.route_subscriber:
     class: Drupal\node\Routing\RouteSubscriber
+  Drupal\node\NodeGrantsHelper: ~
   node.grant_storage:
     class: Drupal\node\NodeGrantDatabaseStorage
     tags:
