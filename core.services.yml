@@ -1408,7 +1408,7 @@ services:
       - { name: access_check, applies_to: _entity_delete_multiple_access }
   access_check.theme:
     class: Drupal\Core\Theme\ThemeAccessCheck
-    arguments: ['@theme_handler']
+    arguments: ['%container.themes%']
     tags:
       - { name: access_check, applies_to: _access_theme }
   access_check.custom:
