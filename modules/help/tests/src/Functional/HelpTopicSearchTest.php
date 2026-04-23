@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Drupal\Tests\search_help\Functional;
+namespace Drupal\Tests\help\Functional;
 
-use Drupal\search_help\Plugin\Search\SearchHelpSearch;
-use Drupal\Tests\help\Functional\HelpTopicTranslatedTestBase;
+use Drupal\help\Plugin\Search\HelpSearch;
 use Drupal\Tests\Traits\Core\CronRunTrait;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -25,8 +24,7 @@ class HelpTopicSearchTest extends HelpTopicTranslatedTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
-    'help',
-    'search_help',
+    'search',
     'locale',
     'language',
   ];
@@ -78,7 +76,7 @@ class HelpTopicSearchTest extends HelpTopicTranslatedTestBase {
     // Run cron until the topics are fully indexed, with a limit of 100 runs
     // to avoid infinite loops.
     $num_runs = 100;
-    $plugin = SearchHelpSearch::create($this->container, [], 'help_search', []);
+    $plugin = HelpSearch::create($this->container, [], 'help_search', []);
     do {
       $this->cronRun();
       $remaining = $plugin->indexStatus()['remaining'];
@@ -254,7 +252,28 @@ class HelpTopicSearchTest extends HelpTopicTranslatedTestBase {
   }
 
   /**
-   * Tests uninstalling the search_help and search modules.
+   * Tests uninstalling the help_topics module.
+   */
+  public function testUninstall(): void {
+    \Drupal::service('module_installer')->uninstall(['help_topics_test']);
+    // Ensure we can uninstall help_topics and use the help system without
+    // breaking.
+    $this->drupalLogin($this->createUser([
+      'administer modules',
+      'access help pages',
+    ]));
+    $edit = [];
+    $edit['uninstall[help]'] = TRUE;
+    $this->drupalGet('admin/modules/uninstall');
+    $this->submitForm($edit, 'Uninstall');
+    $this->submitForm([], 'Uninstall');
+    $this->assertSession()->statusMessageContains('The selected modules have been uninstalled.', 'status');
+    $this->drupalGet('admin/help');
+    $this->assertSession()->statusCodeEquals(404);
+  }
+
+  /**
+   * Tests uninstalling the search module.
    */
   public function testUninstallSearch(): void {
     // Ensure we can uninstall search and use the help system without
@@ -263,11 +282,6 @@ class HelpTopicSearchTest extends HelpTopicTranslatedTestBase {
       'administer modules',
       'access help pages',
     ]));
-    $edit = [];
-    $edit['uninstall[search_help]'] = TRUE;
-    $this->drupalGet('admin/modules/uninstall');
-    $this->submitForm($edit, 'Uninstall');
-    $this->submitForm([], 'Uninstall');
     $edit = [];
     $edit['uninstall[search]'] = TRUE;
     $this->drupalGet('admin/modules/uninstall');

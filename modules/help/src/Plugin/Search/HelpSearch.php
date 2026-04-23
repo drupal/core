@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\search_help\Plugin\Search;
+namespace Drupal\help\Plugin\Search;
 
 use Drupal\Core\Access\AccessibleInterface;
 use Drupal\Core\Access\AccessResult;
@@ -40,7 +40,35 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
   title: new TranslatableMarkup('Help'),
   use_admin_theme: TRUE,
 )]
-class SearchHelpSearch extends SearchPluginBase implements AccessibleInterface, SearchIndexingInterface {
+class HelpSearch extends SearchPluginBase implements AccessibleInterface, SearchIndexingInterface {
+
+  /**
+   * The current database connection.
+   *
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $database;
+
+  /**
+   * A config object for 'search.settings'.
+   *
+   * @var \Drupal\Core\Config\Config
+   */
+  protected $searchSettings;
+
+  /**
+   * The language manager.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected $languageManager;
+
+  /**
+   * The Drupal account to use for checking for access to search.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $account;
 
   /**
    * The messenger.
@@ -50,9 +78,30 @@ class SearchHelpSearch extends SearchPluginBase implements AccessibleInterface, 
   protected $messenger;
 
   /**
+   * The state object.
+   *
+   * @var \Drupal\Core\State\StateInterface
+   */
+  protected $state;
+
+  /**
+   * The help section plugin manager.
+   *
+   * @var \Drupal\help\HelpSectionManager
+   */
+  protected $helpSectionManager;
+
+  /**
+   * The search index.
+   *
+   * @var \Drupal\search\SearchIndexInterface
+   */
+  protected $searchIndex;
+
+  /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
       $configuration,
       $plugin_id,
@@ -68,21 +117,42 @@ class SearchHelpSearch extends SearchPluginBase implements AccessibleInterface, 
     );
   }
 
-  public function __construct(
-    array $configuration,
-    $plugin_id,
-    $plugin_definition,
-    protected Connection $database,
-    protected Config $searchSettings,
-    protected LanguageManagerInterface $languageManager,
-    MessengerInterface $messenger,
-    protected AccountInterface $account,
-    protected StateInterface $state,
-    protected HelpSectionManager $helpSectionManager,
-    protected SearchIndexInterface $searchIndex,
-  ) {
+  /**
+   * Constructs a \Drupal\help_search\Plugin\Search\HelpSearch object.
+   *
+   * @param array $configuration
+   *   Configuration for the plugin.
+   * @param string $plugin_id
+   *   The plugin ID for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Database\Connection $database
+   *   The current database connection.
+   * @param \Drupal\Core\Config\Config $search_settings
+   *   A config object for 'search.settings'.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
+   *   The language manager.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   The messenger.
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   The $account object to use for checking for access to view help.
+   * @param \Drupal\Core\State\StateInterface $state
+   *   The state object.
+   * @param \Drupal\help\HelpSectionManager $help_section_manager
+   *   The help section manager.
+   * @param \Drupal\search\SearchIndexInterface $search_index
+   *   The search index.
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, Connection $database, Config $search_settings, LanguageManagerInterface $language_manager, MessengerInterface $messenger, AccountInterface $account, StateInterface $state, HelpSectionManager $help_section_manager, SearchIndexInterface $search_index) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->database = $database;
+    $this->searchSettings = $search_settings;
+    $this->languageManager = $language_manager;
     $this->messenger = $messenger;
+    $this->account = $account;
+    $this->state = $state;
+    $this->helpSectionManager = $help_section_manager;
+    $this->searchIndex = $search_index;
   }
 
   /**
@@ -96,14 +166,14 @@ class SearchHelpSearch extends SearchPluginBase implements AccessibleInterface, 
   /**
    * {@inheritdoc}
    */
-  public function getType(): ?string {
+  public function getType() {
     return $this->getPluginId();
   }
 
   /**
    * {@inheritdoc}
    */
-  public function execute(): array {
+  public function execute() {
     if ($this->isSearchExecutable()) {
       $results = $this->findResults();
 
@@ -237,7 +307,7 @@ class SearchHelpSearch extends SearchPluginBase implements AccessibleInterface, 
   /**
    * {@inheritdoc}
    */
-  public function updateIndex(): void {
+  public function updateIndex() {
     // Update the list of items to be indexed.
     $this->updateTopicList();
 
@@ -307,14 +377,14 @@ class SearchHelpSearch extends SearchPluginBase implements AccessibleInterface, 
   /**
    * {@inheritdoc}
    */
-  public function indexClear(): void {
+  public function indexClear() {
     $this->searchIndex->clear($this->getType());
   }
 
   /**
    * Rebuilds the database table containing topics to be indexed.
    */
-  public function updateTopicList(): void {
+  public function updateTopicList() {
     // Start by fetching the existing list, so we can remove items not found
     // at the end.
     $old_list = $this->database->select('help_search_items', 'hsi')
@@ -372,7 +442,7 @@ class SearchHelpSearch extends SearchPluginBase implements AccessibleInterface, 
    *
    * The state variable is a count of help topics that have never been indexed.
    */
-  public function updateIndexState(): void {
+  public function updateIndexState() {
     $query = $this->database->select('help_search_items', 'hsi');
     $query->addExpression('COUNT(DISTINCT([hsi].[sid]))');
     $query->leftJoin('search_dataset', 'sd', '[hsi].[sid] = [sd].[sid] AND [sd].[type] = :type', [':type' => $this->getType()]);
@@ -384,7 +454,7 @@ class SearchHelpSearch extends SearchPluginBase implements AccessibleInterface, 
   /**
    * {@inheritdoc}
    */
-  public function markForReindex(): void {
+  public function markForReindex() {
     $this->updateTopicList();
     $this->searchIndex->markForReindex($this->getType());
   }
@@ -392,7 +462,7 @@ class SearchHelpSearch extends SearchPluginBase implements AccessibleInterface, 
   /**
    * {@inheritdoc}
    */
-  public function indexStatus(): array {
+  public function indexStatus() {
     $this->updateTopicList();
     $total = $this->database->select('help_search_items', 'hsi')
       ->countQuery()
@@ -420,7 +490,7 @@ class SearchHelpSearch extends SearchPluginBase implements AccessibleInterface, 
    * @param int|int[] $sids
    *   Search ID (sid) of item or items to remove.
    */
-  protected function removeItemsFromIndex($sids): void {
+  protected function removeItemsFromIndex($sids) {
     $sids = (array) $sids;
 
     // Remove items from our table in batches of 100, to avoid problems

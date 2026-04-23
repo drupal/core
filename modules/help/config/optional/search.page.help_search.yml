@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   module:
-    - search_help
+    - help
 id: help_search
 label: Help
 path: help
