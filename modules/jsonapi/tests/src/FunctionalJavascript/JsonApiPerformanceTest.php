@@ -46,12 +46,11 @@ class JsonApiPerformanceTest extends PerformanceTestBase {
     $user->addRole('administrator');
     $user->save();
     $this->drupalLogin($user);
-    sleep(2);
 
     // Request the front page to ensure all cache collectors are fully
     // warmed, wait one second to ensure that the request finished processing.
     $this->drupalGet('');
-    sleep(2);
+    sleep(1);
 
     $url = Url::fromRoute('jsonapi.node--article.individual', ['entity' => $node->uuid()])->toString();
     $performance_data = $this->collectPerformanceData(function () use ($url) {
@@ -132,8 +131,6 @@ class JsonApiPerformanceTest extends PerformanceTestBase {
       ],
     ];
     $this->assertMetrics($expected, $performance_data);
-
-    sleep(2);
 
     $url = Url::fromRoute('jsonapi.node--article.individual', ['entity' => $node->uuid()])->toString();
     $performance_data = $this->collectPerformanceData(function () use ($url) {

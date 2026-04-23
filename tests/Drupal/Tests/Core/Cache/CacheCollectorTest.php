@@ -12,7 +12,6 @@ use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\TestWith;
 
 /**
  * Tests Drupal\Core\Cache\CacheCollector.
@@ -244,23 +243,9 @@ class CacheCollectorTest extends UnitTestCase {
   }
 
   /**
-   * Tests setting to cache when there is a conflict after cache invalidation.
+   * Tests updating the cache when there is a conflict after cache invalidation.
    */
-  #[TestWith([TRUE, TRUE, TRUE, TRUE])]
-  #[TestWith([TRUE, TRUE, TRUE, FALSE])]
-  #[TestWith([TRUE, TRUE, FALSE, NULL])]
-  #[TestWith([TRUE, FALSE, FALSE, NULL])]
-  #[TestWith([TRUE, FALSE, TRUE, FALSE])]
-  #[TestWith([FALSE, FALSE, FALSE, NULL])]
-  #[TestWith([FALSE, TRUE, FALSE, NULL])]
-  #[TestWith([FALSE, FALSE, TRUE, FALSE])]
-  #[TestWith([FALSE, TRUE, TRUE, TRUE])]
-  #[TestWith([FALSE, TRUE, TRUE, FALSE])]
-  public function testSetCacheInvalidatedConflict(bool $lock_acquired, bool $start_cache_item, bool $end_cache_item, ?bool $timestamp_matches): void {
-
-    if ($end_cache_item === FALSE && isset($timestamp_matches)) {
-      throw new \BadMethodCallException('timestamp_matches is ignored when end_cache_item is FALSE');
-    }
+  public function testUpdateCacheInvalidatedConflict(): void {
     $this->setUpMockCacheBackend();
     $this->setUpMockLockBackend();
 
@@ -272,14 +257,14 @@ class CacheCollectorTest extends UnitTestCase {
       ->method('get')
       ->with($this->cid)
       ->willReturnOnConsecutiveCalls(
-        $start_cache_item ? (object) [
+        (object) [
           'data' => [$key => $value],
           'created' => (int) $_SERVER['REQUEST_TIME'],
-        ] : FALSE,
-        $end_cache_item ? (object) [
+        ],
+        (object) [
           'data' => [$key => $value],
-          'created' => (int) $_SERVER['REQUEST_TIME'] + ($timestamp_matches ? 0 : 1),
-        ] : FALSE,
+          'created' => (int) $_SERVER['REQUEST_TIME'] + 1,
+        ],
       );
 
     $this->cacheBackend->expects($this->once())
@@ -292,83 +277,14 @@ class CacheCollectorTest extends UnitTestCase {
     $this->lock->expects($this->once())
       ->method('acquire')
       ->with($this->cid . ':Drupal\Core\Cache\CacheCollector')
-      ->willReturn($lock_acquired);
-    if ($end_cache_item) {
-      $this->cacheBackend->expects($this->once())
-        ->method('delete')
-        ->with($this->cid);
-    }
-    if ($lock_acquired) {
-      $this->lock->expects($this->once())
-        ->method('release')
-        ->with($this->cid . ':Drupal\Core\Cache\CacheCollector');
-    }
-    // Destruct the object to trigger the update data process.
-    $this->collector->destruct();
-  }
-
-  /**
-   * Tests updating the cache when there is a conflict after cache invalidation.
-   */
-  #[TestWith([TRUE, TRUE, TRUE, TRUE])]
-  #[TestWith([TRUE, TRUE, TRUE, FALSE])]
-  #[TestWith([TRUE, TRUE, FALSE, NULL])]
-  #[TestWith([TRUE, FALSE, FALSE, NULL])]
-  #[TestWith([TRUE, FALSE, TRUE, FALSE])]
-  #[TestWith([FALSE, FALSE, FALSE, NULL])]
-  #[TestWith([FALSE, TRUE, FALSE, NULL])]
-  #[TestWith([FALSE, FALSE, TRUE, FALSE])]
-  #[TestWith([FALSE, TRUE, TRUE, TRUE])]
-  #[TestWith([FALSE, TRUE, TRUE, FALSE])]
-  public function testUpdateCacheConflict(bool $lock_acquired, bool $start_cache_item, bool $end_cache_item, ?bool $timestamp_matches): void {
-
-    if ($end_cache_item === FALSE && isset($timestamp_matches)) {
-      throw new \BadMethodCallException('timestamp_matches is ignored when end_cache_item is FALSE');
-    }
-    $this->setUpMockCacheBackend();
-    $this->setUpMockLockBackend();
-
-    $key = $this->randomMachineName();
-    $value = $this->randomMachineName();
-
-    $this->collector->setCacheMissData($key, $value);
-    $this->collector->setCacheMissData('another key', 'another value');
-
-    // Set up mock cache get with conflicting entries.
-    $this->cacheBackend->expects($this->exactly(2))
-      ->method('get')
-      ->with($this->cid)
-      ->willReturnOnConsecutiveCalls(
-        $start_cache_item ? (object) [
-          'data' => [],
-          'created' => (int) $_SERVER['REQUEST_TIME'],
-        ] : FALSE,
-        $end_cache_item ? (object) [
-          'data' => ['something completely different' => $value],
-          'created' => (int) $_SERVER['REQUEST_TIME'] + ($timestamp_matches ? 0 : 1),
-        ] : FALSE,
-      );
-
-    $this->collector->get($key);
-
-    // When the cache is being warmed, if the lock can't be acquired, or if the
-    // cache item has changed during the request, nothing should be set.
+      ->willReturn(TRUE);
+    $this->cacheBackend->expects($this->once())
+      ->method('delete')
+      ->with($this->cid);
     $this->lock->expects($this->once())
-      ->method('acquire')
-      ->with($this->cid . ':Drupal\Core\Cache\CacheCollector')
-      ->willReturn($lock_acquired);
-    if ($end_cache_item && !$timestamp_matches) {
-      $this->cacheBackend->expects($this->never())
-        ->method('set')
-        ->with($this->cid);
-    }
-    if ($lock_acquired) {
-      $this->lock->expects($this->once())
-        ->method('release')
-        ->with($this->cid . ':Drupal\Core\Cache\CacheCollector');
-    }
-    $this->cacheBackend->expects($this->never())
-      ->method('delete');
+      ->method('release')
+      ->with($this->cid . ':Drupal\Core\Cache\CacheCollector');
+
     // Destruct the object to trigger the update data process.
     $this->collector->destruct();
   }
@@ -447,11 +363,12 @@ class CacheCollectorTest extends UnitTestCase {
   }
 
   /**
-   * Tests deleting the cache after a delete.
+   * Tests updating the cache after a delete.
    */
   public function testUpdateCacheDelete(): void {
     $this->setUpMockCacheBackend();
     $this->setUpMockLockBackend();
+
     $key = $this->randomMachineName();
     $value = $this->randomMachineName();
 
@@ -472,14 +389,14 @@ class CacheCollectorTest extends UnitTestCase {
     $this->collector->delete($key);
 
     // Set up mock objects for the expected calls, first a lock acquire, then
-    // a cache delete and finally the lock is released again.
+    // a cache set and finally the lock is released again.
     $this->lock->expects($this->once())
       ->method('acquire')
       ->with($this->cid . ':Drupal\Core\Cache\CacheCollector')
       ->willReturn(TRUE);
     $this->cacheBackend->expects($this->once())
-      ->method('delete')
-      ->with($this->cid);
+      ->method('set')
+      ->with($this->cid, [], Cache::PERMANENT, []);
     $this->lock->expects($this->once())
       ->method('release')
       ->with($this->cid . ':Drupal\Core\Cache\CacheCollector');
