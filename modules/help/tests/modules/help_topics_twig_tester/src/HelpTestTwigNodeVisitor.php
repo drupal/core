@@ -172,7 +172,7 @@ class HelpTestTwigNodeVisitor implements NodeVisitorInterface {
    * @param int|string $value
    *   Value to set for $key.
    */
-  public static function setStateValue(string $key, $value) {
+  public static function setStateValue(string $key, $value): void {
     $state = \Drupal::state();
     $values = $state->get(static::STATE_NAME, ['manner' => 0]);
     $values[$key] = $value;
