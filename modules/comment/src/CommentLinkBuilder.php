@@ -2,7 +2,6 @@
 
 namespace Drupal\comment;
 
-use Drupal\comment\Plugin\Field\FieldType\CommentItemInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -94,7 +93,7 @@ class CommentLinkBuilder implements CommentLinkBuilderInterface {
           }
           // Provide a link to new comment form.
           if ($commenting_status == CommentingStatus::Open) {
-            $comment_form_location = $field_definition->getSetting('form_location');
+            $comment_form_location = FormLocation::tryFrom((int) $field_definition->getSetting('form_location'));
             if ($this->currentUser->hasPermission('post comments')) {
               $links['comment-add'] = [
                 'title' => $this->t('Add new comment'),
@@ -102,7 +101,7 @@ class CommentLinkBuilder implements CommentLinkBuilderInterface {
                 'attributes' => ['title' => $this->t('Share your thoughts and opinions.')],
                 'fragment' => 'comment-form',
               ];
-              if ($comment_form_location == CommentItemInterface::FORM_SEPARATE_PAGE) {
+              if ($comment_form_location == FormLocation::SeparatePage) {
                 $links['comment-add']['url'] = Url::fromRoute('comment.reply', [
                   'entity_type' => $entity->getEntityTypeId(),
                   'entity' => $entity->id(),
@@ -125,17 +124,17 @@ class CommentLinkBuilder implements CommentLinkBuilderInterface {
           // is allowed to post comments and if this entity is allowing new
           // comments.
           if ($commenting_status == CommentingStatus::Open) {
-            $comment_form_location = $field_definition->getSetting('form_location');
+            $comment_form_location = FormLocation::tryFrom((int) $field_definition->getSetting('form_location'));
             if ($this->currentUser->hasPermission('post comments')) {
               // Show the "post comment" link if the form is on another page, or
               // if there are existing comments that the link will skip past.
-              if ($comment_form_location == CommentItemInterface::FORM_SEPARATE_PAGE || (!empty($entity->get($field_name)->comment_count) && $this->currentUser->hasPermission('access comments'))) {
+              if ($comment_form_location == FormLocation::SeparatePage || (!empty($entity->get($field_name)->comment_count) && $this->currentUser->hasPermission('access comments'))) {
                 $links['comment-add'] = [
                   'title' => $this->t('Add new comment'),
                   'attributes' => ['title' => $this->t('Share your thoughts and opinions.')],
                   'fragment' => 'comment-form',
                 ];
-                if ($comment_form_location == CommentItemInterface::FORM_SEPARATE_PAGE) {
+                if ($comment_form_location == FormLocation::SeparatePage) {
                   $links['comment-add']['url'] = Url::fromRoute('comment.reply', [
                     'entity_type' => $entity->getEntityTypeId(),
                     'entity' => $entity->id(),
