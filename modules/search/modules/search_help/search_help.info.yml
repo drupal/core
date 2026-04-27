@@ -5,4 +5,4 @@ package: Core
 version: VERSION
 dependencies:
   - drupal:help
-  - search:search
+  - drupal:search
