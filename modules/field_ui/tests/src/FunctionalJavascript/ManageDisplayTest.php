@@ -94,7 +94,7 @@ class ManageDisplayTest extends WebDriverTestBase {
    */
   public function testFormatterUI(): void {
     $manage_fields = 'admin/structure/types/manage/' . $this->type;
-    $manage_display = $manage_fields . '/display';
+    $manage_display = $manage_fields . '/display/default';
 
     // Create a field, and a node with some data for the field.
     $this->fieldUIAddNewFieldJS($manage_fields, 'test', 'Test field');
@@ -483,7 +483,7 @@ class ManageDisplayTest extends WebDriverTestBase {
     $manage_fields = 'admin/structure/types/manage/' . $this->type;
 
     $this->fieldUIAddNewFieldJS($manage_fields, 'test', 'Test field');
-    $manage_display = 'admin/structure/types/manage/' . $this->type . '/display';
+    $manage_display = 'admin/structure/types/manage/' . $this->type . '/display/default';
     $manage_form = 'admin/structure/types/manage/' . $this->type . '/form-display';
 
     // Form display, change widget type.

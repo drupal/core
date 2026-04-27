@@ -5,6 +5,7 @@ services:
   _defaults:
     autoconfigure: true
     autowire: true
+  Drupal\field_ui\Controller\EntityViewDisplayOverviewController: ~
   field_ui.subscriber:
     class: Drupal\field_ui\Routing\RouteSubscriber
   access_check.field_ui.view_mode:
