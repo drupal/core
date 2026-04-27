@@ -1,1 +1,0 @@
-!function(i){const n=i.da=i.da||{};n.dictionary=Object.assign(n.dictionary||{},{"Page break":"Sideskift"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

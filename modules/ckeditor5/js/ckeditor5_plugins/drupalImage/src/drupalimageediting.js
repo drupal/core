@@ -1,8 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 // cspell:ignore datafilter downcasted linkimageediting emptyelement downcastdispatcher imageloadobserver
-import { Plugin } from 'ckeditor5/src/core';
-import { setViewAttributes } from '@ckeditor/ckeditor5-html-support/src/utils';
-import { ImageLoadObserver } from '@ckeditor/ckeditor5-image/src/image/imageloadobserver';
+import {
+  Plugin,
+  _setHtmlSupportViewAttributes as setViewAttributes,
+  ImageLoadObserver,
+} from 'ckeditor5';
 /**
  * @typedef {function} converterHandler
  *

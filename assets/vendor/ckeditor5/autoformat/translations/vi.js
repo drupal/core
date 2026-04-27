@@ -1,1 +1,0 @@
-!function(n){const t=n.vi=n.vi||{};t.dictionary=Object.assign(t.dictionary||{},{"Revert autoformatting action":"Hoàn nguyên thao tác tự động định dạng"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

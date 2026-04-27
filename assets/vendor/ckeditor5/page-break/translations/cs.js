@@ -1,1 +1,0 @@
-!function(n){const c=n.cs=n.cs||{};c.dictionary=Object.assign(c.dictionary||{},{"Page break":"Konec stránky"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

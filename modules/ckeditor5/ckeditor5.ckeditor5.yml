@@ -25,7 +25,6 @@ ckeditor5_paragraph:
     plugins: [paragraph.Paragraph]
   drupal:
     label: Paragraph
-    library: core/ckeditor5.essentials
     admin_library: ckeditor5/internal.admin.essentials
     elements:
       - <p>
@@ -48,7 +47,6 @@ ckeditor5_heading:
           - { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
   drupal:
     label: Headings
-    library: core/ckeditor5.essentials
     admin_library: ckeditor5/internal.admin.heading
     class: Drupal\ckeditor5\Plugin\CKEditor5Plugin\Heading
     toolbar_items:
@@ -67,7 +65,6 @@ ckeditor5_style:
     plugins: [style.Style]
   drupal:
     label: Style
-    library: core/ckeditor5.style
     admin_library: ckeditor5/internal.admin.style
     class: Drupal\ckeditor5\Plugin\CKEditor5Plugin\Style
     toolbar_items:
@@ -90,7 +87,6 @@ ckeditor5_htmlComments:
   drupal:
     label: HTML Comment support
     elements: false
-    library: core/ckeditor5.htmlSupport
     # @see \Drupal\ckeditor5\Plugin\CKEditor5PluginManagerInterface::getEnabledDefinitions()
     conditions: []
 
@@ -110,7 +106,6 @@ ckeditor5_arbitraryHtmlSupport:
   drupal:
     label: Arbitrary HTML support
     elements: false
-    library: core/ckeditor5.htmlSupport
     # @see \Drupal\ckeditor5\Plugin\CKEditor5PluginManagerInterface::getEnabledDefinitions()
     conditions: []
 
@@ -121,7 +116,6 @@ ckeditor5_wildcardHtmlSupport:
     label: Wildcard HTML support
     # @see \Drupal\ckeditor5\Plugin\CKEditor5PluginManager::getCKEditor5PluginConfig()
     elements: false
-    library: core/ckeditor5.htmlSupport
     # @see \Drupal\ckeditor5\Plugin\CKEditor5PluginManagerInterface::getEnabledDefinitions()
     conditions: []
 
@@ -146,7 +140,6 @@ ckeditor5_globalAttributeDir:
     # @see \Drupal\filter\Plugin\Filter\FilterHtml::getHTMLRestrictions()
     elements:
       - <* dir="ltr rtl">
-    library: core/ckeditor5.htmlSupport
     conditions:
       filter: filter_html
 
@@ -167,7 +160,6 @@ ckeditor5_globalAttributeLang:
     # @see \Drupal\filter\Plugin\Filter\FilterHtml::getHTMLRestrictions()
     elements:
       - <* lang>
-    library: core/ckeditor5.htmlSupport
     conditions:
       filter: filter_html
 
@@ -178,7 +170,6 @@ ckeditor5_specialCharacters:
       - specialCharacters.SpecialCharactersEssentials
   drupal:
     label: Special characters
-    library: core/ckeditor5.specialCharacters
     admin_library: ckeditor5/internal.admin.specialCharacters
     toolbar_items:
       specialCharacters:
@@ -198,7 +189,6 @@ ckeditor5_sourceEditing:
     # @see \Drupal\ckeditor5\Plugin\CKEditor5PluginDefinition::validateDrupalAspects()
     # @see \Drupal\ckeditor5\Plugin\CKEditor5PluginManager::getProvidedElements()
     elements: []
-    library: core/ckeditor5.sourceEditing
     admin_library: ckeditor5/internal.admin.sourceEditing
     toolbar_items:
       sourceEditing:
@@ -209,7 +199,6 @@ ckeditor5_bold:
     plugins: [basicStyles.Bold]
   drupal:
     label: Bold
-    library: core/ckeditor5.basic
     admin_library: ckeditor5/internal.admin.basic
     toolbar_items:
       bold:
@@ -237,7 +226,6 @@ ckeditor5_underline:
     plugins: [basicStyles.Underline]
   drupal:
     label: Underline
-    library: core/ckeditor5.basic
     admin_library: ckeditor5/internal.admin.basic
     toolbar_items:
       underline:
@@ -250,7 +238,6 @@ ckeditor5_code:
     plugins: [basicStyles.Code]
   drupal:
     label: Code
-    library: core/ckeditor5.basic
     admin_library: ckeditor5/internal.admin.basic
     toolbar_items:
       code:
@@ -288,7 +275,6 @@ ckeditor5_strikethrough:
     plugins: [basicStyles.Strikethrough]
   drupal:
     label: Strikethrough
-    library: core/ckeditor5.basic
     admin_library: ckeditor5/internal.admin.basic
     toolbar_items:
       strikethrough:
@@ -301,7 +287,6 @@ ckeditor5_subscript:
     plugins: [basicStyles.Subscript]
   drupal:
     label: Subscript
-    library: core/ckeditor5.basic
     admin_library: ckeditor5/internal.admin.basic
     toolbar_items:
       subscript:
@@ -314,7 +299,6 @@ ckeditor5_superscript:
     plugins: [basicStyles.Superscript]
   drupal:
     label: Superscript
-    library: core/ckeditor5.basic
     admin_library: ckeditor5/internal.admin.basic
     toolbar_items:
       superscript:
@@ -328,7 +312,6 @@ ckeditor5_blockquote:
       - blockQuote.BlockQuote
   drupal:
     label: Block quote
-    library: core/ckeditor5.blockquote
     admin_library: ckeditor5/internal.admin.blockquote
     toolbar_items:
       blockQuote:
@@ -346,7 +329,6 @@ ckeditor5_link:
         defaultProtocol: 'https://'
   drupal:
     label: Link
-    library: core/ckeditor5.link
     admin_library: ckeditor5/internal.admin.link
     toolbar_items:
       link:
@@ -425,7 +407,6 @@ ckeditor5_list:
     config: {}
   drupal:
     label: List
-    library: core/ckeditor5.list
     admin_library: ckeditor5/internal.admin.list
     class: Drupal\ckeditor5\Plugin\CKEditor5Plugin\ListPlugin
     toolbar_items:
@@ -446,7 +427,6 @@ ckeditor5_horizontalLine:
     plugins: [horizontalLine.HorizontalLine]
   drupal:
     label: Horizontal line
-    library: core/ckeditor5.horizontalLine
     admin_library: ckeditor5/internal.admin.horizontalLine
     toolbar_items:
       horizontalLine:
@@ -471,7 +451,6 @@ ckeditor5_alignment:
             className: text-align-justify
   drupal:
     label: Alignment
-    library: core/ckeditor5.alignment
     admin_library: ckeditor5/internal.admin.alignment
     class: Drupal\ckeditor5\Plugin\CKEditor5Plugin\Alignment
     toolbar_items:
@@ -486,7 +465,6 @@ ckeditor5_autoformat:
       - autoformat.Autoformat
   drupal:
     label: Autoformat
-    library: core/ckeditor5.autoformat
     elements: false
 
 ckeditor5_removeFormat:
@@ -494,7 +472,6 @@ ckeditor5_removeFormat:
     plugins: [removeFormat.RemoveFormat]
   drupal:
     label: Remove Format
-    library: core/ckeditor5.removeFormat
     admin_library: ckeditor5/internal.admin.removeFormat
     toolbar_items:
       removeFormat:
@@ -506,7 +483,6 @@ ckeditor5_pasteFromOffice:
     plugins: [pasteFromOffice.PasteFromOffice]
   drupal:
     label: Paste From Office
-    library: core/ckeditor5.pasteFromOffice
     elements: false
     conditions: []
 
@@ -522,7 +498,6 @@ ckeditor5_table:
         contentToolbar: [tableColumn, tableRow, mergeTableCells, toggleTableCaption]
   drupal:
     label: Table
-    library: core/ckeditor5.table
     admin_library: ckeditor5/internal.admin.table
     toolbar_items:
       insertTable:
@@ -712,7 +687,6 @@ ckeditor5_indent:
   drupal:
     label: Indent
     elements: false
-    library: core/ckeditor5.indent
     admin_library: ckeditor5/internal.admin.indent
     toolbar_items:
       indent:
@@ -739,7 +713,6 @@ ckeditor5_showBlocks:
     plugins: [showBlocks.ShowBlocks]
   drupal:
     label: Show blocks
-    library: core/ckeditor5.showBlocks
     admin_library: ckeditor5/internal.admin.showBlocks
     toolbar_items:
       showBlocks:
@@ -751,7 +724,6 @@ ckeditor5_fullscreen:
     plugins: [fullscreen.Fullscreen]
   drupal:
     label: Fullscreen
-    library: core/ckeditor5.fullscreen
     admin_library: ckeditor5/internal.admin.fullscreen
     toolbar_items:
       fullscreen:

@@ -49,10 +49,10 @@ class LanguageMapper {
     if (empty($langcodes)) {
       $langcodes = [];
       // Collect languages included with CKEditor 5 based on file listing.
-      $files = scandir('core/assets/vendor/ckeditor5/ckeditor5-dll/translations');
+      $files = scandir('core/assets/vendor/ckeditor5/translations');
       foreach ($files as $file) {
-        if (str_ends_with($file, '.js')) {
-          $langcode = basename($file, '.js');
+        if (str_ends_with($file, '.umd.js')) {
+          $langcode = basename($file, '.umd.js');
           $langcodes[$langcode] = $langcode;
         }
       }

@@ -1,1 +1,0 @@
-!function(o){const n=o.cs=o.cs||{};n.dictionary=Object.assign(n.dictionary||{},{"Characters: %0":"Počet znaků: %0","Words: %0":"Počet slov: %0"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

@@ -1,1 +1,0 @@
-!function(i){const n=i.fa=i.fa||{};n.dictionary=Object.assign(n.dictionary||{},{"Page break":"برش صفحه"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

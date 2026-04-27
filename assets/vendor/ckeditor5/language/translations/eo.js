@@ -1,1 +1,0 @@
-!function(n){const o=n.eo=n.eo||{};o.dictionary=Object.assign(o.dictionary||{},{"Choose language":"",Language:"","Remove language":""})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

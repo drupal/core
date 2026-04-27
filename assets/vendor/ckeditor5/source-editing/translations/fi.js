@@ -1,1 +1,0 @@
-!function(i){const n=i.fi=i.fi||{};n.dictionary=Object.assign(n.dictionary||{},{"Show source":"Näytä lähde"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

@@ -1,9 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 // cspell:ignore linksuggestionediting focusables
 
-import { Plugin } from 'ckeditor5/src/core';
-import { SwitchButtonView, View, ViewCollection } from 'ckeditor5/src/ui';
-import { ensureSafeUrl } from '@ckeditor/ckeditor5-link/src/utils';
+import {
+  Plugin,
+  SwitchButtonView,
+  View,
+  ViewCollection,
+  ensureSafeUrl,
+} from 'ckeditor5';
 import DrupalEntityLinkSuggestionsEditing from './linksuggestionediting';
 import initializeAutocomplete from './autocomplete';
 

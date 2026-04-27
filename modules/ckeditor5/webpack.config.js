@@ -49,11 +49,19 @@ getDirectories(path.resolve(__dirname, './js/ckeditor5_plugins')).forEach((dir) 
     },
     plugins: [
       new webpack.BannerPlugin('cspell:disable'),
-      new webpack.DllReferencePlugin({
-        manifest: require(path.resolve(__dirname, '../../node_modules/ckeditor5/build/ckeditor5-dll.manifest.json')), // eslint-disable-line global-require, import/no-unresolved
-        scope: 'ckeditor5/src',
-        name: 'CKEditor5.dll',
-      }),
+    ],
+    externals: [
+      function ({ request }, callback) {
+        // Map all ckeditor5 imports to the CKEDITOR UMD global.
+        if (request === 'ckeditor5' || request.startsWith('ckeditor5/')) {
+          return callback(null, 'CKEDITOR');
+        }
+        // Map @ckeditor/* package imports to the CKEDITOR UMD global.
+        if (request.startsWith('@ckeditor/')) {
+          return callback(null, 'CKEDITOR');
+        }
+        callback();
+      },
     ],
     module: {
       rules: [{ test: /\.svg$/, type: 'asset/source' }],

@@ -1,1 +1,0 @@
-!function(n){const e=n["es-co"]=n["es-co"]||{};e.dictionary=Object.assign(e.dictionary||{},{"Decrease indent":"","Increase indent":""})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

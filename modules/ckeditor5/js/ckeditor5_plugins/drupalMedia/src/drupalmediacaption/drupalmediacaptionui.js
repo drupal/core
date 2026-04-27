@@ -1,7 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { Plugin } from 'ckeditor5/src/core';
-import { IconCaption } from '@ckeditor/ckeditor5-icons';
-import { ButtonView } from 'ckeditor5/src/ui';
+import { Plugin, IconCaption, ButtonView } from 'ckeditor5';
 import { getMediaCaptionFromModelSelection } from './utils';
 
 /**

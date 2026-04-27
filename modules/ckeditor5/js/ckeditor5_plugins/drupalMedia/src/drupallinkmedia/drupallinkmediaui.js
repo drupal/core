@@ -1,8 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 // cspell:ignore linkui
-import { Plugin } from 'ckeditor5/src/core';
-import { LINK_KEYSTROKE } from '@ckeditor/ckeditor5-link/src/utils';
-import { ButtonView } from 'ckeditor5/src/ui';
+import {
+  Plugin,
+  _LINK_KEYSTROKE as LINK_KEYSTROKE,
+  ButtonView,
+} from 'ckeditor5';
 import linkIcon from '../../../../../icons/link.svg';
 
 /**

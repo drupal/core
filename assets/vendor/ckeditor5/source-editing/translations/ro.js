@@ -1,1 +1,0 @@
-!function(o){const i=o.ro=o.ro||{};i.dictionary=Object.assign(i.dictionary||{},{"Show source":"Afișare sursă"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

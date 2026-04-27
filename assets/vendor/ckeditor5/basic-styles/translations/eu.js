@@ -1,1 +1,0 @@
-!function(t){const e=t.eu=t.eu||{};e.dictionary=Object.assign(e.dictionary||{},{Bold:"Lodia","Bold text":"",Code:"Kodea",Italic:"Etzana","Italic text":"","Move out of an inline code style":"",Strikethrough:"","Strikethrough text":"",Subscript:"",Superscript:"",Underline:"Azpimarra","Underline text":""})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

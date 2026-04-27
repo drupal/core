@@ -322,11 +322,11 @@ class Ckeditor5Hooks {
         // will be filtered in ckeditor5_js_alter() hook.
         $files = scandir("{$dir}/translations");
         foreach ($files as $file) {
-          if (str_ends_with($file, '.js')) {
-            $langcode = basename($file, '.js');
-            // Only add languages that Drupal can understands.
+          if (str_ends_with($file, '.umd.js')) {
+            $langcode = basename($file, '.umd.js');
+            // Only add languages that Drupal can understand.
             if (in_array($langcode, $ckeditor_langcodes)) {
-              $library['js']["{$dirname}/translations/{$langcode}.js"] = [
+              $library['js']["{$dirname}/translations/{$file}"] = [
                 'ckeditor5_langcode' => $langcode,
                 'minified' => TRUE,
                 'preprocess' => TRUE,
@@ -355,7 +355,7 @@ class Ckeditor5Hooks {
 
       // This file is used to get a weight that will make it possible to
       // aggregate all translation files in a single aggregate.
-      $ckeditor_dll_file = 'core/assets/vendor/ckeditor5/ckeditor5-dll/ckeditor5-dll.js';
+      $ckeditor_umd_file = 'core/assets/vendor/ckeditor5/ckeditor5.umd.js';
       // Use the placeholder file weight to set all the translations files
       // weights so they can be aggregated together as expected. Account for
       // requests where the library is not loaded such as when during an AJAX
@@ -364,8 +364,8 @@ class Ckeditor5Hooks {
       // anyway since AJAX requests generally result in very few libraries being
       // loaded.
       $default_weight = $javascript[$placeholder_file]['weight'] ?? 0;
-      if (isset($javascript[$ckeditor_dll_file])) {
-        $default_weight = $javascript[$ckeditor_dll_file]['weight'];
+      if (isset($javascript[$ckeditor_umd_file])) {
+        $default_weight = $javascript[$ckeditor_umd_file]['weight'];
       }
 
       $ckeditor5_language = $this->languageMapper->getMapping($language->getId());

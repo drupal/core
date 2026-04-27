@@ -1,1 +1,0 @@
-!function(i){const n=i.be=i.be||{};n.dictionary=Object.assign(n.dictionary||{},{"Remove Format":"Выдаліць фарматаванне"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

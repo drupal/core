@@ -2,10 +2,11 @@
 /* cspell:ignore buttonview componentfactory drupalelementstyle */
 /* cspell:ignore drupalelementstylecommand drupalelementstyleui */
 /* cspell:ignore drupalelementstyleediting imagestyle splitbutton */
-import { Plugin } from 'ckeditor5/src/core';
-import { Collection, toMap } from 'ckeditor5/src/utils';
-import { utils } from '@ckeditor/ckeditor5-image/src/imagestyle/utils';
 import {
+  Plugin,
+  Collection,
+  toMap,
+  _ImageStyleUtils as utils,
   addToolbarToDropdown,
   addListToDropdown,
   ButtonView,
@@ -13,7 +14,7 @@ import {
   DropdownButtonView,
   SplitButtonView,
   ViewModel,
-} from 'ckeditor5/src/ui';
+} from 'ckeditor5';
 import DrupalElementStyleEditing from './drupalelementstyleediting';
 import { isObject } from '../utils';
 import { getClosestElementWithElementStyleAttribute } from './utils';

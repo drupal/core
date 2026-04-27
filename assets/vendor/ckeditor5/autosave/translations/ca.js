@@ -1,1 +1,0 @@
-!function(n){const a=n.ca=n.ca||{};a.dictionary=Object.assign(a.dictionary||{},{"Saving changes":"S'estan desant els canvis"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

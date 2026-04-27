@@ -172,7 +172,7 @@ class EngineTwigTest extends BrowserTestBase {
    */
   public function testTwigAttachLibrary(): void {
     $this->drupalGet('/twig-theme-test/attach-library');
-    $this->assertSession()->responseContains('ckeditor5-dll.js');
+    $this->assertSession()->responseContains('ckeditor5.umd.js');
   }
 
   /**

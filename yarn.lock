@@ -124,7 +124,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-alignment@npm:47.6.0, @ckeditor/ckeditor5-alignment@npm:~47.6.0":
+"@ckeditor/ckeditor5-alignment@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-alignment@npm:47.6.0"
   dependencies:
@@ -137,7 +137,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-autoformat@npm:47.6.0, @ckeditor/ckeditor5-autoformat@npm:~47.6.0":
+"@ckeditor/ckeditor5-autoformat@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-autoformat@npm:47.6.0"
   dependencies:
@@ -163,7 +163,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-basic-styles@npm:47.6.0, @ckeditor/ckeditor5-basic-styles@npm:~47.6.0":
+"@ckeditor/ckeditor5-basic-styles@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-basic-styles@npm:47.6.0"
   dependencies:
@@ -178,7 +178,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-block-quote@npm:47.6.0, @ckeditor/ckeditor5-block-quote@npm:~47.6.0":
+"@ckeditor/ckeditor5-block-quote@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-block-quote@npm:47.6.0"
   dependencies:
@@ -266,7 +266,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-code-block@npm:47.6.0, @ckeditor/ckeditor5-code-block@npm:~47.6.0":
+"@ckeditor/ckeditor5-code-block@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-code-block@npm:47.6.0"
   dependencies:
@@ -322,7 +322,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-editor-classic@npm:47.6.0, @ckeditor/ckeditor5-editor-classic@npm:~47.6.0":
+"@ckeditor/ckeditor5-editor-classic@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-editor-classic@npm:47.6.0"
   dependencies:
@@ -336,7 +336,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-editor-decoupled@npm:47.6.0, @ckeditor/ckeditor5-editor-decoupled@npm:~47.6.0":
+"@ckeditor/ckeditor5-editor-decoupled@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-editor-decoupled@npm:47.6.0"
   dependencies:
@@ -416,7 +416,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-essentials@npm:47.6.0, @ckeditor/ckeditor5-essentials@npm:~47.6.0":
+"@ckeditor/ckeditor5-essentials@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-essentials@npm:47.6.0"
   dependencies:
@@ -475,7 +475,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-heading@npm:47.6.0, @ckeditor/ckeditor5-heading@npm:~47.6.0":
+"@ckeditor/ckeditor5-heading@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-heading@npm:47.6.0"
   dependencies:
@@ -504,7 +504,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-horizontal-line@npm:47.6.0, @ckeditor/ckeditor5-horizontal-line@npm:~47.6.0":
+"@ckeditor/ckeditor5-horizontal-line@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-horizontal-line@npm:47.6.0"
   dependencies:
@@ -532,7 +532,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-html-support@npm:47.6.0, @ckeditor/ckeditor5-html-support@npm:~47.6.0":
+"@ckeditor/ckeditor5-html-support@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-html-support@npm:47.6.0"
   dependencies:
@@ -552,14 +552,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-icons@npm:47.6.0, @ckeditor/ckeditor5-icons@npm:~47.6.0":
+"@ckeditor/ckeditor5-icons@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-icons@npm:47.6.0"
   checksum: 10c0/ddfc8ebaae2a3e550d87a5045bdf786abbd151179a0e94efd5dbb624056ea670a03a19be998769a56bfaca3f8edb875dcb096886eb38a92d4b7556e20f75088f
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-image@npm:47.6.0, @ckeditor/ckeditor5-image@npm:~47.6.0":
+"@ckeditor/ckeditor5-image@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-image@npm:47.6.0"
   dependencies:
@@ -579,7 +579,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-indent@npm:47.6.0, @ckeditor/ckeditor5-indent@npm:~47.6.0":
+"@ckeditor/ckeditor5-indent@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-indent@npm:47.6.0"
   dependencies:
@@ -595,7 +595,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-language@npm:47.6.0, @ckeditor/ckeditor5-language@npm:~47.6.0":
+"@ckeditor/ckeditor5-language@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-language@npm:47.6.0"
   dependencies:
@@ -608,7 +608,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-link@npm:47.6.0, @ckeditor/ckeditor5-link@npm:~47.6.0":
+"@ckeditor/ckeditor5-link@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-link@npm:47.6.0"
   dependencies:
@@ -627,7 +627,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-list@npm:47.6.0, @ckeditor/ckeditor5-list@npm:~47.6.0":
+"@ckeditor/ckeditor5-list@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-list@npm:47.6.0"
   dependencies:
@@ -745,7 +745,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-paste-from-office@npm:47.6.0, @ckeditor/ckeditor5-paste-from-office@npm:~47.6.0":
+"@ckeditor/ckeditor5-paste-from-office@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-paste-from-office@npm:47.6.0"
   dependencies:
@@ -757,7 +757,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-remove-format@npm:47.6.0, @ckeditor/ckeditor5-remove-format@npm:~47.6.0":
+"@ckeditor/ckeditor5-remove-format@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-remove-format@npm:47.6.0"
   dependencies:
@@ -797,7 +797,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-show-blocks@npm:47.6.0, @ckeditor/ckeditor5-show-blocks@npm:~47.6.0":
+"@ckeditor/ckeditor5-show-blocks@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-show-blocks@npm:47.6.0"
   dependencies:
@@ -810,7 +810,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-source-editing@npm:47.6.0, @ckeditor/ckeditor5-source-editing@npm:~47.6.0":
+"@ckeditor/ckeditor5-source-editing@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-source-editing@npm:47.6.0"
   dependencies:
@@ -824,7 +824,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-special-characters@npm:47.6.0, @ckeditor/ckeditor5-special-characters@npm:~47.6.0":
+"@ckeditor/ckeditor5-special-characters@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-special-characters@npm:47.6.0"
   dependencies:
@@ -838,7 +838,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-style@npm:47.6.0, @ckeditor/ckeditor5-style@npm:~47.6.0":
+"@ckeditor/ckeditor5-style@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-style@npm:47.6.0"
   dependencies:
@@ -855,7 +855,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ckeditor/ckeditor5-table@npm:47.6.0, @ckeditor/ckeditor5-table@npm:~47.6.0":
+"@ckeditor/ckeditor5-table@npm:47.6.0":
   version: 47.6.0
   resolution: "@ckeditor/ckeditor5-table@npm:47.6.0"
   dependencies:
@@ -3031,30 +3031,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "Drupal@workspace:."
   dependencies:
-    "@ckeditor/ckeditor5-alignment": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-autoformat": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-basic-styles": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-block-quote": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-code-block": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-editor-classic": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-editor-decoupled": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-essentials": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-heading": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-horizontal-line": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-html-support": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-icons": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-image": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-indent": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-language": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-link": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-list": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-paste-from-office": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-remove-format": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-show-blocks": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-source-editing": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-special-characters": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-style": "npm:~47.6.0"
-    "@ckeditor/ckeditor5-table": "npm:~47.6.0"
     "@drupal/once": "npm:^1.0.1"
     "@floating-ui/dom": "npm:^1.7.4"
     "@gitlab-formatters/stylelint-formatter-gitlab": "npm:^1.0.2"

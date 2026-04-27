@@ -1,1 +1,0 @@
-!function(i){const n=i.sq=i.sq||{};n.dictionary=Object.assign(n.dictionary||{},{"Page break":"Ndarës faqeje"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

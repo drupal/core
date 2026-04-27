@@ -1,1 +1,0 @@
-!function(a){const i=a.ca=a.ca||{};i.dictionary=Object.assign(i.dictionary||{},{"Revert autoformatting action":"Desfés l'acció d'autoformatació"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

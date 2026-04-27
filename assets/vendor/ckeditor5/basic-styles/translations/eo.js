@@ -1,1 +1,0 @@
-!function(t){const e=t.eo=t.eo||{};e.dictionary=Object.assign(e.dictionary||{},{Bold:"grasa","Bold text":"",Code:"",Italic:"kursiva","Italic text":"","Move out of an inline code style":"",Strikethrough:"","Strikethrough text":"",Subscript:"",Superscript:"",Underline:"","Underline text":""})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

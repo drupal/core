@@ -1,1 +1,0 @@
-!function(n){const i=n["sr-latn"]=n["sr-latn"]||{};i.dictionary=Object.assign(i.dictionary||{},{"Show source":""})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

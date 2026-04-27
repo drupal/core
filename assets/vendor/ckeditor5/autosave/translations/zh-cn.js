@@ -1,1 +1,0 @@
-!function(n){const i=n["zh-cn"]=n["zh-cn"]||{};i.dictionary=Object.assign(i.dictionary||{},{"Saving changes":"正在保存更改"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

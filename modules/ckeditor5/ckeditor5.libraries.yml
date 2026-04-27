@@ -13,18 +13,21 @@ internal.ckeditor5.language:
     component:
       css/language.css: {}
   dependencies:
-    - core/ckeditor5.language
+    - core/ckeditor5
 
 internal.drupal.ckeditor5.htmlEngine:
   js:
     js/build/drupalHtmlEngine.js: { minified: true }
   dependencies:
     - core/ckeditor5
-    - core/ckeditor5.essentials
 
 internal.drupal.ckeditor5:
   js:
     js/ckeditor5.js: {}
+    # Backward-compatibility shim so contributed modules built with
+    # DllReferencePlugin continue to work without being rebuilt.
+    # @deprecated in drupal:12.0.0 and is removed from drupal:13.0.0.
+    js/ckeditor5-dll-shim.js: {}
   css:
     theme:
       css/editor.css: { }
@@ -34,8 +37,6 @@ internal.drupal.ckeditor5:
     - core/drupal
     - core/drupal.ajax
     - core/drupal.debounce
-    - core/ckeditor5.editorClassic
-    - core/ckeditor5.editorDecoupled
     - core/ckeditor5
     - editor/drupal.editor
     - ckeditor5/internal.drupal.ckeditor5.stylesheets
@@ -51,8 +52,7 @@ internal.drupal.ckeditor5.stylesheets:
 
 internal.drupal.ckeditor5.codeBlock:
   dependencies:
-    - core/ckeditor5.codeBlock
-    - core/ckeditor5.htmlSupport
+    - core/ckeditor5
 
 internal.drupal.ckeditor5.image:
   js:
@@ -63,7 +63,6 @@ internal.drupal.ckeditor5.image:
   dependencies:
     - core/drupal
     - core/ckeditor5
-    - core/ckeditor5.image
 
 internal.drupal.ckeditor5.emphasis:
   version: VERSION
@@ -71,7 +70,6 @@ internal.drupal.ckeditor5.emphasis:
     js/build/drupalEmphasis.js: { minified: true }
   dependencies:
     - core/ckeditor5
-    - core/ckeditor5.basic
 
 internal.drupal.ckeditor5.link-entity-suggestions:
   js:
@@ -117,7 +115,7 @@ internal.drupal.ckeditor5.table:
     theme:
       css/table.css: { }
   dependencies:
-    - core/ckeditor5.table
+    - core/ckeditor5
 
 internal.admin:
   js:
@@ -172,7 +170,7 @@ internal.admin.heading:
     theme:
       css/heading.admin.css: { }
   dependencies:
-    - core/ckeditor5.essentials
+    - core/ckeditor5
 
 internal.admin.horizontalLine:
   css:

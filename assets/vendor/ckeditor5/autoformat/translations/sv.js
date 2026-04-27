@@ -1,1 +1,0 @@
-!function(t){const i=t.sv=t.sv||{};i.dictionary=Object.assign(i.dictionary||{},{"Revert autoformatting action":"Ångra automatisk formatering"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

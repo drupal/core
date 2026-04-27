@@ -1,1 +1,0 @@
-!function(i){const o=i.lt=i.lt||{};o.dictionary=Object.assign(o.dictionary||{},{"Characters: %0":"Simbolių: %0","Words: %0":"Žodžių: %0"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

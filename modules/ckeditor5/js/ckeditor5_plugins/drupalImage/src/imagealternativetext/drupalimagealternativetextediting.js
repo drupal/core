@@ -7,8 +7,7 @@
  * @module drupalImage/imagealternativetext/drupalimagealternativetextediting
  */
 
-import { Plugin } from 'ckeditor5/src/core';
-import { ImageTextAlternativeCommand } from '@ckeditor/ckeditor5-image/src/imagetextalternative/imagetextalternativecommand';
+import { Plugin, ImageTextAlternativeCommand } from 'ckeditor5';
 
 /**
  * The Drupal image alternative text editing plugin.

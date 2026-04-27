@@ -153,8 +153,8 @@ class AssetResolverTest extends UnitTestCase {
         'version' => '1.0.0',
         'license' => '',
         'js' => [
-          'assets/vendor/ckeditor5/ckeditor5-dll/ckeditor5-dll.js' => [
-            'data' => 'assets/vendor/ckeditor5/ckeditor5-dll/ckeditor5-dll.js',
+          'assets/vendor/ckeditor5/ckeditor5.umd.js' => [
+            'data' => 'assets/vendor/ckeditor5/ckeditor5.umd.js',
             'preprocess' => FALSE,
             'minified' => TRUE,
           ],

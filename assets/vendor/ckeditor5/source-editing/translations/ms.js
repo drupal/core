@@ -1,1 +1,0 @@
-!function(n){const i=n.ms=n.ms||{};i.dictionary=Object.assign(i.dictionary||{},{"Show source":"Paparkan sumber"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

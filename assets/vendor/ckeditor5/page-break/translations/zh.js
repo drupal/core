@@ -1,1 +1,0 @@
-!function(i){const n=i.zh=i.zh||{};n.dictionary=Object.assign(n.dictionary||{},{"Page break":"換頁"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

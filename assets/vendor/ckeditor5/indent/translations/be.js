@@ -1,1 +1,0 @@
-!function(n){const e=n.be=n.be||{};e.dictionary=Object.assign(e.dictionary||{},{"Decrease indent":"Паменшыць адступ","Increase indent":"Павялічыць адступ"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

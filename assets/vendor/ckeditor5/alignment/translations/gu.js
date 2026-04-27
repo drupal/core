@@ -1,1 +1,0 @@
-!function(n){const i=n.gu=n.gu||{};i.dictionary=Object.assign(i.dictionary||{},{"Align center":"","Align left":"","Align right":"",Justify:"","Text alignment":"","Text alignment toolbar":""})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

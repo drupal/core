@@ -1,1 +1,0 @@
-!function(t){const i=t.hu=t.hu||{};i.dictionary=Object.assign(i.dictionary||{},{"Revert autoformatting action":"Automatikus formázási művelet visszaállítása"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

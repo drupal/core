@@ -1,1 +1,0 @@
-!function(n){const i=n.el=n.el||{};i.dictionary=Object.assign(i.dictionary||{},{"Saving changes":"Αποθήκευση αλλαγών"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

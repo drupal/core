@@ -1,1 +1,0 @@
-!function(t){const i=t.sk=t.sk||{};i.dictionary=Object.assign(i.dictionary||{},{"Revert autoformatting action":"Vrátiť späť automatické formátovanie"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

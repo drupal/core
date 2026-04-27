@@ -2,14 +2,14 @@
 /* cspell:ignore imagetextalternative mediaimagetextalternative */
 /* cspell:ignore mediaimagetextalternativeediting textalternativeformview */
 
-import { Plugin } from 'ckeditor5/src/core';
-import { IconLowVision } from '@ckeditor/ckeditor5-icons';
 import {
+  Plugin,
+  IconLowVision,
   ButtonView,
   ContextualBalloon,
   CssTransitionDisablerMixin,
   clickOutsideHandler,
-} from 'ckeditor5/src/ui';
+} from 'ckeditor5';
 
 import { getClosestSelectedDrupalMediaWidget, isDrupalMedia } from '../utils';
 import {

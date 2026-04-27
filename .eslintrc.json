@@ -30,6 +30,7 @@
     "Sortable": true,
     "once": true,
     "CKEditor5": true,
+    "CKEDITOR": true,
     "tabbable": true,
     "transliterate": true,
     "bodyScrollLock" : true,

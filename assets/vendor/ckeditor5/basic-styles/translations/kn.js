@@ -1,1 +1,0 @@
-!function(t){const i=t.kn=t.kn||{};i.dictionary=Object.assign(i.dictionary||{},{Bold:"‍‍ದಪ್ಪ","Bold text":"",Code:"",Italic:"‍ಇಟಾಲಿಕ್","Italic text":"","Move out of an inline code style":"",Strikethrough:"","Strikethrough text":"",Subscript:"",Superscript:"",Underline:"","Underline text":""})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

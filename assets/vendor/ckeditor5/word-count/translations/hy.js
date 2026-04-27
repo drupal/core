@@ -1,1 +1,0 @@
-!function(i){const n=i.hy=i.hy||{};n.dictionary=Object.assign(n.dictionary||{},{"Characters: %0":"%0 նիշեր","Words: %0":"%0 բառեր"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

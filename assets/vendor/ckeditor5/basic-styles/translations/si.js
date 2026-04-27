@@ -1,1 +1,0 @@
-!function(t){const i=t.si=t.si||{};i.dictionary=Object.assign(i.dictionary||{},{Bold:"තදකුරු","Bold text":"",Code:"",Italic:"ඇලකුරු","Italic text":"","Move out of an inline code style":"",Strikethrough:"","Strikethrough text":"",Subscript:"",Superscript:"",Underline:"","Underline text":""})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

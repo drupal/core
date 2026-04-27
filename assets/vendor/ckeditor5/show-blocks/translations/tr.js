@@ -1,1 +1,0 @@
-!function(o){const i=o.tr=o.tr||{};i.dictionary=Object.assign(i.dictionary||{},{"Show blocks":"Blokları göster"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

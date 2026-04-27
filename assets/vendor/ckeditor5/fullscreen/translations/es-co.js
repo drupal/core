@@ -1,1 +1,0 @@
-!function(e){const o=e["es-co"]=e["es-co"]||{};o.dictionary=Object.assign(o.dictionary||{},{"Connected users":"","Document outline":"","Enter fullscreen mode":"","Fullscreen mode":"","Hide left sidebar":"","Leave fullscreen mode":"","Show left sidebar":"","Toggle fullscreen mode":"","Toggle sidebar":""})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

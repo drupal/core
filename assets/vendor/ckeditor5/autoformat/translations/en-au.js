@@ -1,1 +1,0 @@
-!function(n){const i=n["en-au"]=n["en-au"]||{};i.dictionary=Object.assign(i.dictionary||{},{"Revert autoformatting action":""})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

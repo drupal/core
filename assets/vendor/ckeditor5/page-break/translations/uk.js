@@ -1,1 +1,0 @@
-!function(i){const n=i.uk=i.uk||{};n.dictionary=Object.assign(n.dictionary||{},{"Page break":"Розрив cторінки"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

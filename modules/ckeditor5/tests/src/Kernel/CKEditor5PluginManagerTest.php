@@ -1151,11 +1151,6 @@ PHP,
       'ckeditor5/internal.drupal.ckeditor5',
       'ckeditor5/internal.drupal.ckeditor5.emphasis',
       'ckeditor5/internal.drupal.ckeditor5.htmlEngine',
-      'core/ckeditor5.autoformat',
-      'core/ckeditor5.basic',
-      'core/ckeditor5.essentials',
-      'core/ckeditor5.htmlSupport',
-      'core/ckeditor5.pasteFromOffice',
     ];
     $this->assertSame($default_libraries, $this->manager->getEnabledLibraries($editor));
 
@@ -1235,7 +1230,6 @@ PHP,
       'ckeditor5/internal.drupal.ckeditor5.media',
       'ckeditor5/internal.drupal.ckeditor5.mediaAlign',
       'ckeditor5_test/layercake',
-      'core/ckeditor5.table',
     ]);
     sort($expected_libraries);
     $this->assertSame($expected_libraries, $this->manager->getEnabledLibraries($editor));
@@ -1251,10 +1245,6 @@ PHP,
     ]);
     sort($expected_plugins);
     $this->assertSame(array_values($expected_plugins), $plugin_ids);
-    $expected_libraries = array_merge($expected_libraries, [
-      'core/ckeditor5.alignment',
-    ]);
-    sort($expected_libraries);
     $this->assertSame($expected_libraries, $this->manager->getEnabledLibraries($editor));
 
     // Case 8: GHS is enabled for Full HTML (or any other text format that has
@@ -1277,11 +1267,6 @@ PHP,
       'ckeditor5/internal.drupal.ckeditor5',
       'ckeditor5/internal.drupal.ckeditor5.emphasis',
       'ckeditor5/internal.drupal.ckeditor5.htmlEngine',
-      'core/ckeditor5.autoformat',
-      'core/ckeditor5.basic',
-      'core/ckeditor5.essentials',
-      'core/ckeditor5.htmlSupport',
-      'core/ckeditor5.pasteFromOffice',
     ];
     $this->assertSame($default_libraries, $this->manager->getEnabledLibraries($editor));
   }

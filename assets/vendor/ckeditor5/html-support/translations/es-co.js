@@ -1,1 +1,0 @@
-!function(o){const c=o["es-co"]=o["es-co"]||{};c.dictionary=Object.assign(c.dictionary||{},{"HTML object":""})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

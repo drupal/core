@@ -1,1 +1,0 @@
-!function(i){const a=i.az=i.az||{};a.dictionary=Object.assign(a.dictionary||{},{"Characters: %0":"Simvolar: %0","Words: %0":"Sözlər: %0"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

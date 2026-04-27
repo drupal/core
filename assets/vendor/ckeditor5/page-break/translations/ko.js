@@ -1,1 +1,0 @@
-!function(i){const n=i.ko=i.ko||{};n.dictionary=Object.assign(n.dictionary||{},{"Page break":"페이지 나누기"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));
