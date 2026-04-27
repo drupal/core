@@ -27,3 +27,4 @@ services:
     arguments: ['@serializer', '@renderer', '@current_route_match']
   rest.resource.entity.post_route.subscriber:
     class: \Drupal\rest\EventSubscriber\EntityResourcePostRouteSubscriber
+  Drupal\rest\EventSubscriber\DeprecatedUserRoutesSubscriber: ~
