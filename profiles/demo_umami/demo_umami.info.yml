@@ -2,6 +2,7 @@ name: 'Demo: Umami Food Magazine (Experimental)'
 type: profile
 description: 'Install an example site that shows off some of Drupal’s capabilities.'
 version: VERSION
+hidden: true
 install:
   - node
   - big_pipe
