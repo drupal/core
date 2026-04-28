@@ -462,8 +462,16 @@ class ModuleHandler implements ModuleHandlerInterface {
     // weight then alphabetical. Finally we order using order attributes.
     $modules = array_keys($identifiers_by_module);
     // Order by module order first, this preserves expected order for alter
-    // hooks implemented on behalf of other modules.
-    $modules = array_intersect(array_keys($this->moduleList), $modules);
+    // hooks implemented on behalf of other modules. The module that hooks
+    // implementations in kernel test classes are grouped by is 'core'. Since
+    // 'core' is not actually a module, add 'core' as a key to the module list,
+    // so core implementations are not filtered out. 'Core' is added last to
+    // match how kernel test hooks are added last by KernelTestCompilerPass.
+    // @todo Determine whether 'core' should still be ordered last by default
+    //   when any service, including in the Drupal\Core namespace, can have
+    //   hook implementations.
+    // @see https://www.drupal.org/i/3481903.
+    $modules = array_intersect(array_keys($this->moduleList + ['core' => '']), $modules);
     // Create a flat list of identifiers.
     $identifiers = array_merge(...array_map(
       fn (string $module) => $identifiers_by_module[$module],
