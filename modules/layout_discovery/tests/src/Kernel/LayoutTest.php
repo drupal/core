@@ -71,7 +71,7 @@ class LayoutTest extends KernelTestBase {
 
     // Add in the wrapping form elements and prefix/suffix.
     array_unshift($html, 'Test prefix');
-    array_unshift($html, '<form data-drupal-selector="the-form-id" action="/" method="post" id="the-form-id" accept-charset="UTF-8">');
+    array_unshift($html, '<form data-drupal-selector="the-form-id" action="/" method="post" id="the-form-id" accept-charset="UTF-8" novalidate="">');
     // Retrieve the build ID from the rendered HTML since the string is random.
     $build_id_input = $this->cssSelect('input[name="form_build_id"]')[0]->asXML();
     $form_id_input = '<input data-drupal-selector="edit-the-form-id" type="hidden" name="form_id" value="the_form_id"/>';

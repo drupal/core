@@ -1232,6 +1232,16 @@ class SystemRequirementsHooks {
           'description' => $this->t('The rebuild_access setting is enabled in settings.php. It is recommended to have this setting disabled unless you are performing a rebuild.'),
         ];
       }
+
+      // Warn about HTML5 validation setting removal in Drupal 13.
+      if (Settings::get('enable_html5_validation') === TRUE) {
+        $requirements['enable_html5_validation'] = [
+          'title' => $this->t('HTML5 validation'),
+          'value' => $this->t('Enabled'),
+          'severity' => RequirementSeverity::Warning,
+          'description' => $this->t('The enable_html5_validation setting will be removed in Drupal 13, and HTML5 validation will be disabled on all forms.  Make sure your forms will still work the way you expect before upgrading by setting the value to FALSE in a test environment. See <a href=":url">the change record</a> for more information.', [':url' => 'https://www.drupal.org/node/3537128']),
+        ];
+      }
     }
 
     // Check if the SameSite cookie attribute is set to a valid value. Since
