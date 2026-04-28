@@ -52,9 +52,9 @@ class OpenTelemetryFrontPagePerformanceTest extends PerformanceTestBase {
     $this->assertSession()->pageTextContains('Umami');
 
     $expected = [
-      'QueryCount' => 192,
-      'CacheGetCount' => 241,
-      'CacheSetCount' => 246,
+      'QueryCount' => 183,
+      'CacheGetCount' => 232,
+      'CacheSetCount' => 237,
       'CacheDeleteCount' => 0,
       'CacheTagLookupQueryCount' => 24,
       'CacheTagInvalidationCount' => 0,
