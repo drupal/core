@@ -433,6 +433,7 @@ spaze
 squaresmall
 squiz
 squizlabs
+srclang
 srcset
 ssess
 starterkit
