@@ -76,7 +76,7 @@ class ExtractTest extends MigrateProcessTestCase {
    * @throws \Drupal\migrate\MigrateException
    */
   #[DataProvider('providerExtractDefault')]
-  public function testExtractDefault(array $value, array $configuration, $expected): void {
+  public function testExtractDefault(array $value, array $configuration, string|bool|null $expected): void {
     $this->plugin = new Extract($configuration, 'map', []);
 
     $value = $this->plugin->transform($value, $this->migrateExecutable, $this->row, 'destination_property');
@@ -86,7 +86,7 @@ class ExtractTest extends MigrateProcessTestCase {
   /**
    * Data provider for testExtractDefault.
    */
-  public static function providerExtractDefault() {
+  public static function providerExtractDefault(): array {
     return [
       [
         ['foo' => 'bar'],
@@ -142,7 +142,7 @@ class ExtractTest extends MigrateProcessTestCase {
   /**
    * Provides data for the testExtractInvalid.
    */
-  public static function providerTestExtractInvalid() {
+  public static function providerTestExtractInvalid(): array {
     $xml_str = <<<XML
     <xml version='1.0'?>
       <authors>

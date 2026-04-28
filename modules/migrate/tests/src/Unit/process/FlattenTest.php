@@ -27,7 +27,7 @@ class FlattenTest extends MigrateProcessTestCase {
    * Tests that various array flatten operations work properly.
    */
   #[DataProvider('providerTestFlatten')]
-  public function testFlatten($value, $expected): void {
+  public function testFlatten($value, array $expected): void {
     $flattened = $this->plugin->transform($value, $this->migrateExecutable, $this->row, 'destination_property');
     $this->assertSame($expected, $flattened);
   }
@@ -35,7 +35,7 @@ class FlattenTest extends MigrateProcessTestCase {
   /**
    * Provides data for the testFlatten.
    */
-  public static function providerTestFlatten() {
+  public static function providerTestFlatten(): array {
     $object = (object) [
       'a' => 'test',
       'b' => '1.2',
@@ -57,7 +57,7 @@ class FlattenTest extends MigrateProcessTestCase {
    * Tests that Flatten throws a MigrateException.
    */
   #[DataProvider('providerTestFlattenInvalid')]
-  public function testFlattenInvalid($value): void {
+  public function testFlattenInvalid(string|int|float|bool|null $value): void {
     $this->expectException(MigrateException::class);
     $type = gettype($value);
     $this->expectExceptionMessage(sprintf("Input should be an array or an object, instead it was of type '%s'", $type));
@@ -67,7 +67,7 @@ class FlattenTest extends MigrateProcessTestCase {
   /**
    * Provides data for the testFlattenInvalid.
    */
-  public static function providerTestFlattenInvalid() {
+  public static function providerTestFlattenInvalid(): array {
     $xml_str = <<<XML
 <xml version='1.0'?>
 <authors>

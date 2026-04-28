@@ -35,7 +35,7 @@ abstract class FileManagedTestBase extends BrowserTestBase {
    *   An array of strings containing with the hook name; for example, 'load',
    *   'save', 'insert', etc.
    */
-  public function assertFileHooksCalled($expected) {
+  public function assertFileHooksCalled($expected): void {
     \Drupal::state()->resetCache();
 
     // Determine which hooks were called.
@@ -70,7 +70,7 @@ abstract class FileManagedTestBase extends BrowserTestBase {
    * @param string|null $message
    *   Optional translated string message.
    */
-  public function assertFileHookCalled($hook, $expected_count = 1, $message = NULL) {
+  public function assertFileHookCalled($hook, $expected_count = 1, $message = NULL): void {
     $actual_count = count(FileTestHelper::getCalls($hook));
 
     if (!isset($message)) {
@@ -95,7 +95,7 @@ abstract class FileManagedTestBase extends BrowserTestBase {
    * @param \Drupal\file\FileInterface $after
    *   File object to compare.
    */
-  public function assertFileUnchanged(FileInterface $before, FileInterface $after) {
+  public function assertFileUnchanged(FileInterface $before, FileInterface $after): void {
     $this->assertEquals($before->id(), $after->id());
     $this->assertEquals($before->getOwner()->id(), $after->getOwner()->id());
     $this->assertEquals($before->getFilename(), $after->getFilename());
@@ -113,7 +113,7 @@ abstract class FileManagedTestBase extends BrowserTestBase {
    * @param \Drupal\file\FileInterface $file2
    *   File object to compare.
    */
-  public function assertDifferentFile(FileInterface $file1, FileInterface $file2) {
+  public function assertDifferentFile(FileInterface $file1, FileInterface $file2): void {
     $this->assertNotEquals($file1->id(), $file2->id());
     $this->assertNotEquals($file1->getFileUri(), $file2->getFileUri());
   }
@@ -126,7 +126,7 @@ abstract class FileManagedTestBase extends BrowserTestBase {
    * @param \Drupal\file\FileInterface $file2
    *   File object to compare.
    */
-  public function assertSameFile(FileInterface $file1, FileInterface $file2) {
+  public function assertSameFile(FileInterface $file1, FileInterface $file2): void {
     $this->assertEquals($file1->id(), $file2->id());
     $this->assertEquals($file1->getFileUri(), $file2->getFileUri());
   }

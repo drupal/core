@@ -115,7 +115,7 @@ class FieldDefinitionIntegrityTest extends KernelTestBase {
     $field_definitions = [];
 
     /** @var \Drupal\Core\Entity\EntityTypeInterface[] $content_entity_types */
-    $content_entity_types = array_filter($entity_type_manager->getDefinitions(), function (EntityTypeInterface $entity_type) {
+    $content_entity_types = array_filter($entity_type_manager->getDefinitions(), function (EntityTypeInterface $entity_type): bool {
       return $entity_type instanceof ContentEntityTypeInterface;
     });
 
@@ -145,7 +145,7 @@ class FieldDefinitionIntegrityTest extends KernelTestBase {
    * @param string $display_context
    *   Defines which display options should be loaded.
    */
-  protected function checkDisplayOption($entity_type_id, $field_id, BaseFieldDefinition $field_definition, DiscoveryInterface $plugin_manager, $display_context): void {
+  protected function checkDisplayOption($entity_type_id, string $field_id, BaseFieldDefinition $field_definition, DiscoveryInterface $plugin_manager, $display_context): void {
     $display_options = $field_definition->getDisplayOptions($display_context);
     if (!empty($display_options['type'])) {
       $plugin = $plugin_manager->getDefinition($display_options['type'], FALSE);
@@ -175,7 +175,7 @@ class FieldDefinitionIntegrityTest extends KernelTestBase {
    */
   protected function modulesWithSubdirectory($subdirectory): array {
     $modules = \Drupal::service('extension.list.module')->getList();
-    $modules = array_filter($modules, function (Extension $module) use ($subdirectory) {
+    $modules = array_filter($modules, function (Extension $module) use ($subdirectory): bool {
       // Filter contrib, hidden, already enabled modules and modules in the
       // Testing package.
       return ($module->origin === 'core'
@@ -185,7 +185,7 @@ class FieldDefinitionIntegrityTest extends KernelTestBase {
         && is_readable($module->getPath() . DIRECTORY_SEPARATOR . $subdirectory));
     });
     // Gather the dependencies of the modules.
-    $dependencies = NestedArray::mergeDeepArray(array_map(function (Extension $module) {
+    $dependencies = NestedArray::mergeDeepArray(array_map(function (Extension $module): array {
       return array_keys($module->requires);
     }, $modules));
 

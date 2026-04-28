@@ -128,7 +128,7 @@ class EntityRevisionTestDestination extends EntityRevision {
   /**
    * Gets the test entity ID.
    */
-  public static function getEntityTypeId($plugin_id) {
+  public static function getEntityTypeId($plugin_id): string {
     return 'foo';
   }
 

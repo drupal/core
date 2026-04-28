@@ -91,7 +91,7 @@ class BlockDragTest extends WebDriverTestBase {
   /**
    * Helper function to find block tr element on the page.
    */
-  private function getDragRow($page, $blockId) {
+  private function getDragRow($page, string $blockId) {
     return $page->find('css', '#blocks tbody tr[data-drupal-selector="' . $blockId . '"] a.tabledrag-handle');
   }
 

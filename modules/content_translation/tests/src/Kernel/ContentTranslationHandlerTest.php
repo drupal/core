@@ -131,7 +131,7 @@ class ContentTranslationHandlerTest extends KernelTestBase {
    *   An array of test cases, each one containing the element to alter, the
    *   form state, and the expected altered element.
    */
-  public static function providerTestEntityFormSharedElements() {
+  public static function providerTestEntityFormSharedElements(): array {
     $tests = [];
 
     $element = [];

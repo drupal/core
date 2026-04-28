@@ -32,7 +32,7 @@ class MigrationPluginConfigurationTest extends KernelTestBase {
    * Tests merging configuration into a plugin through the plugin manager.
    */
   #[DataProvider('mergeProvider')]
-  public function testConfigurationMerge($id, $configuration, $expected): void {
+  public function testConfigurationMerge(string $id, array $configuration, array $expected): void {
     /** @var \Drupal\migrate\Plugin\MigrationInterface $migration */
     $migration = $this->container->get('plugin.manager.migration')
       ->createInstance($id, $configuration);
@@ -43,7 +43,7 @@ class MigrationPluginConfigurationTest extends KernelTestBase {
   /**
    * Provide configuration data for testing.
    */
-  public static function mergeProvider() {
+  public static function mergeProvider(): array {
     return [
       // Tests adding new configuration to a migration.
       [

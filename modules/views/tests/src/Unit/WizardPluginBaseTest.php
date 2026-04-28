@@ -40,7 +40,7 @@ class WizardPluginBaseTest extends UnitTestCase {
   /**
    * Provides test data for testGetSelected().
    */
-  public static function providerTestGetSelected() {
+  public static function providerTestGetSelected(): array {
     $data = [];
     // A form element with an invalid #type.
     $data['invalid_type'] = [

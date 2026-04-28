@@ -55,7 +55,7 @@ abstract class MigrateSqlSourceTestBase extends MigrateSourceTestBase {
         ->createTable($table, [
           // SQLite uses loose affinity typing, so it's OK for every field to
           // be a text field.
-          'fields' => array_map(function () {
+          'fields' => array_map(function (): array {
             return ['type' => 'text'];
           }, $pilot),
         ]);

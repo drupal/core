@@ -86,7 +86,7 @@ class PhpExtensionsValidatorTest extends PackageManagerKernelTestBase {
     $state->delete('package_manager_loaded_php_extensions');
     // On post-create set the loaded extensions in state so that the pre-apply
     // event will have the expected validation error.
-    $this->addEventTestListener(function () use ($state, $loaded_extensions) {
+    $this->addEventTestListener(function () use ($state, $loaded_extensions): void {
       $state->set('package_manager_loaded_php_extensions', $loaded_extensions);
     }, PostCreateEvent::class);
     $this->assertResults($expected_life_cycle_results, PreApplyEvent::class);

@@ -136,7 +136,7 @@ class EntityTestDestination extends EntityContentBase {
   /**
    * Gets the test entity ID.
    */
-  public static function getEntityTypeId($plugin_id) {
+  public static function getEntityTypeId($plugin_id): string {
     return 'foo';
   }
 

@@ -231,7 +231,7 @@ class RelationshipNormalizerTest extends JsonapiKernelTestBase {
    * Tests normalize.
    */
   #[DataProvider('normalizeProvider')]
-  public function testNormalize($entity_property_names, $field_name, $expected): void {
+  public function testNormalize(array $entity_property_names, string $field_name, array $expected): void {
     // Links cannot be generated in the test provider because the container
     // has not yet been set.
     $expected['links'] = [
@@ -239,7 +239,7 @@ class RelationshipNormalizerTest extends JsonapiKernelTestBase {
       'related' => ['href' => Url::fromUri('base:/jsonapi/node/referencer/' . static::$referencerId . "/$field_name", ['query' => ['resourceVersion' => 'id:1']])->setAbsolute()->toString()],
     ];
     // Set up different field values.
-    $this->referencer->{$field_name} = array_map(function ($entity_property_name) {
+    $this->referencer->{$field_name} = array_map(function ($entity_property_name): array {
       $value = ['target_id' => $this->{$entity_property_name === 'image1a' ? 'image1' : $entity_property_name}->id()];
       switch ($entity_property_name) {
         case 'image1':
@@ -271,7 +271,7 @@ class RelationshipNormalizerTest extends JsonapiKernelTestBase {
   /**
    * Data provider for testNormalize.
    */
-  public static function normalizeProvider() {
+  public static function normalizeProvider(): array {
     return [
       'single cardinality' => [
         ['user1'],

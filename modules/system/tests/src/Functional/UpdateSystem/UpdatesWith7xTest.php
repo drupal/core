@@ -7,6 +7,7 @@ namespace Drupal\Tests\system\Functional\UpdateSystem;
 use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\RequirementsPageTrait;
+use Drupal\user\UserInterface;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
@@ -31,17 +32,15 @@ class UpdatesWith7xTest extends BrowserTestBase {
 
   /**
    * The URL for the update page.
-   *
-   * @var string
    */
-  private $updateUrl;
+  private string $updateUrl;
 
   /**
    * An administrative user.
    *
    * @var \Drupal\user\Entity\User|false
    */
-  private $updateUser;
+  private UserInterface $updateUser;
 
   /**
    * {@inheritdoc}

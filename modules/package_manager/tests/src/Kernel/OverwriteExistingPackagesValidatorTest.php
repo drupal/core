@@ -142,7 +142,7 @@ class OverwriteExistingPackagesValidatorTest extends PackageManagerKernelTestBas
       TRUE
     );
     $inspector = $this->container->get(ComposerInspector::class);
-    $listener = function (PostCreateEvent $event) use ($inspector) {
+    $listener = function (PostCreateEvent $event) use ($inspector): void {
       $list = $inspector->getInstalledPackagesList($event->sandboxManager->getSandboxDirectory());
       $this->assertArrayHasKey('drupal/sub-module', $list->getArrayCopy());
       $this->assertArrayHasKey('drupal/other_module_1', $list->getArrayCopy());

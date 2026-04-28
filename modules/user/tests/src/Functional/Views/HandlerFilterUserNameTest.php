@@ -182,7 +182,7 @@ class HandlerFilterUserNameTest extends ViewTestBase {
     }
 
     // Pass in just valid user IDs in the entity_autocomplete target_id format.
-    $options['query']['uid'] = array_map(function ($account) {
+    $options['query']['uid'] = array_map(function ($account): array {
       return ['target_id' => $account->id()];
     }, $this->accounts);
 

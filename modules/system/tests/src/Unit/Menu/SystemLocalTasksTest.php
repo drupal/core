@@ -69,14 +69,14 @@ class SystemLocalTasksTest extends LocalTaskIntegrationTestBase {
    * Tests local task existence.
    */
   #[DataProvider('getSystemAdminRoutes')]
-  public function testSystemAdminLocalTasks($route, $expected): void {
+  public function testSystemAdminLocalTasks(string $route, array $expected): void {
     $this->assertLocalTasks($route, $expected);
   }
 
   /**
    * Provides a list of routes to test.
    */
-  public static function getSystemAdminRoutes() {
+  public static function getSystemAdminRoutes(): array {
     return [
       ['system.admin_content', [['system.admin_content']]],
       [

@@ -153,7 +153,7 @@ class LinkFieldUITest extends BrowserTestBase {
    * @param string $default_uri
    *   The default URI value.
    */
-  public function runFieldUIItem($cardinality, $link_type, $title, $label, $field_name, $default_uri): void {
+  public function runFieldUIItem($cardinality, $link_type, $title, $label, string $field_name, $default_uri): void {
     $this->drupalLogin($this->adminUser);
     $type_path = 'admin/structure/types/manage/' . $this->contentType->id();
 
@@ -253,7 +253,7 @@ class LinkFieldUITest extends BrowserTestBase {
    * @return string
    *   The raw HTML.
    */
-  protected function getFieldHtml($field_name) {
+  protected function getFieldHtml(string $field_name) {
     $css_id = Html::cleanCssIdentifier('edit-field-' . $field_name . '-wrapper');
     return $this->xpath('//*[@id=:id]', [':id' => $css_id])[0]->getHtml();
   }

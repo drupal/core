@@ -410,7 +410,7 @@ abstract class ContentTranslationUITestBase extends ContentTranslationTestBase {
   /**
    * Returns an edit array containing the values to be posted.
    */
-  protected function getEditValues($values, $langcode, $new = FALSE) {
+  protected function getEditValues(array $values, $langcode, $new = FALSE) {
     $edit = $values[$langcode];
     $langcode = $new ? LanguageInterface::LANGCODE_NOT_SPECIFIED : $langcode;
     foreach ($values[$langcode] as $property => $value) {
@@ -605,7 +605,7 @@ abstract class ContentTranslationUITestBase extends ContentTranslationTestBase {
   /**
    * Tests the changed time after API and FORM save without changes.
    */
-  public function doTestChangedTimeAfterSaveWithoutChanges() {
+  public function doTestChangedTimeAfterSaveWithoutChanges(): void {
     $storage = $this->container->get('entity_type.manager')
       ->getStorage($this->entityTypeId);
     $entity = $storage->load($this->entityId);

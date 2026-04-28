@@ -452,7 +452,7 @@ class AliasTest extends KernelTestBase {
   /**
    * Tests situation where the prefix list  cache is deleted mid-request.
    */
-  public function testPrefixListCacheDeletionMidRequest() {
+  public function testPrefixListCacheDeletionMidRequest(): void {
     $memoryCounterBackend = new MemoryCounterBackend(\Drupal::service(TimeInterface::class));
 
     // Create AliasManager and Path object.

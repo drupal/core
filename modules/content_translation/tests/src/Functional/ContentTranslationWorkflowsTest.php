@@ -321,7 +321,7 @@ class ContentTranslationWorkflowsTest extends ContentTranslationTestBase {
    *   The an associative array with the operation name as key and the expected
    *   status as value.
    */
-  protected function doTestWorkflows(UserInterface $user, $expected_status): void {
+  protected function doTestWorkflows(UserInterface $user, array $expected_status): void {
     $default_langcode = $this->langcodes[0];
     $languages = $this->container->get('language_manager')->getLanguages();
     $options = ['language' => $languages[$default_langcode], 'absolute' => TRUE];

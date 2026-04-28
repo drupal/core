@@ -74,7 +74,7 @@ abstract class UpdateTestBase extends BrowserTestBase {
    *
    * @see \Drupal\update_test\Controller\UpdateTestController::updateTest()
    */
-  protected function refreshUpdateStatus($xml_map, $url = 'update-test') {
+  protected function refreshUpdateStatus(array $xml_map, string $url = 'update-test') {
     // Tell the Update Status module to fetch from the URL provided by
     // update_test module.
     $this->config('update.settings')->set('fetch.url', Url::fromUri('base:' . $url, ['absolute' => TRUE])->toString())->save();
@@ -112,12 +112,12 @@ abstract class UpdateTestBase extends BrowserTestBase {
    * @param string $update_element_css_locator
    *   The CSS locator for the page element that contains the security updates.
    */
-  protected function assertSecurityUpdates($project_path_part, array $expected_security_releases, $expected_update_message_type, $update_element_css_locator) {
+  protected function assertSecurityUpdates($project_path_part, array $expected_security_releases, string $expected_update_message_type, $update_element_css_locator) {
     $assert_session = $this->assertSession();
     $page = $this->getSession()->getPage();
     $this->standardTests();
     $assert_session->elementTextNotContains('css', $update_element_css_locator, 'Not supported');
-    $all_security_release_urls = array_map(function ($link) {
+    $all_security_release_urls = array_map(function (NodeElement $link) {
       return $link->getAttribute('href');
     }, $page->findAll('css', "$update_element_css_locator .version-security a[href$='-release']"));
     if ($expected_security_releases) {
@@ -173,7 +173,7 @@ abstract class UpdateTestBase extends BrowserTestBase {
    * @param int $index
    *   (optional) The index of the link.
    */
-  protected function assertVersionUpdateLinks($label, $version, int $index = 0) {
+  protected function assertVersionUpdateLinks($label, string $version, int $index = 0) {
     $update_element = $this->findUpdateElementByLabel($label, $index);
     // In the release notes URL the periods are replaced with dashes.
     $url_version = str_replace('.', '-', $version);
@@ -242,7 +242,7 @@ abstract class UpdateTestBase extends BrowserTestBase {
    *
    * @see \Behat\Mink\WebAssert::elementTextContains()
    */
-  protected function assertUpdateTableTextContains($text) {
+  protected function assertUpdateTableTextContains(string $text) {
     $this->assertSession()
       ->elementTextContains('css', $this->updateTableLocator, $text);
   }
@@ -253,7 +253,7 @@ abstract class UpdateTestBase extends BrowserTestBase {
    * @param string $text
    *   The expected text.
    */
-  protected function assertUpdateTableTextNotContains($text) {
+  protected function assertUpdateTableTextNotContains(string $text) {
     $this->assertSession()->elementTextNotContains('css', $this->updateTableLocator, $text);
   }
 
@@ -265,7 +265,7 @@ abstract class UpdateTestBase extends BrowserTestBase {
    *
    * @see \Behat\Mink\WebAssert::elementContains()
    */
-  protected function assertUpdateTableElementContains($text) {
+  protected function assertUpdateTableElementContains(string $text) {
     $this->assertSession()
       ->elementContains('css', $this->updateTableLocator, $text);
   }
@@ -278,7 +278,7 @@ abstract class UpdateTestBase extends BrowserTestBase {
    *
    * @see \Behat\Mink\WebAssert::elementNotContains()
    */
-  protected function assertUpdateTableElementNotContains($text) {
+  protected function assertUpdateTableElementNotContains(string $text) {
     $this->assertSession()
       ->elementNotContains('css', $this->updateTableLocator, $text);
   }

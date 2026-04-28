@@ -50,7 +50,7 @@ class StateFormatterTest extends KernelTestBase {
    * Tests the embed field.
    */
   #[DataProvider('formatterTestCases')]
-  public function testStateFieldFormatter($field_value, $formatter_settings, $expected_output): void {
+  public function testStateFieldFormatter(string $field_value, array $formatter_settings, array $expected_output): void {
     $entity = EntityTestRev::create([
       'moderation_state' => $field_value,
     ]);
@@ -66,7 +66,7 @@ class StateFormatterTest extends KernelTestBase {
   /**
    * Test cases for testStateFieldFormatter().
    */
-  public static function formatterTestCases() {
+  public static function formatterTestCases(): array {
     return [
       'Draft State' => [
         'draft',

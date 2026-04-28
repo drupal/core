@@ -112,7 +112,7 @@ class EntityReferenceSelectionReferenceableTest extends KernelTestBase {
    * @see \Drupal\Core\Entity\EntityReferenceSelection\SelectionInterface::getReferenceableEntities()
    */
   #[DataProvider('providerTestCases')]
-  public function testReferenceablesWithNoLabelKey($match, $match_operator, $limit, $count_limited, array $items, $count_all): void {
+  public function testReferenceablesWithNoLabelKey(string|array|null $match, string $match_operator, int $limit, int $count_limited, array $items, int $count_all): void {
     // Test ::getReferenceableEntities().
     $referenceables = $this->selectionHandler->getReferenceableEntities($match, $match_operator, $limit);
 
@@ -144,7 +144,7 @@ class EntityReferenceSelectionReferenceableTest extends KernelTestBase {
    * @return array[]
    *   An array of test cases.
    */
-  public static function providerTestCases() {
+  public static function providerTestCases(): array {
     return [
       // All referenceables, no limit. Expecting 9 items.
       [NULL, 'CONTAINS', 0, 9, static::$labels, 9],

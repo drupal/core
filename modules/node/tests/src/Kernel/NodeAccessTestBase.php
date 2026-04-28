@@ -94,7 +94,7 @@ abstract class NodeAccessTestBase extends KernelTestBase {
    *
    * @internal
    */
-  public function assertNodeAccess(array $ops, NodeInterface $node, AccountInterface $account) {
+  public function assertNodeAccess(array $ops, NodeInterface $node, AccountInterface $account): void {
     foreach ($ops as $op => $result) {
       $this->assertEquals($result, $this->accessHandler->access($node, $op, $account), $this->nodeAccessAssertMessage($op, $result, $node->language()
         ->getId()));
@@ -116,7 +116,7 @@ abstract class NodeAccessTestBase extends KernelTestBase {
    *
    * @internal
    */
-  public function assertNodeCreateAccess(string $bundle, bool $result, AccountInterface $account, string $langcode = LanguageInterface::LANGCODE_DEFAULT) {
+  public function assertNodeCreateAccess(string $bundle, bool $result, AccountInterface $account, string $langcode = LanguageInterface::LANGCODE_DEFAULT): void {
     $this->assertEquals($result, $this->accessHandler->createAccess($bundle, $account, [
       'langcode' => $langcode,
     ]), $this->nodeAccessAssertMessage('create', $result, $langcode));

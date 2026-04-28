@@ -53,7 +53,7 @@ class JsonApiPerformanceTest extends PerformanceTestBase {
     sleep(1);
 
     $url = Url::fromRoute('jsonapi.node--article.individual', ['entity' => $node->uuid()])->toString();
-    $performance_data = $this->collectPerformanceData(function () use ($url) {
+    $performance_data = $this->collectPerformanceData(function () use ($url): void {
       $this->drupalGet($url);
     }, 'jsonapi_individual_cool_cache');
 
@@ -133,7 +133,7 @@ class JsonApiPerformanceTest extends PerformanceTestBase {
     $this->assertMetrics($expected, $performance_data);
 
     $url = Url::fromRoute('jsonapi.node--article.individual', ['entity' => $node->uuid()])->toString();
-    $performance_data = $this->collectPerformanceData(function () use ($url) {
+    $performance_data = $this->collectPerformanceData(function () use ($url): void {
       $this->drupalGet($url);
     }, 'jsonapi_individual_hot_cache');
 
@@ -185,7 +185,7 @@ class JsonApiPerformanceTest extends PerformanceTestBase {
     $node->save();
 
     $url = Url::fromRoute('jsonapi.node--article.individual', ['entity' => $node->uuid()])->toString();
-    $performance_data = $this->collectPerformanceData(function () use ($url) {
+    $performance_data = $this->collectPerformanceData(function () use ($url): void {
       $this->drupalGet($url);
     }, 'jsonapi_node_individual_invalidated');
 

@@ -65,7 +65,7 @@ class SettingsTrayBlockFormTest extends SettingsTrayTestBase {
   /**
    * Tests opening off-canvas dialog by click blocks and elements in the blocks.
    */
-  protected function doTestBlocks($theme, $block_plugin, $new_page_text, $element_selector, $label_selector, $button_text, $toolbar_item, $permissions): void {
+  protected function doTestBlocks(string $theme, string $block_plugin, $new_page_text, $element_selector, $label_selector, ?string $button_text, $toolbar_item, $permissions): void {
     if ($permissions) {
       $this->grantPermissions(Role::load(Role::AUTHENTICATED_ID), $permissions);
     }
@@ -170,7 +170,7 @@ class SettingsTrayBlockFormTest extends SettingsTrayTestBase {
   /**
    * Creates tests for ::testBlocks().
    */
-  public function getBlockTests() {
+  public function getBlockTests(): array {
     $blocks = [];
     foreach (static::getTestThemes() as $theme) {
       $blocks += [

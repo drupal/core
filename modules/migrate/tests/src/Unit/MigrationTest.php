@@ -18,6 +18,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Tests Drupal\migrate\Plugin\Migration.
@@ -165,7 +166,7 @@ class MigrationTest extends UnitTestCase {
    * @legacy-covers ::getMigrationDependencies
    */
   #[DataProvider('getValidMigrationDependenciesProvider')]
-  public function testMigrationDependenciesWithValidConfig($source, array $expected_value): void {
+  public function testMigrationDependenciesWithValidConfig(?array $source, array $expected_value): void {
     $migration = new TestMigration();
 
     // Set the plugin manager to support getMigrationDependencies().
@@ -208,7 +209,7 @@ class MigrationTest extends UnitTestCase {
   /**
    * Provides data for valid migration configuration test.
    */
-  public static function getValidMigrationDependenciesProvider() {
+  public static function getValidMigrationDependenciesProvider(): array {
     return [
       [
         'source' => NULL,
@@ -236,7 +237,7 @@ class MigrationTest extends UnitTestCase {
   /**
    * Provides invalid migration dependencies.
    */
-  public static function getInvalidMigrationDependenciesProvider() {
+  public static function getInvalidMigrationDependenciesProvider(): array {
     return [
       'invalid key' => [
         'dependencies' => ['bogus' => []],
@@ -426,7 +427,7 @@ class MigrationTest extends UnitTestCase {
    * @return \Drupal\migrate\Plugin\MigrationPluginManagerInterface|\PHPUnit\Framework\MockObject\MockObject
    *   A configured MigrationPluginManager test mock.
    */
-  public function getMockPluginManager() {
+  public function getMockPluginManager(): MockObject {
     $plugin_manager = $this->createMock('Drupal\migrate\Plugin\MigrationPluginManagerInterface');
     $plugin_manager->expects($this->exactly(2))
       ->method('expandPluginIds')

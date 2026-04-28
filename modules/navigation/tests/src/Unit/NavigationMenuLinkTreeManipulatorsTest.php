@@ -34,7 +34,7 @@ class NavigationMenuLinkTreeManipulatorsTest extends UnitTestCase {
     $childListRoute = new Route('/test-child-list', ['_controller' => SystemController::class . '::systemAdminMenuBlockPage']);
     $routeProvider
       ->method('getRouteByName')
-      ->willReturnCallback(static fn ($name) => $name === 'child_list' ? $childListRoute : new Route("/$name"));
+      ->willReturnCallback(static fn ($name): Route => $name === 'child_list' ? $childListRoute : new Route("/$name"));
     $overrides = $this->createStub(StaticMenuLinkOverridesInterface::class);
     $translation = $this->createStub(TranslationInterface::class);
     $translation

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\field\Functional\Views;
 
+use Behat\Mink\Element\NodeElement;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\views\Views;
@@ -65,7 +66,7 @@ class FieldUITest extends FieldTestBase {
 
     // Tests the available formatter options.
     $options = $this->assertSession()->selectExists('edit-options-type')->findAll('css', 'option');
-    $options = array_map(function ($item) {
+    $options = array_map(function (NodeElement $item) {
       return $item->getValue();
     }, $options);
     $this->assertEqualsCanonicalizing(['text_default', 'text_trimmed'], $options);
@@ -121,7 +122,7 @@ class FieldUITest extends FieldTestBase {
     // Test the click sort column options.
     // Tests the available formatter options.
     $options = $this->assertSession()->selectExists('edit-options-click-sort-column')->findAll('css', 'option');
-    $options = array_map(function ($item) {
+    $options = array_map(function (NodeElement $item) {
       return $item->getValue();
     }, $options);
     $this->assertEqualsCanonicalizing(['format', 'value'], $options);

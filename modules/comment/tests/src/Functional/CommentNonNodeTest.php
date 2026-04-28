@@ -130,7 +130,7 @@ class CommentNonNodeTest extends BrowserTestBase {
    * @return \Drupal\comment\CommentInterface
    *   The new comment entity.
    */
-  public function postComment(?EntityInterface $entity, $comment, $subject = '', $contact = NULL) {
+  public function postComment(?EntityInterface $entity, string|int|float|bool $comment, $subject = '', $contact = NULL) {
     $edit = [];
     $edit['comment_body[0][value]'] = $comment;
 
@@ -224,7 +224,7 @@ class CommentNonNodeTest extends BrowserTestBase {
    * @return bool
    *   Contact info is available.
    */
-  public function commentContactInfoAvailable() {
+  public function commentContactInfoAvailable(): bool {
     return (bool) preg_match('/(input).*?(name="name").*?(input).*?(name="mail").*?(input).*?(name="homepage")/s', $this->getSession()->getPage()->getContent());
   }
 
@@ -263,7 +263,7 @@ class CommentNonNodeTest extends BrowserTestBase {
    * @return int
    *   Comment ID.
    */
-  public function getUnapprovedComment($subject) {
+  public function getUnapprovedComment(string $subject): string {
     $this->drupalGet('admin/content/comment/approval');
     preg_match('/href="(.*?)#comment-([^"]+)"(.*?)>(' . $subject . ')/', $this->getSession()->getPage()->getContent(), $match);
 

@@ -105,7 +105,7 @@ class FiberPlaceholderTest extends UnitTestCase {
 
     // Capture the result to avoid PHPUnit complaining.
     ob_start();
-    $fiber = new \Fiber(function () use ($bigpipe, $response) {
+    $fiber = new \Fiber(function () use ($bigpipe, $response): void {
       $bigpipe->sendContent($response);
     });
     $fiber->start();
@@ -143,7 +143,7 @@ class TurtleLazyBuilder implements TrustedCallbackInterface {
   /**
    * {@inheritdoc}
    */
-  public static function trustedCallbacks() {
+  public static function trustedCallbacks(): array {
     return ['turtle'];
   }
 

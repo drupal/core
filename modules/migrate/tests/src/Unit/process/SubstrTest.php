@@ -22,7 +22,7 @@ class SubstrTest extends MigrateProcessTestCase {
    * Tests Substr plugin based on providerTestSubstr() values.
    */
   #[DataProvider('providerTestSubstr')]
-  public function testSubstr($start = NULL, $length = NULL, $expected = NULL): void {
+  public function testSubstr(?int $start = NULL, ?int $length = NULL, ?string $expected = NULL): void {
     $configuration['start'] = $start;
     $configuration['length'] = $length;
     $this->plugin = new Substr($configuration, 'map', []);
@@ -33,7 +33,7 @@ class SubstrTest extends MigrateProcessTestCase {
   /**
    * Data provider for testSubstr().
    */
-  public static function providerTestSubstr() {
+  public static function providerTestSubstr(): array {
     return [
       // Tests with valid start and length values.
       [0, 7, 'Captain'],

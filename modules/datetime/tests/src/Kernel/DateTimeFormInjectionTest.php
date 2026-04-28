@@ -30,7 +30,7 @@ class DateTimeFormInjectionTest extends KernelTestBase implements FormInterface 
   /**
    * {@inheritdoc}
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'datetime_test_injection_form';
   }
 
@@ -50,7 +50,7 @@ class DateTimeFormInjectionTest extends KernelTestBase implements FormInterface 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $form['datelist_element'] = [
       '#title' => 'datelist test',
       '#type' => 'datelist',

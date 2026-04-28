@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\jsonapi\Functional;
 
-use Drupal\jsonapi\JsonApiSpec;
 use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Component\Utility\Random;
@@ -39,6 +38,7 @@ use Drupal\jsonapi\JsonApiResource\LinkCollection;
 use Drupal\jsonapi\JsonApiResource\NullIncludedData;
 use Drupal\jsonapi\JsonApiResource\ResourceObject;
 use Drupal\jsonapi\JsonApiResource\ResourceObjectData;
+use Drupal\jsonapi\JsonApiSpec;
 use Drupal\jsonapi\Normalizer\HttpExceptionNormalizer;
 use Drupal\jsonapi\ResourceResponse;
 use Drupal\path\Plugin\Field\FieldType\PathItem;
@@ -424,7 +424,7 @@ abstract class ResourceTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function getEntityDuplicate(EntityInterface $original, $key) {
+  protected function getEntityDuplicate(EntityInterface $original, string $key) {
     $duplicate = $original->createDuplicate();
     if ($label_key = $original->getEntityType()->getKey('label')) {
       $duplicate->set($label_key, $original->label() . '_' . $key);
@@ -1056,7 +1056,7 @@ abstract class ResourceTestBase extends BrowserTestBase {
       'Transfer-Encoding',
       'Vary',
     ];
-    $header_cleaner = function ($headers) use ($ignored_headers) {
+    $header_cleaner = function (array $headers) use ($ignored_headers): array {
       foreach ($headers as $header => $value) {
         if (str_starts_with($header, 'X-Drupal-Assertion-') || in_array($header, $ignored_headers)) {
           unset($headers[$header]);
@@ -1229,7 +1229,7 @@ abstract class ResourceTestBase extends BrowserTestBase {
     $this->assertResourceResponse(200, $expected_document, $response, $expected_cacheability->getCacheTags(), $expected_cacheability->getCacheContexts(), 'UNCACHEABLE (request policy)', $this->generateDynamicPageCacheExpectedHeaderValue($expected_cacheability->getCacheContexts(), $expected_cacheability->getCacheMaxAge()));
 
     // Filtered collection with includes.
-    $relationship_field_names = array_reduce($filtered_entity_collection, function ($relationship_field_names, $entity) {
+    $relationship_field_names = array_reduce($filtered_entity_collection, function (array $relationship_field_names, EntityInterface $entity): array {
       return array_unique(array_merge($relationship_field_names, $this->getRelationshipFieldNames($entity)));
     }, []);
     $include = ['include' => implode(',', $relationship_field_names)];
@@ -1265,7 +1265,7 @@ abstract class ResourceTestBase extends BrowserTestBase {
 
     // Sorted collection with includes.
     $sorted_entity_collection = $entity_collection;
-    uasort($sorted_entity_collection, function (EntityInterface $a, EntityInterface $b) {
+    uasort($sorted_entity_collection, function (EntityInterface $a, EntityInterface $b): int {
       // Sort by ID in reverse order.
       return strcmp($b->uuid(), $a->uuid());
     });
@@ -1828,7 +1828,7 @@ abstract class ResourceTestBase extends BrowserTestBase {
     }
     else {
       $arity_counter = [];
-      $relation_list = array_filter(array_map(function ($item) use (&$arity_counter) {
+      $relation_list = array_filter(array_map(function ($item) use (&$arity_counter): ?array {
         $target_entity = $item->entity;
 
         if (is_null($target_entity)) {
@@ -1850,7 +1850,7 @@ abstract class ResourceTestBase extends BrowserTestBase {
       }, iterator_to_array($field)));
 
       $arity_map = [];
-      $relation_list = array_map(function ($identifier) use ($arity_counter, &$arity_map) {
+      $relation_list = array_map(function (array $identifier) use ($arity_counter, &$arity_map): array {
         $type = $identifier['type'];
         $id = $identifier['id'];
         // Only add an arity value if there are two or more resource identifiers
@@ -1990,7 +1990,7 @@ abstract class ResourceTestBase extends BrowserTestBase {
           ? [$relationship_document['data']]
           : $relationship_document['data'];
         // Remove any relationships to 'virtual' resources.
-        $resource_identifiers = array_filter($resource_identifiers, function ($resource_identifier) {
+        $resource_identifiers = array_filter($resource_identifiers, function (array $resource_identifier): bool {
           return $resource_identifier['id'] !== 'virtual';
         });
         if (!empty($resource_identifiers)) {
@@ -2925,7 +2925,7 @@ abstract class ResourceTestBase extends BrowserTestBase {
     $published_key = $this->entity->getEntityType()->getKey('published');
     $revision_translation_affected_key = $this->entity->getEntityType()->getKey('revision_translation_affected');
 
-    $amend_relationship_urls = function (array &$document, $revision_id) {
+    $amend_relationship_urls = function (array &$document, $revision_id): void {
       if (!empty($document['data']['relationships'])) {
         foreach ($document['data']['relationships'] as &$relationship) {
           $pattern = '/resourceVersion=id%3A\d/';
@@ -3531,7 +3531,7 @@ abstract class ResourceTestBase extends BrowserTestBase {
    *   An array of nested include paths.
    */
   protected function getNestedIncludePaths($depth = 3) {
-    $get_nested_relationship_field_names = function (EntityInterface $entity, $depth, $path = "") use (&$get_nested_relationship_field_names) {
+    $get_nested_relationship_field_names = function (EntityInterface $entity, $depth, $path = "") use (&$get_nested_relationship_field_names): array {
       $relationship_field_names = $this->getRelationshipFieldNames($entity);
       if ($depth > 0) {
         $paths = [];
@@ -3548,7 +3548,7 @@ abstract class ResourceTestBase extends BrowserTestBase {
         }
         return $paths;
       }
-      return array_map(function ($target_name) use ($path) {
+      return array_map(function ($target_name) use ($path): string {
         return "$path.$target_name";
       }, $relationship_field_names);
     };

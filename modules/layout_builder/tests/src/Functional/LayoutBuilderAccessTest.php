@@ -74,7 +74,7 @@ class LayoutBuilderAccessTest extends BrowserTestBase {
    *   An array of expected permission dependencies.
    */
   #[DataProvider('providerTestAccessWithBundles')]
-  public function testAccessWithBundles(array $permissions, $default_access, $non_editable_access, $editable_access, array $permission_dependencies): void {
+  public function testAccessWithBundles(array $permissions, bool $default_access, bool $non_editable_access, bool $editable_access, array $permission_dependencies): void {
     $permissions[] = 'edit own bundle_with_section_field content';
     $permissions[] = 'access content';
     $user = $this->drupalCreateUser($permissions);
@@ -145,7 +145,7 @@ class LayoutBuilderAccessTest extends BrowserTestBase {
   /**
    * Provides test data for ::testAccessWithBundles().
    */
-  public static function providerTestAccessWithBundles() {
+  public static function providerTestAccessWithBundles(): array {
     // Data provider values are:
     // - the permissions to grant to the user
     // - whether access is expected for the defaults
@@ -188,7 +188,7 @@ class LayoutBuilderAccessTest extends BrowserTestBase {
    * Tests Layout Builder access for an entity type that does not have bundles.
    */
   #[DataProvider('providerTestAccessWithoutBundles')]
-  public function testAccessWithoutBundles(array $permissions, $default_access, $non_editable_access, $editable_access, array $permission_dependencies): void {
+  public function testAccessWithoutBundles(array $permissions, bool $default_access, bool $non_editable_access, bool $editable_access, array $permission_dependencies): void {
     $permissions[] = 'access user profiles';
     $user = $this->drupalCreateUser($permissions);
     $this->drupalLogin($user);
@@ -238,7 +238,7 @@ class LayoutBuilderAccessTest extends BrowserTestBase {
   /**
    * Provides test data for ::testAccessWithoutBundles().
    */
-  public static function providerTestAccessWithoutBundles() {
+  public static function providerTestAccessWithoutBundles(): array {
     // Data provider values are:
     // - the permissions to grant to the user
     // - whether access is expected for the defaults

@@ -637,7 +637,7 @@ class WidgetUploadTest extends MediaLibraryTestBase {
     $selection_area = $this->getSelectionArea();
     $assert_session->checkboxChecked("Select $existing_media_name", $selection_area);
     $selection_area->uncheckField("Select $existing_media_name");
-    $page->waitFor(10, function () use ($page) {
+    $page->waitFor(10, function () use ($page): bool {
       return $page->find('hidden_field_selector', ['hidden_field', 'current_selection'])->getValue() === '';
     });
     // Close the details element so that clicking the Save and select works.

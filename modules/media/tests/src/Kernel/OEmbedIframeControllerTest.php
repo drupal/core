@@ -38,7 +38,7 @@ class OEmbedIframeControllerTest extends MediaKernelTestBase {
    * @return array
    *   An array of test cases.
    */
-  public static function providerBadHashParameter() {
+  public static function providerBadHashParameter(): array {
     return [
       'no hash' => [
         '',
@@ -58,7 +58,7 @@ class OEmbedIframeControllerTest extends MediaKernelTestBase {
    * @legacy-covers ::render
    */
   #[DataProvider('providerBadHashParameter')]
-  public function testBadHashParameter($hash): void {
+  public function testBadHashParameter(string $hash): void {
     /** @var callable $controller */
     $controller = $this->container
       ->get('controller_resolver')

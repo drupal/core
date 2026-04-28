@@ -22,7 +22,7 @@ class DefaultValueTest extends MigrateProcessTestCase {
    * @legacy-covers ::transform
    */
   #[DataProvider('defaultValueDataProvider')]
-  public function testDefaultValue($configuration, $expected_value, $value): void {
+  public function testDefaultValue(array $configuration, string|bool|int|array $expected_value, string|bool|int|array|null $value): void {
     $process = new DefaultValue($configuration, 'default_value', []);
     $value = $process->transform($value, $this->migrateExecutable, $this->row, 'destination_property');
     $this->assertSame($expected_value, $value);
@@ -34,7 +34,7 @@ class DefaultValueTest extends MigrateProcessTestCase {
    * @return array
    *   An array of test cases.
    */
-  public static function defaultValueDataProvider() {
+  public static function defaultValueDataProvider(): array {
     return [
       'strict_true_value_populated_array' => [
         'configuration' => [

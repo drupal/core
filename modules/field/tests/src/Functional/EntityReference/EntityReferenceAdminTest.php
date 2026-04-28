@@ -393,7 +393,7 @@ class EntityReferenceAdminTest extends BrowserTestBase {
    * @return string
    *   Returns the generated field name
    */
-  protected function createEntityReferenceField($target_type, $bundles = []) {
+  protected function createEntityReferenceField($target_type, $bundles = []): string {
     // Generates a bundle path for the newly created content type.
     $bundle_path = 'admin/structure/types/manage/' . $this->type;
 
@@ -424,7 +424,7 @@ class EntityReferenceAdminTest extends BrowserTestBase {
    */
   protected function assertFieldSelectOptions(string $name, array $expected_options): void {
     $options = $this->assertSession()->selectExists($name)->findAll('xpath', 'option');
-    array_walk($options, function (NodeElement &$option) {
+    array_walk($options, function (NodeElement &$option): void {
       $option = $option->getValue();
     });
     $this->assertEqualsCanonicalizing($expected_options, $options);

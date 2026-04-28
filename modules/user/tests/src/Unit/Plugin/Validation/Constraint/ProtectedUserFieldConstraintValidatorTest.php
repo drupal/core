@@ -27,7 +27,7 @@ class ProtectedUserFieldConstraintValidatorTest extends UnitTestCase {
   /**
    * {@inheritdoc}
    */
-  protected function createValidator() {
+  protected function createValidator(): ProtectedUserFieldConstraintValidator {
     // Setup mocks that don't need to change.
     $unchanged_field = $this->createStub(FieldItemListInterface::class);
     $unchanged_field

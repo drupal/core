@@ -95,7 +95,7 @@ abstract class SettingsTrayTestBase extends OffCanvasTestBase {
     $web_assert = $this->assertSession();
     $page = $this->getSession()->getPage();
     $page->find('css', static::TOOLBAR_EDIT_LINK_SELECTOR)->mouseOver();
-    $this->assertTrue($page->waitFor(10, function ($page) {
+    $this->assertTrue($page->waitFor(10, function ($page): bool {
       return !$page->find('css', '.contextual .trigger:not(.visually-hidden)');
     }));
     // Contextual triggers should be hidden.
@@ -118,7 +118,7 @@ abstract class SettingsTrayTestBase extends OffCanvasTestBase {
     // Move the mouse over the toolbar button so that isn't over a contextual
     // links area which cause the contextual link to be shown.
     $page->find('css', static::TOOLBAR_EDIT_LINK_SELECTOR)->mouseOver();
-    $this->assertTrue($page->waitFor(10, function ($page) {
+    $this->assertTrue($page->waitFor(10, function ($page): bool {
       return !$page->find('css', '.contextual .trigger.visually-hidden');
     }));
     // No contextual triggers should be hidden.
@@ -160,7 +160,7 @@ abstract class SettingsTrayTestBase extends OffCanvasTestBase {
   protected static function getTestThemes(): array {
     // Remove 'claro' theme. Settings Tray "Edit Mode" will not work with this
     // theme because it removes all contextual links.
-    return array_filter(parent::getTestThemes(), function ($theme) {
+    return array_filter(parent::getTestThemes(), function (string $theme): bool {
       return ($theme !== 'claro');
     });
   }

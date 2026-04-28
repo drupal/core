@@ -38,7 +38,7 @@ class AdminRouteSubscriberTest extends UnitTestCase {
   /**
    * Provides data to testAlterRoutes().
    */
-  public static function providerTestAlterRoutes() {
+  public static function providerTestAlterRoutes(): array {
     $data = [];
     $data['non-admin'] = [
       new Route('/foo'),

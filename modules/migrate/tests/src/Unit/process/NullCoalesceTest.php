@@ -38,7 +38,7 @@ class NullCoalesceTest extends MigrateProcessTestCase {
    * @throws \Drupal\migrate\MigrateException
    */
   #[DataProvider('transformDataProvider')]
-  public function testTransform(array $source, $expected_result): void {
+  public function testTransform(array $source, bool|string|array|null $expected_result): void {
     $plugin = new NullCoalesce([], 'null_coalesce', []);
     $result = $plugin->transform($source, $this->migrateExecutable, $this->row, 'destination_property');
     $this->assertSame($expected_result, $result);
@@ -47,7 +47,7 @@ class NullCoalesceTest extends MigrateProcessTestCase {
   /**
    * Provides Data for ::testTransform.
    */
-  public static function transformDataProvider() {
+  public static function transformDataProvider(): array {
     return [
       'all null' => [
         'source' => [NULL, NULL, NULL],
@@ -89,7 +89,7 @@ class NullCoalesceTest extends MigrateProcessTestCase {
    * @throws \Drupal\migrate\MigrateException
    */
   #[DataProvider('transformWithDefaultProvider')]
-  public function testTransformWithDefault(array $source, $default_value, $expected_result): void {
+  public function testTransformWithDefault(array $source, ?string $default_value, ?string $expected_result): void {
     $plugin = new NullCoalesce(['default_value' => $default_value], 'null_coalesce', []);
     $result = $plugin->transform($source, $this->migrateExecutable, $this->row, 'destination_property');
     $this->assertSame($expected_result, $result);
@@ -98,7 +98,7 @@ class NullCoalesceTest extends MigrateProcessTestCase {
   /**
    * Provides Data for ::testTransformWithDefault.
    */
-  public static function transformWithDefaultProvider() {
+  public static function transformWithDefaultProvider(): array {
     return [
       'default not used' => [
         'source' => [NULL, NULL, 'Test', 'Test 2'],

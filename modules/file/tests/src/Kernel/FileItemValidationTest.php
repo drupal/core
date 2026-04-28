@@ -66,7 +66,7 @@ class FileItemValidationTest extends KernelTestBase {
    * @legacy-covers \Drupal\file\Plugin\Validation\Constraint\FileValidationConstraintValidator
    */
   #[DataProvider('getFileTypes')]
-  public function testFileValidationConstraint($file_type): void {
+  public function testFileValidationConstraint(string $file_type): void {
     $field_storage = FieldStorageConfig::create([
       'field_name' => 'field_test_file',
       'entity_type' => 'entity_test',
@@ -143,7 +143,7 @@ class FileItemValidationTest extends KernelTestBase {
   /**
    * Provides a list of file types to test.
    */
-  public static function getFileTypes() {
+  public static function getFileTypes(): array {
     return [['file'], ['image']];
   }
 

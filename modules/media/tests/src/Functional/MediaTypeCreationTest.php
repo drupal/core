@@ -33,7 +33,7 @@ class MediaTypeCreationTest extends MediaFunctionalTestBase {
    * Tests the media type creation form with only the mandatory options.
    */
   #[DataProvider('providerMediaTypeCreationForm')]
-  public function testMediaTypeCreationForm($button_label, $address, $machine_name): void {
+  public function testMediaTypeCreationForm(string $button_label, string $address, string $machine_name): void {
     $this->drupalGet('/admin/structure/media/add');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->fieldExists('label')->setValue($this->randomString());
@@ -52,7 +52,7 @@ class MediaTypeCreationTest extends MediaFunctionalTestBase {
   /**
    * Data provider for testMediaTypeCreationForm().
    */
-  public static function providerMediaTypeCreationForm() {
+  public static function providerMediaTypeCreationForm(): array {
     $machine_name = Random::machineName();
     return [
       [

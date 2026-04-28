@@ -47,7 +47,7 @@ class ConfigurableLanguageManagerSwitchLinksTest extends UnitTestCase {
       // object by forcing the fiber to be suspended in ::access();
       $urls[$langcode] = $this->createStub(Url::class);
       $urls[$langcode]->method('access')
-        ->willReturnCallback(function () {
+        ->willReturnCallback(function (): true {
           if (\Fiber::getCurrent() !== NULL) {
             \Fiber::suspend();
           }
@@ -62,7 +62,7 @@ class ConfigurableLanguageManagerSwitchLinksTest extends UnitTestCase {
     ]);
     $negotiationMethod->expects($this->once())
       ->method('getLanguageSwitchLinks')
-      ->willReturnCallback(function () use ($languages, $urls) {
+      ->willReturnCallback(function () use ($languages, $urls): array {
         $links = [];
         foreach ($languages as $langcode => $language) {
           $links[$langcode] = [

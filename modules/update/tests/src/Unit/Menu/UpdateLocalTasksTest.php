@@ -26,7 +26,7 @@ class UpdateLocalTasksTest extends LocalTaskIntegrationTestBase {
    * Checks update report tasks.
    */
   #[DataProvider('getUpdateReportRoutes')]
-  public function testUpdateReportLocalTasks($route): void {
+  public function testUpdateReportLocalTasks(string $route): void {
     $this->assertLocalTasks($route, [
       0 => ['update.status', 'update.settings'],
     ]);
@@ -35,7 +35,7 @@ class UpdateLocalTasksTest extends LocalTaskIntegrationTestBase {
   /**
    * Provides a list of report routes to test.
    */
-  public static function getUpdateReportRoutes() {
+  public static function getUpdateReportRoutes(): array {
     return [
       ['update.status'],
       ['update.settings'],

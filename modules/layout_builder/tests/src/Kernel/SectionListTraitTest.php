@@ -22,7 +22,7 @@ class SectionListTraitTest extends SectionListTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function getSectionList(array $section_data) {
+  protected function getSectionList(array $section_data): TestSectionList {
     return new TestSectionList($section_data);
   }
 

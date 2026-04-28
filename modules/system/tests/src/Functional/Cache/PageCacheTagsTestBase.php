@@ -59,7 +59,7 @@ abstract class PageCacheTagsTestBase extends BrowserTestBase {
    * @param string $hit_or_miss
    *   'HIT' if a page cache hit is expected, 'MISS' otherwise.
    */
-  protected function verifyDynamicPageCache(Url $url, $hit_or_miss) {
+  protected function verifyDynamicPageCache(Url $url, string|int|float|bool|null $hit_or_miss) {
     $this->drupalGet($url);
     $this->assertSession()->responseHeaderEquals('X-Drupal-Dynamic-Cache', $hit_or_miss);
   }

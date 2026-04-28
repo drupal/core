@@ -29,7 +29,7 @@ class HandleMultiplesTest extends KernelTestBase {
    * @return array
    *   The test migration definition.
    */
-  public function getDefinition() {
+  public function getDefinition(): array {
     return [
       'source' => [
         'plugin' => 'embedded_data',
@@ -142,7 +142,7 @@ class HandleMultiplesTest extends KernelTestBase {
    * @return array
    *   An array of test cases.
    */
-  public static function scalarAndMultipleValuesProviderSource() {
+  public static function scalarAndMultipleValuesProviderSource(): array {
     return [
       [
         'source_data' => [

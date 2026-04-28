@@ -119,7 +119,7 @@ abstract class LayoutBuilderCompatibilityTestBase extends EntityKernelTestBase {
     $build = $view_builder->view($entity);
     $this->render($build);
 
-    $actual = array_map(function (\SimpleXMLElement $element) {
+    $actual = array_map(function (\SimpleXMLElement $element): string {
       return (string) $element->attributes();
     }, $this->cssSelect('.field'));
     $this->assertSame($attributes, $actual);

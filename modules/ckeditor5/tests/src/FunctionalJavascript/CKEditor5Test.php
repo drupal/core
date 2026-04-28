@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\ckeditor5\FunctionalJavascript;
 
+use Behat\Mink\Element\NodeElement;
 use Drupal\ckeditor5\Plugin\Editor\CKEditor5;
 use Drupal\Core\Language\LanguageManager;
 use Drupal\editor\Entity\Editor;
@@ -612,7 +613,7 @@ JS;
     $editor->setSettings($settings)->save();
 
     $this->assertSame([], array_map(
-      function (ConstraintViolationInterface $v) {
+      function (ConstraintViolationInterface $v): string {
         return (string) $v->getMessage();
       },
       iterator_to_array(CKEditor5::validatePair(
@@ -711,7 +712,7 @@ JS;
         // While this is a bit of an indirect way to find the correct button, it
         // accounts for the mixed dash characters and worked better than other
         // attempts.
-        $toolbar_button_tips = array_map(fn($item) => str_replace('–', '-', $item->getAttribute('data-cke-tooltip-text')), $toolbar_buttons);
+        $toolbar_button_tips = array_map(fn(NodeElement $item): string => str_replace('–', '-', $item->getAttribute('data-cke-tooltip-text')), $toolbar_buttons);
         $this->assertNotFalse(array_search($type, $toolbar_button_tips));
         $toolbar_buttons[array_search($type, $toolbar_button_tips)]->click();
         $widget_selector = '.ck-editor__editable_inline > ' . $list_tag . '[type="' . $type_attribute . '"]';
@@ -764,7 +765,7 @@ JS;
       ],
     ])->save();
     $this->assertSame([], array_map(
-      function (ConstraintViolationInterface $v) {
+      function (ConstraintViolationInterface $v): string {
         return (string) $v->getMessage();
       },
       iterator_to_array(CKEditor5::validatePair(
@@ -785,7 +786,7 @@ JS;
       ],
     ])->save();
     $this->assertSame([], array_map(
-      function (ConstraintViolationInterface $v) {
+      function (ConstraintViolationInterface $v): string {
         return (string) $v->getMessage();
       },
       iterator_to_array(CKEditor5::validatePair(

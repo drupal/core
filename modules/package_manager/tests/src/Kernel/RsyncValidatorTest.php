@@ -15,6 +15,7 @@ use PhpTuf\ComposerStager\API\Translation\Factory\TranslatableFactoryInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
@@ -34,7 +35,7 @@ class RsyncValidatorTest extends PackageManagerKernelTestBase {
    *
    * @var \PhpTuf\ComposerStager\API\Finder\Service\ExecutableFinderInterface
    */
-  private $executableFinder;
+  private ObjectProphecy $executableFinder;
 
   /**
    * {@inheritdoc}

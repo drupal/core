@@ -136,7 +136,7 @@ class ItemsPerPageTest extends WizardTestBase {
     // Asserts that the 3 newest articles are listed, which is the configuration
     // for the `block` display in the view. In other words: the `items_per_page`
     // setting in the `View` config entity is respected.
-    $assert_3_newest_nodes = function () use ($node5, $node4, $node3, $node2, $node1, $page_node) {
+    $assert_3_newest_nodes = function () use ($node5, $node4, $node3, $node2, $node1, $page_node): void {
       $this->drupalGet('user');
       $content = $this->getSession()->getPage()->getContent();
       $this->assertSession()->pageTextContains($node5->label());

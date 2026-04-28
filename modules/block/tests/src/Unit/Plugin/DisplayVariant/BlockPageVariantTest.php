@@ -51,7 +51,7 @@ class BlockPageVariantTest extends UnitTestCase {
    * @return \Drupal\block\Plugin\DisplayVariant\BlockPageVariant
    *   A test display variant plugin.
    */
-  public function setUpDisplayVariant($configuration = [], $definition = []) {
+  public function setUpDisplayVariant($configuration = [], $definition = []): BlockPageVariant {
 
     $container = new Container();
     $cache_context_manager = $this->createStub(CacheContextsManager::class);
@@ -70,7 +70,7 @@ class BlockPageVariantTest extends UnitTestCase {
   /**
    * Provides data to testBuild().
    */
-  public static function providerBuild() {
+  public static function providerBuild(): array {
     $blocks_config = [
       'block1' => [
         // region, is main content block, is messages block, is title block.
@@ -202,7 +202,7 @@ class BlockPageVariantTest extends UnitTestCase {
    * Tests the building of a full page variant.
    */
   #[DataProvider('providerBuild')]
-  public function testBuild(array $blocks_config, $visible_block_count, array $expected_render_array): void {
+  public function testBuild(array $blocks_config, int $visible_block_count, array $expected_render_array): void {
     $display_variant = $this->setUpDisplayVariant();
     $display_variant->setMainContent(['#markup' => 'Hello kittens!']);
 
@@ -223,7 +223,7 @@ class BlockPageVariantTest extends UnitTestCase {
       ->willReturn([]);
     $this->blockRepository->expects($this->once())
       ->method('getVisibleBlocksPerRegion')
-      ->willReturnCallback(function (&$cacheable_metadata) use ($blocks) {
+      ->willReturnCallback(function (array &$cacheable_metadata) use ($blocks): array {
         $cacheable_metadata['top'] = (new CacheableMetadata())->addCacheTags(['route']);
         return $blocks;
       });

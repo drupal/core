@@ -41,7 +41,7 @@ class EntityConditionTest extends UnitTestCase {
    * Tests create from query parameter.
    */
   #[DataProvider('queryParameterProvider')]
-  public function testCreateFromQueryParameter($case): void {
+  public function testCreateFromQueryParameter(array $case): void {
     $condition = EntityCondition::createFromQueryParameter($case);
     $this->assertEquals($case['path'], $condition->field());
     $this->assertEquals($case['value'], $condition->value());
@@ -53,7 +53,7 @@ class EntityConditionTest extends UnitTestCase {
   /**
    * Data provider for testDenormalize.
    */
-  public static function queryParameterProvider() {
+  public static function queryParameterProvider(): array {
     return [
       [['path' => 'some_field', 'value' => NULL, 'operator' => '=']],
       [['path' => 'some_field', 'operator' => '=', 'value' => 'some_string']],
@@ -81,7 +81,7 @@ class EntityConditionTest extends UnitTestCase {
    * @legacy-covers ::validate
    */
   #[DataProvider('validationProvider')]
-  public function testValidation($input, $exception): void {
+  public function testValidation(array $input, ?BadRequestHttpException $exception): void {
     if ($exception) {
       $this->expectException(get_class($exception));
       $this->expectExceptionMessage($exception->getMessage());
@@ -93,7 +93,7 @@ class EntityConditionTest extends UnitTestCase {
   /**
    * Data provider for testValidation.
    */
-  public static function validationProvider() {
+  public static function validationProvider(): array {
     return [
       [['path' => 'some_field', 'value' => 'some_value'], NULL],
       [

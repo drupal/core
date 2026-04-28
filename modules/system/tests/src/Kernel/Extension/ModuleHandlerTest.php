@@ -419,7 +419,7 @@ class ModuleHandlerTest extends KernelTestBase {
    * @return \Drupal\Core\Extension\ModuleHandlerInterface
    *   The module handler service.
    */
-  protected function moduleHandler() {
+  protected function moduleHandler(): ?object {
     return $this->container->get('module_handler');
   }
 
@@ -429,7 +429,7 @@ class ModuleHandlerTest extends KernelTestBase {
    * @return \Drupal\Core\Extension\ModuleInstallerInterface
    *   The module installer service.
    */
-  protected function moduleInstaller() {
+  protected function moduleInstaller(): ?object {
     return $this->container->get('module_installer');
   }
 

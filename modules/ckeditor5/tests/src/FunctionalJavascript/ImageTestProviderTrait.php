@@ -185,7 +185,7 @@ trait ImageTestProviderTrait {
   /**
    * Data provider for testAlignment().
    */
-  public static function providerAlignment() {
+  public static function providerAlignment(): array {
     return [
       'Block image' => ['block'],
       'Inline image' => ['inline'],

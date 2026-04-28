@@ -45,7 +45,7 @@ class MigrationPluginManagerTest extends UnitTestCase {
    * Tests building dependencies for multiple migrations.
    */
   #[DataProvider('dependencyProvider')]
-  public function testDependencyBuilding($migrations_data, $result_ids): void {
+  public function testDependencyBuilding(array $migrations_data, array $result_ids): void {
     $migrations = [];
     foreach ($migrations_data as $migration_id => $migration_data) {
       $migrations[$migration_id] = new TestMigrationMock($migration_id, $migration_data['migration_dependencies']);
@@ -95,7 +95,7 @@ class MigrationPluginManagerTest extends UnitTestCase {
   /**
    * Provide dependency data for testing.
    */
-  public static function dependencyProvider() {
+  public static function dependencyProvider(): array {
     return [
       // Just one migration, with no dependencies.
       [

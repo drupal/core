@@ -7,6 +7,7 @@ namespace Drupal\Tests\views\Kernel\Entity;
 use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 use Drupal\Tests\views\Kernel\ViewsKernelTestBase;
+use Drupal\views\ResultRow;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
 use PHPUnit\Framework\Attributes\Group;
@@ -137,7 +138,7 @@ class LatestRevisionFilterTest extends ViewsKernelTestBase {
    * @internal
    */
   protected function assertNotInResultSet(ViewExecutable $view, array $not_expected_revision_ids): void {
-    $found_revision_ids = array_filter($view->result, function ($row) use ($not_expected_revision_ids) {
+    $found_revision_ids = array_filter($view->result, function (ResultRow $row) use ($not_expected_revision_ids): bool {
       return in_array($row->vid, $not_expected_revision_ids);
     });
     $this->assertEmpty($found_revision_ids);

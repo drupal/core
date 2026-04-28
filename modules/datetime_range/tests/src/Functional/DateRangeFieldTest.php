@@ -895,7 +895,7 @@ class DateRangeFieldTest extends DateTestBase {
    * @return array
    *   An array of datelist input permutations to test.
    */
-  protected static function datelistDataProvider() {
+  protected static function datelistDataProvider(): array {
     return [
       // Year only selected, validation error on Month, Day, Hour, Minute.
       [

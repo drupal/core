@@ -12,8 +12,8 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Url;
 use Drupal\entity_test\EntityTestHelper;
-use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Tests\system\Functional\Cache\PageCacheTagsTestBase;
 use Drupal\Tests\system\Traits\CacheTestTrait;
 use Drupal\user\Entity\Role;
@@ -187,7 +187,7 @@ abstract class EntityCacheTagsTestBase extends PageCacheTagsTestBase {
    * Prefers 'full', picks the first one otherwise, and if none are available,
    * chooses 'default'.
    */
-  protected function selectViewMode($entity_type) {
+  protected function selectViewMode(string $entity_type) {
     $view_modes = \Drupal::entityTypeManager()
       ->getStorage('entity_view_mode')
       ->loadByProperties(['targetEntityType' => $entity_type]);

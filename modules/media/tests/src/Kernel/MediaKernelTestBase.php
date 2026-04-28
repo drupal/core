@@ -89,7 +89,7 @@ abstract class MediaKernelTestBase extends KernelTestBase {
    * @return \Drupal\media\Entity\Media
    *   A media item.
    */
-  protected function generateMedia($filename, MediaTypeInterface $media_type) {
+  protected function generateMedia(string $filename, MediaTypeInterface $media_type) {
     vfsStream::setup('drupal_root');
     vfsStream::create([
       'sites' => [

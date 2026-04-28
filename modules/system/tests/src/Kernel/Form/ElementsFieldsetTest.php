@@ -26,14 +26,14 @@ class ElementsFieldsetTest extends KernelTestBase implements FormInterface {
   /**
    * {@inheritdoc}
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'form_test_fieldset_element';
   }
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $form['fieldset_default'] = [
       '#type' => 'fieldset',
       '#title' => 'Fieldset title for default description display',

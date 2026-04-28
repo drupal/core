@@ -169,7 +169,7 @@ class ProjectReleaseTest extends UnitTestCase {
    *   The expected message for the field.
    */
   #[DataProvider('providerCreateFromArrayInvalidField')]
-  public function testCreateFromArrayInvalidField(string $invalid_field, $invalid_value, string $expected_message): void {
+  public function testCreateFromArrayInvalidField(string $invalid_field, string|\stdClass $invalid_value, string $expected_message): void {
     $data = $this->getValidData();
     // Set the field a value that is not valid for any of the fields in the
     // feed.

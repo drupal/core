@@ -91,7 +91,7 @@ class ModerationInformationTest extends KernelTestBase {
    * Tests is default revision published.
    */
   #[DataProvider('isDefaultRevisionPublishedTestCases')]
-  public function testIsDefaultRevisionPublished($initial_state, $final_state, $initial_is_default_published, $final_is_default_published): void {
+  public function testIsDefaultRevisionPublished(string $initial_state, string $final_state, bool $initial_is_default_published, bool $final_is_default_published): void {
     $entity = EntityTestMulRevPub::create([
       'moderation_state' => $initial_state,
     ]);
@@ -106,7 +106,7 @@ class ModerationInformationTest extends KernelTestBase {
   /**
    * Test cases for ::testIsDefaultRevisionPublished.
    */
-  public static function isDefaultRevisionPublishedTestCases() {
+  public static function isDefaultRevisionPublishedTestCases(): array {
     return [
       'Draft to draft' => [
         'draft',

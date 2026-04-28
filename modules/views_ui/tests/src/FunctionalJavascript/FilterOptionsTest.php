@@ -64,7 +64,7 @@ class FilterOptionsTest extends WebDriverTestBase {
 
     // Test the ".title" field in search.
     $options_search->setValue('FIELD_1_TITLE');
-    $page->waitFor(10, function () use ($page) {
+    $page->waitFor(10, function () use ($page): bool {
       return !$page->findField('name[views.views_test_field_2]')->isVisible();
     });
     $this->assertTrue($page->findField('name[views.views_test_field_1]')->isVisible());
@@ -72,7 +72,7 @@ class FilterOptionsTest extends WebDriverTestBase {
 
     // Test the ".description" field in search.
     $options_search->setValue('FIELD_2_DESCRIPTION');
-    $page->waitFor(10, function () use ($page) {
+    $page->waitFor(10, function () use ($page): bool {
       return !$page->findField('name[views.views_test_field_1]')->isVisible();
     });
     $this->assertTrue($page->findField('name[views.views_test_field_2]')->isVisible());
@@ -80,7 +80,7 @@ class FilterOptionsTest extends WebDriverTestBase {
 
     // Test the "label" field not in search.
     $options_search->setValue('FIELD_1_LABEL');
-    $page->waitFor(10, function () use ($page) {
+    $page->waitFor(10, function () use ($page): bool {
       return !$page->findField('name[views.views_test_field_2]')->isVisible();
     });
     $this->assertFalse($page->findField('name[views.views_test_field_2]')->isVisible());

@@ -29,7 +29,7 @@ class SubProcessWithSkipTest extends KernelTestBase {
    * @return array
    *   The test migration definition.
    */
-  public function getDefinition() {
+  public function getDefinition(): array {
     return [
       'source' => [
         'plugin' => 'embedded_data',

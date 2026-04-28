@@ -37,7 +37,7 @@ class DbLogFormInjectionTest extends KernelTestBase implements FormInterface {
   /**
    * {@inheritdoc}
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'dblog_test_injection_form';
   }
 
@@ -57,7 +57,7 @@ class DbLogFormInjectionTest extends KernelTestBase implements FormInterface {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $form['#process'][] = [$this, 'process'];
     return $form;
   }

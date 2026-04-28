@@ -71,21 +71,21 @@ class BaseFieldDefinitionTest extends BaseFieldDefinition {
   /**
    * {@inheritdoc}
    */
-  public static function create($type) {
+  public static function create($type): static {
     return new static([]);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getSettings() {
+  public function getSettings(): array {
     return [];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getType() {
+  public function getType(): string {
     return 'integer';
   }
 

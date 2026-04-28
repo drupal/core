@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\file\Functional;
 
-use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\file\Entity\File;
 use Drupal\file\FileInterface;
 use Drupal\Tests\BrowserTestBase;
-use Drupal\file\Entity\File;
 use Drupal\Tests\TestFileCreationTrait;
 
 /**
@@ -84,7 +84,7 @@ abstract class FileFieldTestBase extends BrowserTestBase {
   /**
    * Updates an existing file field with new settings.
    */
-  public function updateFileField($name, $type_name, $field_settings = [], $widget_settings = []) {
+  public function updateFileField($name, $type_name, $field_settings = [], $widget_settings = []): void {
     $field = FieldConfig::loadByName('node', $type_name, $name);
     $field->setSettings(array_merge($field->getSettings(), $field_settings));
     $field->save();
@@ -136,7 +136,7 @@ abstract class FileFieldTestBase extends BrowserTestBase {
    * @return int
    *   The node id.
    */
-  public function uploadNodeFiles(array $files, $field_name, $nid_or_type, $new_revision = TRUE, array $extras = []) {
+  public function uploadNodeFiles(array $files, string $field_name, $nid_or_type, $new_revision = TRUE, array $extras = []) {
     $edit = [
       'title[0][value]' => $this->randomMachineName(),
       'revision' => (string) (int) $new_revision,
@@ -191,7 +191,7 @@ abstract class FileFieldTestBase extends BrowserTestBase {
    *
    * Note that if replacing a file, it must first be removed then added again.
    */
-  public function removeNodeFile($nid, $new_revision = TRUE) {
+  public function removeNodeFile(string|int $nid, $new_revision = TRUE): void {
     $edit = [
       'revision' => (string) (int) $new_revision,
     ];
@@ -204,7 +204,7 @@ abstract class FileFieldTestBase extends BrowserTestBase {
   /**
    * Replaces a file within a node.
    */
-  public function replaceNodeFile($file, $field_name, $nid, $new_revision = TRUE) {
+  public function replaceNodeFile($file, string $field_name, string|int $nid, $new_revision = TRUE): void {
     $edit = [
       'files[' . $field_name . '_0]' => \Drupal::service('file_system')->realpath($file->getFileUri()),
       'revision' => (string) (int) $new_revision,
@@ -218,7 +218,7 @@ abstract class FileFieldTestBase extends BrowserTestBase {
   /**
    * Asserts that a file exists in the database.
    */
-  public function assertFileEntryExists($file, $message = NULL) {
+  public function assertFileEntryExists($file, $message = NULL): void {
     $this->container->get('entity_type.manager')->getStorage('file')->resetCache();
     $db_file = File::load($file->id());
     $message = $message ?? sprintf('File %s exists in database at the correct path.', $file->getFileUri());
@@ -242,7 +242,7 @@ abstract class FileFieldTestBase extends BrowserTestBase {
   /**
    * Asserts that a file's status is set to permanent in the database.
    */
-  public function assertFileIsPermanent(FileInterface $file, $message = NULL) {
+  public function assertFileIsPermanent(FileInterface $file, $message = NULL): void {
     $message = $message ?? sprintf('File %s is permanent.', $file->getFileUri());
     $this->assertTrue($file->isPermanent(), $message);
   }

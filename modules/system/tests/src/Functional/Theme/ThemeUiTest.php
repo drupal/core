@@ -89,12 +89,12 @@ class ThemeUiTest extends BrowserTestBase {
    *   Machine names of the modules required by $base_theme_to_uninstall.
    */
   #[DataProvider('providerTestThemeInstallWithModuleDependencies')]
-  public function testThemeInstallWithModuleDependencies($theme_name, array $first_modules, array $second_modules, array $required_by_messages, $base_theme_to_uninstall, array $base_theme_module_names): void {
+  public function testThemeInstallWithModuleDependencies(string $theme_name, array $first_modules, array $second_modules, array $required_by_messages, string $base_theme_to_uninstall, array $base_theme_module_names): void {
     $assert_session = $this->assertSession();
     $page = $this->getSession()->getPage();
     $all_dependent_modules = array_merge($first_modules, $second_modules);
     $this->drupalGet('admin/appearance');
-    $assert_module_enabled_message = function ($enabled_modules) {
+    $assert_module_enabled_message = function ($enabled_modules): void {
       $count = count($enabled_modules);
       $module_enabled_text = $count === 1 ? "{$this->testModules[$enabled_modules[0]]} has been installed." : $count . " modules have been installed:";
       $this->assertSession()->pageTextContains($module_enabled_text);
@@ -215,7 +215,7 @@ class ThemeUiTest extends BrowserTestBase {
    *   An array of arrays. Details on the specific elements can be found in the
    *   function body.
    */
-  public static function providerTestThemeInstallWithModuleDependencies() {
+  public static function providerTestThemeInstallWithModuleDependencies(): array {
     // Data provider values with the following keys:
     // -'theme_name': The name of the theme being tested.
     // -'first_modules': Array of module machine names to enable first.

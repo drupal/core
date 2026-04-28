@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\options\FunctionalJavascript;
 
+use Behat\Mink\Element\NodeElement;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
@@ -250,7 +251,7 @@ class OptionsFieldUIAllowedValuesTest extends WebDriverTestBase {
    */
   protected function assertNodeFormOrder($expected) {
     $elements = $this->assertSession()->selectExists('field_options_text')->findAll('css', 'option');
-    $elements = array_map(function ($element) {
+    $elements = array_map(function (NodeElement $element) {
       return $element->getText();
     }, $elements);
     $this->assertSame($expected, $elements);
@@ -309,7 +310,7 @@ JS;
    *   - The method which should be used to add another row to the table. The
    *     possible values are 'Press button', 'Enter button' or 'Enter element'.
    */
-  public static function providerTestOptionsAllowedValues() {
+  public static function providerTestOptionsAllowedValues(): array {
     $type_cases = [
       'List integer' => [
         'list_integer',

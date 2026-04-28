@@ -181,7 +181,7 @@ class FieldPluginBaseTest extends UnitTestCase {
       ->method('render')
       ->willReturnCallback(
         // Pretend to do a render.
-        function (&$elements, $is_root_call = FALSE) {
+        function (array &$elements, $is_root_call = FALSE) {
           // Mock the ability to theme links.
           $link = $this->linkGenerator->generate($elements['#title'], $elements['#url']);
           if (isset($elements['#prefix'])) {
@@ -252,7 +252,7 @@ class FieldPluginBaseTest extends UnitTestCase {
    * @legacy-covers ::renderText
    */
   #[DataProvider('providerTestRenderTrimmedWithMoreLinkAndPath')]
-  public function testRenderTrimmedWithMoreLinkAndPath($path, $url): void {
+  public function testRenderTrimmedWithMoreLinkAndPath($path, string $url): void {
     $alter = [
       'trim' => TRUE,
       'max_length' => 7,
@@ -286,7 +286,7 @@ class FieldPluginBaseTest extends UnitTestCase {
    * @return array
    *   Test data.
    */
-  public static function providerTestRenderTrimmedWithMoreLinkAndPath() {
+  public static function providerTestRenderTrimmedWithMoreLinkAndPath(): array {
     $data = [];
     // Simple path with default options.
     $data[] = ['test-path', '/test-path'];
@@ -350,7 +350,7 @@ class FieldPluginBaseTest extends UnitTestCase {
    * @return array
    *   Test data.
    */
-  public static function providerTestRenderAsLinkWithPathAndOptions() {
+  public static function providerTestRenderAsLinkWithPathAndOptions(): array {
     $data = [];
     // Simple path with default options.
     $data[] = ['test-path', [], '<a href="/test-path">value</a>'];
@@ -431,7 +431,7 @@ class FieldPluginBaseTest extends UnitTestCase {
    * @return array
    *   Array of test data.
    */
-  public static function providerTestRenderAsLinkWithUrlAndOptions() {
+  public static function providerTestRenderAsLinkWithUrlAndOptions(): array {
     $data = [];
 
     // Simple path with default options.
@@ -670,7 +670,7 @@ class FieldPluginBaseTest extends UnitTestCase {
    * @return array
    *   Test data.
    */
-  public static function providerTestRenderAsLinkWithPathAndTokens() {
+  public static function providerTestRenderAsLinkWithPathAndTokens(): array {
     $tokens = ['{{ foo }}' => 123];
     $link_html = '<a href="/test-path/123">value</a>';
 
@@ -695,7 +695,7 @@ class FieldPluginBaseTest extends UnitTestCase {
    * @legacy-covers ::renderAsLink
    */
   #[DataProvider('providerTestRenderAsExternalLinkWithPathAndTokens')]
-  public function testRenderAsExternalLinkWithPathAndTokens($path, $tokens, $link_html, $context): void {
+  public function testRenderAsExternalLinkWithPathAndTokens($path, $tokens, $link_html, array $context): void {
     $this->setUpMockRenderer();
     $alter = [
       'make_link' => TRUE,
@@ -742,7 +742,7 @@ class FieldPluginBaseTest extends UnitTestCase {
    * @return array
    *   Test data.
    */
-  public static function providerTestRenderAsExternalLinkWithPathAndTokens() {
+  public static function providerTestRenderAsExternalLinkWithPathAndTokens(): array {
     $data = [];
 
     $data[] = [
@@ -779,7 +779,7 @@ class FieldPluginBaseTest extends UnitTestCase {
    * @return \Drupal\Tests\views\Unit\Plugin\field\FieldPluginBaseTestField
    *   The test field.
    */
-  protected function setupTestField(array $options = []) {
+  protected function setupTestField(array $options = []): FieldPluginBaseTestField {
     $field = new FieldPluginBaseTestField($this->configuration, $this->pluginId, $this->pluginDefinition);
     $field->init($this->executable, $this->display, $options);
     $field->setLinkGenerator($this->linkGenerator);
@@ -1023,7 +1023,7 @@ if (!function_exists('base_path')) {
   /**
    * Returns the base path.
    */
-  function base_path() {
+  function base_path(): string {
     return '/';
   }
 

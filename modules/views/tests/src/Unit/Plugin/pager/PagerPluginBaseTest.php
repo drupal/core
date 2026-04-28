@@ -173,7 +173,7 @@ class PagerPluginBaseTest extends UnitTestCase {
    * @see \Drupal\views\Plugin\views\pager\PagerPluginBase::hasMoreRecords()
    */
   #[DataProvider('providerTestHasMoreRecords')]
-  public function testHasMoreRecords($items_per_page, $total_items, $current_page, $has_more_records): void {
+  public function testHasMoreRecords(int $items_per_page, int $total_items, int $current_page, bool $has_more_records): void {
     $this->pager->setItemsPerPage($items_per_page);
     $this->pager->total_items = $total_items;
     $this->pager->setCurrentPage($current_page);
@@ -185,7 +185,7 @@ class PagerPluginBaseTest extends UnitTestCase {
    *
    * @see self::testHasMoreRecords
    */
-  public static function providerTestHasMoreRecords() {
+  public static function providerTestHasMoreRecords(): array {
     return [
       // No items per page, so there can't be more available records.
       [0, 0, 0, FALSE],

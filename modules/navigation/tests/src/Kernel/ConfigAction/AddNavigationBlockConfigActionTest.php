@@ -51,7 +51,7 @@ class AddNavigationBlockConfigActionTest extends KernelTestBase {
   #[TestWith([1, 1])]
   #[TestWith([3, 3])]
   #[TestWith([7, 3])]
-  public function testAddBlockToNavigation($delta, $computed_delta): void {
+  public function testAddBlockToNavigation($delta, int $computed_delta): void {
     // Load the navigation section storage.
     $navigation_storage = \Drupal::service('plugin.manager.layout_builder.section_storage')->load('navigation', [
       'navigation' => new Context(new ContextDefinition('string'), 'navigation'),

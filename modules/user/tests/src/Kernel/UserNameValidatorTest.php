@@ -40,7 +40,7 @@ class UserNameValidatorTest extends KernelTestBase {
    * Tests valid user name validation.
    */
   #[DataProvider('validUsernameProvider')]
-  public function testValidUsernames($name): void {
+  public function testValidUsernames(string $name): void {
     $violations = $this->userValidator->validateName($name);
     $this->assertEmpty($violations);
   }
@@ -49,7 +49,7 @@ class UserNameValidatorTest extends KernelTestBase {
    * Tests invalid user name validation.
    */
   #[DataProvider('invalidUserNameProvider')]
-  public function testInvalidUsernames($name, $expectedMessage): void {
+  public function testInvalidUsernames(string $name, string $expectedMessage): void {
     $violations = $this->userValidator->validateName($name);
     $this->assertNotEmpty($violations);
     $this->assertEquals($expectedMessage, $violations[0]->getMessage());

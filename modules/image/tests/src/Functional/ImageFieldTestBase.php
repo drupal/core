@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\image\Functional;
 
-use Drupal\Tests\image\Kernel\ImageFieldCreationTrait;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\image\Kernel\ImageFieldCreationTrait;
 
 /**
  * @todo Test the following functions.
@@ -82,7 +82,7 @@ abstract class ImageFieldTestBase extends BrowserTestBase {
    * @param string $type
    *   The type of node to create.
    */
-  public function previewNodeImage($image, $field_name, $type) {
+  public function previewNodeImage($image, string $field_name, string $type): void {
     $edit = [
       'title[0][value]' => $this->randomMachineName(),
     ];
@@ -103,7 +103,7 @@ abstract class ImageFieldTestBase extends BrowserTestBase {
    * @param string $alt
    *   The alt text for the image. Use if the field settings require alt text.
    */
-  public function uploadNodeImage($image, $field_name, $type, $alt = '') {
+  public function uploadNodeImage($image, string $field_name, string $type, $alt = '') {
     $edit = [
       'title[0][value]' => $this->randomMachineName(),
     ];

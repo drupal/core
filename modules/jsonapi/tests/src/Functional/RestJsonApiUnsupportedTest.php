@@ -127,7 +127,7 @@ class RestJsonApiUnsupportedTest extends ResourceTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function getExpectedUnauthorizedAccessCacheability() {
+  protected function getExpectedUnauthorizedAccessCacheability(): CacheableMetadata {
     return (new CacheableMetadata());
   }
 

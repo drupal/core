@@ -171,7 +171,7 @@ class NavigationBlockUiTest extends WebDriverTestBase {
    * @param string $block_title
    *   The block title which will be the link text.
    */
-  private function openAddBlockForm($block_title): void {
+  private function openAddBlockForm(string $block_title): void {
     $this->assertSession()->linkExists('Add block');
     $this->clickLink('Add block');
     $this->assertSession()->assertWaitOnAjaxRequest();

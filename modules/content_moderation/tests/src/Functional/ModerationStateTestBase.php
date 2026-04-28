@@ -94,7 +94,7 @@ abstract class ModerationStateTestBase extends BrowserTestBase {
    * @return string
    *   The permission machine name for a transition.
    */
-  protected function getWorkflowTransitionPermission($workflow_id, $transition_id) {
+  protected function getWorkflowTransitionPermission(string $workflow_id, string $transition_id) {
     return 'use ' . $workflow_id . ' transition ' . $transition_id;
   }
 
@@ -136,7 +136,7 @@ abstract class ModerationStateTestBase extends BrowserTestBase {
    * @param string $workflow_id
    *   The workflow to attach to the bundle.
    */
-  public function enableModerationThroughUi($content_type_id, $workflow_id = 'editorial') {
+  public function enableModerationThroughUi(string $content_type_id, string $workflow_id = 'editorial'): void {
     $this->drupalGet('/admin/config/workflow/workflows');
     $this->assertSession()->linkByHrefExists('admin/config/workflow/workflows/manage/' . $workflow_id);
     $edit['bundles[' . $content_type_id . ']'] = TRUE;

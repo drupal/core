@@ -57,7 +57,7 @@ class JsonApiDocumentTopLevelNormalizerTest extends UnitTestCase {
       'fcce1b61-258e-4054-ae36-244d25a9e04c' => 2,
     ];
     $entity_storage->loadByProperties(Argument::type('array'))
-      ->will(function ($args) use ($self, $uuid_to_id) {
+      ->will(function ($args) use ($self, $uuid_to_id): array {
         $result = [];
         foreach ($args[0]['uuid'] as $uuid) {
           $entity = $self->prophesize(EntityInterface::class);
@@ -94,7 +94,7 @@ class JsonApiDocumentTopLevelNormalizerTest extends UnitTestCase {
    * Tests denormalize.
    */
   #[DataProvider('denormalizeProvider')]
-  public function testDenormalize($input, $expected): void {
+  public function testDenormalize(array $input, array $expected): void {
     $resource_type = new ResourceType('node', 'article', FieldableEntityInterface::class);
     $resource_type->setRelatableResourceTypes([]);
     $context = ['resource_type' => $resource_type];
@@ -108,7 +108,7 @@ class JsonApiDocumentTopLevelNormalizerTest extends UnitTestCase {
    * @return array
    *   The data for the test method.
    */
-  public static function denormalizeProvider() {
+  public static function denormalizeProvider(): array {
     return [
       [
         [
@@ -221,7 +221,7 @@ class JsonApiDocumentTopLevelNormalizerTest extends UnitTestCase {
    *   Whether to expect an exception.
    */
   #[DataProvider('denormalizeUuidProvider')]
-  public function testDenormalizeUuid($id, $expect_exception): void {
+  public function testDenormalizeUuid(string|int|null $id, bool $expect_exception): void {
     $data['data'] = (isset($id)) ?
       ['type' => 'node--article', 'id' => $id] :
       ['type' => 'node--article'];
@@ -250,7 +250,7 @@ class JsonApiDocumentTopLevelNormalizerTest extends UnitTestCase {
   /**
    * Provides test cases for testDenormalizeUuid.
    */
-  public static function denormalizeUuidProvider() {
+  public static function denormalizeUuidProvider(): array {
     return [
       'valid' => ['76dd5c18-ea1b-4150-9e75-b21958a2b836', FALSE],
       'missing' => [NULL, FALSE],

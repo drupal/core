@@ -36,7 +36,7 @@ trait FakeLogEntries {
    *     entry.
    *   - 'timestamp': Int unix timestamp.
    */
-  private function generateLogEntries($count, $options = []) {
+  private function generateLogEntries($count, $options = []): void {
     global $base_root;
 
     $user = !empty($this->adminUser) ? $this->adminUser : new AnonymousUserSession();

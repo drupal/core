@@ -35,7 +35,7 @@ class HtmlToTextTest extends UnitTestCase {
    *   An HTML representation of the text string that, when displayed in a
    *   browser, represents the PHP source code equivalent of $text.
    */
-  protected function stringToHtml($text): string {
+  protected function stringToHtml(string $text): string {
     return '"' .
       str_replace(
         ["\n", ' '],

@@ -125,7 +125,7 @@ class BlockRepositoryTest extends UnitTestCase {
   /**
    * Provides data to testGetVisibleBlocksPerRegion().
    */
-  public static function providerBlocksConfig() {
+  public static function providerBlocksConfig(): array {
     $blocks_config = [
       'block1' => [
         AccessResult::allowed(), 'top', 0,

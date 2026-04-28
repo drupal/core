@@ -105,7 +105,7 @@ class CommentLinkBuilderTest extends UnitTestCase {
    * @legacy-covers ::buildCommentedEntityLinks
    */
   #[DataProvider('getLinkCombinations')]
-  public function testCommentLinkBuilder(array $node_args, $context, $has_access_comments, $has_post_comments, $is_anonymous, $expected): void {
+  public function testCommentLinkBuilder(array $node_args, array $context, $has_access_comments, $has_post_comments, $is_anonymous, $expected): void {
     $node = $this->getMockNode(...$node_args);
     $this->currentUser
       ->method('hasPermission')
@@ -147,7 +147,7 @@ class CommentLinkBuilderTest extends UnitTestCase {
   /**
    * Data provider for ::testCommentLinkBuilder.
    */
-  public static function getLinkCombinations() {
+  public static function getLinkCombinations(): array {
     $cases = [];
     // No links should be created if the entity doesn't have the field.
     $cases[] = [

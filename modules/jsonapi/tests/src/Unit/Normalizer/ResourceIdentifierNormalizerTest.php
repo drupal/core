@@ -115,7 +115,7 @@ class ResourceIdentifierNormalizerTest extends UnitTestCase {
    * Tests denormalize.
    */
   #[DataProvider('denormalizeProvider')]
-  public function testDenormalize($input, $field_name, $expected): void {
+  public function testDenormalize(array $input, string $field_name, array $expected): void {
     $entity = $this->prophesize(FieldableEntityInterface::class);
     $context = [
       'resource_type' => $this->resourceType,
@@ -132,7 +132,7 @@ class ResourceIdentifierNormalizerTest extends UnitTestCase {
    * @return array
    *   The data for the test method.
    */
-  public static function denormalizeProvider() {
+  public static function denormalizeProvider(): array {
     return [
       [
         ['data' => [['type' => 'lorem--dummy_bundle', 'id' => '4e6cb61d-4f04-437f-99fe-42c002393658']]],
@@ -156,7 +156,7 @@ class ResourceIdentifierNormalizerTest extends UnitTestCase {
    * Tests denormalize invalid resource.
    */
   #[DataProvider('denormalizeInvalidResourceProvider')]
-  public function testDenormalizeInvalidResource($data, $field_name): void {
+  public function testDenormalizeInvalidResource(array $data, string $field_name): void {
     $context = [
       'resource_type' => $this->resourceType,
       'related' => $field_name,
@@ -172,7 +172,7 @@ class ResourceIdentifierNormalizerTest extends UnitTestCase {
    * @return array
    *   The input data for the test method.
    */
-  public static function denormalizeInvalidResourceProvider() {
+  public static function denormalizeInvalidResourceProvider(): array {
     return [
       [
         [

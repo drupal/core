@@ -205,7 +205,7 @@ class TestViewListBuilder extends ViewListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function buildOperations(EntityInterface $entity) {
+  public function buildOperations(EntityInterface $entity): array {
     return [];
   }
 

@@ -29,7 +29,7 @@ class ImageStyleFlushTest extends ImageFieldTestBase {
   /**
    * Given an image style and a wrapper, generate an image.
    */
-  public function createSampleImage($style, $wrapper) {
+  public function createSampleImage($style, string $wrapper) {
     static $file;
 
     if (!isset($file)) {
@@ -49,7 +49,7 @@ class ImageStyleFlushTest extends ImageFieldTestBase {
   /**
    * Count the number of images currently created for a style in a wrapper.
    */
-  public function getImageCount($style, $wrapper) {
+  public function getImageCount($style, string $wrapper): int {
     $count = 0;
     if (is_dir($wrapper . '://styles/' . $style->id())) {
       $count = count(\Drupal::service('file_system')->scanDirectory($wrapper . '://styles/' . $style->id(), '/.*/'));

@@ -161,7 +161,7 @@ class RenderCacheIntegrationTest extends ViewsKernelTestBase {
 
     // Setup arguments to ensure that render caching also varies by them.
     // Custom assert for a single result row.
-    $single_entity_assertions = function (array $build, EntityInterface $entity) {
+    $single_entity_assertions = function (array $build, EntityInterface $entity): void {
       $this->setRawContent($build['#markup']);
 
       $result = $this->cssSelect('div.views-row');

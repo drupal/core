@@ -118,7 +118,7 @@ class UpdateFetcherTest extends UnitTestCase {
    *   - 'site_key' - An arbitrary site key.
    *   - 'expected' - The expected URL from UpdateFetcher::buildFetchUrl().
    */
-  public static function providerTestUpdateBuildFetchUrl() {
+  public static function providerTestUpdateBuildFetchUrl(): array {
     $data = [];
 
     // First test that we didn't break the trivial case.
@@ -199,7 +199,7 @@ class UpdateFetcherTest extends UnitTestCase {
     $this->assertEquals(500, $response->getStatusCode());
     $this->assertEmpty($data);
 
-    $this->assertTrue($this->logger->hasErrorThatPasses(function (array $record) {
+    $this->assertTrue($this->logger->hasErrorThatPasses(function (array $record): bool {
       return $record['context']['@message'] === "Server error: `GET https://www.example.com/update_test/current` resulted in a `500 Internal Server Error` response:\nHTTPS failed\n";
     }));
   }
@@ -237,7 +237,7 @@ class UpdateFetcherTest extends UnitTestCase {
     // Although this is a bogus mocked response, it's what fetchProjectData()
     // should return in this case.
     $this->assertEquals('HTTP worked', $data);
-    $this->assertTrue($this->logger->hasErrorThatPasses(function (array $record) {
+    $this->assertTrue($this->logger->hasErrorThatPasses(function (array $record): bool {
       return $record['context']['@message'] === "Server error: `GET https://www.example.com/update_test/current` resulted in a `500 Internal Server Error` response:\nHTTPS failed\n";
     }));
   }

@@ -113,7 +113,7 @@ class FileManagedFileElementTest extends WebDriverTestBase {
   /**
    * Retrieves the fid of the last inserted file.
    */
-  protected function getLastFileId() {
+  protected function getLastFileId(): int {
     return (int) \Drupal::entityQueryAggregate('file')
       ->accessCheck(FALSE)
       ->aggregate('fid', 'max')

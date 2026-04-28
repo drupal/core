@@ -76,7 +76,7 @@ class LayoutBuilderEntityViewDisplayTest extends SectionListTestBase {
   /**
    * Provides test data for ::testIsLayoutBuilderEnabled().
    */
-  public static function providerTestIsLayoutBuilderEnabled() {
+  public static function providerTestIsLayoutBuilderEnabled(): array {
     $data = [];
     $data['default enabled'] = [TRUE, 'default', TRUE];
     $data['default disabled'] = [FALSE, 'default', FALSE];

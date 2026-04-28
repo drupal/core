@@ -118,7 +118,7 @@ abstract class LocaleUpdateBase extends BrowserTestBase {
    *   singular strings are supported, no plurals. No double quotes are allowed
    *   in source and translations strings.
    */
-  protected function makePoFile($path, $filename, $timestamp = NULL, array $translations = []) {
+  protected function makePoFile($path, string $filename, $timestamp = NULL, array $translations = []) {
     $timestamp = $timestamp ?: \Drupal::time()->getRequestTime();
     $path = 'public://' . $path;
     $text = '';

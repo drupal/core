@@ -95,7 +95,7 @@ class UnknownPathExcluderTest extends PackageManagerKernelTestBase {
    * @return mixed[][]
    *   The test cases.
    */
-  public static function providerTestUnknownPath() {
+  public static function providerTestUnknownPath(): array {
     return [
       'unknown file where web and project root same' => [
         FALSE,

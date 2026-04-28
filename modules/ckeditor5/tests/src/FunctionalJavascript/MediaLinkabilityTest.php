@@ -54,7 +54,7 @@ class MediaLinkabilityTest extends MediaTestBase {
     $editor->save();
     $filter_format->save();
     $this->assertSame([], array_map(
-      function (ConstraintViolationInterface $v) {
+      function (ConstraintViolationInterface $v): string {
         return (string) $v->getMessage();
       },
       iterator_to_array(CKEditor5::validatePair(

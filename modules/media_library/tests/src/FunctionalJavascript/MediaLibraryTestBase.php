@@ -64,7 +64,7 @@ abstract class MediaLibraryTestBase extends WebDriverTestBase {
    * @todo replace with whatever gets added in
    *   https://www.drupal.org/node/3061852
    */
-  protected function waitForText($text, $timeout = 10000) {
+  protected function waitForText($text, int $timeout = 10000) {
     $result = $this->assertSession()->waitForText($text, $timeout);
     $this->assertNotEmpty($result, "\"$text\" not found");
   }
@@ -82,7 +82,7 @@ abstract class MediaLibraryTestBase extends WebDriverTestBase {
    */
   protected function waitForNoText($text, $timeout = 10000) {
     $page = $this->getSession()->getPage();
-    $result = $page->waitFor($timeout / 1000, function ($page) use ($text) {
+    $result = $page->waitFor($timeout / 1000, function ($page) use ($text): bool {
       $actual = preg_replace('/\s+/u', ' ', $page->getText());
       $regex = '/' . preg_quote($text, '/') . '/ui';
       return (bool) !preg_match($regex, $actual);
@@ -105,7 +105,7 @@ abstract class MediaLibraryTestBase extends WebDriverTestBase {
    * @todo replace with whatever gets added in
    *   https://www.drupal.org/node/3061852
    */
-  protected function waitForElementsCount($selector_type, $selector, $count, $timeout = 10000) {
+  protected function waitForElementsCount(string $selector_type, $selector, $count, $timeout = 10000) {
     $page = $this->getSession()->getPage();
 
     $start = microtime(TRUE);
@@ -134,7 +134,7 @@ abstract class MediaLibraryTestBase extends WebDriverTestBase {
    * @todo replace with whatever gets added in
    *   https://www.drupal.org/node/3061852
    */
-  protected function waitForElementTextContains($selector, $text, $timeout = 10000) {
+  protected function waitForElementTextContains($selector, $text, int $timeout = 10000) {
     $element = $this->assertSession()->waitForElement('css', "$selector:contains('$text')", $timeout);
     $this->assertNotEmpty($element);
   }
@@ -156,7 +156,7 @@ abstract class MediaLibraryTestBase extends WebDriverTestBase {
    * @todo replace with whatever gets added in
    *   https://www.drupal.org/node/3061852
    */
-  protected function assertElementExistsAfterWait($selector, $locator, $timeout = 10000): NodeElement {
+  protected function assertElementExistsAfterWait(string $selector, $locator, int $timeout = 10000): NodeElement {
     $element = $this->assertSession()->waitForElement($selector, $locator, $timeout);
     $this->assertNotEmpty($element);
     return $element;
@@ -211,7 +211,7 @@ abstract class MediaLibraryTestBase extends WebDriverTestBase {
    * @todo replace with whatever gets added in
    *   https://www.drupal.org/node/3061852
    */
-  protected function waitForFieldExists($field, $timeout = 10000) {
+  protected function waitForFieldExists($field, int $timeout = 10000) {
     $assert_session = $this->assertSession();
     $assert_session->waitForField($field, $timeout);
     return $assert_session->fieldExists($field);
@@ -220,7 +220,7 @@ abstract class MediaLibraryTestBase extends WebDriverTestBase {
   /**
    * Waits for a file field to exist before uploading.
    */
-  public function addMediaFileToField($locator, $path) {
+  public function addMediaFileToField($locator, string $path): void {
     $page = $this->getSession()->getPage();
     $this->waitForFieldExists($locator);
     $page->attachFileToField($locator, $path);

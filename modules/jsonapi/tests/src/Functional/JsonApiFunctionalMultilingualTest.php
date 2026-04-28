@@ -77,7 +77,7 @@ class JsonApiFunctionalMultilingualTest extends JsonApiFunctionalTestBase {
     $output = Json::decode($this->drupalGet('/ca/jsonapi/node/article/' . $this->nodes[0]->uuid(), ['query' => ['include' => 'field_tags,field_image'] + $default_sort]));
     $this->assertEquals($this->nodes[0]->getTranslation('ca')->getTitle(), $output['data']['attributes']['title']);
     $this->assertSame('ca', $output['data']['attributes']['langcode']);
-    $included_tags = array_filter($output['included'], function ($entry) {
+    $included_tags = array_filter($output['included'], function (array $entry): bool {
       return $entry['type'] === 'taxonomy_term--tags';
     });
     $tag_name = $this->nodes[0]->get('field_tags')->entity

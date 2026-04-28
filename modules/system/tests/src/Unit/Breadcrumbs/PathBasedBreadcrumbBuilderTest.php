@@ -321,7 +321,7 @@ class PathBasedBreadcrumbBuilderTest extends UnitTestCase {
    * @legacy-covers ::getRequestForPath
    */
   #[DataProvider('providerTestBuildWithException')]
-  public function testBuildWithException($exception_class, $exception_argument): void {
+  public function testBuildWithException(string $exception_class, string|array $exception_argument): void {
     $this->context
       ->method('getPathInfo')
       ->willReturn('/example/bar');
@@ -348,7 +348,7 @@ class PathBasedBreadcrumbBuilderTest extends UnitTestCase {
    *
    * @see \Drupal\Tests\system\Unit\Breadcrumbs\PathBasedBreadcrumbBuilderTest::testBuildWithException()
    */
-  public static function providerTestBuildWithException() {
+  public static function providerTestBuildWithException(): array {
     return [
       ['Drupal\Core\ParamConverter\ParamNotConvertedException', ''],
       ['Symfony\Component\Routing\Exception\MethodNotAllowedException', []],
@@ -476,7 +476,7 @@ class TestPathBasedBreadcrumbBuilder extends PathBasedBreadcrumbBuilder {
   /**
    * {@inheritdoc}
    */
-  public function setStringTranslation(TranslationInterface $string_translation) {
+  public function setStringTranslation(TranslationInterface $string_translation): static {
     $this->stringTranslation = $string_translation;
     return $this;
   }

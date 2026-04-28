@@ -113,7 +113,7 @@ class CommentStatisticsUnitTest extends UnitTestCase {
    *   'Something' on first, 'something-else' on second and FALSE for the
    *   other calls to function.
    */
-  public function fetchObjectCallback() {
+  public function fetchObjectCallback(): string|false {
     $this->callsToFetch++;
     switch ($this->callsToFetch) {
       case 1:

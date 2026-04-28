@@ -16,6 +16,7 @@ use Drupal\migrate\Row;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -426,7 +427,7 @@ class MigrateExecutableTest extends MigrateTestCase {
    * @return \Drupal\migrate\Plugin\MigrateSourceInterface|\PHPUnit\Framework\MockObject\MockObject
    *   The mocked migration source.
    */
-  protected function getMockSource() {
+  protected function getMockSource(): MockObject {
     $source = $this->createMock(StubSourcePlugin::class);
     $source->expects($this->once())
       ->method('rewind');
@@ -484,7 +485,7 @@ class MigrateExecutableTest extends MigrateTestCase {
    * @return array
    *   The test cases.
    */
-  public static function providerTestRollback() {
+  public static function providerTestRollback(): array {
     return [
       'Rollback delete' => [
         'id_map_records' => [
@@ -567,7 +568,7 @@ class MigrateExecutableTest extends MigrateTestCase {
    *   An ID map object prophecy.
    */
   public function getTestRollbackIdMap(array $items, array $source_id_keys, array $destination_id_keys): ObjectProphecy {
-    static::$idMapRecords = array_map(function (array $item) {
+    static::$idMapRecords = array_map(function (array $item): array {
       return $item + [
         'source_row_status' => '0',
         'rollback_action' => '0',
@@ -579,27 +580,27 @@ class MigrateExecutableTest extends MigrateTestCase {
 
     $id_map = $this->prophesize(MigrateIdMapInterface::class);
     $id_map->setMessage(Argument::cetera())->willReturn(NULL);
-    $id_map->rewind()->will(function () use ($array_iterator) {
+    $id_map->rewind()->will(function () use ($array_iterator): void {
       $array_iterator->rewind();
     });
-    $id_map->valid()->will(function () use ($array_iterator) {
+    $id_map->valid()->will(function () use ($array_iterator): bool {
       return $array_iterator->valid();
     });
-    $id_map->next()->will(function () use ($array_iterator) {
+    $id_map->next()->will(function () use ($array_iterator): void {
       $array_iterator->next();
     });
-    $id_map->currentDestination()->will(function () use ($array_iterator, $destination_id_keys) {
+    $id_map->currentDestination()->will(function () use ($array_iterator, $destination_id_keys): ?array {
       $current = $array_iterator->current();
-      $destination_values = array_filter($current, function ($key) use ($destination_id_keys) {
+      $destination_values = array_filter($current, function ($key) use ($destination_id_keys): bool {
         return in_array($key, $destination_id_keys, TRUE);
       }, ARRAY_FILTER_USE_KEY);
       return empty(array_filter($destination_values, 'is_null'))
         ? array_combine($destination_id_keys, array_values($destination_values))
         : NULL;
     });
-    $id_map->currentSource()->will(function () use ($array_iterator, $source_id_keys) {
+    $id_map->currentSource()->will(function () use ($array_iterator, $source_id_keys): ?array {
       $current = $array_iterator->current();
-      $source_values = array_filter($current, function ($key) use ($source_id_keys) {
+      $source_values = array_filter($current, function ($key) use ($source_id_keys): bool {
         return in_array($key, $source_id_keys, TRUE);
       }, ARRAY_FILTER_USE_KEY);
       return empty(array_filter($source_values, 'is_null'))
@@ -608,7 +609,7 @@ class MigrateExecutableTest extends MigrateTestCase {
     });
     $id_map->getRowByDestination(Argument::type('array'))->will(function () {
       $destination_ids = func_get_args()[0][0];
-      $return = array_reduce(self::$idMapRecords, function (array $carry, array $record) use ($destination_ids) {
+      $return = array_reduce(self::$idMapRecords, function (array $carry, array $record) use ($destination_ids): array {
         if (array_merge($record, $destination_ids) === $record) {
           $carry = $record;
         }
@@ -617,18 +618,18 @@ class MigrateExecutableTest extends MigrateTestCase {
 
       return $return;
     });
-    $id_map->deleteDestination(Argument::type('array'))->will(function () {
+    $id_map->deleteDestination(Argument::type('array'))->will(function (): void {
       $destination_ids = func_get_args()[0][0];
-      $matching_records = array_filter(self::$idMapRecords, function (array $record) use ($destination_ids) {
+      $matching_records = array_filter(self::$idMapRecords, function (array $record) use ($destination_ids): bool {
         return array_merge($record, $destination_ids) === $record;
       });
       foreach (array_keys($matching_records) as $record_key) {
         unset(self::$idMapRecords[$record_key]);
       }
     });
-    $id_map->delete(Argument::type('array'))->will(function () {
+    $id_map->delete(Argument::type('array'))->will(function (): void {
       $source_ids = func_get_args()[0][0];
-      $matching_records = array_filter(self::$idMapRecords, function (array $record) use ($source_ids) {
+      $matching_records = array_filter(self::$idMapRecords, function (array $record) use ($source_ids): bool {
         return array_merge($record, $source_ids) === $record;
       });
       foreach (array_keys($matching_records) as $record_key) {

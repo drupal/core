@@ -223,7 +223,7 @@ class ImageFieldValidateTest extends ImageFieldTestBase {
    * with it forbidden.
    */
   #[DataProvider('providerTestEmpty')]
-  public function testEmpty($field_name, $required, $cardinality, $form_element_name, $expected_page_text_when_edit_access_allowed, $expected_page_text_when_edit_access_forbidden): void {
+  public function testEmpty(string $field_name, bool $required, int $cardinality, string $form_element_name, string $expected_page_text_when_edit_access_allowed, string $expected_page_text_when_edit_access_forbidden): void {
     $this->createImageField($field_name, 'node', 'article', ['cardinality' => $cardinality], ['required' => $required]);
 
     // Test with field edit access allowed.
@@ -252,7 +252,7 @@ class ImageFieldValidateTest extends ImageFieldTestBase {
    * @return array
    *   Test cases.
    */
-  public static function providerTestEmpty() {
+  public static function providerTestEmpty(): array {
     return [
       'optional-single' => [
         'field_image',
@@ -318,7 +318,7 @@ class ImageFieldValidateTest extends ImageFieldTestBase {
    * @return array
    *   List of field settings.
    */
-  protected function getFieldSettings($min_resolution, $max_resolution): array {
+  protected function getFieldSettings(array $min_resolution, array $max_resolution): array {
     return [
       'max_resolution' => $max_resolution['width'] . 'x' . $max_resolution['height'],
       'min_resolution' => $min_resolution['width'] . 'x' . $min_resolution['height'],

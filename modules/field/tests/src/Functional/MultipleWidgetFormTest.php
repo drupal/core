@@ -212,7 +212,7 @@ class MultipleWidgetFormTest extends FieldTestBase {
   /**
    * Tests widget alter hooks for a given hook name.
    */
-  protected function widgetAlterTest($hook, $widget) {
+  protected function widgetAlterTest(string $hook, $widget) {
     // Create a field with fixed cardinality, configure the form to use a
     // "multiple" widget.
     $field_storage = $this->fieldStorageMultiple;

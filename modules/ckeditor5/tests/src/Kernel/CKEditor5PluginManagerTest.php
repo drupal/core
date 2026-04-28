@@ -24,6 +24,7 @@ use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\FrozenParameterBag;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Yaml\Yaml;
 
 // cspell:ignore layercake everytextcontainer justheading
@@ -1310,7 +1311,7 @@ PHP,
     );
     // @todo Remove in https://www.drupal.org/project/drupal/issues/3361534, which moves this into ::assertConfigSchema()
     $this->assertSame([], array_map(
-      fn ($v) => sprintf("[%s] %s", $v->getPropertyPath(), (string) $v->getMessage()),
+      fn (ConstraintViolationInterface $v): string => sprintf("[%s] %s", $v->getPropertyPath(), (string) $v->getMessage()),
       iterator_to_array($this->typedConfig->createFromNameAndData($text_editor->getConfigDependencyName(), $text_editor->toArray())->validate())
     ));
 
@@ -1546,7 +1547,7 @@ PHP,
   /**
    * Provides use cases for findPluginSupportingElement().
    */
-  public static function providerTestPluginSupportingElement() {
+  public static function providerTestPluginSupportingElement(): array {
     return [
       'tag that belongs to a superset' => [
         'tag' => 'h2',

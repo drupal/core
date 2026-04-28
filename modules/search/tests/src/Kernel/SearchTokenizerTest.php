@@ -146,7 +146,7 @@ class SearchTokenizerTest extends KernelTestBase {
    * function converts a number to the corresponding unicode character. Adapted
    * from functions supplied in comments on several functions on php.net.
    */
-  public function code2utf($num) {
+  public function code2utf($num): string {
     if ($num < 128) {
       return chr($num);
     }

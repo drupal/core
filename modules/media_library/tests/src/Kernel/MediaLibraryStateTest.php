@@ -121,7 +121,7 @@ class MediaLibraryStateTest extends KernelTestBase {
    * @return array
    *   The data sets to test.
    */
-  public static function providerCreate() {
+  public static function providerCreate(): array {
     $test_data = [];
 
     // Assert no exception is thrown when we add the parameters as expected.
@@ -307,7 +307,7 @@ class MediaLibraryStateTest extends KernelTestBase {
    * @return array
    *   The data sets to test.
    */
-  public static function providerFromRequest() {
+  public static function providerFromRequest(): array {
     $test_data = [];
 
     // Assert no exception is thrown when we use valid state parameters.

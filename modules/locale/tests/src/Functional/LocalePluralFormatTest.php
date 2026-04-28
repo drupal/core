@@ -399,7 +399,7 @@ class LocalePluralFormatTest extends BrowserTestBase {
   /**
    * Returns a .po file with a simple plural formula.
    */
-  public function getPoFileWithSimplePlural() {
+  public function getPoFileWithSimplePlural(): string {
     return <<< EOF
 msgid ""
 msgstr ""
@@ -427,7 +427,7 @@ EOF;
   /**
    * Returns a .po file with a complex plural formula.
    */
-  public function getPoFileWithComplexPlural() {
+  public function getPoFileWithComplexPlural(): string {
     return <<< EOF
 msgid ""
 msgstr ""
@@ -451,7 +451,7 @@ EOF;
   /**
    * Returns a .po file with a missing plural formula.
    */
-  public function getPoFileWithMissingPlural() {
+  public function getPoFileWithMissingPlural(): string {
     return <<< EOF
 msgid ""
 msgstr ""
@@ -468,7 +468,7 @@ EOF;
   /**
    * Returns a .po file with a broken plural formula.
    */
-  public function getPoFileWithBrokenPlural() {
+  public function getPoFileWithBrokenPlural(): string {
     return <<< EOF
 msgid ""
 msgstr ""

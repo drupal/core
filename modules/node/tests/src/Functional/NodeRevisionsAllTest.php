@@ -95,7 +95,7 @@ class NodeRevisionsAllTest extends NodeTestBase {
    * @return \Drupal\node\NodeInterface
    *   A node object with up to date revision information.
    */
-  protected function createNodeRevision(NodeInterface $node) {
+  protected function createNodeRevision(NodeInterface $node): NodeInterface {
     // Create revision with a random title and body and update variables.
     $node->title = $this->randomMachineName();
     $node->body = [

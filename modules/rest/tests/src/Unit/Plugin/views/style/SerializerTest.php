@@ -62,7 +62,7 @@ class SerializerTest extends UnitTestCase {
 
     // This is the main expectation of the test. We want to make sure the
     // serializer options are passed to the SerializerInterface object.
-    $mock_serializer->serialize([], 'json', Argument::that(function ($argument) {
+    $mock_serializer->serialize([], 'json', Argument::that(function (array $argument): bool {
       return isset($argument['views_style_plugin'])
         && $argument['views_style_plugin'] instanceof Serializer;
     }))

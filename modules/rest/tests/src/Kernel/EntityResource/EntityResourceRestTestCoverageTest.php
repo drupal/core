@@ -46,7 +46,7 @@ class EntityResourceRestTestCoverageTest extends KernelTestBase {
 
     $this->installConfig('system');
     $all_modules = $this->container->get('extension.list.module')->getList();
-    $stable_core_modules = array_filter($all_modules, function ($module) {
+    $stable_core_modules = array_filter($all_modules, function ($module): bool {
       // Filter out contrib, hidden, testing, deprecated and experimental
       // modules. We also don't need to enable modules that are already enabled.
       return $module->origin === 'core' &&
@@ -64,7 +64,7 @@ class EntityResourceRestTestCoverageTest extends KernelTestBase {
 
     // Entity types marked as "internal" are not exposed by the entity REST
     // resource plugin and hence also don't need test coverage.
-    $this->definitions = array_filter($this->definitions, function (EntityTypeInterface $entity_type) {
+    $this->definitions = array_filter($this->definitions, function (EntityTypeInterface $entity_type): bool {
       return !$entity_type->isInternal();
     });
   }
@@ -110,7 +110,7 @@ class EntityResourceRestTestCoverageTest extends KernelTestBase {
           $missing_tests[] = $postfix;
         }
         if (!empty($missing_tests)) {
-          $missing_tests_list = implode(', ', array_map(function ($missing_test) use ($class_name) {
+          $missing_tests_list = implode(', ', array_map(function (string $missing_test) use ($class_name): string {
             return $class_name . $missing_test;
           }, $missing_tests));
           $which_normalization = $module === 'serialization' ? 'default' : $module;

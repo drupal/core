@@ -51,7 +51,7 @@ class BlockComponentRenderArrayTest extends UnitTestCase {
   /**
    * Data provider for test functions that should test block types.
    */
-  public static function providerBlockTypes() {
+  public static function providerBlockTypes(): array {
     return [
       [TRUE],
       [FALSE],
@@ -77,7 +77,7 @@ class BlockComponentRenderArrayTest extends UnitTestCase {
    * Tests on build render.
    */
   #[DataProvider('providerBlockTypes')]
-  public function testOnBuildRender($refinable_dependent_access): void {
+  public function testOnBuildRender(bool $refinable_dependent_access): void {
     $contexts = [];
     if ($refinable_dependent_access) {
       $block = $this->prophesize(TestBlockPluginWithRefinableDependentAccessInterface::class)->willImplement(PreviewFallbackInterface::class);
@@ -150,7 +150,7 @@ class BlockComponentRenderArrayTest extends UnitTestCase {
    * Tests on build render without preview fallback string.
    */
   #[DataProvider('providerBlockTypes')]
-  public function testOnBuildRenderWithoutPreviewFallbackString($refinable_dependent_access): void {
+  public function testOnBuildRenderWithoutPreviewFallbackString(bool $refinable_dependent_access): void {
     $contexts = [];
     if ($refinable_dependent_access) {
       $block = $this->prophesize(TestBlockPluginWithRefinableDependentAccessInterface::class);
@@ -222,7 +222,7 @@ class BlockComponentRenderArrayTest extends UnitTestCase {
    * Tests on build render denied.
    */
   #[DataProvider('providerBlockTypes')]
-  public function testOnBuildRenderDenied($refinable_dependent_access): void {
+  public function testOnBuildRenderDenied(bool $refinable_dependent_access): void {
     $contexts = [];
     if ($refinable_dependent_access) {
       $block = $this->prophesize(TestBlockPluginWithRefinableDependentAccessInterface::class);
@@ -279,7 +279,7 @@ class BlockComponentRenderArrayTest extends UnitTestCase {
    * Tests on build render in preview.
    */
   #[DataProvider('providerBlockTypes')]
-  public function testOnBuildRenderInPreview($refinable_dependent_access): void {
+  public function testOnBuildRenderInPreview(bool $refinable_dependent_access): void {
     $contexts = [];
     if ($refinable_dependent_access) {
       $block = $this->prophesize(TestBlockPluginWithRefinableDependentAccessInterface::class)->willImplement(PreviewFallbackInterface::class);

@@ -58,14 +58,14 @@ class LayoutBuilderRoutesTest extends UnitTestCase {
     ];
 
     $section_storage_first = $this->prophesize(SectionStorageInterface::class);
-    $section_storage_first->buildRoutes(Argument::type(RouteCollection::class))->shouldBeCalled()->will(function ($args) {
+    $section_storage_first->buildRoutes(Argument::type(RouteCollection::class))->shouldBeCalled()->will(function ($args): void {
       /** @var \Symfony\Component\Routing\RouteCollection $collection */
       $collection = $args[0];
       $collection->add('test_route_shared', new Route('/test/path/shared1'));
       $collection->add('test_route1', new Route('/test/path1'));
     });
     $section_storage_second = $this->prophesize(SectionStorageInterface::class);
-    $section_storage_second->buildRoutes(Argument::type(RouteCollection::class))->shouldBeCalled()->will(function ($args) {
+    $section_storage_second->buildRoutes(Argument::type(RouteCollection::class))->shouldBeCalled()->will(function ($args): void {
       /** @var \Symfony\Component\Routing\RouteCollection $collection */
       $collection = $args[0];
       $collection->add('test_route_shared', new Route('/test/path/shared2'));

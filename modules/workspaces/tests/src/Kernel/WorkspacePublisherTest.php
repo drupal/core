@@ -181,7 +181,7 @@ class TestTime extends Time {
   /**
    * {@inheritdoc}
    */
-  public function getRequestTime() {
+  public function getRequestTime(): float|int {
     return parent::getRequestTime() + static::$offset;
   }
 

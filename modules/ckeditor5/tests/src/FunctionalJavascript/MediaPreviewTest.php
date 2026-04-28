@@ -147,7 +147,7 @@ class MediaPreviewTest extends MediaTestBase {
    *   Whether the logged in user is allowed to use the text format.
    */
   #[DataProvider('previewAccessProvider')]
-  public function testEmbedPreviewAccess($media_embed_enabled, $can_use_format): void {
+  public function testEmbedPreviewAccess(bool $media_embed_enabled, bool $can_use_format): void {
     // Reconfigure the host entity's text format to suit our needs.
     /** @var \Drupal\filter\FilterFormatInterface $format */
     $format = FilterFormat::load($this->host->body->format);
@@ -190,7 +190,7 @@ class MediaPreviewTest extends MediaTestBase {
   /**
    * Data provider for ::testEmbedPreviewAccess.
    */
-  public static function previewAccessProvider() {
+  public static function previewAccessProvider(): array {
     return [
       'media_embed filter enabled' => [
         TRUE,

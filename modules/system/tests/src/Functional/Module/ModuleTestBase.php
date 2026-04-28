@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\system\Functional\Module;
 
+use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Config\InstallStorage;
 use Drupal\Core\Database\Database;
-use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Logger\RfcLogLevel;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\TestTools\Extension\SchemaInspector;
@@ -47,7 +47,7 @@ abstract class ModuleTestBase extends BrowserTestBase {
    * @param string $module
    *   The name of the module.
    */
-  public function assertModuleTablesExist($module) {
+  public function assertModuleTablesExist(string $module): void {
     $tables = array_keys(SchemaInspector::getTablesSpecification(\Drupal::moduleHandler(), $module));
     $tables_exist = TRUE;
     $schema = Database::getConnection()->schema();
@@ -65,7 +65,7 @@ abstract class ModuleTestBase extends BrowserTestBase {
    * @param string $module
    *   The name of the module.
    */
-  public function assertModuleTablesDoNotExist($module) {
+  public function assertModuleTablesDoNotExist(string $module): void {
     $tables = array_keys(SchemaInspector::getTablesSpecification(\Drupal::moduleHandler(), $module));
     $tables_exist = FALSE;
     $schema = Database::getConnection()->schema();
@@ -83,7 +83,7 @@ abstract class ModuleTestBase extends BrowserTestBase {
    * @param string $module
    *   The name of the module.
    */
-  public function assertModuleConfig($module) {
+  public function assertModuleConfig(string $module): void {
     $module_config_dir = $this->getModulePath($module) . '/' . InstallStorage::CONFIG_INSTALL_DIRECTORY;
     if (!is_dir($module_config_dir)) {
       return;
@@ -124,7 +124,7 @@ abstract class ModuleTestBase extends BrowserTestBase {
    * @param string $module
    *   The name of the module.
    */
-  public function assertNoModuleConfig($module) {
+  public function assertNoModuleConfig(string $module): void {
     $names = \Drupal::configFactory()->listAll($module . '.');
     $this->assertEmpty($names, "No configuration found for $module module.");
   }
@@ -137,7 +137,7 @@ abstract class ModuleTestBase extends BrowserTestBase {
    * @param bool $enabled
    *   Expected module state.
    */
-  public function assertModules(array $modules, $enabled) {
+  public function assertModules(array $modules, $enabled): void {
     $this->rebuildContainer();
     foreach ($modules as $module) {
       if ($enabled) {
@@ -170,7 +170,7 @@ abstract class ModuleTestBase extends BrowserTestBase {
    * @param string $link
    *   A link to associate with the message.
    */
-  public function assertLogMessage($type, $message, $variables = [], $severity = RfcLogLevel::NOTICE, $link = '') {
+  public function assertLogMessage($type, $message, $variables = [], $severity = RfcLogLevel::NOTICE, $link = ''): void {
     $this->assertNotEmpty(Database::getConnection()->select('watchdog', 'w')
       ->condition('type', $type)
       ->condition('message', $message)

@@ -190,7 +190,7 @@ class SearchExcerptTest extends KernelTestBase {
    * @return string
    *   A string containing HTML for the excerpt.
    */
-  protected function doSearchExcerpt($keys, $render_array, $langcode = NULL) {
+  protected function doSearchExcerpt($keys, $render_array, $langcode = NULL): ?string {
     $render_array = search_excerpt($keys, $render_array, $langcode);
     $text = (string) \Drupal::service('renderer')->renderInIsolation($render_array);
     // The search_excerpt() function adds some extra spaces -- not

@@ -111,7 +111,7 @@ class FilterNumericTest extends ViewsKernelTestBase {
    *   The expected results.
    */
   #[DataProvider('providerTestFilterNumericBetween')]
-  public function testFilterNumericBetween($operator, $min, $max, array $expected_result): void {
+  public function testFilterNumericBetween(string $operator, int|string $min, int|string $max, array $expected_result): void {
     $view = Views::getView('test_view');
     $view->setDisplay();
 
@@ -140,7 +140,7 @@ class FilterNumericTest extends ViewsKernelTestBase {
    *   An array of arrays, each containing the parameters for
    *   self::testFilterNumericBetween().
    */
-  public static function providerTestFilterNumericBetween() {
+  public static function providerTestFilterNumericBetween(): array {
     $all_result = [
       ['name' => 'John', 'age' => 25],
       ['name' => 'George', 'age' => 27],

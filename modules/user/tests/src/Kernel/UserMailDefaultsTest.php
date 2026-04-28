@@ -33,7 +33,7 @@ class UserMailDefaultsTest extends KernelTestBase {
    * Tests that each user mail contains blank lines.
    */
   #[DataProvider('userMailsProvider')]
-  public function testMailDefaults($key): void {
+  public function testMailDefaults(string $key): void {
     $body = $this->config('user.mail')->get("$key.body");
     $this->assertStringContainsString("\n\n", $body);
   }
@@ -44,7 +44,7 @@ class UserMailDefaultsTest extends KernelTestBase {
    * @return array
    *   Array of arrays containing the set of user mail configuration keys.
    */
-  public static function userMailsProvider() {
+  public static function userMailsProvider(): array {
     return [
       ['cancel_confirm'],
       ['password_reset'],

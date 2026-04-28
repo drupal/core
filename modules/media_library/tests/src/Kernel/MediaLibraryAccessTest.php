@@ -144,7 +144,7 @@ class MediaLibraryAccessTest extends KernelTestBase {
    * @legacy-covers \Drupal\media_library\MediaLibraryEditorOpener::checkAccess
    */
   #[DataProvider('editorOpenerAccessProvider')]
-  public function testEditorOpenerAccess($media_embed_enabled, $can_use_format): void {
+  public function testEditorOpenerAccess(bool $media_embed_enabled, bool $can_use_format): void {
     $format = $this->container
       ->get('entity_type.manager')
       ->getStorage('filter_format')->create([
@@ -187,7 +187,7 @@ class MediaLibraryAccessTest extends KernelTestBase {
   /**
    * Data provider for ::testEditorOpenerAccess.
    */
-  public static function editorOpenerAccessProvider() {
+  public static function editorOpenerAccessProvider(): array {
     return [
       'media_embed filter enabled' => [
         TRUE,

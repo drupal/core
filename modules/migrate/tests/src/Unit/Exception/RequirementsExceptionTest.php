@@ -33,7 +33,7 @@ class RequirementsExceptionTest extends UnitTestCase {
    * @legacy-covers ::getRequirementsString
    */
   #[DataProvider('getRequirementsProvider')]
-  public function testGetExceptionString($expected, $message, $requirements): void {
+  public function testGetExceptionString(string $expected, string $message, array $requirements): void {
     $exception = new RequirementsException($message, $requirements);
     $this->assertEquals($expected, $exception->getRequirementsString());
   }
@@ -41,7 +41,7 @@ class RequirementsExceptionTest extends UnitTestCase {
   /**
    * Provides a list of requirements to test.
    */
-  public static function getRequirementsProvider() {
+  public static function getRequirementsProvider(): array {
     return [
       [
         'requirements: random_jackson_pivot.',

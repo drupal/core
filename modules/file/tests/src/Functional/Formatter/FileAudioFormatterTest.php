@@ -31,7 +31,7 @@ class FileAudioFormatterTest extends FileMediaFormatterTestBase {
    * @legacy-covers ::viewElements
    */
   #[DataProvider('dataProvider')]
-  public function testRender($tag_count, $formatter_settings): void {
+  public function testRender(int $tag_count, array $formatter_settings): void {
     // Create a file field that accepts .mp3 and an unknown file extension.
     $field_config = $this->createMediaField('file_audio', 'unknown-extension, mp3', $formatter_settings);
 

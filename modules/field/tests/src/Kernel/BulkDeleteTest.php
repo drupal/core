@@ -66,7 +66,7 @@ class BulkDeleteTest extends FieldKernelTestBase {
    *   The array of actual hook invocations recorded by
    *   FieldTestHelper::memorize().
    */
-  public function checkHooksInvocations($expected_hooks, $actual_hooks): void {
+  public function checkHooksInvocations($expected_hooks, array $actual_hooks): void {
     foreach ($expected_hooks as $hook => $invocations) {
       $actual_invocations = $actual_hooks[$hook];
 

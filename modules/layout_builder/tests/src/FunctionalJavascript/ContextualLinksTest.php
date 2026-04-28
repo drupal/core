@@ -132,7 +132,7 @@ class ContextualLinksTest extends WebDriverTestBase {
    * @param string $block_name
    *   The block name as it appears in the Add block form.
    */
-  protected function addBlock($block_name): void {
+  protected function addBlock(string $block_name): void {
     $assert_session = $this->assertSession();
     $page = $this->getSession()->getPage();
 

@@ -411,7 +411,7 @@ class NodeTest extends ResourceTestBase {
       ->get(['node--camelids', $this->entity->uuid(), $this->entity->language()->getId()], new CacheableMetadata());
     $cached_fields = $cache->data['fields'];
     $this->assertSameSize($field_names, $cached_fields);
-    array_walk($field_names, function ($field_name) use ($cached_fields) {
+    array_walk($field_names, function (string $field_name) use ($cached_fields): void {
       $this->assertInstanceOf(
         CacheableNormalization::class,
         $cached_fields[$field_name]

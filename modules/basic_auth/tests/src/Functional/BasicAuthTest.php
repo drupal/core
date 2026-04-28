@@ -214,7 +214,7 @@ class BasicAuthTest extends BrowserTestBase {
   public function testCacheabilityOf401Response(): void {
     $url = Url::fromRoute('router_test.11');
 
-    $assert_response_cacheability = function ($expected_page_cache_header_value, $expected_dynamic_page_cache_header_sub_request_value) use ($url) {
+    $assert_response_cacheability = function (string|int|float|bool|null $expected_page_cache_header_value, $expected_dynamic_page_cache_header_sub_request_value) use ($url): void {
       $this->drupalGet($url);
       $this->assertSession()->statusCodeEquals(401);
       $this->assertSession()->responseHeaderEquals('X-Drupal-Cache', $expected_page_cache_header_value);

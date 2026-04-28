@@ -52,7 +52,7 @@ class ImageAdminStylesTest extends ImageFieldTestBase {
   /**
    * Count the number of images currently create for a style.
    */
-  public function getImageCount(ImageStyleInterface $style) {
+  public function getImageCount(ImageStyleInterface $style): int {
     $count = 0;
     if (is_dir('public://styles/' . $style->id())) {
       $count = count(\Drupal::service('file_system')->scanDirectory('public://styles/' . $style->id(), '/.*/'));

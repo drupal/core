@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\ckeditor5\FunctionalJavascript;
 
+use Drupal\ckeditor5\Plugin\Editor\CKEditor5;
 use Drupal\editor\Entity\Editor;
 use Drupal\file\Entity\File;
 use Drupal\filter\Entity\FilterFormat;
-use Drupal\ckeditor5\Plugin\Editor\CKEditor5;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 
 // cspell:ignore imageresize imageupload
@@ -76,7 +76,7 @@ abstract class ImageTestTestBase extends ImageTestBase {
       ],
     ])->save();
     $this->assertSame([], array_map(
-      function (ConstraintViolationInterface $v) {
+      function (ConstraintViolationInterface $v): string {
         return (string) $v->getMessage();
       },
       iterator_to_array(CKEditor5::validatePair(

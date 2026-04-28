@@ -10,8 +10,8 @@ use Drupal\Core\Entity\Entity\EntityViewMode;
 use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\filter\Entity\FilterFormat;
-use Drupal\user\Entity\Role;
 use Drupal\media\Plugin\Filter\MediaEmbed;
+use Drupal\user\Entity\Role;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -38,7 +38,7 @@ class MediaEmbedFilterTest extends MediaEmbedFilterTestBase {
    * Ensures media entities are rendered correctly.
    */
   #[DataProvider('providerTestBasics')]
-  public function testBasics(array $embed_attributes, $expected_view_mode, array $expected_attributes, CacheableMetadata $expected_cacheability): void {
+  public function testBasics(array $embed_attributes, string $expected_view_mode, array $expected_attributes, CacheableMetadata $expected_cacheability): void {
     $content = $this->createEmbedCode($embed_attributes);
 
     $result = $this->applyFilter($content);
@@ -55,7 +55,7 @@ class MediaEmbedFilterTest extends MediaEmbedFilterTestBase {
   /**
    * Data provider for testBasics().
    */
-  public static function providerTestBasics() {
+  public static function providerTestBasics(): array {
     $default_cacheability = (new CacheableMetadata())
       ->setCacheTags([
         '_media_test_embed_filter_access:media:1',
@@ -139,7 +139,7 @@ class MediaEmbedFilterTest extends MediaEmbedFilterTestBase {
    * Tests that entity access is respected by embedding an unpublished entity.
    */
   #[DataProvider('providerAccessUnpublished')]
-  public function testAccessUnpublished($allowed_to_view_unpublished, $expected_rendered, CacheableMetadata $expected_cacheability, array $expected_attachments): void {
+  public function testAccessUnpublished(bool $allowed_to_view_unpublished, bool $expected_rendered, CacheableMetadata $expected_cacheability, array $expected_attachments): void {
     // Unpublish the embedded entity so we can test variations in behavior.
     $this->embeddedEntity->setUnpublished()->save();
 
@@ -172,7 +172,7 @@ class MediaEmbedFilterTest extends MediaEmbedFilterTestBase {
   /**
    * Data provider for testAccessUnpublished().
    */
-  public static function providerAccessUnpublished() {
+  public static function providerAccessUnpublished(): array {
     return [
       'user cannot access embedded media' => [
         FALSE,
@@ -213,7 +213,7 @@ class MediaEmbedFilterTest extends MediaEmbedFilterTestBase {
    * @legacy-covers ::applyPerEmbedMediaOverrides
    */
   #[DataProvider('providerOverridesAltAndTitle')]
-  public function testOverridesAltAndTitle($title_field_property_enabled, array $expected_title_attributes): void {
+  public function testOverridesAltAndTitle(bool $title_field_property_enabled, array $expected_title_attributes): void {
     // The `alt` field property is enabled by default, the `title` one is not.
     if ($title_field_property_enabled) {
       $source_field = FieldConfig::load('media.image.field_media_image');
@@ -272,7 +272,7 @@ class MediaEmbedFilterTest extends MediaEmbedFilterTestBase {
   /**
    * Data provider for testOverridesAltAndTitle().
    */
-  public static function providerOverridesAltAndTitle() {
+  public static function providerOverridesAltAndTitle(): array {
     return [
       '`title` field property disabled ⇒ `title` is not overridable' => [
         FALSE,
@@ -289,7 +289,7 @@ class MediaEmbedFilterTest extends MediaEmbedFilterTestBase {
    * Tests the indicator for missing entities.
    */
   #[DataProvider('providerMissingEntityIndicator')]
-  public function testMissingEntityIndicator($uuid, array $filter_ids, array $additional_attributes): void {
+  public function testMissingEntityIndicator(string $uuid, array $filter_ids, array $additional_attributes): void {
     $content = $this->createEmbedCode([
       'data-entity-type' => 'media',
       'data-entity-uuid' => $uuid,
@@ -317,7 +317,7 @@ class MediaEmbedFilterTest extends MediaEmbedFilterTestBase {
   /**
    * Data provider for testMissingEntityIndicator().
    */
-  public static function providerMissingEntityIndicator() {
+  public static function providerMissingEntityIndicator(): array {
     return [
       'invalid UUID' => [
         'uuid' => 'invalidUUID',
@@ -404,7 +404,7 @@ class MediaEmbedFilterTest extends MediaEmbedFilterTestBase {
    * @legacy-covers \Drupal\filter\Plugin\Filter\FilterCaption
    */
   #[DataProvider('providerFilterIntegration')]
-  public function testFilterIntegration(array $filter_ids, array $additional_attributes, $verification_selector, $expected_verification_success, array $expected_asset_libraries = [], $prefix = '', $suffix = ''): void {
+  public function testFilterIntegration(array $filter_ids, array $additional_attributes, string $verification_selector, $expected_verification_success, array $expected_asset_libraries = [], string $prefix = '', string $suffix = ''): void {
     $content = $this->createEmbedCode([
       'data-entity-type' => 'media',
       'data-entity-uuid' => static::EMBEDDED_ENTITY_UUID,
@@ -433,7 +433,7 @@ class MediaEmbedFilterTest extends MediaEmbedFilterTestBase {
   /**
    * Data provider for testFilterIntegration().
    */
-  public static function providerFilterIntegration() {
+  public static function providerFilterIntegration(): array {
     $default_asset_libraries = ['media/filter.caption'];
 
     $caption_additional_attributes = ['data-caption' => 'Yo.'];

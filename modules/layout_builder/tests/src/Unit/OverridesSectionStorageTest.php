@@ -123,7 +123,7 @@ class OverridesSectionStorageTest extends UnitTestCase {
   /**
    * Provides data for ::testExtractEntityFromRoute().
    */
-  public static function providerTestExtractEntityFromRoute() {
+  public static function providerTestExtractEntityFromRoute(): array {
     // Data provider values are:
     // - whether a successful result is expected
     // - the expected entity ID

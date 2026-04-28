@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\system\Functional\Form;
 
+use Behat\Mink\Element\NodeElement;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\language\Entity\ConfigurableLanguage;
@@ -117,7 +118,7 @@ class LanguageSelectElementTest extends BrowserTestBase {
     // Check that the options in the language field are exactly the same,
     // including the order, as the languages sent as a parameter.
     $found_options = $this->assertSession()->selectExists($id)->findAll('css', 'option');
-    $found_options = array_map(function ($item) {
+    $found_options = array_map(function (NodeElement $item) {
       return $item->getText();
     }, $found_options);
     $this->assertEquals(array_values($options), $found_options);

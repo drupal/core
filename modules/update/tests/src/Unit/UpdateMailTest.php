@@ -78,7 +78,7 @@ class UpdateMailTest extends UnitTestCase {
    * Test the subject and body of update text.
    */
   #[DataProvider('providerTestUpdateEmail')]
-  public function testUpdateEmail($notification_threshold, $params, array $expected_body): void {
+  public function testUpdateEmail(string $notification_threshold, array $params, array $expected_body): void {
     $langcode = 'en';
     $available_updates_url = 'https://example.com/admin/reports/updates';
     $update_settings_url = 'https://example.com/admin/reports/updates/settings';

@@ -159,7 +159,7 @@ class UserRegistrationRestTest extends ResourceTestBase {
    * @return array
    *   Return the request body.
    */
-  protected function createRequestBody($name, $include_password = TRUE, $include_email = TRUE): array {
+  protected function createRequestBody(string $name, $include_password = TRUE, $include_email = TRUE): array {
     $request_body = [
       'langcode' => [['value' => 'en']],
       'name' => [['value' => $name]],
@@ -272,7 +272,7 @@ class UserRegistrationRestTest extends ResourceTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function getExpectedUnauthorizedAccessCacheability() {
+  protected function getExpectedUnauthorizedAccessCacheability(): CacheableMetadata {
     return new CacheableMetadata();
   }
 

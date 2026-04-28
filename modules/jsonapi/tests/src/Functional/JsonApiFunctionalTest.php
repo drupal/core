@@ -197,7 +197,7 @@ class JsonApiFunctionalTest extends JsonApiFunctionalTestBase {
     ]));
     $this->assertSession()->statusCodeEquals(200);
     $this->assertCount(1, $single_output['data']);
-    $non_help_links = array_filter(array_keys($single_output['meta']['omitted']['links']), function ($key) {
+    $non_help_links = array_filter(array_keys($single_output['meta']['omitted']['links']), function (int|string $key): bool {
       return $key !== 'help';
     });
     $this->assertCount(1, $non_help_links);
@@ -329,7 +329,7 @@ class JsonApiFunctionalTest extends JsonApiFunctionalTestBase {
         'sort' => 'field_sort1,field_sort2',
       ],
     ]));
-    $output_uuids = array_map(function ($result) {
+    $output_uuids = array_map(function (array $result) {
       return $result['id'];
     }, $output['data']);
     $this->assertCount(6, $output_uuids);
@@ -348,7 +348,7 @@ class JsonApiFunctionalTest extends JsonApiFunctionalTestBase {
         'sort' => 'field_sort1,-field_sort2',
       ],
     ]));
-    $output_uuids = array_map(function ($result) {
+    $output_uuids = array_map(function (array $result) {
       return $result['id'];
     }, $output['data']);
     $this->assertCount(6, $output_uuids);
@@ -367,7 +367,7 @@ class JsonApiFunctionalTest extends JsonApiFunctionalTestBase {
         'sort' => '-field_sort1,field_sort2',
       ],
     ]));
-    $output_uuids = array_map(function ($result) {
+    $output_uuids = array_map(function (array $result) {
       return $result['id'];
     }, $output['data']);
     $this->assertCount(5, $output_uuids);
@@ -386,7 +386,7 @@ class JsonApiFunctionalTest extends JsonApiFunctionalTestBase {
         'sort' => '-field_sort1,-field_sort2',
       ],
     ]));
-    $output_uuids = array_map(function ($result) {
+    $output_uuids = array_map(function (array $result) {
       return $result['id'];
     }, $output['data']);
     $this->assertCount(5, $output_uuids);

@@ -62,7 +62,7 @@ class LatestRevisionCheckTest extends UnitTestCase {
    *   AccessResultForbidden, AccessResultNeutral.
    */
   #[DataProvider('accessSituationProvider')]
-  public function testLatestAccessPermissions($entity_class, $entity_type, $has_pending_revision, array $account_permissions, $is_owner, $result_class): void {
+  public function testLatestAccessPermissions(string $entity_class, string $entity_type, bool $has_pending_revision, array $account_permissions, bool $is_owner, string $result_class): void {
 
     /** @var \Drupal\Core\Session\AccountInterface $account */
     $account = $this->prophesize(AccountInterface::class);
@@ -108,7 +108,7 @@ class LatestRevisionCheckTest extends UnitTestCase {
   /**
    * Data provider for testLastAccessPermissions().
    */
-  public static function accessSituationProvider() {
+  public static function accessSituationProvider(): array {
     return [
       // Node with global permissions and latest version.
       [

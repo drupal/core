@@ -49,7 +49,7 @@ class SpaceUsedTest extends FileManagedUnitTestBase {
    * @return \Drupal\Core\Entity\EntityInterface
    *   The file entity.
    */
-  protected function createFileWithSize($uri, $size, $uid, $status = FileInterface::STATUS_PERMANENT): EntityInterface {
+  protected function createFileWithSize($uri, int $size, $uid, $status = FileInterface::STATUS_PERMANENT): EntityInterface {
     file_put_contents($uri, $this->randomMachineName($size));
     $file = File::create([
       'uri' => $uri,

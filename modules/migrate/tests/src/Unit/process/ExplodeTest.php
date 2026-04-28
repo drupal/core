@@ -68,7 +68,7 @@ class ExplodeTest extends MigrateProcessTestCase {
    * Tests that explode works on non-strings but with strict set to FALSE.
    */
   #[DataProvider('providerExplodeWithNonStrictAndEmptySource')]
-  public function testExplodeWithNonStrictAndEmptySource($value, $expected): void {
+  public function testExplodeWithNonStrictAndEmptySource(string|int|bool|null $value, array $expected): void {
     $plugin = new Explode(['delimiter' => '|', 'strict' => FALSE], 'map', []);
 
     $processed = $plugin->transform($value, $this->migrateExecutable, $this->row, 'destination_property');
@@ -78,7 +78,7 @@ class ExplodeTest extends MigrateProcessTestCase {
   /**
    * Data provider for ::testExplodeWithNonStrictAndEmptySource().
    */
-  public static function providerExplodeWithNonStrictAndEmptySource() {
+  public static function providerExplodeWithNonStrictAndEmptySource(): array {
     return [
       'normal_string' => ['a|b|c', ['a', 'b', 'c']],
       'integer_cast_to_string' => [123, ['123']],

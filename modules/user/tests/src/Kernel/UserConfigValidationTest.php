@@ -59,7 +59,7 @@ class UserConfigValidationTest extends KernelTestBase {
    * Tests invalid values in 'user.settings' config properties.
    */
   #[DataProvider('providerTestUserSettings')]
-  public function testUserSettings($property, $property_value, $expected_message): void {
+  public function testUserSettings(string $property, string $property_value, string $expected_message): void {
     $config_name = 'user.settings';
     $config = $this->config($config_name);
     $violations = $this->container->get('config.typed')

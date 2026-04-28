@@ -201,7 +201,7 @@ END;
   /**
    * {@inheritdoc}
    */
-  public function visit($request_uri = '/', $working_dir = NULL): Mink {
+  public function visit(string $request_uri = '/', $working_dir = NULL): Mink {
     return parent::visit($request_uri, $working_dir ?: $this->webRoot);
   }
 
@@ -222,7 +222,7 @@ END;
    * @param string $working_directory
    *   (optional) The Composer working directory. Defaults to 'project'.
    */
-  protected function addRepository(string $name, string $path, $working_directory = 'project'): void {
+  protected function addRepository(string $name, string $path, ?string $working_directory = 'project'): void {
     $this->assertDirectoryExists($path);
 
     $repository = json_encode([
@@ -731,7 +731,7 @@ END;
   /**
    * {@inheritdoc}
    */
-  public function copyCodebase(?\Iterator $iterator = NULL, $working_dir = NULL): void {
+  public function copyCodebase(?\Iterator $iterator = NULL, ?string $working_dir = NULL): void {
     parent::copyCodebase($iterator, $working_dir);
 
     // Create a local Composer repository for all third-party dependencies and

@@ -27,7 +27,7 @@ class HighWaterNotJoinableTest extends MigrateSqlSourceTestBase {
   /**
    * {@inheritdoc}
    */
-  public static function providerSource() {
+  public static function providerSource(): array {
     $tests = [];
 
     // Test high water when the map is not joinable.

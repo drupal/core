@@ -36,7 +36,7 @@ class UserMailRequiredValidatorTest extends UnitTestCase {
    * @return \Drupal\user\Plugin\Validation\Constraint\UserMailRequiredValidator
    *   The validator instance.
    */
-  protected function createValidator($is_admin) {
+  protected function createValidator($is_admin): UserMailRequiredValidator {
     // Setup mocks that don't need to change.
     $unchanged_account = $this->prophesize(UserInterface::class);
     $unchanged_account->getEmail()->willReturn(NULL);
@@ -83,7 +83,7 @@ class UserMailRequiredValidatorTest extends UnitTestCase {
   /**
    * Data provider for ::testValidate().
    */
-  public static function providerTestValidate() {
+  public static function providerTestValidate(): array {
     $prophet = new Prophet();
     $cases = [];
 

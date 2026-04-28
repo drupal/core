@@ -126,7 +126,7 @@ class DateTimeNormalizerTest extends UnitTestCase {
    * @return array
    *   An array of test data.
    */
-  public static function providerTestDenormalizeValidFormats() {
+  public static function providerTestDenormalizeValidFormats(): array {
     $data = [];
 
     $data['RFC3339'] = ['2016-11-06T09:02:00+00:00', new \DateTimeImmutable('2016-11-06T09:02:00+00:00')];
@@ -156,7 +156,7 @@ class DateTimeNormalizerTest extends UnitTestCase {
    * @return array
    *   An array of test data.
    */
-  public static function providerTestDenormalizeUserFormats() {
+  public static function providerTestDenormalizeUserFormats(): array {
     $data = [];
 
     $data['Y/m/d H:i:s P'] = [
@@ -210,7 +210,7 @@ class DateTimeNormalizerTest extends UnitTestCase {
       return $data->reveal();
     };
     return [
-      'RFC 3339' => [fn (UnitTestCase $test) => $case($test)],
+      'RFC 3339' => [fn (UnitTestCase $test): DateTimeInterface => $case($test)],
     ];
   }
 

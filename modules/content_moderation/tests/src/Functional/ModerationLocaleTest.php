@@ -677,7 +677,7 @@ class ModerationLocaleTest extends ModerationStateTestBase {
    * @return bool
    *   TRUE if the moderation form could be find in the page, FALSE otherwise.
    */
-  public function hasModerationForm() {
+  public function hasModerationForm(): bool {
     return (bool) $this->xpath('//ul[@class="entity-moderation-form"]');
   }
 

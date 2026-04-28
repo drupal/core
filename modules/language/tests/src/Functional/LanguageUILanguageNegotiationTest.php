@@ -281,7 +281,7 @@ class LanguageUILanguageNegotiationTest extends BrowserTestBase {
     $definitions = \Drupal::languageManager()->getNegotiator()->getNegotiationMethods();
     // Enable only methods, which are either not limited to a specific language
     // type or are supporting the interface language type.
-    $language_interface_method_definitions = array_filter($definitions, function ($method_definition) {
+    $language_interface_method_definitions = array_filter($definitions, function (array $method_definition): bool {
       return !isset($method_definition['types']) || (isset($method_definition['types']) && in_array(LanguageInterface::TYPE_INTERFACE, $method_definition['types']));
     });
     $this->config('language.types')
@@ -423,7 +423,7 @@ class LanguageUILanguageNegotiationTest extends BrowserTestBase {
   /**
    * Runs common tests for the language user interface.
    */
-  protected function doRunTest($test): void {
+  protected function doRunTest(array $test): void {
     $test += ['path_options' => []];
     if (!empty($test['language_negotiation'])) {
       $method_weights = array_flip($test['language_negotiation']);

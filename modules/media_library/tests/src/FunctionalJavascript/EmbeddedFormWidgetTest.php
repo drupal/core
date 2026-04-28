@@ -99,7 +99,7 @@ class EmbeddedFormWidgetTest extends WebDriverTestBase {
    * Tests media inside another widget that validates too enthusiastically.
    */
   #[DataProvider('insertionReselectionProvider')]
-  public function testInsertionAndReselection($widget): void {
+  public function testInsertionAndReselection(string $widget): void {
     $this->container
       ->get('entity_display.repository')
       ->getFormDisplay('node', 'basic_page')
@@ -156,7 +156,7 @@ class EmbeddedFormWidgetTest extends WebDriverTestBase {
    * @return array
    *   Test data.
    */
-  public static function insertionReselectionProvider() {
+  public static function insertionReselectionProvider(): array {
     return [
       'using media_library_widget' => [
         'widget' => 'media_library_widget',

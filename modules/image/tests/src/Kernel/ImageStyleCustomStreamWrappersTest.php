@@ -102,7 +102,7 @@ class ImageStyleCustomStreamWrappersTest extends KernelTestBase {
    *   - The derivative expected stream wrapper scheme.
    *   - The stream wrapper service class.
    */
-  public static function providerTestCustomStreamWrappers() {
+  public static function providerTestCustomStreamWrappers(): array {
     return [
       ['public', 'public', PublicStream::class],
       ['private', 'private', PrivateStream::class],

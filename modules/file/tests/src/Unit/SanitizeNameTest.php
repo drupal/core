@@ -42,7 +42,7 @@ class SanitizeNameTest extends UnitTestCase {
    * @legacy-covers \Drupal\Core\File\Event\FileUploadSanitizeNameEvent::__construct
    */
   #[DataProvider('provideFilenames')]
-  public function testFileNameTransliteration($original, $expected, array $options, $language_id = 'en'): void {
+  public function testFileNameTransliteration(string $original, string $expected, array $options, string $language_id = 'en'): void {
     $sanitization_options = [
       'transliterate' => $options[0],
       'replacement_character' => $options[1],
@@ -75,7 +75,7 @@ class SanitizeNameTest extends UnitTestCase {
    * @return array
    *   Arrays with original name, expected name, and sanitization options.
    */
-  public static function provideFilenames() {
+  public static function provideFilenames(): array {
     return [
       'Test default options' => [
         'TÉXT-œ.txt',

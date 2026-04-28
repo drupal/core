@@ -80,7 +80,7 @@ abstract class CKEditor5TestBase extends WebDriverTestBase {
   /**
    * Create a new text format using CKEditor 5.
    */
-  public function createNewTextFormat($page, $assert_session, $name = 'ckeditor5') {
+  public function createNewTextFormat($page, $assert_session, $name = 'ckeditor5'): void {
     $this->drupalGet('admin/config/content/formats/add');
     $page->fillField('name', $name);
     $assert_session->waitForText('Machine name');
@@ -104,7 +104,7 @@ abstract class CKEditor5TestBase extends WebDriverTestBase {
   /**
    * Save the new text format.
    */
-  public function saveNewTextFormat($page, $assert_session) {
+  public function saveNewTextFormat($page, $assert_session): void {
     $page->pressButton('Save configuration');
     $this->assertTrue($assert_session->waitForText('Added text format'), "Confirm new text format saved");
   }
@@ -150,7 +150,7 @@ JS;
    *
    * @see \Behat\Mink\WebAssert::fieldValueEquals()
    */
-  protected function assertHtmlEsqueFieldValueEquals($field, $value, ?TraversableElement $container = NULL) {
+  protected function assertHtmlEsqueFieldValueEquals(string $field, $value, ?TraversableElement $container = NULL) {
     $assert_session = $this->assertSession();
 
     $node = $assert_session->fieldExists($field, $container);

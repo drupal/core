@@ -38,7 +38,7 @@ class UserMailNotifyTest extends EntityKernelTestBase {
    * @return array
    *   An array of operations and the mail keys they should send.
    */
-  public static function userMailsProvider() {
+  public static function userMailsProvider(): array {
     return [
       'cancel confirm notification' => [
         'cancel_confirm',
@@ -84,7 +84,7 @@ class UserMailNotifyTest extends EntityKernelTestBase {
    *   The mail keys to test for.
    */
   #[DataProvider('userMailsProvider')]
-  public function testUserMailsSent($op, array $mail_keys): void {
+  public function testUserMailsSent(string $op, array $mail_keys): void {
     $this->installConfig('user');
     $this->config('system.site')->set('mail', 'test@example.com')->save();
     $this->config('user.settings')->set('notify.' . $op, TRUE)->save();

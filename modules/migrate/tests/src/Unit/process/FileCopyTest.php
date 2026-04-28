@@ -36,7 +36,7 @@ class FileCopyTest extends MigrateProcessTestCase {
   /**
    * Data provider for testFileProcessBaseConstructor.
    */
-  public static function providerFileProcessBaseConstructor() {
+  public static function providerFileProcessBaseConstructor(): array {
     return [
       [['file_exists' => 'replace'], FileExists::Replace],
       [['file_exists' => 'rename'], FileExists::Rename],

@@ -136,7 +136,7 @@ class FormErrorHandlerTest extends UnitTestCase {
 
     $this->renderer->expects($this->once())
       ->method('renderInIsolation')
-      ->willReturnCallback(function ($render_array) {
+      ->willReturnCallback(function ($render_array): string {
         $links = [];
         foreach ($render_array[1]['#items'] as $item) {
           $links[] = htmlspecialchars($item['#title']);

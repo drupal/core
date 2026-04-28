@@ -133,7 +133,7 @@ class NavigationTopBarTest extends PageCacheTagsTestBase {
   protected function assertActionsWeight(NodeElement $toolbar_links): void {
     // Displayed action links in the top bar.
     $displayed_links = array_map(
-      fn($link) => $link->getText(),
+      fn(NodeElement $link) => $link->getText(),
       $toolbar_links->findAll('css', 'li')
     );
 
@@ -153,10 +153,10 @@ class NavigationTopBarTest extends PageCacheTagsTestBase {
     uasort($entity_local_tasks['tabs'], [SortArray::class, 'sortByWeightProperty']);
 
     // Extract the expected order based on sorted weights.
-    $expected_order = array_values(array_map(fn($task) => $task['#link']['title'], $entity_local_tasks['tabs']));
+    $expected_order = array_values(array_map(fn(array $task) => $task['#link']['title'], $entity_local_tasks['tabs']));
 
     // Filter out elements not in displayed_links.
-    $expected_order = array_values(array_filter($expected_order, fn($title) => in_array($title, $displayed_links, TRUE)));
+    $expected_order = array_values(array_filter($expected_order, fn($title): bool => in_array($title, $displayed_links, TRUE)));
 
     // Ensure that the displayed links match the expected order.
     $this->assertSame($expected_order, $displayed_links, 'Local tasks are displayed in the correct order based on their weights.');
@@ -185,7 +185,7 @@ class NavigationTopBarTest extends PageCacheTagsTestBase {
     }
 
     // Capture text values in the order they appear in the DOM.
-    $labels = array_map(fn($element) => trim($element->getText()), $elements);
+    $labels = array_map(fn(NodeElement $element): string => trim($element->getText()), $elements);
 
     // Expected order based on weights: low (-10), zero (0), high (10).
     $expected = [

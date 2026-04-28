@@ -96,10 +96,8 @@ abstract class BuildTestBase extends TestCase {
    * This stores the last docroot directory used to start the server process. We
    * keep this information so we can restart the server if the desired docroot
    * changes.
-   *
-   * @var string
    */
-  private $serverDocroot = NULL;
+  private ?string $serverDocroot = NULL;
 
   /**
    * Our native host name, used by PHP when it starts up the server.
@@ -318,7 +316,7 @@ abstract class BuildTestBase extends TestCase {
    * @return \Symfony\Component\Process\Process
    *   The process object.
    */
-  public function executeCommand(string $command_line, $working_dir = NULL) {
+  public function executeCommand(string $command_line, ?string $working_dir = NULL) {
     $this->commandProcess = Process::fromShellCommandline($command_line);
     $this->commandProcess->setWorkingDirectory($this->getWorkingPath($working_dir))
       ->setTimeout(360)
@@ -356,7 +354,7 @@ abstract class BuildTestBase extends TestCase {
    * @throws \InvalidArgumentException
    *   Thrown when $request_uri does not start with a slash.
    */
-  public function visit(string $request_uri = '/', $working_dir = NULL): Mink {
+  public function visit(string $request_uri = '/', ?string $working_dir = NULL): Mink {
     if ($request_uri[0] !== '/') {
       throw new \InvalidArgumentException('URI: ' . $request_uri . ' must be relative. Example: /some/path?foo=bar');
     }
@@ -380,7 +378,7 @@ abstract class BuildTestBase extends TestCase {
   protected function standUpServer(?string $working_dir = NULL): void {
     // If the user wants to test a new docroot, we have to shut down the old
     // server process and generate a new port number.
-    if ($working_dir !== $this->serverDocroot && !empty($this->serverProcess)) {
+    if ($working_dir !== $this->serverDocroot && $this->serverProcess instanceof Process) {
       $this->stopServer();
     }
     // If there's not a server at this point, make one.
@@ -446,7 +444,7 @@ abstract class BuildTestBase extends TestCase {
    * Stop the HTTP server, zero out all necessary variables.
    */
   protected function stopServer(): void {
-    if (!empty($this->serverProcess)) {
+    if ($this->serverProcess instanceof Process) {
       $this->serverProcess->stop();
     }
     $this->serverProcess = NULL;

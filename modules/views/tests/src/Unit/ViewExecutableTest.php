@@ -395,7 +395,7 @@ class ViewExecutableTest extends UnitTestCase {
    *   The handler type to set.
    */
   #[DataProvider('addHandlerProvider')]
-  public function testAddHandler($option, $handler_type): void {
+  public function testAddHandler(string $option, string $handler_type): void {
     $this->setUpMockViewsData();
 
     /** @var \Drupal\views\ViewExecutable|\PHPUnit\Framework\MockObject\MockObject $view */
@@ -438,7 +438,7 @@ class ViewExecutableTest extends UnitTestCase {
    *   The handler type to set.
    */
   #[DataProvider('addHandlerProvider')]
-  public function testAddHandlerWithEntityField($option, $handler_type): void {
+  public function testAddHandlerWithEntityField(string $option, string $handler_type): void {
     $this->setUpMockViewsData();
 
     /** @var \Drupal\views\ViewExecutable|\PHPUnit\Framework\MockObject\MockObject $view */
@@ -482,7 +482,7 @@ class ViewExecutableTest extends UnitTestCase {
    * @return array[]
    *   Test data set.
    */
-  public static function addHandlerProvider() {
+  public static function addHandlerProvider(): array {
     return [
       'field' => ['fields', 'field'],
       'filter' => ['filters', 'filter'],
@@ -502,7 +502,7 @@ class ViewExecutableTest extends UnitTestCase {
    *   Expected result.
    */
   #[DataProvider('providerAttachDisplays')]
-  public function testAttachDisplays($display_enabled, $access_granted, $expected_to_be_attached): void {
+  public function testAttachDisplays($display_enabled, $access_granted, bool $expected_to_be_attached): void {
     /** @var \Drupal\views\ViewExecutable|\PHPUnit\Framework\MockObject\MockObject $view */
     /** @var \Drupal\views\Plugin\views\display\DisplayPluginBase|\PHPUnit\Framework\MockObject\MockObject $display */
     [$view, $display] = $this->setupBaseViewAndDisplay();
@@ -553,7 +553,7 @@ class ViewExecutableTest extends UnitTestCase {
    *   An array of arrays containing the display state, a user's access to the
    *   display and whether it is expected or not that the display gets attached.
    */
-  public static function providerAttachDisplays() {
+  public static function providerAttachDisplays(): array {
     return [
       'enabled-granted' => [static::DISPLAY_ENABLED, static::ACCESS_GRANTED, TRUE],
       'enabled-revoked' => [static::DISPLAY_ENABLED, static::ACCESS_REVOKED, FALSE],
@@ -750,7 +750,7 @@ class ViewExecutableTest extends UnitTestCase {
    *   The expected result when calling execute().
    */
   #[DataProvider('providerExecuteReturn')]
-  public function testExecuteReturn($display_enabled, $expected_result): void {
+  public function testExecuteReturn($display_enabled, bool $expected_result): void {
     /** @var \Drupal\views\ViewExecutable|\PHPUnit\Framework\MockObject\MockObject $view */
     /** @var \Drupal\views\Plugin\views\display\DisplayPluginBase|\PHPUnit\Framework\MockObject\MockObject $display */
     [$view, $display] = $this->setupBaseViewAndDisplay();
@@ -776,7 +776,7 @@ class ViewExecutableTest extends UnitTestCase {
    * @return array[]
    *   An array of arrays containing the display state and expected value.
    */
-  public static function providerExecuteReturn() {
+  public static function providerExecuteReturn(): array {
     return [
       'enabled' => [static::DISPLAY_ENABLED, TRUE],
       'disabled' => [static::DISPLAY_DISABLED, FALSE],

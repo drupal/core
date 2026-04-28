@@ -374,7 +374,7 @@ class LayoutBuilderDefaultValuesTest extends BrowserTestBase {
   /**
    * Sample 'default value' callback.
    */
-  public static function defaultValueCallback(FieldableEntityInterface $entity, FieldDefinitionInterface $definition) {
+  public static function defaultValueCallback(FieldableEntityInterface $entity, FieldDefinitionInterface $definition): array {
     return [['value' => 'This is from my default value callback']];
   }
 

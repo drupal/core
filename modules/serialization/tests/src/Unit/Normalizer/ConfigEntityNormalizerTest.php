@@ -72,7 +72,7 @@ class ConfigEntityNormalizerTest extends UnitTestCase {
     $entity_storage = $this->prophesize(EntityStorageInterface::class);
     $entity_storage->create($expected_storage_data)
       ->shouldBeCalled()
-      ->will(function ($args) {
+      ->will(function ($args): \stdClass {
         $entity = new \stdClass();
         $entity->received_data = $args[0];
         return $entity;

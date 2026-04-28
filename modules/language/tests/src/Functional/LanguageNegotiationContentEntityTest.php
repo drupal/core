@@ -185,7 +185,7 @@ class LanguageNegotiationContentEntityTest extends BrowserTestBase {
    *   The route name for which the route object for the request should be
    *   created.
    */
-  protected function setCurrentRequestForRoute($path, $route_name): void {
+  protected function setCurrentRequestForRoute(string $path, $route_name): void {
     $request = Request::create($path);
     $request->attributes->set(RouteObjectInterface::ROUTE_NAME, $route_name);
     $request->attributes->set(RouteObjectInterface::ROUTE_OBJECT, new Route($path));

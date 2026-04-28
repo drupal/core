@@ -79,7 +79,7 @@ class AddFeedTest extends KernelTestBase {
   /**
    * Creates a pattern representing the RSS feed in the page.
    */
-  public function urlToRSSLinkPattern($url, $title = '') {
+  public function urlToRSSLinkPattern($url, string $title = ''): string {
     // Escape any regular expression characters in the URL ('?' is the worst).
     $url = preg_replace('/([+?.*])/', '[$0]', $url);
     $generated_pattern = '%<link +href="' . $url . '" +rel="alternate" +title="' . $title . '" +type="application/rss.xml" */>%';

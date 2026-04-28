@@ -33,7 +33,7 @@ class SqlBaseTest extends UnitTestCase {
    *   Defaults to an empty array.
    */
   #[DataProvider('sqlBaseTestProvider')]
-  public function testMapJoinable($expected_result, $id_map_is_sql, $with_id_map, $source_options = [], $id_map_options = []): void {
+  public function testMapJoinable(bool $expected_result, bool $id_map_is_sql, bool $with_id_map, array $source_options = [], array $id_map_options = []): void {
     // Setup a connection object.
     $source_connection = $this->getMockBuilder('Drupal\Core\Database\Connection')
       ->disableOriginalConstructor()
@@ -85,7 +85,7 @@ class SqlBaseTest extends UnitTestCase {
    * @return array
    *   An array of data per test run.
    */
-  public static function sqlBaseTestProvider() {
+  public static function sqlBaseTestProvider(): array {
     return [
       // Source ids are empty so mapJoinable() is false.
       [
@@ -217,21 +217,21 @@ class TestSqlBase extends SqlBase {
   /**
    * {@inheritdoc}
    */
-  public function fields() {
+  public function fields(): never {
     throw new \RuntimeException(__METHOD__ . " not implemented for " . __CLASS__);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function query() {
+  public function query(): never {
     throw new \RuntimeException(__METHOD__ . " not implemented for " . __CLASS__);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function calculateDependencies() {
+  public function calculateDependencies(): array {
     return [];
   }
 

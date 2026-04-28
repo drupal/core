@@ -61,7 +61,7 @@ abstract class ComposerPluginsValidatorTestBase extends PackageManagerKernelTest
   protected function doTestValidationAfterTrustingDuringPreCreate(array $composer_config_to_add, array $packages_to_add, array $expected_results): void {
     $expected_results_without_composer_plugin_violations = array_filter(
       $expected_results,
-      fn (ValidationResult $v) => !$v->summary || !str_contains(strtolower($v->summary->getUntranslatedString()), 'unsupported composer plugin'),
+      fn (ValidationResult $v): bool => !$v->summary || !str_contains(strtolower($v->summary->getUntranslatedString()), 'unsupported composer plugin'),
     );
 
     // Trust all added packages.
@@ -80,7 +80,7 @@ abstract class ComposerPluginsValidatorTestBase extends PackageManagerKernelTest
   protected function doTestValidationAfterTrustingDuringPreApply(array $composer_config_to_add, array $packages_to_add, array $expected_results): void {
     $expected_results_without_composer_plugin_violations = array_filter(
       $expected_results,
-      fn (ValidationResult $v) => !$v->summary || !str_contains(strtolower($v->summary->getUntranslatedString()), 'unsupported composer plugin'),
+      fn (ValidationResult $v): bool => !$v->summary || !str_contains(strtolower($v->summary->getUntranslatedString()), 'unsupported composer plugin'),
     );
 
     // Trust all added packages.

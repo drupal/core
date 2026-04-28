@@ -30,7 +30,7 @@ class FieldNumericTest extends ViewsKernelTestBase {
    * Tests the Numeric handler with different settings.
    */
   #[DataProvider('providerTestFieldNumeric')]
-  public function testFieldNumeric($field_settings, $values, $expected_values): void {
+  public function testFieldNumeric(array $field_settings, array $values, array $expected_values): void {
     $view = Views::getView('test_view');
     $view->setDisplay();
 
@@ -52,7 +52,7 @@ class FieldNumericTest extends ViewsKernelTestBase {
    *   The data set containing field settings, values to set and expected
    *   values.
    */
-  public static function providerTestFieldNumeric() {
+  public static function providerTestFieldNumeric(): array {
     return [
       'no-formatting' => [
         [],

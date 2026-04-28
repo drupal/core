@@ -244,7 +244,7 @@ class ProcessingTest extends BrowserTestBase {
   /**
    * Returns expected execution stacks for the test batches.
    */
-  public function _resultStack($id, $value = 0) {
+  public function _resultStack($id, $value = 0): array {
     $stack = [];
     switch ($id) {
       case 'batch1':
@@ -330,7 +330,7 @@ class ProcessingTest extends BrowserTestBase {
   /**
    * Returns expected result messages for the test batches.
    */
-  public function _resultMessages($id) {
+  public function _resultMessages($id): array {
     $messages = [];
 
     // The elapsed time should be either in minutes and seconds or only seconds.

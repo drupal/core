@@ -106,7 +106,7 @@ class JsonApiFunctionalDateFieldTest extends JsonApiFunctionalTestBase {
       'query' => ['filter' => $filter],
     ]));
     $this->assertSession()->statusCodeEquals(200);
-    $output_uuids = array_map(function ($result) {
+    $output_uuids = array_map(function (array $result) {
       return $result['id'];
     }, $output['data']);
     $this->assertCount(1, $output_uuids);
@@ -128,7 +128,7 @@ class JsonApiFunctionalDateFieldTest extends JsonApiFunctionalTestBase {
       'query' => ['filter' => $filter],
     ]));
     $this->assertSession()->statusCodeEquals(200);
-    $output_uuids = array_map(function ($result) {
+    $output_uuids = array_map(function (array $result) {
       return $result['id'];
     }, $output['data']);
     $this->assertCount(2, $output_uuids);
@@ -151,7 +151,7 @@ class JsonApiFunctionalDateFieldTest extends JsonApiFunctionalTestBase {
       'query' => ['filter' => $filter],
     ]));
     $this->assertSession()->statusCodeEquals(200);
-    $output_uuids = array_map(function ($result) {
+    $output_uuids = array_map(function (array $result) {
       return $result['id'];
     }, $output['data']);
     $this->assertCount(1, $output_uuids);
@@ -173,7 +173,7 @@ class JsonApiFunctionalDateFieldTest extends JsonApiFunctionalTestBase {
       'query' => ['filter' => $filter],
     ]));
     $this->assertSession()->statusCodeEquals(200);
-    $output_uuids = array_map(function ($result) {
+    $output_uuids = array_map(function (array $result) {
       return $result['id'];
     }, $output['data']);
     $this->assertCount(2, $output_uuids);

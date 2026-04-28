@@ -20,7 +20,7 @@ trait AssertConfigEntityImportTrait {
    * @param \Drupal\Core\Config\Entity\ConfigEntityInterface $entity
    *   The config entity to test importing.
    */
-  public function assertConfigEntityImport(ConfigEntityInterface $entity) {
+  public function assertConfigEntityImport(ConfigEntityInterface $entity): void {
     // Save original config information.
     $entity_uuid = $entity->uuid();
     $entity_type_id = $entity->getEntityTypeId();

@@ -49,7 +49,7 @@ class DbLogTest extends KernelTestBase {
     $implementation_count = 0;
     \Drupal::moduleHandler()->invokeAllWith(
       'cron',
-      function (callable $hook, string $module) use (&$implementation_count) {
+      function (callable $hook, string $module) use (&$implementation_count): void {
         $implementation_count++;
       }
     );

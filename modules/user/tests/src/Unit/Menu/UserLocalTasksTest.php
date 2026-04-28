@@ -35,14 +35,14 @@ class UserLocalTasksTest extends LocalTaskIntegrationTestBase {
    * Tests local task existence.
    */
   #[DataProvider('getUserAdminRoutes')]
-  public function testUserAdminLocalTasks($route, $expected): void {
+  public function testUserAdminLocalTasks(string $route, array $expected): void {
     $this->assertLocalTasks($route, $expected);
   }
 
   /**
    * Provides a list of routes to test.
    */
-  public static function getUserAdminRoutes() {
+  public static function getUserAdminRoutes(): array {
     return [
       [
         'entity.user.collection',
@@ -85,7 +85,7 @@ class UserLocalTasksTest extends LocalTaskIntegrationTestBase {
    * Checks user listing local tasks.
    */
   #[DataProvider('getUserLoginRoutes')]
-  public function testUserLoginLocalTasks($route): void {
+  public function testUserLoginLocalTasks(string $route): void {
     $tasks = [
       0 => ['user.register', 'user.pass', 'user.login'],
     ];
@@ -95,7 +95,7 @@ class UserLocalTasksTest extends LocalTaskIntegrationTestBase {
   /**
    * Provides a list of routes to test.
    */
-  public static function getUserLoginRoutes() {
+  public static function getUserLoginRoutes(): array {
     return [
       ['user.login'],
       ['user.register'],
@@ -107,7 +107,7 @@ class UserLocalTasksTest extends LocalTaskIntegrationTestBase {
    * Checks user listing local tasks.
    */
   #[DataProvider('getUserPageRoutes')]
-  public function testUserPageLocalTasks($route, $subtask = []): void {
+  public function testUserPageLocalTasks(string $route, $subtask = []): void {
     $tasks = [
       0 => ['entity.user.canonical', 'entity.user.edit_form'],
     ];
@@ -120,7 +120,7 @@ class UserLocalTasksTest extends LocalTaskIntegrationTestBase {
   /**
    * Provides a list of routes to test.
    */
-  public static function getUserPageRoutes() {
+  public static function getUserPageRoutes(): array {
     return [
       ['entity.user.canonical'],
       ['entity.user.edit_form'],

@@ -53,7 +53,7 @@ class CommentExtrasTest extends CommentTest {
     $request_options[RequestOptions::HEADERS]['Content-Type'] = 'application/vnd.api+json';
     $request_options = NestedArray::mergeDeep($request_options, $this->getAuthenticationRequestOptions());
 
-    $remove_field = function (array $normalization, $type, $attribute_name) {
+    $remove_field = function (array $normalization, $type, $attribute_name): array {
       unset($normalization['data'][$type][$attribute_name]);
       return $normalization;
     };

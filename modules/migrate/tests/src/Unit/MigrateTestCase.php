@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\migrate\Unit;
 
-use Drupal\Core\Extension\ModuleHandlerInterface;
-use Drupal\sqlite\Driver\Database\sqlite\Connection;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\migrate\Plugin\MigrateIdMapInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
+use Drupal\sqlite\Driver\Database\sqlite\Connection;
 use Drupal\Tests\UnitTestCase;
 
 /**
@@ -74,7 +74,7 @@ abstract class MigrateTestCase extends UnitTestCase {
       });
     $migration
       ->method('setStatus')
-      ->willReturnCallback(function ($status) {
+      ->willReturnCallback(function ($status): void {
         $this->migrationStatus = $status;
       });
 
@@ -87,7 +87,7 @@ abstract class MigrateTestCase extends UnitTestCase {
     $configuration = &$this->migrationConfiguration;
 
     $migration->method('set')
-      ->willReturnCallback(function ($argument, $value) use (&$configuration) {
+      ->willReturnCallback(function ($argument, $value) use (&$configuration): void {
         $configuration[$argument] = $value;
       });
 
@@ -110,7 +110,7 @@ abstract class MigrateTestCase extends UnitTestCase {
    * @return \Drupal\sqlite\Driver\Database\sqlite\Connection
    *   The database connection.
    */
-  protected function getDatabase(array $database_contents, $connection_options = []) {
+  protected function getDatabase(array $database_contents, array $connection_options = []) {
     if (extension_loaded('pdo_sqlite')) {
       $connection_options['database'] = ':memory:';
       $pdo = Connection::open($connection_options);
@@ -150,7 +150,7 @@ abstract class MigrateTestCase extends UnitTestCase {
   protected function createSchemaFromRow(array $row) {
     // SQLite uses loose ("affinity") typing, so it is OK for every column to be
     // a text field.
-    $fields = array_map(function () {
+    $fields = array_map(function (): array {
       return ['type' => 'text'];
     }, $row);
     return ['fields' => $fields];
@@ -164,7 +164,7 @@ abstract class MigrateTestCase extends UnitTestCase {
    * @param array $expected_results
    *   An array of expected results.
    */
-  public function queryResultTest($iter, $expected_results) {
+  public function queryResultTest(\Countable|iterable $iter, \Countable|iterable $expected_results): void {
     $this->assertSameSize($expected_results, $iter, 'Number of results match');
     $count = 0;
     foreach ($iter as $data_row) {
@@ -188,7 +188,7 @@ abstract class MigrateTestCase extends UnitTestCase {
    * @return mixed
    *   The value on a row for a given key.
    */
-  protected function getValue($row, $key) {
+  protected function getValue(array $row, $key) {
     return $row[$key];
   }
 
@@ -202,7 +202,7 @@ abstract class MigrateTestCase extends UnitTestCase {
    * @param string $message
    *   The tested result as a formatted string.
    */
-  protected function retrievalAssertHelper($expected_value, $actual_value, $message) {
+  protected function retrievalAssertHelper($expected_value, $actual_value, string $message) {
     if (is_array($expected_value)) {
       // If the expected and actual values are empty, no need to array compare.
       if (empty($expected_value && $actual_value)) {

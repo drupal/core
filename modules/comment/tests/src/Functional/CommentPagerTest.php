@@ -441,7 +441,7 @@ class CommentPagerTest extends CommentTestBase {
    *
    * @see \Drupal\Tests\UiHelperTrait::clickLink()
    */
-  protected function clickLinkWithXPath($xpath, $arguments = [], $index = 0) {
+  protected function clickLinkWithXPath($xpath, array $arguments = [], $index = 0): string|false {
     $url_before = $this->getUrl();
     $urls = $this->xpath($xpath, $arguments);
     if (isset($urls[$index])) {

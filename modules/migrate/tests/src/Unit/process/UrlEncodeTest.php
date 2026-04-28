@@ -32,7 +32,7 @@ class UrlEncodeTest extends MigrateTestCase {
    * @return array
    *   An array of URLs to test.
    */
-  public static function urlDataProvider() {
+  public static function urlDataProvider(): array {
     return [
       'A URL with no characters requiring encoding' => [
         'http://example.com/normal_url.html',
@@ -65,7 +65,7 @@ class UrlEncodeTest extends MigrateTestCase {
    * Cover various encoding scenarios.
    */
   #[DataProvider('urlDataProvider')]
-  public function testUrls($input, $output): void {
+  public function testUrls(string $input, string $output): void {
     $this->assertEquals($output, $this->doTransform($input));
   }
 

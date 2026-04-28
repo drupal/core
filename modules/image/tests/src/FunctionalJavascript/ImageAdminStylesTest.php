@@ -64,7 +64,7 @@ class ImageAdminStylesTest extends ImageFieldTestBase {
       $ajax_value = $page->find('css', '#ajax-value')->getText();
       $this->assertSame('Ajax value bar', $ajax_value);
       $this->getSession()->getPage()->pressButton('Ajax refresh');
-      $this->assertTrue($page->waitFor(10, function ($page) {
+      $this->assertTrue($page->waitFor(10, function ($page): bool {
         $ajax_value = $page->find('css', '#ajax-value')->getText();
         return (bool) preg_match('/^Ajax value [0-9.]+ [0-9.]+$/', $ajax_value);
       }));

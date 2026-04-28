@@ -86,7 +86,7 @@ class LanguageNegotiationUrlTest extends UnitTestCase {
    * Tests path prefix language negotiation and outbound path processing.
    */
   #[DataProvider('providerTestPathPrefix')]
-  public function testPathPrefix($prefix, $prefixes, $expected_langcode): void {
+  public function testPathPrefix(string $prefix, $prefixes, $expected_langcode): void {
     $this->languageManager
       ->method('getCurrentLanguage')
       ->willReturn($this->languages[(in_array($expected_langcode, [
@@ -130,7 +130,7 @@ class LanguageNegotiationUrlTest extends UnitTestCase {
    * @return array
    *   An array of data for checking path prefix negotiation.
    */
-  public static function providerTestPathPrefix() {
+  public static function providerTestPathPrefix(): array {
     $path_prefix_configuration[] = [
       'prefix' => 'de',
       'prefixes' => [
@@ -177,7 +177,7 @@ class LanguageNegotiationUrlTest extends UnitTestCase {
    * Tests outbound path processing for neutral languages.
    */
   #[DataProvider('providerNeutralLanguages')]
-  public function testNeutralLanguages($langcode, $expected_langcode): void {
+  public function testNeutralLanguages(string $langcode, ?string $expected_langcode): void {
     if ($expected_langcode) {
       $this->languageManager->expects($this->once())
         ->method('getCurrentLanguage')
@@ -230,7 +230,7 @@ class LanguageNegotiationUrlTest extends UnitTestCase {
    *   An array of data for checking path prefix negotiation for neutral
    *   languages.
    */
-  public static function providerNeutralLanguages() {
+  public static function providerNeutralLanguages(): array {
     return [
       [LanguageInterface::LANGCODE_NOT_APPLICABLE, NULL],
       [LanguageInterface::LANGCODE_NOT_SPECIFIED, 'en'],
@@ -279,7 +279,7 @@ class LanguageNegotiationUrlTest extends UnitTestCase {
    * @return array
    *   An array of data for checking domain negotiation.
    */
-  public static function providerTestDomain() {
+  public static function providerTestDomain(): array {
 
     $domain_configuration[] = [
       'http_host' => 'example.de',
@@ -393,7 +393,7 @@ if (!function_exists('base_path')) {
   /**
    * Returns the base path.
    */
-  function base_path() {
+  function base_path(): string {
     return '/';
   }
 

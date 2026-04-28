@@ -234,7 +234,7 @@ abstract class JsonApiFunctionalTestBase extends BrowserTestBase {
    *
    * @see \GuzzleHttp\ClientInterface::request
    */
-  protected function request($method, Url $url, array $request_options): ResponseInterface {
+  protected function request(string $method, Url $url, array $request_options): ResponseInterface {
     try {
       $response = $this->httpClient->request($method, $url->toString(), $request_options);
     }
@@ -301,7 +301,7 @@ abstract class JsonApiFunctionalTestBase extends BrowserTestBase {
           $tags[] = mt_rand(1, $num_tags);
           $tags = array_unique($tags);
         }
-        $values['field_tags'] = array_map(function ($tag) {
+        $values['field_tags'] = array_map(function ($tag): array {
           return ['target_id' => $tag];
         }, $tags);
       }

@@ -19,12 +19,12 @@ class ConfigFieldDefinitionTest extends FieldKernelTestBase {
   /**
    * @var string
    */
-  private $entityType;
+  private string $entityType;
 
   /**
    * @var string
    */
-  private $bundle;
+  private string $bundle;
 
   /**
    * {@inheritdoc}

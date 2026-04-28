@@ -25,7 +25,7 @@ class EntityConditionGroupTest extends UnitTestCase {
    * @legacy-covers ::__construct
    */
   #[DataProvider('constructProvider')]
-  public function testConstruct($case): void {
+  public function testConstruct(array $case): void {
     $group = new EntityConditionGroup($case['conjunction'], $case['members']);
 
     $this->assertEquals($case['conjunction'], $group->conjunction());
@@ -49,7 +49,7 @@ class EntityConditionGroupTest extends UnitTestCase {
   /**
    * Data provider for testConstruct.
    */
-  public static function constructProvider() {
+  public static function constructProvider(): array {
     return [
       [['conjunction' => 'AND', 'members' => []]],
       [['conjunction' => 'OR', 'members' => []]],

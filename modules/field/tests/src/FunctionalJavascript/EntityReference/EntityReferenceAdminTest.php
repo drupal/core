@@ -373,7 +373,7 @@ class EntityReferenceAdminTest extends WebDriverTestBase {
       $nested_options[] = $optgroup->findAll('xpath', 'option');
     }
     $options = array_merge($options, ...$nested_options);
-    array_walk($options, function (NodeElement &$option) {
+    array_walk($options, function (NodeElement &$option): void {
       $option = $option->getAttribute('value');
     });
     $this->assertEqualsCanonicalizing($expected_options, $options);

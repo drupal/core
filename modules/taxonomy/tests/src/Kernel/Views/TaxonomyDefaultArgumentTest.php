@@ -47,7 +47,7 @@ class TaxonomyDefaultArgumentTest extends TaxonomyTestBase {
    *
    * @throws \Exception
    */
-  protected function initViewWithRequest($request_url, $view_name = 'taxonomy_default_argument_test') {
+  protected function initViewWithRequest(string $request_url, $view_name = 'taxonomy_default_argument_test') {
     $view = Views::getView($view_name);
 
     $request = Request::create($request_url);

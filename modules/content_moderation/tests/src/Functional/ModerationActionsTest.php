@@ -63,7 +63,7 @@ class ModerationActionsTest extends BrowserTestBase {
    * Tests the node status actions report moderation status to users correctly.
    */
   #[DataProvider('nodeStatusActionsTestCases')]
-  public function testNodeStatusActions($action, $bundle, $warning_appears, $starting_status, $final_status): void {
+  public function testNodeStatusActions(string $action, string $bundle, bool $warning_appears, bool $starting_status, bool $final_status): void {
     // Create and run an action on a node.
     $node = Node::create([
       'type' => $bundle,
@@ -105,7 +105,7 @@ class ModerationActionsTest extends BrowserTestBase {
    * @return array
    *   An array of test cases.
    */
-  public static function nodeStatusActionsTestCases() {
+  public static function nodeStatusActionsTestCases(): array {
     return [
       'Moderated bundle shows warning (publish action)' => [
         'node_publish_action',

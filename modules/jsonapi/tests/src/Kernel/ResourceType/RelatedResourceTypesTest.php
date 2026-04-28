@@ -106,7 +106,7 @@ class RelatedResourceTypesTest extends JsonapiKernelTestBase {
    * Tests get relatable resource types.
    */
   #[DataProvider('getRelatableResourceTypesProvider')]
-  public function testGetRelatableResourceTypes($resource_type_name, $relatable_type_names): void {
+  public function testGetRelatableResourceTypes(string $resource_type_name, array $relatable_type_names): void {
     // We're only testing the fields that we set up.
     $test_fields = [
       'field_ref_foo',
@@ -141,7 +141,7 @@ class RelatedResourceTypesTest extends JsonapiKernelTestBase {
    * @legacy-covers ::getRelatableResourceTypes
    */
   #[DataProvider('getRelatableResourceTypesProvider')]
-  public static function getRelatableResourceTypesProvider() {
+  public static function getRelatableResourceTypesProvider(): array {
     return [
       [
         'node--foo',
@@ -159,7 +159,7 @@ class RelatedResourceTypesTest extends JsonapiKernelTestBase {
    * Tests get relatable resource types by field.
    */
   #[DataProvider('getRelatableResourceTypesByFieldProvider')]
-  public function testGetRelatableResourceTypesByField($entity_type_id, $bundle, $field): void {
+  public function testGetRelatableResourceTypesByField(string $entity_type_id, string $bundle, string $field): void {
     $resource_type = $this->resourceTypeRepository->get($entity_type_id, $bundle);
     $relatable_types = $resource_type->getRelatableResourceTypes();
     $this->assertSame(
@@ -171,7 +171,7 @@ class RelatedResourceTypesTest extends JsonapiKernelTestBase {
   /**
    * Provides cases to test getRelatableTypesByField.
    */
-  public static function getRelatableResourceTypesByFieldProvider() {
+  public static function getRelatableResourceTypesByFieldProvider(): array {
     return [
       ['node', 'foo', 'field_ref_foo'],
       ['node', 'foo', 'field_ref_bar'],

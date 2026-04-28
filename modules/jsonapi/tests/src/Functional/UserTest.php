@@ -200,7 +200,7 @@ class UserTest extends ResourceTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function getPatchDocument() {
+  protected function getPatchDocument(): array {
     return [
       'data' => [
         'id' => $this->entity->uuid(),

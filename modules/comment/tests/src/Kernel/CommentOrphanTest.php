@@ -41,7 +41,7 @@ class CommentOrphanTest extends EntityKernelTestBase {
    * Test loading/deleting/rendering orphaned comments.
    */
   #[DataProvider('providerTestOrphan')]
-  public function testOrphan($property): void {
+  public function testOrphan(string $property): void {
 
     DateFormat::create([
       'id' => 'fallback',
@@ -128,7 +128,7 @@ class CommentOrphanTest extends EntityKernelTestBase {
   /**
    * Provides test data for testOrphan.
    */
-  public static function providerTestOrphan() {
+  public static function providerTestOrphan(): array {
     return [
       ['entity_id'],
       ['uid'],

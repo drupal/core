@@ -30,7 +30,7 @@ class MenuDeleteTest extends KernelTestBase {
    * @legacy-covers \Drupal\menu_ui\Hook\MenuUiHooks::menuDelete
    */
   #[DataProvider('providerMenuDelete')]
-  public function testMenuDelete($settings, $expected): void {
+  public function testMenuDelete(array $settings, array $expected): void {
     $menu = Menu::create([
       'id' => 'mock',
       'label' => $this->randomMachineName(16),

@@ -77,7 +77,7 @@ abstract class OffCanvasTestBase extends WebDriverTestBase {
    *
    * @throws \Behat\Mink\Exception\ElementNotFoundException
    */
-  protected function waitForOffCanvasToOpen($position = 'side') {
+  protected function waitForOffCanvasToOpen(string $position = 'side') {
     $this->waitForOffCanvasArea();
     // Check that the canvas is positioned on the side.
     $this->assertSession()->elementExists('css', '.ui-dialog-position-' . $position);
@@ -123,7 +123,7 @@ abstract class OffCanvasTestBase extends WebDriverTestBase {
    * @param int $timeout
    *   (Optional) Timeout in milliseconds, defaults to 10000.
    */
-  protected function assertElementVisibleAfterWait($selector, $locator, $timeout = 10000) {
+  protected function assertElementVisibleAfterWait(string $selector, $locator, int $timeout = 10000) {
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->assertNotEmpty($this->assertSession()->waitForElementVisible($selector, $locator, $timeout));
   }

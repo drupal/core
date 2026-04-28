@@ -123,7 +123,7 @@ class OverridesSectionStorageTest extends KernelTestBase {
   /**
    * Provides test data for ::testAccess().
    */
-  public static function providerTestAccess() {
+  public static function providerTestAccess(): array {
     $section_data = [
       new Section('layout_onecol', [], [
         '10000000-0000-1000-a000-000000000000' => new SectionComponent('10000000-0000-1000-a000-000000000000', 'content', ['id' => 'foo']),

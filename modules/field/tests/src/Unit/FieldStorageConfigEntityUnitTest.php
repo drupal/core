@@ -174,7 +174,7 @@ class FieldStorageConfigEntityUnitTest extends UnitTestCase {
    * @legacy-covers ::getCardinality
    */
   #[DataProvider('providerInvalidEnforcedCardinality')]
-  public function testInvalidEnforcedCardinality($enforced_cardinality): void {
+  public function testInvalidEnforcedCardinality(int|string $enforced_cardinality): void {
     $this->fieldTypeManager->expects($this->atLeastOnce())
       ->method('getDefinition')
       ->with('test_field_type')
@@ -201,7 +201,7 @@ class FieldStorageConfigEntityUnitTest extends UnitTestCase {
    * @return array
    *   Test cases.
    */
-  public static function providerInvalidEnforcedCardinality() {
+  public static function providerInvalidEnforcedCardinality(): array {
     return [
       'zero' => [0],
       'negative_other_than_-1' => [-70],
@@ -221,7 +221,7 @@ class TestFieldType {
   /**
    * {@inheritdoc}
    */
-  public static function calculateStorageDependencies(FieldStorageDefinitionInterface $field_definition) {
+  public static function calculateStorageDependencies(FieldStorageDefinitionInterface $field_definition): array {
     $dependencies = [];
     $dependencies['module'] = ['entity_test'];
     $dependencies['theme'] = ['stark'];

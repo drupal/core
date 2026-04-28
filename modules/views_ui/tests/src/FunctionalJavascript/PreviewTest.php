@@ -262,7 +262,7 @@ class PreviewTest extends WebDriverTestBase {
    * @param int $row_count
    *   The expected number of rows in the preview.
    */
-  protected function getPreviewAJAX($view_name, $panel_id, $row_count): void {
+  protected function getPreviewAJAX(string $view_name, string $panel_id, int $row_count): void {
     $this->drupalGet('admin/structure/views/view/' . $view_name . '/edit/' . $panel_id);
     $this->getSession()->getPage()->pressButton('Update preview');
     $this->assertSession()->assertWaitOnAjaxRequest();
@@ -277,7 +277,7 @@ class PreviewTest extends WebDriverTestBase {
    * @param int $row_count
    *   The expected number of rows in the preview.
    */
-  protected function clickPreviewLinkAJAX(NodeElement $element, $row_count): void {
+  protected function clickPreviewLinkAJAX(NodeElement $element, int $row_count): void {
     $element->click();
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->assertPreviewAJAX($row_count);

@@ -69,14 +69,16 @@ class ElementsTableSelectTest extends WebDriverTestBase {
    */
   public function testDisabledRows(): void {
     // Asserts that a row number (1 based) is enabled.
-    $assert_row_enabled = function ($delta) {
+    $assert_row_enabled = function (int $delta): void {
+      $delta = (string) $delta;
       $row = $this->assertSession()->elementExists('xpath', "//table/tbody/tr[$delta]");
       $this->assertFalse($row->hasClass('disabled'));
       $input = $row->find('css', 'input[value="row' . $delta . '"]');
       $this->assertFalse($input->hasAttribute('disabled'));
     };
     // Asserts that a row number (1 based) is disabled.
-    $assert_row_disabled = function ($delta) {
+    $assert_row_disabled = function (int $delta): void {
+      $delta = (string) $delta;
       $row = $this->assertSession()->elementExists('xpath', "//table/tbody/tr[$delta]");
       $this->assertTrue($row->hasClass('disabled'));
       $input = $row->find('css', 'input[value="row' . $delta . '"]');

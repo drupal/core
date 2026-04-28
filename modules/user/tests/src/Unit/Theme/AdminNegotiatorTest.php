@@ -24,7 +24,7 @@ class AdminNegotiatorTest extends UnitTestCase {
    * Tests determining the active theme.
    */
   #[DataProvider('getThemes')]
-  public function testDetermineActiveTheme($admin_theme, $expected): void {
+  public function testDetermineActiveTheme(?string $admin_theme, ?string $expected): void {
     $user = $this->prophesize(AccountInterface::class);
     $config_factory = $this->getConfigFactoryStub(['system.theme' => ['admin' => $admin_theme]]);
     $admin_context = $this->prophesize(AdminContext::class);
@@ -36,7 +36,7 @@ class AdminNegotiatorTest extends UnitTestCase {
   /**
    * Provides a list of theme names to test.
    */
-  public static function getThemes() {
+  public static function getThemes(): array {
     return [
       ['claro', 'claro'],
       [NULL, NULL],

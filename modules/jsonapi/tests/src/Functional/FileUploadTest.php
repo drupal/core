@@ -845,7 +845,7 @@ class FileUploadTest extends ResourceTestBase {
       // Set the required JSON:API Accept header.
       'Accept' => 'application/vnd.api+json',
     ];
-    $request_options[RequestOptions::HEADERS] = array_filter($headers, function ($value) {
+    $request_options[RequestOptions::HEADERS] = array_filter($headers, function ($value): bool {
       return $value !== FALSE;
     });
     $request_options[RequestOptions::BODY] = $file_contents;
@@ -894,7 +894,7 @@ class FileUploadTest extends ResourceTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function getExpectedUnauthorizedAccessCacheability() {
+  protected function getExpectedUnauthorizedAccessCacheability(): CacheableMetadata {
     // There is cacheability metadata to check as file uploads only allows POST
     // requests, which will not return cacheable responses.
     return new CacheableMetadata();

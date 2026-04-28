@@ -51,7 +51,7 @@ class MediaEmbedFilterTranslationTest extends MediaEmbedFilterTestBase {
    * Tests that the expected embedded media entity translation is selected.
    */
   #[DataProvider('providerTranslationSituations')]
-  public function testTranslationSelection($text_langcode, $expected_title_langcode): void {
+  public function testTranslationSelection(string $text_langcode, string $expected_title_langcode): void {
     $text = $this->createEmbedCode([
       'data-entity-type' => 'media',
       'data-entity-uuid' => static::EMBEDDED_ENTITY_UUID,
@@ -75,7 +75,7 @@ class MediaEmbedFilterTranslationTest extends MediaEmbedFilterTestBase {
   /**
    * Data provider for testTranslationSelection().
    */
-  public static function providerTranslationSituations() {
+  public static function providerTranslationSituations(): \Iterator {
     $embedded_entity_translation_languages = ['en', 'pt-br'];
 
     foreach (['en', 'pt-br', 'nl'] as $text_langcode) {

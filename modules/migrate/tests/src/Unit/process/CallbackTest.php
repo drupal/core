@@ -19,7 +19,7 @@ class CallbackTest extends MigrateProcessTestCase {
    * Tests callback with valid "callable".
    */
   #[DataProvider('providerCallback')]
-  public function testCallback($callable): void {
+  public function testCallback(string|array $callable): void {
     $configuration = ['callable' => $callable];
     $this->plugin = new Callback($configuration, 'map', []);
     $value = $this->plugin->transform('FooBar', $this->migrateExecutable, $this->row, 'destination_property');
@@ -29,7 +29,7 @@ class CallbackTest extends MigrateProcessTestCase {
   /**
    * Data provider for ::testCallback().
    */
-  public static function providerCallback() {
+  public static function providerCallback(): array {
     return [
       'function' => ['strtolower'],
       'class method' => [[self::class, 'strtolower']],
@@ -40,7 +40,7 @@ class CallbackTest extends MigrateProcessTestCase {
    * Test callback with valid "callable" and multiple arguments.
    */
   #[DataProvider('providerCallbackArray')]
-  public function testCallbackArray($callable, $args, $result): void {
+  public function testCallbackArray(string $callable, array $args, string|float $result): void {
     $configuration = ['callable' => $callable, 'unpack_source' => TRUE];
     $this->plugin = new Callback($configuration, 'map', []);
     $value = $this->plugin->transform($args, $this->migrateExecutable, $this->row, 'destination_property');
@@ -50,7 +50,7 @@ class CallbackTest extends MigrateProcessTestCase {
   /**
    * Data provider for ::testCallbackArray().
    */
-  public static function providerCallbackArray() {
+  public static function providerCallbackArray(): array {
     return [
       'date format' => [
         'date',
@@ -88,7 +88,7 @@ class CallbackTest extends MigrateProcessTestCase {
    *   (optional) Arguments to pass to the transform() method.
    */
   #[DataProvider('providerCallbackExceptions')]
-  public function testCallbackExceptions($message, array $configuration, $class = 'InvalidArgumentException', $args = NULL): void {
+  public function testCallbackExceptions(string $message, array $configuration, string $class = 'InvalidArgumentException', ?string $args = NULL): void {
     $this->expectException($class);
     $this->expectExceptionMessage($message);
     $this->plugin = new Callback($configuration, 'map', []);
@@ -98,7 +98,7 @@ class CallbackTest extends MigrateProcessTestCase {
   /**
    * Data provider for ::testCallbackExceptions().
    */
-  public static function providerCallbackExceptions() {
+  public static function providerCallbackExceptions(): array {
     return [
       'not set' => [
         'message' => 'The "callable" must be set.',
@@ -128,7 +128,7 @@ class CallbackTest extends MigrateProcessTestCase {
    *
    * @see \Drupal\Tests\migrate\Unit\process\CallbackTest::providerCallback()
    */
-  public static function strToLower($string) {
+  public static function strToLower($string): string {
     return mb_strtolower($string);
   }
 

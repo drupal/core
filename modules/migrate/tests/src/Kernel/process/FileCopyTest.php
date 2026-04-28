@@ -88,7 +88,7 @@ class FileCopyTest extends FileTestBase {
    *   The destination path to copy to.
    */
   #[DataProvider('providerSuccessfulReuse')]
-  public function testSuccessfulReuse($source_path, $destination_path): void {
+  public function testSuccessfulReuse(string $source_path, string $destination_path): void {
     $file_reuse = $this->doTransform($source_path, $destination_path);
     clearstatcache(TRUE, $destination_path);
 
@@ -113,7 +113,7 @@ class FileCopyTest extends FileTestBase {
   /**
    * Provides the source and destination path files.
    */
-  public static function providerSuccessfulReuse() {
+  public static function providerSuccessfulReuse(): array {
     return [
       [
         'source_path' => static::getDrupalRoot() . '/core/tests/fixtures/files/image-test.jpg',
@@ -247,7 +247,7 @@ class FileCopyTest extends FileTestBase {
    * @return string
    *   The URI of the copied file.
    */
-  protected function doTransform($source_path, $destination_path, $configuration = []) {
+  protected function doTransform($source_path, $destination_path, array $configuration = []) {
     // Prepare a mock HTTP client.
     $this->container->set('http_client', $this->createStub(Client::class));
 

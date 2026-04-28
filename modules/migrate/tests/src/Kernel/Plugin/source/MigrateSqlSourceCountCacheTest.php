@@ -31,7 +31,7 @@ class MigrateSqlSourceCountCacheTest extends MigrateSqlSourceTestBase {
   /**
    * {@inheritdoc}
    */
-  public static function providerSource() {
+  public static function providerSource(): array {
     // All tests use the same source_data, expected_data, expected_count, and
     // high_water. The high water is set later to maintain the order of the
     // parameters.

@@ -71,7 +71,7 @@ class SecurityFileUploadEventSubscriberTest extends UnitTestCase {
    *   Arrays with original name, allowed extensions, expected name and
    *   (optional) expected name 'allow_insecure_uploads' is set to TRUE.
    */
-  public static function provideFilenames() {
+  public static function provideFilenames(): array {
     return [
       'All extensions allowed filename not munged' => ['foo.txt', '', 'foo.txt'],
       'All extensions allowed with .php file' => ['foo.php', '', 'foo.php_.txt', 'foo.php'],
@@ -143,7 +143,7 @@ class SecurityFileUploadEventSubscriberTest extends UnitTestCase {
    * @return array
    *   Arrays with original name and allowed extensions.
    */
-  public static function provideFilenamesNoMunge() {
+  public static function provideFilenamesNoMunge(): array {
     return [
       // The following filename would be rejected by 'FileExtension' constraint
       // and therefore remains unchanged.

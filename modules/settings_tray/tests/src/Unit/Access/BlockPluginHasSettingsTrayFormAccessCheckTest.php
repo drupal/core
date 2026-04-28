@@ -32,12 +32,12 @@ class BlockPluginHasSettingsTrayFormAccessCheckTest extends UnitTestCase {
    * @legacy-covers ::accessBlockPlugin
    */
   #[DataProvider('providerTestAccess')]
-  public function testAccess($with_forms, array $plugin_definition, AccessResultInterface $expected_access_result): void {
+  public function testAccess(bool $with_forms, array $plugin_definition, AccessResultInterface $expected_access_result): void {
     $block_plugin = $this->prophesize()->willImplement(BlockPluginInterface::class);
 
     if ($with_forms) {
       $block_plugin->willImplement(PluginWithFormsInterface::class);
-      $block_plugin->hasFormClass(Argument::type('string'))->will(function ($arguments) use ($plugin_definition) {
+      $block_plugin->hasFormClass(Argument::type('string'))->will(function ($arguments) use ($plugin_definition): bool {
         return !empty($plugin_definition['forms'][$arguments[0]]);
       });
     }
@@ -53,7 +53,7 @@ class BlockPluginHasSettingsTrayFormAccessCheckTest extends UnitTestCase {
   /**
    * Provides test data for ::testAccess().
    */
-  public static function providerTestAccess() {
+  public static function providerTestAccess(): array {
     $annotation_forms_settings_tray_class = [
       'forms' => [
         'settings_tray' => Random::machineName(),

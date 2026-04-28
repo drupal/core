@@ -101,7 +101,7 @@ class StateTransitionValidationTest extends UnitTestCase {
   /**
    * Data provider for the user transition test.
    */
-  public static function userTransitionsProvider() {
+  public static function userTransitionsProvider(): array {
     // The user has the right permission, so let it through.
     $ret[] = ['draft', 'draft', 'use process transition draft', TRUE, TRUE];
 

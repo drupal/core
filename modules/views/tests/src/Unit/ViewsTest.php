@@ -102,7 +102,7 @@ class ViewsTest extends UnitTestCase {
    * Tests get applicable views.
    */
   #[DataProvider('providerTestGetApplicableViews')]
-  public function testGetApplicableViews($applicable_type, $expected): void {
+  public function testGetApplicableViews(string $applicable_type, array $expected): void {
     $view_1 = new View([
       'id' => 'test_view_1',
       'display' => [
@@ -217,7 +217,7 @@ class ViewsTest extends UnitTestCase {
    * @return array
    *   An array of test data.
    */
-  public static function providerTestGetApplicableViews() {
+  public static function providerTestGetApplicableViews(): array {
     return [
       ['type_a', [['test_view_1', 'type_a']]],
       ['type_b', [['test_view_2', 'type_b']]],

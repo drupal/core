@@ -102,7 +102,7 @@ class MigrateSqlIdMapTest extends MigrateTestCase {
    * @return \Drupal\Tests\migrate\Unit\TestSqlIdMap
    *   A SQL ID map plugin test instance.
    */
-  protected function getIdMap() {
+  protected function getIdMap(): TestSqlIdMap {
     $migration = $this->getMigration();
 
     $plugin = $this->createStub(MigrateSourceInterface::class);
@@ -404,7 +404,7 @@ class MigrateSqlIdMapTest extends MigrateTestCase {
    * @return array
    *   An array of data values.
    */
-  public static function lookupDestinationIdMappingDataProvider() {
+  public static function lookupDestinationIdMappingDataProvider(): array {
     return [
       [1, 1],
       [2, 2],
@@ -422,7 +422,7 @@ class MigrateSqlIdMapTest extends MigrateTestCase {
    *   Number of destination fields to test.
    */
   #[DataProvider('lookupDestinationIdMappingDataProvider')]
-  public function testLookupDestinationIdMapping($num_source_fields, $num_destination_fields): void {
+  public function testLookupDestinationIdMapping(int $num_source_fields, int $num_destination_fields): void {
     // Adjust the migration configuration according to the number of source and
     // destination fields.
     $this->sourceIds = [];
@@ -623,7 +623,7 @@ class MigrateSqlIdMapTest extends MigrateTestCase {
    * @return array
    *   An array of data values.
    */
-  public static function lookupSourceIdMappingDataProvider() {
+  public static function lookupSourceIdMappingDataProvider(): array {
     return [
       [1, 1],
       [2, 2],
@@ -641,7 +641,7 @@ class MigrateSqlIdMapTest extends MigrateTestCase {
    *   Number of destination fields to test.
    */
   #[DataProvider('lookupSourceIdMappingDataProvider')]
-  public function testLookupSourceIdMapping($num_source_fields, $num_destination_fields): void {
+  public function testLookupSourceIdMapping(int $num_source_fields, int $num_destination_fields): void {
     $source_id_property_prefix = 'source_id_property_';
     $this->doTestLookupSourceIdMapping($num_source_fields, $num_destination_fields, $source_id_property_prefix);
   }
@@ -659,7 +659,7 @@ class MigrateSqlIdMapTest extends MigrateTestCase {
    *   Number of destination fields to test.
    */
   #[DataProvider('lookupSourceIdMappingDataProvider')]
-  public function testLookupSourceIdMappingNonSqlCharacters($num_source_fields, $num_destination_fields): void {
+  public function testLookupSourceIdMappingNonSqlCharacters(int $num_source_fields, int $num_destination_fields): void {
     $source_id_property_prefix = '$ource id property * ';
     $this->doTestLookupSourceIdMapping($num_source_fields, $num_destination_fields, $source_id_property_prefix);
   }
@@ -813,7 +813,7 @@ class MigrateSqlIdMapTest extends MigrateTestCase {
    * @return array
    *   An array of data values.
    */
-  public static function updateCountDataProvider() {
+  public static function updateCountDataProvider(): array {
     return [
       [0],
       [1],
@@ -828,7 +828,7 @@ class MigrateSqlIdMapTest extends MigrateTestCase {
    *   The number of update rows to test.
    */
   #[DataProvider('updateCountDataProvider')]
-  public function testUpdateCount($num_update_rows): void {
+  public function testUpdateCount(int $num_update_rows): void {
     for ($i = 0; $i < 5; $i++) {
       $row = $this->idMapDefaults();
       $row['sourceid1'] = "source_id_value_$i";
@@ -860,7 +860,7 @@ class MigrateSqlIdMapTest extends MigrateTestCase {
    * @return array
    *   An array of data values.
    */
-  public static function errorCountDataProvider() {
+  public static function errorCountDataProvider(): array {
     return [
       [0],
       [1],
@@ -875,7 +875,7 @@ class MigrateSqlIdMapTest extends MigrateTestCase {
    *   Number of error rows to test.
    */
   #[DataProvider('errorCountDataProvider')]
-  public function testErrorCount($num_error_rows): void {
+  public function testErrorCount(int $num_error_rows): void {
     for ($i = 0; $i < 5; $i++) {
       $row = $this->idMapDefaults();
       $row['sourceid1'] = "source_id_value_$i";
@@ -1110,7 +1110,7 @@ class MigrateSqlIdMapTest extends MigrateTestCase {
    *   Expected highest id value.
    */
   #[DataProvider('getHighestIdDataProvider')]
-  public function testGetHighestId(array $destination_ids, array $rows, $expected): void {
+  public function testGetHighestId(array $destination_ids, array $rows, int $expected): void {
     $this->database = $this->getDatabase([]);
     $this->sourceIds = $destination_ids;
     $this->destinationIds = $destination_ids;
@@ -1144,7 +1144,7 @@ class MigrateSqlIdMapTest extends MigrateTestCase {
    * @return array
    *   An array of data values.
    */
-  public static function getHighestIdDataProvider() {
+  public static function getHighestIdDataProvider(): array {
     return [
       'Destination ID type integer' => [
         'destination_ids' => [
@@ -1208,7 +1208,7 @@ class MigrateSqlIdMapTest extends MigrateTestCase {
    * @return array
    *   An array of data values.
    */
-  public static function getHighestIdInvalidDataProvider() {
+  public static function getHighestIdInvalidDataProvider(): array {
     return [
       'Destination ID type string' => [
         'destination_ids' => [

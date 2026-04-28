@@ -91,7 +91,7 @@ class DateTimeIso8601NormalizerTest extends UnitTestCase {
    * Tests normalize.
    */
   #[DataProvider('providerTestNormalize')]
-  public function testNormalize($parent_field_item_class, $datetime_type, $expected_format): void {
+  public function testNormalize(string $parent_field_item_class, ?string $datetime_type, string $expected_format): void {
     $formatted_string = $this->randomMachineName();
 
     $field_item = $this->prophesize($parent_field_item_class);
@@ -128,7 +128,7 @@ class DateTimeIso8601NormalizerTest extends UnitTestCase {
    * Tests normalize when null.
    */
   #[DataProvider('providerTestNormalize')]
-  public function testNormalizeWhenNull($parent_field_item_class, $datetime_type, $expected_format): void {
+  public function testNormalizeWhenNull(string $parent_field_item_class, ?string $datetime_type, string $expected_format): void {
     $field_item = $this->prophesize($parent_field_item_class);
     if ($parent_field_item_class === DateTimeItem::class) {
       $field_storage_definition = $this->prophesize(FieldStorageDefinitionInterface::class);
@@ -160,7 +160,7 @@ class DateTimeIso8601NormalizerTest extends UnitTestCase {
    * @return array
    *   The data provider array.
    */
-  public static function providerTestNormalize() {
+  public static function providerTestNormalize(): array {
     return [
       // @see \Drupal\datetime\Plugin\Field\FieldType\DateTimeItem::DATETIME_TYPE_DATE
       'datetime field, configured to store only date: must be handled by DateTimeIso8601Normalizer' => [
@@ -203,7 +203,7 @@ class DateTimeIso8601NormalizerTest extends UnitTestCase {
    * @return array
    *   An array of test cases.
    */
-  public static function providerTestDenormalizeValidFormats() {
+  public static function providerTestDenormalizeValidFormats(): array {
     $data = [];
     $data['just a date'] = ['date-only', '2016-11-06', '2016-11-06'];
 

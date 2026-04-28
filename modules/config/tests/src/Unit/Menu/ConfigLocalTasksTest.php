@@ -26,14 +26,14 @@ class ConfigLocalTasksTest extends LocalTaskIntegrationTestBase {
    * Tests config local tasks existence.
    */
   #[DataProvider('getConfigAdminRoutes')]
-  public function testConfigAdminLocalTasks($route, $expected): void {
+  public function testConfigAdminLocalTasks(string $route, array $expected): void {
     $this->assertLocalTasks($route, $expected);
   }
 
   /**
    * Provides a list of routes to test.
    */
-  public static function getConfigAdminRoutes() {
+  public static function getConfigAdminRoutes(): array {
     return [
       ['config.sync', [['config.sync', 'config.import', 'config.export']]],
       ['config.import_full',

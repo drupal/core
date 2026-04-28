@@ -203,7 +203,7 @@ class MediaRevisionTest extends MediaFunctionalTestBase {
    * @return \Drupal\media\MediaInterface
    *   A media object with up to date revision information.
    */
-  protected function createMediaRevision(MediaInterface $media) {
+  protected function createMediaRevision(MediaInterface $media): MediaInterface {
     $media->setName($this->randomMachineName());
     $media->setNewRevision();
     $media->save();

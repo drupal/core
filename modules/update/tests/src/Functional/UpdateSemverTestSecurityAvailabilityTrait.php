@@ -94,9 +94,9 @@ trait UpdateSemverTestSecurityAvailabilityTrait {
    *   - 8.1.0 Insecure
    *   - 8.0.2 Security update
    *   - 8.0.1 Insecure
-   *   - 8.0.0 Insecure
+   *   - 8.0.0 Insecure.
    */
-  public static function securityUpdateAvailabilityProvider() {
+  public static function securityUpdateAvailabilityProvider(): array {
     $test_cases = [
       // Security release available for site minor release 0.
       // No releases for next minor.

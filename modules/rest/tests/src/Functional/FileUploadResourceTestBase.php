@@ -682,7 +682,7 @@ abstract class FileUploadResourceTestBase extends ResourceTestBase {
    * @return array
    *   The expected normalized data array.
    */
-  protected function getExpectedNormalizedEntity($fid = 1, $expected_filename = 'example.txt', $expected_as_filename = FALSE) {
+  protected function getExpectedNormalizedEntity($fid = 1, string $expected_filename = 'example.txt', $expected_as_filename = FALSE) {
     $author = User::load(static::$auth ? $this->account->id() : 0);
     $file = File::load($fid);
     $this->assertInstanceOf(FileInterface::class, $file);
@@ -782,7 +782,7 @@ abstract class FileUploadResourceTestBase extends ResourceTestBase {
       // Set the required Content-Disposition header for the file name.
       'Content-Disposition' => 'file; filename="example.txt"',
     ];
-    $request_options[RequestOptions::HEADERS] = array_filter($headers, function ($value) {
+    $request_options[RequestOptions::HEADERS] = array_filter($headers, function ($value): bool {
       return $value !== FALSE;
     });
     $request_options[RequestOptions::BODY] = $file_contents;

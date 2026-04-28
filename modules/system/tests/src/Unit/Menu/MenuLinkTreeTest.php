@@ -105,7 +105,7 @@ class MenuLinkTreeTest extends UnitTestCase {
    * @see \Drupal\menu_link_content\Tests\MenuLinkContentCacheabilityBubblingTest
    */
   #[DataProvider('providerTestBuildCacheability')]
-  public function testBuildCacheability($description, $tree, $expected_build, $access, array $access_cache_contexts = []): void {
+  public function testBuildCacheability(string $description, array $tree, $expected_build, $access, array $access_cache_contexts = []): void {
     if ($access !== NULL) {
       $access->addCacheContexts($access_cache_contexts);
     }
@@ -121,7 +121,7 @@ class MenuLinkTreeTest extends UnitTestCase {
    *
    * @see testBuildCacheability
    */
-  public static function providerTestBuildCacheability() {
+  public static function providerTestBuildCacheability(): array {
     $base_expected_build_empty = [
       '#cache' => [
         'contexts' => [],
@@ -145,7 +145,7 @@ class MenuLinkTreeTest extends UnitTestCase {
       ],
     ];
 
-    $get_built_element = function (MenuLinkTreeElement $element) {
+    $get_built_element = function (MenuLinkTreeElement $element): array {
       $return = [
         'attributes' => new Attribute(),
         'title' => $element->link->getTitle(),

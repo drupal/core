@@ -179,7 +179,7 @@ class CronQueueTest extends KernelTestBase {
     $this->logger->log(
       RfcLogLevel::ERROR,
       '%type: @message in %function (line %line of %file).',
-      Argument::that(function ($args) {
+      Argument::that(function (array $args): bool {
         return $args['@message'] === 'That is not supposed to happen.'
           && $args['exception'] instanceof \Exception;
       })
@@ -230,7 +230,7 @@ class CronQueueTest extends KernelTestBase {
     $this->logger->log(
       RfcLogLevel::DEBUG,
       'A worker for @queue queue suspended further processing of the queue.',
-      Argument::that(function ($args) {
+      Argument::that(function (array $args): bool {
         return $args['@queue'] === CronQueueTestSuspendQueue::PLUGIN_ID;
       })
     )->shouldBeCalled();

@@ -72,7 +72,7 @@ class ConfigMapperManagerTest extends UnitTestCase {
    *   The expected return value of ConfigMapperManager::hasTranslatable().
    */
   #[DataProvider('providerTestHasTranslatable')]
-  public function testHasTranslatable(TypedDataInterface $element, $expected): void {
+  public function testHasTranslatable(TypedDataInterface $element, bool $expected): void {
     $this->typedConfigManager
       ->expects($this->once())
       ->method('get')
@@ -91,7 +91,7 @@ class ConfigMapperManagerTest extends UnitTestCase {
    *   to test as the first key and the expected result of
    *   ConfigMapperManager::hasTranslatable() as the second key.
    */
-  public static function providerTestHasTranslatable() {
+  public static function providerTestHasTranslatable(): array {
     return [
       [static::getElement([]), FALSE],
       [static::getElement(['aaa' => 'bbb']), FALSE],

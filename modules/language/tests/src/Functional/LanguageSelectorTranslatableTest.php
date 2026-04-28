@@ -60,7 +60,7 @@ class LanguageSelectorTranslatableTest extends BrowserTestBase {
   /**
    * Returns an array of permissions needed for the translator.
    */
-  protected function getAdministratorPermissions() {
+  protected function getAdministratorPermissions(): array {
     return array_filter(
       ['translate interface',
         'administer content translation',

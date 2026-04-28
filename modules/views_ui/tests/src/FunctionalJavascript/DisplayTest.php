@@ -196,7 +196,7 @@ class DisplayTest extends WebDriverTestBase {
   /**
    * Helper function for adding interface text translations.
    */
-  private function addTranslation($langcode, $source_string, $translation_string): void {
+  private function addTranslation(string $langcode, string $source_string, string $translation_string): void {
     $storage = \Drupal::service('locale.storage');
     $string = $storage->findString(['source' => $source_string]);
     if (is_null($string)) {

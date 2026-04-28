@@ -180,7 +180,7 @@ class FilterBaseTestableClass extends FilterBase {
   /**
    * {@inheritdoc}
    */
-  public function process($text, $langcode) {
+  public function process($text, $langcode): FilterProcessResult {
     return new FilterProcessResult();
   }
 

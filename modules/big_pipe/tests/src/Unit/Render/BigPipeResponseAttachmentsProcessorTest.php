@@ -40,7 +40,7 @@ class BigPipeResponseAttachmentsProcessorTest extends UnitTestCase {
    * @legacy-covers ::processAttachments
    */
   #[DataProvider('nonHtmlResponseProvider')]
-  public function testNonHtmlResponse($response_class): void {
+  public function testNonHtmlResponse(string $response_class): void {
     $big_pipe_response_attachments_processor = $this->createBigPipeResponseAttachmentsProcessor($this->prophesize(AttachmentsResponseProcessorInterface::class));
 
     $non_html_response = new $response_class();
@@ -51,7 +51,7 @@ class BigPipeResponseAttachmentsProcessorTest extends UnitTestCase {
   /**
    * Provides data to testNonHtmlResponse().
    */
-  public static function nonHtmlResponseProvider() {
+  public static function nonHtmlResponseProvider(): array {
     return [
       'AjaxResponse, which implements AttachmentsInterface' => [AjaxResponse::class],
       'A dummy that implements AttachmentsInterface' => [get_class((new Prophet())->prophesize(AttachmentsInterface::class)->reveal())],
@@ -72,7 +72,7 @@ class BigPipeResponseAttachmentsProcessorTest extends UnitTestCase {
     // service (that is this mock) never receives BigPipe placeholder
     // attachments, because it doesn't know (nor should it) how to handle them.
     $html_response_attachments_processor = $this->prophesize(AttachmentsResponseProcessorInterface::class);
-    $html_response_attachments_processor->processAttachments(Argument::that(function ($response) {
+    $html_response_attachments_processor->processAttachments(Argument::that(function ($response): bool {
       return $response instanceof HtmlResponse
         && empty(array_intersect(['big_pipe_placeholders', 'big_pipe_nojs_placeholders'], array_keys($response->getAttachments())));
     }))
@@ -102,7 +102,7 @@ class BigPipeResponseAttachmentsProcessorTest extends UnitTestCase {
   /**
    * Provides data to testHtmlResponse().
    */
-  public static function attachmentsProvider() {
+  public static function attachmentsProvider(): array {
     $typical_cases = [
       'no attachments' => [[]],
       'libraries' => [['library' => ['core/drupal']]],
@@ -154,7 +154,7 @@ class BigPipeResponseAttachmentsProcessorTest extends UnitTestCase {
    * @return \Drupal\big_pipe\Render\BigPipeResponseAttachmentsProcessor
    *   The BigPipeResponseAttachmentsProcessor to test.
    */
-  protected function createBigPipeResponseAttachmentsProcessor(ObjectProphecy $decorated_html_response_attachments_processor) {
+  protected function createBigPipeResponseAttachmentsProcessor(ObjectProphecy $decorated_html_response_attachments_processor): BigPipeResponseAttachmentsProcessor {
     return new BigPipeResponseAttachmentsProcessor(
       $decorated_html_response_attachments_processor->reveal(),
       $this->prophesize(AssetResolverInterface::class)->reveal(),

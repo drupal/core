@@ -72,7 +72,7 @@ class ContentModerationRouteSubscriberTest extends UnitTestCase {
   /**
    * Data provider for ::testSetLatestRevisionFlag.
    */
-  public static function setLatestRevisionFlagTestCases() {
+  public static function setLatestRevisionFlagTestCases(): array {
     return [
       'Entity parameter not on an entity form' => [
         [],
@@ -228,7 +228,7 @@ class ContentModerationRouteSubscriberTest extends UnitTestCase {
    *   (optional) The expected route parameters. Defaults to FALSE.
    */
   #[DataProvider('setLatestRevisionFlagTestCases')]
-  public function testSetLatestRevisionFlag($defaults, $parameters, $expected_parameters = FALSE): void {
+  public function testSetLatestRevisionFlag(array $defaults, array $parameters, bool|array $expected_parameters = FALSE): void {
     $route = new Route('/foo/{entity_test}', $defaults, [], [
       'parameters' => $parameters,
     ]);

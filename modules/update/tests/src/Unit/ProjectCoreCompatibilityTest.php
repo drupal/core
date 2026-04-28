@@ -34,7 +34,7 @@ class ProjectCoreCompatibilityTest extends UnitTestCase {
   /**
    * Data provider for testSetProjectCoreCompatibilityRanges().
    */
-  public static function providerSetProjectCoreCompatibilityRanges() {
+  public static function providerSetProjectCoreCompatibilityRanges(): array {
     $test_cases['no 9 releases, no supported branches'] = [
       'project_data' => [
         'recommended' => '1.0.1',

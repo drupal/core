@@ -92,7 +92,7 @@ class FileEncodingConstraintValidatorTest extends FileValidatorTestBase {
   /**
    * Helper function that returns a .po file with invalid encoding.
    */
-  public function getInvalidEncodedPoFile() {
+  public function getInvalidEncodedPoFile(): string {
     return <<< EOF
 msgid ""
 msgstr ""

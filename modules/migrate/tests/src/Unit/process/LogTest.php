@@ -20,7 +20,7 @@ class LogTest extends MigrateProcessTestCase {
    * Tests the Log plugin.
    */
   #[DataProvider('providerTestLog')]
-  public function testLog($value, $expected_message): void {
+  public function testLog($value, string $expected_message): void {
     // Test the expected log message.
     $this->migrateExecutable = $this->createMock(MigrateExecutableInterface::class);
     $this->migrateExecutable->expects($this->once())
@@ -39,7 +39,7 @@ class LogTest extends MigrateProcessTestCase {
    * @return string[][]
    *   An array of test data arrays.
    */
-  public static function providerTestLog() {
+  public static function providerTestLog(): array {
     $object = (object) [
       'a' => 'test',
       'b' => 'test2',
@@ -108,7 +108,7 @@ class ObjWithString {
    * @return string
    *   A string.
    */
-  public function __toString() {
+  public function __toString(): string {
     return 'a test string';
   }
 

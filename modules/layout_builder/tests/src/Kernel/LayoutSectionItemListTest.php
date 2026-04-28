@@ -36,7 +36,7 @@ class LayoutSectionItemListTest extends SectionListTestBase {
       ->setOverridable()
       ->save();
 
-    array_map(function ($row) {
+    array_map(function ($row): array {
       return ['section' => $row];
     }, $section_data);
     $entity = EntityTestBaseFieldDisplay::create([

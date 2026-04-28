@@ -45,7 +45,7 @@ class UrlResolverTest extends MediaFunctionalTestBase {
    * @return array
    *   An array of test data.
    */
-  public static function providerEndpointMatching() {
+  public static function providerEndpointMatching(): array {
     return [
       'match by endpoint: Twitter' => [
         'https://twitter.com/Dries/status/999985431595880448',
@@ -78,7 +78,7 @@ class UrlResolverTest extends MediaFunctionalTestBase {
    * @legacy-covers ::getResourceUrl
    */
   #[DataProvider('providerEndpointMatching')]
-  public function testEndpointMatching($url, $resource_url): void {
+  public function testEndpointMatching(string $url, string $resource_url): void {
     $this->assertSame(
       $resource_url,
       $this->container->get('media.oembed.url_resolver')->getResourceUrl($url)
@@ -109,7 +109,7 @@ class UrlResolverTest extends MediaFunctionalTestBase {
    * @return array
    *   An array of test data.
    */
-  public static function providerUrlDiscovery() {
+  public static function providerUrlDiscovery(): array {
     return [
       'JSON resource' => [
         'video_vimeo.html',
@@ -135,7 +135,7 @@ class UrlResolverTest extends MediaFunctionalTestBase {
    * @legacy-covers ::getResourceUrl
    */
   #[DataProvider('providerUrlDiscovery')]
-  public function testUrlDiscovery($url, $resource_url): void {
+  public function testUrlDiscovery(string $url, string $resource_url): void {
     $this->assertSame(
       $this->container->get('media.oembed.url_resolver')->getResourceUrl($url),
       $resource_url

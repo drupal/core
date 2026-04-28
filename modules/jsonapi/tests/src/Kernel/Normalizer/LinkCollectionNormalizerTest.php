@@ -107,7 +107,7 @@ class LinkCollectionNormalizerTest extends KernelTestBase {
    * Tests the link collection normalizer.
    */
   #[DataProvider('linkAccessTestData')]
-  public function testLinkAccess($current_user_id, $edit_form_uid, $expected_link_keys, $expected_cache_contexts): void {
+  public function testLinkAccess(int $current_user_id, int $edit_form_uid, array $expected_link_keys, array $expected_cache_contexts): void {
     // Get the current user and an edit-form URL.
     foreach ($this->testUsers as $user) {
       $uid = (int) $user->id();
@@ -168,7 +168,7 @@ class LinkCollectionNormalizerTest extends KernelTestBase {
    * @return array[]
    *   An array of test cases for testLinkAccess().
    */
-  public static function linkAccessTestData() {
+  public static function linkAccessTestData(): array {
     return [
       'the edit-form link is present because uid 2 has access to the targeted resource (its own edit form)' => [
         'current_user_id' => 2,
@@ -188,7 +188,7 @@ class LinkCollectionNormalizerTest extends KernelTestBase {
   /**
    * Get an instance of the normalizer to test.
    */
-  protected function getNormalizer(?AccountInterface $current_user = NULL) {
+  protected function getNormalizer(?AccountInterface $current_user = NULL): LinkCollectionNormalizer {
     if (is_null($current_user)) {
       $current_user = $this->setUpCurrentUser();
     }

@@ -77,7 +77,7 @@ class MigrateSourceTest extends MigrateTestCase {
    * @return \Drupal\migrate\Plugin\MigrateSourceInterface&\PHPUnit\Framework\MockObject\MockObject
    *   A mocked source plugin.
    */
-  protected function getSource($configuration = [], $migrate_config = [], $status = MigrateIdMapInterface::STATUS_NEEDS_UPDATE, $high_water_value = NULL) {
+  protected function getSource(array $configuration = [], array $migrate_config = [], $status = MigrateIdMapInterface::STATUS_NEEDS_UPDATE, $high_water_value = NULL) {
     $configuration += ['skip_count' => FALSE];
 
     $container = new ContainerBuilder();
@@ -126,7 +126,7 @@ class MigrateSourceTest extends MigrateTestCase {
     $rows = [$this->row];
     if (isset($configuration['high_water_property']) && isset($high_water_value)) {
       $property = $configuration['high_water_property']['name'];
-      $rows = array_filter($rows, function (array $row) use ($property, $high_water_value) {
+      $rows = array_filter($rows, function (array $row) use ($property, $high_water_value): bool {
         return $row[$property] >= $high_water_value;
       });
     }
@@ -426,7 +426,7 @@ class MigrateSourceTest extends MigrateTestCase {
    * @return \Drupal\migrate\MigrateExecutable
    *   The migrate executable.
    */
-  protected function getMigrateExecutable($migration) {
+  protected function getMigrateExecutable($migration): MigrateExecutable {
     /** @var \Drupal\migrate\MigrateMessageInterface $message */
     $message = $this->createStub(MigrateMessageInterface::class);
     /** @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface $event_dispatcher */

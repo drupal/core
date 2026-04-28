@@ -41,7 +41,7 @@ class ResourceResponseSubscriberTest extends UnitTestCase {
    * @legacy-covers ::onResponse
    */
   #[DataProvider('providerTestSerialization')]
-  public function testSerialization($data, $expected_response = FALSE): void {
+  public function testSerialization(string|bool|array|null $data, string|false $expected_response = FALSE): void {
     $request = new Request();
     $route_match = new RouteMatch('test', new Route('/rest/test', ['_rest_resource_config' => 'rest_plugin'], ['_format' => 'json']));
 
@@ -62,7 +62,7 @@ class ResourceResponseSubscriberTest extends UnitTestCase {
   /**
    * Provides data to testSerialization().
    */
-  public static function providerTestSerialization() {
+  public static function providerTestSerialization(): array {
     return [
       // The default data for \Drupal\rest\ResourceResponse.
       'default' => [NULL, ''],
@@ -232,7 +232,7 @@ class ResourceResponseSubscriberTest extends UnitTestCase {
    *   6. expected response content type
    *   7. expected response body
    */
-  public static function providerTestResponseFormat() {
+  public static function providerTestResponseFormat(): array {
     $json_encoded = Json::encode(['REST' => 'Drupal']);
     $xml_encoded = "<?xml version=\"1.0\"?>\n<response><REST>Drupal</REST></response>\n";
 
@@ -397,7 +397,7 @@ class ResourceResponseSubscriberTest extends UnitTestCase {
    * @return \Drupal\rest\EventSubscriber\ResourceResponseSubscriber
    *   A functioning ResourceResponseSubscriber.
    */
-  protected function getFunctioningResourceResponseSubscriber(RouteMatchInterface $route_match) {
+  protected function getFunctioningResourceResponseSubscriber(RouteMatchInterface $route_match): ResourceResponseSubscriber {
     // Create a dummy of the renderer service.
     $renderer = $this->prophesize(RendererInterface::class);
     $renderer->executeInRenderContext(Argument::type(RenderContext::class), Argument::type('callable'))

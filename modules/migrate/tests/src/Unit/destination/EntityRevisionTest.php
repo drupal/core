@@ -201,7 +201,7 @@ class EntityRevisionTest extends UnitTestCase {
    *
    * @see \Drupal\Tests\migrate\Unit\Destination\EntityRevision
    */
-  protected function getEntityRevisionDestination(array $configuration = [], $plugin_id = 'entity_revision', array $plugin_definition = []) {
+  protected function getEntityRevisionDestination(array $configuration = [], $plugin_id = 'entity_revision', array $plugin_definition = []): EntityRevision {
     return new EntityRevision($configuration, $plugin_id, $plugin_definition,
       $this->migration,
       $this->storage->reveal(),
@@ -249,7 +249,7 @@ class EntityRevision extends RealEntityRevision {
    * @return \Drupal\Core\Entity\EntityInterface
    *   An updated entity from row values.
    */
-  protected function updateEntity(EntityInterface $entity, Row $row) {
+  protected function updateEntity(EntityInterface $entity, Row $row): EntityInterface {
     return $entity;
   }
 

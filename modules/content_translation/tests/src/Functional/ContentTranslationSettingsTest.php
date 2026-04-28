@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\content_translation\Functional;
 
+use Behat\Mink\Element\NodeElement;
 use Drupal\comment\CommentingStatus;
 use Drupal\comment\Tests\CommentTestTrait;
 use Drupal\content_translation\Hook\ContentTranslationFormLanguageHooks;
@@ -244,7 +245,7 @@ class ContentTranslationSettingsTest extends BrowserTestBase {
       'zxx',
     ];
     $options = $this->assertSession()->selectExists('edit-settings-node-article-settings-language-langcode')->findAll('css', 'option');
-    $options = array_map(function ($item) {
+    $options = array_map(function (NodeElement $item) {
       return $item->getValue();
     }, $options);
     $this->assertSame($expected_elements, $options);

@@ -382,7 +382,7 @@ class SystemMenuBlockTest extends KernelTestBase {
    * @return array
    *   An array of test cases for the config expanded option.
    */
-  public static function configExpandedTestCases() {
+  public static function configExpandedTestCases(): array {
     return [
       'All levels' => [
         'example5',
@@ -532,7 +532,7 @@ class SystemMenuBlockTest extends KernelTestBase {
    * @return array
    *   The "menu link ID tree" representation of the given render array.
    */
-  protected function convertBuiltMenuToIdTree(array $build) {
+  protected function convertBuiltMenuToIdTree(array $build): array {
     $level = [];
     foreach (Element::children($build) as $id) {
       $level[$id] = [];

@@ -235,7 +235,7 @@ trait EntityDefinitionTestTrait {
    *   (optional) If the base field should be translatable or not. Defaults to
    *   FALSE.
    */
-  protected function addBaseField($type = 'string', $entity_type_id = 'entity_test_update', $is_revisionable = FALSE, $set_label = TRUE, $is_translatable = FALSE): void {
+  protected function addBaseField($type = 'string', string $entity_type_id = 'entity_test_update', $is_revisionable = FALSE, $set_label = TRUE, $is_translatable = FALSE): void {
     $definitions['new_base_field'] = BaseFieldDefinition::create($type)
       ->setName('new_base_field')
       ->setRevisionable($is_revisionable)
@@ -300,7 +300,7 @@ trait EntityDefinitionTestTrait {
    * @param string $entity_type_id
    *   (optional) The entity type ID the base field should be attached to.
    */
-  protected function removeBaseField($entity_type_id = 'entity_test_update'): void {
+  protected function removeBaseField(string $entity_type_id = 'entity_test_update'): void {
     $this->state->delete($entity_type_id . '.additional_base_field_definitions');
   }
 
@@ -437,7 +437,7 @@ trait EntityDefinitionTestTrait {
    * @return \Drupal\Core\Entity\EntityTypeInterface
    *   An entity type definition.
    */
-  protected function getUpdatedEntityTypeDefinition($revisionable = FALSE, $translatable = FALSE) {
+  protected function getUpdatedEntityTypeDefinition($revisionable = FALSE, $translatable = FALSE): object {
     $entity_type = clone \Drupal::entityTypeManager()->getDefinition('entity_test_update');
 
     if ($revisionable) {

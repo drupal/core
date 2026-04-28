@@ -149,7 +149,7 @@ class AliasManagerTest extends UnitTestCase {
   /**
    * Tests the getAliasByPath method for a path that is not in the prefix list.
    */
-  public function testGetAliasByPathPrefixList() {
+  public function testGetAliasByPathPrefixList(): void {
     $this->setUpMockAliasPrefixList();
 
     $path_part1 = $this->randomMachineName();
@@ -327,7 +327,7 @@ class AliasManagerTest extends UnitTestCase {
    * @return \Drupal\Core\Language\LanguageInterface
    *   The current language object.
    */
-  protected function setUpCurrentLanguage() {
+  protected function setUpCurrentLanguage(): Language {
     $language = new Language(['id' => 'en']);
 
     $this->languageManager

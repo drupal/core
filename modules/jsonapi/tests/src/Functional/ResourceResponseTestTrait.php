@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\jsonapi\Functional;
 
-use Drupal\jsonapi\JsonApiSpec;
 use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Access\AccessResultInterface;
@@ -15,6 +14,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\Url;
 use Drupal\jsonapi\CacheableResourceResponse;
+use Drupal\jsonapi\JsonApiSpec;
 use Drupal\jsonapi\Normalizer\HttpExceptionNormalizer;
 use Psr\Http\Message\ResponseInterface;
 
@@ -124,7 +124,7 @@ trait ResourceResponseTestTrait {
    */
   protected function getExpectedIncludedResourceResponse(array $include_paths, array $request_options) {
     $resource_type = $this->resourceType;
-    $resource_data = array_reduce($include_paths, function ($data, $path) use ($request_options, $resource_type) {
+    $resource_data = array_reduce($include_paths, function (array $data, $path) use ($request_options, $resource_type): array {
       $field_names = explode('.', $path);
       /** @var \Drupal\Core\Entity\EntityInterface $entity */
       $entity = $this->entity;
@@ -291,7 +291,7 @@ trait ResourceResponseTestTrait {
    *   The resource or resource identifier.
    */
   protected static function sortResourceCollection(array &$resources) {
-    usort($resources, function ($a, $b) {
+    usort($resources, function (array $a, array $b): int {
       return strcmp("{$a['type']}:{$a['id']}", "{$b['type']}:{$b['id']}");
     });
   }
@@ -327,9 +327,9 @@ trait ResourceResponseTestTrait {
    * @return array
    *   An array of link paths, keyed by relationship field name.
    */
-  protected static function getLinkPaths(array $relationship_field_names, $type) {
+  protected static function getLinkPaths(array $relationship_field_names, $type): mixed {
     assert($type === 'relationship' || $type === 'related');
-    return array_reduce($relationship_field_names, function ($link_paths, $relationship_field_name) use ($type) {
+    return array_reduce($relationship_field_names, function (array $link_paths, $relationship_field_name) use ($type): array {
       $tail = $type === 'relationship' ? 'self' : $type;
       $link_paths[$relationship_field_name] = "data.relationships.$relationship_field_name.links.$tail.href";
       return $link_paths;
@@ -435,7 +435,7 @@ trait ResourceResponseTestTrait {
    */
   protected function getRelatedResponses(array $relationship_field_names, array $request_options, ?EntityInterface $entity = NULL) {
     $entity = $entity ?: $this->entity;
-    $links = array_map(function ($relationship_field_name) use ($entity) {
+    $links = array_map(function ($relationship_field_name) use ($entity): string {
       return static::getRelatedLink(static::toResourceIdentifier($entity), $relationship_field_name);
     }, array_combine($relationship_field_names, $relationship_field_names));
     return $this->getResponses($links, $request_options);
@@ -455,7 +455,7 @@ trait ResourceResponseTestTrait {
    * @see \GuzzleHttp\ClientInterface::request()
    */
   protected function getRelationshipResponses(array $relationship_field_names, array $request_options) {
-    $links = array_map(function ($relationship_field_name) {
+    $links = array_map(function ($relationship_field_name): string {
       return static::getRelationshipLink(static::toResourceIdentifier($this->entity), $relationship_field_name);
     }, array_combine($relationship_field_names, $relationship_field_names));
     return $this->getResponses($links, $request_options);
@@ -474,8 +474,8 @@ trait ResourceResponseTestTrait {
    *
    * @see \GuzzleHttp\ClientInterface::request()
    */
-  protected function getResponses(array $links, array $request_options) {
-    return array_reduce(array_keys($links), function ($related_responses, $key) use ($links, $request_options) {
+  protected function getResponses(array $links, array $request_options): mixed {
+    return array_reduce(array_keys($links), function (array $related_responses, int|string $key) use ($links, $request_options): array {
       $related_responses[$key] = $this->request('GET', Url::fromUri($links[$key]), $request_options);
       return $related_responses;
     }, []);
@@ -641,7 +641,7 @@ trait ResourceResponseTestTrait {
   protected static function sortOmittedLinks(array &$omitted) {
     $help = $omitted['links']['help'];
     $links = array_diff_key($omitted['links'], array_flip(['help']));
-    uasort($links, function ($a, $b) {
+    uasort($links, function (array $a, array $b): int {
       return strcmp($a['href'], $b['href']);
     });
     $omitted['links'] = ['help' => $help] + $links;

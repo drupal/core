@@ -41,7 +41,7 @@ class GetTest extends MigrateProcessTestCase {
     $this->row = $this->createMock(Row::class);
     $this->row->expects($this->exactly(2))
       ->method('get')
-      ->willReturnCallback(function ($argument) use ($map) {
+      ->willReturnCallback(function ($argument) use ($map): string {
         return $map[$argument];
       });
     $value = $this->plugin->transform(NULL, $this->migrateExecutable, $this->row, 'destination_property');
@@ -76,7 +76,7 @@ class GetTest extends MigrateProcessTestCase {
     $this->row = $this->createMock(Row::class);
     $this->row->expects($this->exactly(4))
       ->method('get')
-      ->willReturnCallback(function ($argument) use ($map) {
+      ->willReturnCallback(function ($argument) use ($map): string {
         return $map[$argument];
       });
     $value = $this->plugin->transform(NULL, $this->migrateExecutable, $this->row, 'destination_property');
@@ -87,7 +87,7 @@ class GetTest extends MigrateProcessTestCase {
    * Tests the Get plugin when source has integer values.
    */
   #[DataProvider('integerValuesDataProvider')]
-  public function testIntegerValues($source, $expected_value): void {
+  public function testIntegerValues(array $source, array $expected_value): void {
     $this->row = $this->createMock(Row::class);
     $this->row->expects($this->atMost(2))
       ->method('get')
@@ -104,7 +104,7 @@ class GetTest extends MigrateProcessTestCase {
    * @return array
    *   An array of data for the test.
    */
-  public static function integerValuesDataProvider() {
+  public static function integerValuesDataProvider(): array {
     return [
       [
         'source' => [0 => 0, 1 => 'test'],

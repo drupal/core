@@ -240,7 +240,7 @@ class WorkspaceTrackerTest extends KernelTestBase {
    *   An array of expected values for the initial revisions, i.e. for the
    *   entities that were created in the specified workspace.
    */
-  protected function assertWorkspaceAssociations($entity_type_id, array $expected_latest_revisions, array $expected_all_revisions, array $expected_initial_revisions): void {
+  protected function assertWorkspaceAssociations(?string $entity_type_id, array $expected_latest_revisions, array $expected_all_revisions, array $expected_initial_revisions): void {
     /** @var \Drupal\workspaces\WorkspaceTrackerInterface $workspace_tracker */
     $workspace_tracker = \Drupal::service('workspaces.tracker');
     foreach ($expected_latest_revisions as $workspace_id => $expected_tracked_revision_ids) {

@@ -359,7 +359,7 @@ class RowTest extends UnitTestCase {
    *   The expected value.
    */
   #[DataProvider('getDataProvider')]
-  public function testGet($key, $expected_value): void {
+  public function testGet(string $key, ?string $expected_value): void {
     $row = $this->createRowWithDestinationProperties($this->testGetSourceProperties, $this->testGetSourceIds, $this->testGetDestinationProperties);
     $this->assertSame($expected_value, $row->get($key));
   }
@@ -370,7 +370,7 @@ class RowTest extends UnitTestCase {
    * @return array
    *   The keys and expected values.
    */
-  public static function getDataProvider() {
+  public static function getDataProvider(): array {
     return [
       ['source_key_1', 'source_value_1'],
       ['source_key_2', 'source_value_2'],
@@ -412,7 +412,7 @@ class RowTest extends UnitTestCase {
    * @return array
    *   The keys and expected values.
    */
-  public static function getMultipleDataProvider() {
+  public static function getMultipleDataProvider(): array {
     return [
       'Single Key' => [
         'keys' => ['source_key_1'],
@@ -480,7 +480,7 @@ class RowTest extends UnitTestCase {
    * @return \Drupal\migrate\Row
    *   The row, populated with destination properties.
    */
-  protected function createRowWithDestinationProperties(array $source_properties, array $source_ids, array $destination_properties, $is_stub = FALSE) {
+  protected function createRowWithDestinationProperties(array $source_properties, array $source_ids, array $destination_properties, $is_stub = FALSE): Row {
     $row = new Row($source_properties, $source_ids, $is_stub);
     foreach ($destination_properties as $key => $property) {
       $row->setDestinationProperty($key, $property);

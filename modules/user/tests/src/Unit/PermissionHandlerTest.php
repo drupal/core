@@ -75,7 +75,7 @@ class PermissionHandlerTest extends UnitTestCase {
    * @return \Drupal\Core\Extension\Extension
    *   The extension object.
    */
-  protected function mockModuleExtension($module, $name) {
+  protected function mockModuleExtension($module, $name): Extension {
     $extension = new Extension('vfs:/', $module, "modules/$module");
     $extension->info['name'] = $name;
     return $extension;
@@ -365,7 +365,7 @@ class TestPermissionCallbacks {
   /**
    * Callback that returns a single description.
    */
-  public function singleDescription() {
+  public function singleDescription(): array {
     return [
       'access_module_a' => 'single_description',
     ];
@@ -374,7 +374,7 @@ class TestPermissionCallbacks {
   /**
    * Callback that returns the title and description.
    */
-  public function titleDescription() {
+  public function titleDescription(): array {
     return [
       'access module b' => [
         'title' => 'Access B',
@@ -386,7 +386,7 @@ class TestPermissionCallbacks {
   /**
    * Callback that returns restricted access.
    */
-  public function titleDescriptionRestrictAccess() {
+  public function titleDescriptionRestrictAccess(): array {
     return [
       'access_module_c' => [
         'title' => 'Access C',
@@ -399,7 +399,7 @@ class TestPermissionCallbacks {
   /**
    * Callback that returns the title.
    */
-  public function titleProvider() {
+  public function titleProvider(): array {
     return [
       'access module a via module b' => [
         'title' => 'Access A via B',
@@ -418,7 +418,7 @@ class TestTranslationManager implements TranslationInterface {
   /**
    * {@inheritdoc}
    */
-  public function translate($string, array $args = [], array $options = []) {
+  public function translate($string, array $args = [], array $options = []): TranslatableMarkup {
     // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
     return new TranslatableMarkup($string, $args, $options, $this);
   }
@@ -433,7 +433,7 @@ class TestTranslationManager implements TranslationInterface {
   /**
    * {@inheritdoc}
    */
-  public function formatPlural($count, $singular, $plural, array $args = [], array $options = []) {
+  public function formatPlural($count, $singular, $plural, array $args = [], array $options = []): PluralTranslatableMarkup {
     return new PluralTranslatableMarkup($count, $singular, $plural, $args, $options, $this);
   }
 

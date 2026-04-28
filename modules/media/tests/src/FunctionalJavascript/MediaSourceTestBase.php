@@ -122,7 +122,7 @@ abstract class MediaSourceTestBase extends MediaJavascriptTestBase {
    * @return \Drupal\media\MediaTypeInterface
    *   The created media type.
    */
-  public function doTestCreateMediaType($media_type_id, $source_id, array $provided_fields = [], $source_label_visibility = 'visually_hidden') {
+  public function doTestCreateMediaType(string $media_type_id, string|int|float|bool $source_id, array $provided_fields = [], string|int|float|bool $source_label_visibility = 'visually_hidden') {
     $session = $this->getSession();
     $page = $session->getPage();
     $assert_session = $this->assertSession();

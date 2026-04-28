@@ -68,7 +68,7 @@ class AliasPathProcessorTest extends UnitTestCase {
    * Tests process outbound.
    */
   #[DataProvider('providerTestProcessOutbound')]
-  public function testProcessOutbound($path, array $options, $expected_path): void {
+  public function testProcessOutbound(string $path, array $options, string $expected_path): void {
     if (isset($options['alias']) && $options['alias']) {
       $this->aliasManager->expects($this->never())
         ->method('getAliasByPath');
@@ -95,7 +95,7 @@ class AliasPathProcessorTest extends UnitTestCase {
    * @return array
    *   The data provider for testProcessOutbound.
    */
-  public static function providerTestProcessOutbound() {
+  public static function providerTestProcessOutbound(): array {
     return [
       ['internal-url', [], 'url-alias'],
       ['internal-url', ['alias' => TRUE], 'internal-url'],

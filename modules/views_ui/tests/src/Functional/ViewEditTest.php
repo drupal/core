@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\views_ui\Functional;
 
+use Behat\Mink\Element\NodeElement;
 use Drupal\Core\Database\Database;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\views\Entity\View;
@@ -197,7 +198,7 @@ class ViewEditTest extends UITestBase {
           'hu',
         ];
         $elements = $this->assertSession()->selectExists('edit-rendering-language')->findAll('css', 'option');
-        $elements = array_map(function ($element) {
+        $elements = array_map(function (NodeElement $element) {
           return $element->getValue();
         }, $elements);
         $this->assertSame($expected_elements, $elements);

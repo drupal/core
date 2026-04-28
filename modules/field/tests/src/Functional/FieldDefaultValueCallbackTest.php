@@ -32,7 +32,7 @@ class FieldDefaultValueCallbackTest extends BrowserTestBase {
    *
    * @var string
    */
-  private $fieldName;
+  private string $fieldName;
 
   /**
    * {@inheritdoc}

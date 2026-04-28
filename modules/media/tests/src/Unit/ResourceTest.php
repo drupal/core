@@ -20,7 +20,7 @@ class ResourceTest extends UnitTestCase {
   /**
    * Test cases for ::testSetDimensions.
    */
-  public static function setDimensionsTestCases() {
+  public static function setDimensionsTestCases(): array {
     return [
       'Standard rich dimensions' => [
         'rich',
@@ -81,7 +81,7 @@ class ResourceTest extends UnitTestCase {
    * Tests set dimensions.
    */
   #[DataProvider('setDimensionsTestCases')]
-  public function testSetDimensions($factory, $width, $height, $exception = NULL, $expected_width = NULL, $expected_height = NULL): void {
+  public function testSetDimensions(string $factory, int|string|null $width, int|string|null $height, ?string $exception = NULL, ?int $expected_width = NULL, ?int $expected_height = NULL): void {
     if ($exception) {
       $this->expectException(\InvalidArgumentException::class);
       $this->expectExceptionMessage($exception);

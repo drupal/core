@@ -35,7 +35,7 @@ trait ImageFieldCreationTrait {
    * @param string $description
    *   (optional) A description for the field. Defaults to ''.
    */
-  protected function createImageField($field_name, $entity_type, $bundle, $storage_settings = [], $field_settings = [], $widget_settings = [], $formatter_settings = [], $description = '') {
+  protected function createImageField($field_name, $entity_type, $bundle, array $storage_settings = [], array $field_settings = [], $widget_settings = [], $formatter_settings = [], $description = '') {
     FieldStorageConfig::create([
       'field_name' => $field_name,
       'entity_type' => $entity_type,

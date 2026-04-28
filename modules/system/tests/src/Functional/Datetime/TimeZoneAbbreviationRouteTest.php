@@ -52,7 +52,7 @@ class TimeZoneAbbreviationRouteTest extends BrowserTestBase {
    *   Whether to expect the request is invalid.
    */
   #[DataProvider('providerAbbreviationConversion')]
-  public function testAbbreviationConversion($path, $expectedResponse = NULL, $expectInvalidRequest = FALSE): void {
+  public function testAbbreviationConversion(string $path, ?string $expectedResponse = NULL, bool $expectInvalidRequest = FALSE): void {
     $response = $this->drupalGet('system/timezone/' . $path);
     if (isset($expectedResponse)) {
       $this->assertEquals($response, $expectedResponse);
@@ -66,7 +66,7 @@ class TimeZoneAbbreviationRouteTest extends BrowserTestBase {
    * @return array
    *   Test scenarios.
    */
-  public static function providerAbbreviationConversion() {
+  public static function providerAbbreviationConversion(): array {
     return [
       'valid, default offset' => [
         'CST/0/0',

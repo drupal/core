@@ -18,7 +18,7 @@ class TestMigrateExecutable extends MigrateExecutable {
    * @param \Drupal\Core\StringTranslation\TranslationInterface $string_translation
    *   The translation manager.
    */
-  public function setStringTranslation(TranslationInterface $string_translation) {
+  public function setStringTranslation(TranslationInterface $string_translation): static {
     $this->stringTranslation = $string_translation;
     return $this;
   }
@@ -29,7 +29,7 @@ class TestMigrateExecutable extends MigrateExecutable {
    * @param \Drupal\migrate\Plugin\MigrateSourceInterface $source
    *   The value to set.
    */
-  public function setSource($source) {
+  public function setSource($source): void {
     $this->source = $source;
   }
 
@@ -39,14 +39,14 @@ class TestMigrateExecutable extends MigrateExecutable {
    * @param array $source_id_values
    *   The values to set.
    */
-  public function setSourceIdValues($source_id_values) {
+  public function setSourceIdValues($source_id_values): void {
     $this->sourceIdValues = $source_id_values;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function handleException(\Exception $exception, $save = TRUE) {
+  public function handleException(\Exception $exception, $save = TRUE): void {
     $message = $exception->getMessage();
     if ($save) {
       $this->saveMessage($message);

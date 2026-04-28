@@ -202,7 +202,7 @@ class FieldWebTest extends ViewTestBase {
    * @return array
    *   An array containing simplexml objects.
    */
-  protected function parseContent($content) {
+  protected function parseContent($content): ?\SimpleXMLElement {
     $htmlDom = Html::load($content);
     $elements = simplexml_import_dom($htmlDom);
 

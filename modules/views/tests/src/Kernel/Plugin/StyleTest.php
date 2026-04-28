@@ -316,7 +316,7 @@ class StyleTest extends ViewsKernelTestBase {
    * @return \SimpleXMLElement|null
    *   The HTML DOM.
    */
-  protected function getHtmlDom($output) {
+  protected function getHtmlDom($output): ?\SimpleXMLElement {
     $html_dom = Html::load($output);
     if ($html_dom) {
       // It's much easier to work with simplexml than DOM, luckily enough

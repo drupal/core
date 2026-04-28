@@ -147,7 +147,7 @@ class ViewsDataTest extends UnitTestCase {
     $this->moduleHandler->expects($this->atLeastOnce())
       ->method('invokeAllWith')
       ->with('views_data')
-      ->willReturnCallback(function (string $hook, callable $callback) {
+      ->willReturnCallback(function (string $hook, callable $callback): void {
         $callback(\Closure::fromCallable([$this, 'viewsData']), 'views_test_data');
       });
   }
@@ -227,7 +227,7 @@ class ViewsDataTest extends UnitTestCase {
     $this->moduleHandler->expects($this->exactly(2))
       ->method('invokeAllWith')
       ->with('views_data')
-      ->willReturnCallback(function ($hook, $callback) {
+      ->willReturnCallback(function ($hook, $callback): void {
         $callback(\Closure::fromCallable([$this, 'viewsData']), 'views_test_data');
       });
     $this->moduleHandler->expects($this->exactly(2))
@@ -674,7 +674,7 @@ class ViewsDataTest extends UnitTestCase {
    * Tests that getting data with an empty key throws an exception.
    */
   #[DataProvider('providerTestGetEmptyKey')]
-  public function testGetEmptyKey($key): void {
+  public function testGetEmptyKey(string|int|null $key): void {
     $this->expectException(\InvalidArgumentException::class);
     $this->expectExceptionMessage('A valid cache entry key is required. Use getAll() to get all table data.');
 
@@ -684,7 +684,7 @@ class ViewsDataTest extends UnitTestCase {
   /**
    * Provides data to testGetEmptyKey().
    */
-  public static function providerTestGetEmptyKey() {
+  public static function providerTestGetEmptyKey(): array {
     return [
       [NULL],
       [''],
@@ -902,7 +902,7 @@ class ViewsDataTest extends UnitTestCase {
    * 2. getData() invokes module hooks which may suspend the fiber
    * 3. Fiber B calls get($table) or getAll(), sees fullyLoaded is FALSE
    * 4. Fiber B correctly calls getData() again (not skipping it)
-   * 5. Both fibers get correct data, no empty cache entries written
+   * 5. Both fibers get correct data, no empty cache entries written.
    *
    * The fix ensures fullyLoaded is set to TRUE only AFTER data is obtained,
    * not at the start of getData().
@@ -933,7 +933,7 @@ class ViewsDataTest extends UnitTestCase {
     $this->moduleHandler->expects($this->once())
       ->method('invokeAllWith')
       ->with('views_data')
-      ->willReturnCallback(function ($hook, $callback) {
+      ->willReturnCallback(function ($hook, $callback): void {
         // Suspend the fiber to simulate async operation during hook.
         if (\Fiber::getCurrent() !== NULL) {
           \Fiber::suspend();
@@ -959,13 +959,13 @@ class ViewsDataTest extends UnitTestCase {
     // properties.
     $this->cacheBackend->expects($this->exactly($expected_cache_get_count))
       ->method('get')
-      ->willReturnCallback(function (string $cid) use (&$cache_sets) {
+      ->willReturnCallback(function (string $cid) use (&$cache_sets): null {
         return $cache_sets[$cid] ?? NULL;
       });
 
     $this->cacheBackend->expects($this->exactly($expected_cache_set_count))
       ->method('set')
-      ->willReturnCallback(function ($cid, $data) use (&$cache_sets) {
+      ->willReturnCallback(function ($cid, $data) use (&$cache_sets): void {
         $cache_sets[$cid] = (object) ['data' => $data];
       });
 

@@ -82,8 +82,11 @@ class QueryBatchTest extends KernelTestBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @return mixed[]
+   *   The data.
    */
-  public static function queryDataProvider() {
+  public static function queryDataProvider(): array {
     // Define the parameters for building the data array. The first element is
     // the number of source data rows, the second is the batch size to set on
     // the plugin configuration.
@@ -154,7 +157,7 @@ class QueryBatchTest extends KernelTestBase {
    *   The total number of batches.
    */
   #[DataProvider('queryDataProvider')]
-  public function testQueryBatch($source_data, $expected_data, $num_rows, $configuration, $expected_batch_size, $expected_batch_count): void {
+  public function testQueryBatch(array $source_data, array $expected_data, $num_rows, array $configuration, $expected_batch_size, $expected_batch_count): void {
     $plugin = $this->getPlugin($configuration);
 
     // Since we don't yet inject the database connection, we need to use a
@@ -209,7 +212,7 @@ class QueryBatchTest extends KernelTestBase {
    * @return \Drupal\migrate\Plugin\MigrateSourceInterface|object
    *   The fully configured source plugin.
    */
-  protected function getPlugin($configuration) {
+  protected function getPlugin(array $configuration) {
     /** @var \Drupal\migrate\Plugin\MigratePluginManager $plugin_manager */
     $plugin_manager = $this->container->get('plugin.manager.migrate.source');
     $plugin = $plugin_manager->createInstance('query_batch_test', $configuration, $this->migration->reveal());
@@ -230,7 +233,7 @@ class QueryBatchTest extends KernelTestBase {
    * @return \Drupal\sqlite\Driver\Database\sqlite\Connection
    *   The SQLite database connection.
    */
-  protected function getDatabase(array $source_data) {
+  protected function getDatabase(array $source_data): Connection {
     // Create an in-memory SQLite database. Plugins can interact with it like
     // any other database, and it will cease to exist when the connection is
     // closed.
@@ -249,7 +252,7 @@ class QueryBatchTest extends KernelTestBase {
         ->createTable($table, [
           // SQLite uses loose affinity typing, so it's OK for every field to
           // be a text field.
-          'fields' => array_map(function () {
+          'fields' => array_map(function (): array {
             return ['type' => 'text'];
           }, $pilot),
         ]);

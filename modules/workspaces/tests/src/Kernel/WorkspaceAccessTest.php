@@ -57,7 +57,7 @@ class WorkspaceAccessTest extends KernelTestBase {
    * @return array
    *   An array of operations and permissions to test with.
    */
-  public static function operationCases() {
+  public static function operationCases(): array {
     return [
       ['create', 'administer workspaces'],
       ['create', 'create workspace'],
@@ -82,7 +82,7 @@ class WorkspaceAccessTest extends KernelTestBase {
    *   The permission to test with.
    */
   #[DataProvider('operationCases')]
-  public function testWorkspaceAccess($operation, $permission): void {
+  public function testWorkspaceAccess(string $operation, string $permission): void {
     $user = $this->createUser();
     $this->setCurrentUser($user);
     $workspace = Workspace::create(['id' => 'oak']);

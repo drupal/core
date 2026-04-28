@@ -139,7 +139,7 @@ class TranslationWebTest extends FieldTestBase {
    * Check if the field translation attached to the entity revision identified
    * by the passed arguments were correctly stored.
    */
-  private function checkTranslationRevisions($id, $revision_id, $available_langcodes): void {
+  private function checkTranslationRevisions($id, $revision_id, array $available_langcodes): void {
     $field_name = $this->fieldStorage->getName();
     /** @var \Drupal\Core\Entity\RevisionableStorageInterface $storage */
     $storage = $this->container->get('entity_type.manager')

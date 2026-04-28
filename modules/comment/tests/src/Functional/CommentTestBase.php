@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Drupal\Tests\comment\Functional;
 
 use Drupal\comment\AnonymousContact;
-use Drupal\comment\CommentPreviewMode;
-use Drupal\comment\FormLocation;
-use Drupal\Component\Render\FormattableMarkup;
-use Drupal\comment\Entity\CommentType;
-use Drupal\comment\Entity\Comment;
 use Drupal\comment\CommentInterface;
+use Drupal\comment\CommentPreviewMode;
+use Drupal\comment\Entity\Comment;
+use Drupal\comment\Entity\CommentType;
+use Drupal\comment\FormLocation;
 use Drupal\comment\Tests\CommentTestTrait;
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\node\Entity\NodeType;
 use Drupal\Tests\BrowserTestBase;
@@ -119,7 +119,7 @@ abstract class CommentTestBase extends BrowserTestBase {
    * @return \Drupal\comment\CommentInterface|null
    *   The posted comment or NULL when posted comment was not found.
    */
-  protected function postComment($entity, $comment, $subject = '', $contact = NULL, $field_name = 'comment') {
+  protected function postComment($entity, string|int|float|bool $comment, $subject = '', $contact = NULL, string $field_name = 'comment') {
     $edit = [];
     $edit['comment_body[0][value]'] = $comment;
 
@@ -379,7 +379,7 @@ abstract class CommentTestBase extends BrowserTestBase {
    * @return int
    *   Comment id.
    */
-  protected function getUnapprovedComment($subject) {
+  protected function getUnapprovedComment(string $subject) {
     $this->drupalGet('admin/content/comment/approval');
     preg_match('/href="(.*?)#comment-([^"]+)"(.*?)>(' . $subject . ')/', $this->getSession()->getPage()->getContent(), $match);
 

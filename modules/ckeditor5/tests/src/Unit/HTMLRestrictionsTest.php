@@ -240,7 +240,7 @@ class HTMLRestrictionsTest extends UnitTestCase {
    * @legacy-covers ::fromFilterPluginInstance
    */
   #[DataProvider('providerConvenienceConstructors')]
-  public function testConvenienceConstructors($input, array $expected, ?array $expected_raw = NULL): void {
+  public function testConvenienceConstructors(string $input, array $expected, ?array $expected_raw = NULL): void {
     $expected_raw = $expected_raw ?? $expected;
 
     // ::fromString()
@@ -918,7 +918,7 @@ class HTMLRestrictionsTest extends UnitTestCase {
    * @legacy-covers ::merge
    */
   #[DataProvider('providerOperands')]
-  public function testOperations(HTMLRestrictions $a, HTMLRestrictions $b, $expected_diff, $expected_intersection, $expected_union): void {
+  public function testOperations(HTMLRestrictions $a, HTMLRestrictions $b, string|HTMLRestrictions $expected_diff, string|HTMLRestrictions $expected_intersection, string|HTMLRestrictions $expected_union): void {
     // This looks more complicated than it is: it applies the same processing to
     // all three of the expected operation results.
     foreach (['diff', 'intersection', 'union'] as $op) {

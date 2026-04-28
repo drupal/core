@@ -247,7 +247,7 @@ class ManageFieldsTest extends WebDriverTestBase {
     $this->assertSame('255', $max_length_input->getValue());
     $this->assertSame('255', $default_input_1->getAttribute('maxlength'));
     $max_length_input->setValue('5');
-    $page->waitFor(5, function () use ($default_input_1) {
+    $page->waitFor(5, function () use ($default_input_1): bool {
       return $default_input_1->getAttribute('maxlength') === '5';
     });
     $this->assertSame('5', $default_input_1->getAttribute('maxlength'));

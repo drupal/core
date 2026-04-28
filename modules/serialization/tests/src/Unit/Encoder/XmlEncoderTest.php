@@ -120,7 +120,7 @@ class TestObject {
   /**
    * Return the characters "A".
    */
-  public function getA() {
+  public function getA(): string {
     return 'A';
   }
 

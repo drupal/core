@@ -502,7 +502,7 @@ class ConfigNamesMapperTest extends UnitTestCase {
    *   The expected return value of ConfigNamesMapper::hasSchema().
    */
   #[DataProvider('providerTestHasSchema')]
-  public function testHasSchema(array $mock_return_values, $expected): void {
+  public function testHasSchema(array $mock_return_values, bool $expected): void {
     // As the configuration names are arbitrary, simply use integers.
     $config_names = range(1, count($mock_return_values));
     $this->configNamesMapper->setConfigNames($config_names);
@@ -528,7 +528,7 @@ class ConfigNamesMapperTest extends UnitTestCase {
    *   hasConfigSchema() as the first value and the expected return value of
    *   ConfigNamesMapper::hasSchema() as the second value.
    */
-  public static function providerTestHasSchema() {
+  public static function providerTestHasSchema(): array {
     return [
       [[TRUE], TRUE],
       [[FALSE], FALSE],
@@ -547,7 +547,7 @@ class ConfigNamesMapperTest extends UnitTestCase {
    *   The expected return value of ConfigNamesMapper::hasTranslatable().
    */
   #[DataProvider('providerTestHasTranslatable')]
-  public function testHasTranslatable(array $mock_return_values, $expected): void {
+  public function testHasTranslatable(array $mock_return_values, bool $expected): void {
     // As the configuration names are arbitrary, simply use integers.
     $config_names = range(1, count($mock_return_values));
     $this->configNamesMapper->setConfigNames($config_names);
@@ -573,7 +573,7 @@ class ConfigNamesMapperTest extends UnitTestCase {
    *   hasTranslatable() as the first value and the expected return value of
    *   ConfigNamesMapper::hasTranslatable() as the second value.
    */
-  public static function providerTestHasTranslatable() {
+  public static function providerTestHasTranslatable(): array {
     return [
       [[], FALSE],
       [[TRUE], TRUE],
@@ -594,7 +594,7 @@ class ConfigNamesMapperTest extends UnitTestCase {
    *   The expected return value of ConfigNamesMapper::hasTranslation().
    */
   #[DataProvider('providerTestHasTranslation')]
-  public function testHasTranslation(array $mock_return_values, $expected): void {
+  public function testHasTranslation(array $mock_return_values, bool $expected): void {
     $language = new Language();
 
     // As the configuration names are arbitrary, simply use integers.
@@ -622,7 +622,7 @@ class ConfigNamesMapperTest extends UnitTestCase {
    *   hasTranslation() as the first value and the expected return value of
    *   ConfigNamesMapper::hasTranslation() as the second value.
    */
-  public static function providerTestHasTranslation() {
+  public static function providerTestHasTranslation(): array {
     return [
       [[TRUE], TRUE],
       [[FALSE], FALSE],

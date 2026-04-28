@@ -6,8 +6,8 @@ namespace Drupal\Tests\serialization\Traits;
 
 use Drupal\serialization\Normalizer\PrimitiveDataNormalizer;
 use JsonSchema\Validator;
-use Prophecy\Prophecy\ObjectProphecy;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -69,7 +69,7 @@ trait JsonSchemaTestTrait {
     if (!$accept_no_schema_type) {
       $this->assertFalse(empty(array_filter(
         array_keys($defined_schema),
-        fn($key) => in_array($key, ['type', 'allOf', 'oneOf', 'anyOf', 'not', '$ref']),
+        fn(int|string $key): bool => in_array($key, ['type', 'allOf', 'oneOf', 'anyOf', 'not', '$ref']),
       )));
     }
     // All associative arrays must be encoded as objects.
@@ -109,7 +109,7 @@ trait JsonSchemaTestTrait {
    *   Supported types for which to test schema generation.
    */
   public static function supportedTypesDataProvider(): array {
-    return array_map(fn ($type) => [$type], array_keys((new PrimitiveDataNormalizer())->getSupportedTypes(NULL)));
+    return array_map(fn (string $type): array => [$type], array_keys((new PrimitiveDataNormalizer())->getSupportedTypes(NULL)));
   }
 
   /**

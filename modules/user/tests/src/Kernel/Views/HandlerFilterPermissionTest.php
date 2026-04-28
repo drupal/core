@@ -107,7 +107,7 @@ class HandlerFilterPermissionTest extends UserKernelTestBase {
       $permission_by_module[$permission['provider']][$name] = $permission;
     }
     foreach (['system' => 'System', 'user' => 'User'] as $module => $title) {
-      $expected = array_map(function ($permission) {
+      $expected = array_map(function (array $permission): string {
         return Html::escape(strip_tags((string) $permission['title']));
       }, $permission_by_module[$module]);
 

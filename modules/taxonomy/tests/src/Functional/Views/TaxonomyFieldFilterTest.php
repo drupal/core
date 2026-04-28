@@ -184,7 +184,7 @@ class TaxonomyFieldFilterTest extends ViewTestBase {
    * @return \Drupal\taxonomy\TermInterface
    *   The created taxonomy term.
    */
-  protected function createTermWithProperties($properties) {
+  protected function createTermWithProperties(array $properties) {
     // Use the first available text format.
     $filter_formats = \Drupal::service(FilterFormatRepositoryInterface::class)->getAllFormats();
     $format = array_pop($filter_formats);

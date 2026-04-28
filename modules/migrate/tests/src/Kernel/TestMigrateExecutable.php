@@ -14,7 +14,7 @@ class TestMigrateExecutable extends MigrateExecutable {
   /**
    * {@inheritdoc}
    */
-  protected function getIdMap() {
+  protected function getIdMap(): TestFilterIterator {
     // This adds test coverage that this works.
     return new TestFilterIterator(parent::getIdMap());
   }
@@ -22,7 +22,7 @@ class TestMigrateExecutable extends MigrateExecutable {
   /**
    * {@inheritdoc}
    */
-  protected function getSource() {
+  protected function getSource(): TestFilterIterator {
     // This adds test coverage that this works.
     return new TestFilterIterator(parent::getSource());
   }

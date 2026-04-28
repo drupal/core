@@ -22,14 +22,14 @@ class ManagedFileTest extends FileManagedUnitTestBase implements FormInterface {
   /**
    * {@inheritdoc}
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'form_test_managed_file';
   }
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $form['managed_file'] = [
       '#type' => 'managed_file',
     ];

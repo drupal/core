@@ -114,7 +114,7 @@ class DefaultsSectionStorageTest extends KernelTestBase {
   /**
    * Provides test data for ::testAccess().
    */
-  public static function providerTestAccess() {
+  public static function providerTestAccess(): array {
     $section_data = [
       new Section(
         'layout_onecol',

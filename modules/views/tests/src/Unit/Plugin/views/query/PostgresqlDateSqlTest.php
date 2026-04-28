@@ -50,7 +50,7 @@ class PostgresqlDateSqlTest extends UnitTestCase {
    * Tests date formatting replacement.
    */
   #[DataProvider('providerTestGetDateFormat')]
-  public function testGetDateFormat($field, $format, $expected_format): void {
+  public function testGetDateFormat(string $field, string $format, string $expected_format): void {
     $date_sql = new PostgresqlDateSql($this->database);
 
     $this->assertEquals("TO_CHAR($field, '$expected_format')", $date_sql->getDateFormat($field, $format));
@@ -59,7 +59,7 @@ class PostgresqlDateSqlTest extends UnitTestCase {
   /**
    * Provider for date formatting test.
    */
-  public static function providerTestGetDateFormat() {
+  public static function providerTestGetDateFormat(): array {
     return [
       ['foo.field', 'Y-y-M-m', 'YYYY-YY-Mon-MM'],
       ['bar.field', 'n-F D d l', 'MM-Month Dy DD Day'],

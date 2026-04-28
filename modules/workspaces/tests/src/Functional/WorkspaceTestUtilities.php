@@ -182,7 +182,7 @@ trait WorkspaceTestUtilities {
    *
    * @throws \Behat\Mink\Exception\ElementNotFoundException
    */
-  protected function createNodeThroughUi($label, $bundle, $publish = TRUE) {
+  protected function createNodeThroughUi($label, string $bundle, $publish = TRUE) {
     $this->drupalGet('/node/add/' . $bundle);
 
     /** @var \Behat\Mink\Session $session */

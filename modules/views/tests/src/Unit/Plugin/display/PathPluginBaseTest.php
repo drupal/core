@@ -624,7 +624,7 @@ class TestController {
    * @return string
    *   The page title.
    */
-  public function testTitle() {
+  public function testTitle(): string {
     return 'Test title';
   }
 

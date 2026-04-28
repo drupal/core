@@ -82,7 +82,7 @@ class ContextualFilterTest extends WebDriverTestBase {
     $add_button->click();
 
     // Wait for the dialog to close.
-    $page->waitFor(10, function () use ($page) {
+    $page->waitFor(10, function () use ($page): bool {
       $field = $page->find('css', '.ui-dialog-buttonset .button--primary');
       return empty($field);
     });

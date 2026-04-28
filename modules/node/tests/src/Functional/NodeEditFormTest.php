@@ -294,7 +294,7 @@ class NodeEditFormTest extends NodeTestBase {
    * @param string $form_element_name
    *   The name of the form element to populate.
    */
-  protected function checkVariousAuthoredByValues(NodeInterface $node, $form_element_name): void {
+  protected function checkVariousAuthoredByValues(NodeInterface $node, string $form_element_name): void {
     // Try to change the 'authored by' field to an invalid user name.
     $edit = [
       $form_element_name => 'invalid-name',

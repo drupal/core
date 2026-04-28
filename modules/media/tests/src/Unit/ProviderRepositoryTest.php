@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\media\Unit;
 
 use Drupal\Core\KeyValueStore\KeyValueMemoryFactory;
+use Drupal\Core\KeyValueStore\KeyValueStoreInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\media\OEmbed\ProviderException;
 use Drupal\media\OEmbed\ProviderRepository;
@@ -16,6 +17,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Prophecy\Prophecy\ObjectProphecy;
 
 /**
  * Tests Drupal\media\OEmbed\ProviderRepository.
@@ -29,35 +31,33 @@ class ProviderRepositoryTest extends UnitTestCase {
    *
    * @var \Drupal\media\OEmbed\ProviderRepository
    */
-  private $repository;
+  private ProviderRepository $repository;
 
   /**
    * The HTTP client handler which will serve responses.
    *
    * @var \GuzzleHttp\Handler\MockHandler
    */
-  private $responses;
+  private MockHandler $responses;
 
   /**
    * The key-value store.
-   *
-   * @var \Drupal\Core\KeyValueStore\KeyValueStoreInterface
    */
-  private $keyValue;
+  private KeyValueStoreInterface $keyValue;
 
   /**
    * The time that the current test began.
    *
    * @var int
    */
-  private $currentTime;
+  private int $currentTime;
 
   /**
    * The mocked logger channel.
    *
    * @var \Psr\Log\LoggerInterface|\Prophecy\Prophecy\ObjectProphecy
    */
-  private $logger;
+  private ObjectProphecy $logger;
 
   /**
    * {@inheritdoc}

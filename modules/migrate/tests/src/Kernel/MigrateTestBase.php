@@ -82,7 +82,7 @@ abstract class MigrateTestBase extends KernelTestBase implements MigrateMessageI
    *
    * @todo Remove when we don't use global. https://www.drupal.org/node/2552791
    */
-  private function createMigrationConnection() {
+  private function createMigrationConnection(): void {
     // If the backup already exists, something went terribly wrong.
     // This case is possible, because database connection info is a static
     // global state construct on the Database class, which at least persists
@@ -120,7 +120,7 @@ abstract class MigrateTestBase extends KernelTestBase implements MigrateMessageI
    *
    * @todo Remove when we don't use global. https://www.drupal.org/node/2552791
    */
-  private function cleanupMigrateConnection() {
+  private function cleanupMigrateConnection(): void {
     Database::removeConnection('migrate');
     $original_connection_info = Database::getConnectionInfo('simpletest_original_migrate');
     if ($original_connection_info) {
@@ -198,7 +198,7 @@ abstract class MigrateTestBase extends KernelTestBase implements MigrateMessageI
   /**
    * {@inheritdoc}
    */
-  public function display($message, $type = 'status') {
+  public function display($message, $type = 'status'): void {
     if ($this->collectMessages) {
       $this->migrateMessages[$type][] = $message;
     }
@@ -210,7 +210,7 @@ abstract class MigrateTestBase extends KernelTestBase implements MigrateMessageI
   /**
    * Start collecting messages and erase previous messages.
    */
-  public function startCollectingMessages() {
+  public function startCollectingMessages(): void {
     $this->collectMessages = TRUE;
     $this->migrateMessages = [];
   }
@@ -218,7 +218,7 @@ abstract class MigrateTestBase extends KernelTestBase implements MigrateMessageI
   /**
    * Stop collecting messages.
    */
-  public function stopCollectingMessages() {
+  public function stopCollectingMessages(): void {
     $this->collectMessages = FALSE;
   }
 
@@ -241,7 +241,7 @@ abstract class MigrateTestBase extends KernelTestBase implements MigrateMessageI
       $migration = $this->getMigration($migration);
     }
     /** @var \Drupal\migrate\Plugin\MigrationInterface $migration */
-    $destination = array_map(function () {
+    $destination = array_map(function (): null {
       return NULL;
     }, $migration->getDestinationPlugin()->getIds());
     $row = new Row($row, $migration->getSourcePlugin()->getIds());

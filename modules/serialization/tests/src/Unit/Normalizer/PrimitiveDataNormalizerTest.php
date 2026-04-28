@@ -72,7 +72,7 @@ class PrimitiveDataNormalizerTest extends UnitTestCase {
   /**
    * Data provider for testNormalize().
    */
-  public static function dataProviderPrimitiveData() {
+  public static function dataProviderPrimitiveData(): array {
     $data = [];
 
     $definition = DataDefinition::createFromDataType('string');
@@ -136,7 +136,7 @@ class PrimitiveDataNormalizerTest extends UnitTestCase {
       'uri' => [$uri],
       'decimal' => [$decimal],
       'duration' => [$duration],
-      ...array_map(fn ($value) => [$value[0]], static::dataProviderPrimitiveData()),
+      ...array_map(fn (array $value): array => [$value[0]], static::dataProviderPrimitiveData()),
     ];
   }
 

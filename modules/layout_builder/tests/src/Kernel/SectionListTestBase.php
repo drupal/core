@@ -129,7 +129,7 @@ abstract class SectionListTestBase extends EntityKernelTestBase {
    * Tests remove all sections.
    */
   #[DataProvider('providerTestRemoveAllSections')]
-  public function testRemoveAllSections($set_blank, $expected): void {
+  public function testRemoveAllSections($set_blank, array $expected): void {
     if ($set_blank === NULL) {
       $this->sectionList->removeAllSections();
     }

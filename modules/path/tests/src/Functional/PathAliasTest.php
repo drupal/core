@@ -382,7 +382,7 @@ class PathAliasTest extends PathTestBase {
    * @return int
    *   Integer representing the path ID.
    */
-  public function getPID($alias) {
+  public function getPID($alias): mixed {
     $result = \Drupal::entityTypeManager()->getStorage('path_alias')->getQuery()
       ->condition('alias', $alias, '=')
       ->accessCheck(FALSE)

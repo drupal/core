@@ -171,7 +171,7 @@ abstract class LinksetControllerTestBase extends BrowserTestBase {
   /**
    * Rebuild the router only if needed.
    */
-  public function rebuildIfNeeded() {
+  public function rebuildIfNeeded(): void {
     /** @var \Drupal\Core\Routing\RouteBuilderInterface $router_builder */
     $router_builder = $this->container->get('router.builder');
     $router_builder->rebuildIfNeeded();

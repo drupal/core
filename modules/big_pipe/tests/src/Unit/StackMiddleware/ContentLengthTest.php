@@ -42,7 +42,7 @@ final class ContentLengthTest extends UnitTestCase {
   /**
    * Provides data for testHandle().
    */
-  public static function providerTestSetContentLengthHeader() {
+  public static function providerTestSetContentLengthHeader(): array {
     $response = new Response('Test content', 200);
     $response->headers->set('Content-Length', (string) strlen('Test content'));
     return [

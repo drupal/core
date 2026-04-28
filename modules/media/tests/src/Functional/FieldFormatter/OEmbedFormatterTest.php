@@ -66,7 +66,7 @@ class OEmbedFormatterTest extends MediaFunctionalTestBase {
    * @return array
    *   An array of test data.
    */
-  public static function providerRender() {
+  public static function providerRender(): array {
     return [
       'Vimeo video' => [
         'https://vimeo.com/7073899',
@@ -198,7 +198,7 @@ class OEmbedFormatterTest extends MediaFunctionalTestBase {
    *   Indicator if the HTML element is self closing i.e. <p/> vs <p></p>.
    */
   #[DataProvider('providerRender')]
-  public function testRender($url, $resource_url, array $formatter_settings, array $selectors, bool $self_closing): void {
+  public function testRender(string $url, string $resource_url, array $formatter_settings, array $selectors, bool $self_closing): void {
     $account = $this->drupalCreateUser(['view media']);
     $this->drupalLogin($account);
 

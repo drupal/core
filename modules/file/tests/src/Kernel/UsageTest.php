@@ -156,7 +156,7 @@ class UsageTest extends FileManagedUnitTestBase {
    * We are using UPDATE statements because using the API would set the
    * timestamp.
    */
-  public function createTempFiles() {
+  public function createTempFiles(): array {
     /** @var \Drupal\file\FileRepositoryInterface $fileRepository */
     $fileRepository = \Drupal::service('file.repository');
 

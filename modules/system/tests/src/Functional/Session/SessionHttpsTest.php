@@ -276,7 +276,7 @@ class SessionHttpsTest extends BrowserTestBase {
    * @return string
    *   URL prepared for the https.php mock front controller.
    */
-  protected function httpsUrl($url): string {
+  protected function httpsUrl(string $url): string {
     return 'core/modules/system/tests/https.php/' . $url;
   }
 
@@ -289,7 +289,7 @@ class SessionHttpsTest extends BrowserTestBase {
    * @return string
    *   URL prepared for the http.php mock front controller.
    */
-  protected function httpUrl($url): string {
+  protected function httpUrl(string $url): string {
     return 'core/modules/system/tests/http.php/' . $url;
   }
 
@@ -299,7 +299,7 @@ class SessionHttpsTest extends BrowserTestBase {
    * @return \GuzzleHttp\Cookie\CookieJar
    *   The Guzzle CookieJar.
    */
-  protected function getGuzzleCookieJar() {
+  protected function getGuzzleCookieJar(): CookieJar {
     // @todo Add xdebug cookie.
     $cookies = $this->extractCookiesFromRequest(\Drupal::request());
     foreach ($cookies as $cookie_name => $values) {

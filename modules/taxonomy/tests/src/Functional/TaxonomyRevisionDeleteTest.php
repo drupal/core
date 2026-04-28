@@ -6,6 +6,7 @@ namespace Drupal\Tests\taxonomy\Functional;
 
 use Drupal\Core\Entity\Form\RevisionDeleteForm;
 use Drupal\taxonomy\Entity\Term;
+use Drupal\taxonomy\VocabularyInterface;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\taxonomy\Traits\TaxonomyTestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -45,10 +46,8 @@ class TaxonomyRevisionDeleteTest extends BrowserTestBase {
 
   /**
    * Vocabulary for testing.
-   *
-   * @var \Drupal\taxonomy\VocabularyInterface
    */
-  private $vocabulary;
+  private VocabularyInterface $vocabulary;
 
   /**
    * {@inheritdoc}

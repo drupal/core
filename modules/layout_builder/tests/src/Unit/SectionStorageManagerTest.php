@@ -194,7 +194,7 @@ class SectionStorageManagerTest extends UnitTestCase {
   /**
    * Provides test data for ::testFindByContext().
    */
-  public static function providerTestFindByContext() {
+  public static function providerTestFindByContext(): array {
     // Data provider values are:
     // - the result for the plugin's isApplicable() method to return.
     $data = [];
@@ -225,7 +225,7 @@ class SectionStorageManagerTest extends UnitTestCase {
     $first_plugin->getCacheContexts()->shouldNotBeCalled();
     $first_plugin->getCacheTags()->shouldNotBeCalled();
     $first_plugin->getCacheMaxAge()->shouldNotBeCalled();
-    $first_plugin->isApplicable($cacheability)->will(function ($arguments) {
+    $first_plugin->isApplicable($cacheability)->will(function ($arguments): false {
       $arguments[0]->addCacheTags(['first_plugin']);
       return FALSE;
     });
@@ -233,7 +233,7 @@ class SectionStorageManagerTest extends UnitTestCase {
     // Create a plugin that adds cacheability info from within ::isApplicable()
     // and is applicable.
     $second_plugin = $this->prophesize(SectionStorageInterface::class);
-    $second_plugin->isApplicable($cacheability)->will(function ($arguments) {
+    $second_plugin->isApplicable($cacheability)->will(function ($arguments): true {
       $arguments[0]->addCacheTags(['second_plugin']);
       return TRUE;
     });

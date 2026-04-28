@@ -85,7 +85,7 @@ class SqlTest extends MigrateTestBase {
    * Tests that ensureTables creates the migrate map table.
    */
   #[DataProvider('providerTestEnsureTables')]
-  public function testEnsureTables($ids): void {
+  public function testEnsureTables(array $ids): void {
     $this->migrationDefinition['source']['ids'] = $ids;
     $migration = $this->migrationPluginManager->createStubMigration($this->migrationDefinition);
 
@@ -100,7 +100,7 @@ class SqlTest extends MigrateTestBase {
   /**
    * Provides data for testEnsureTables.
    */
-  public static function providerTestEnsureTables() {
+  public static function providerTestEnsureTables(): array {
     return [
       'no ids' => [
         [],
@@ -138,7 +138,7 @@ class SqlTest extends MigrateTestBase {
    * Tests exception is thrown in ensureTables fails.
    */
   #[DataProvider('providerTestFailEnsureTables')]
-  public function testFailEnsureTables($ids): void {
+  public function testFailEnsureTables(array $ids): void {
     // This just tests mysql, as other PDO integrations allow longer indexes.
     if (Database::getConnection()->databaseType() !== 'mysql') {
       $this->markTestSkipped("This test only runs for MySQL");
@@ -159,7 +159,7 @@ class SqlTest extends MigrateTestBase {
   /**
    * Provides data for testFailEnsureTables.
    */
-  public static function providerTestFailEnsureTables() {
+  public static function providerTestFailEnsureTables(): array {
     return [
       'one id' => [
         [
@@ -181,7 +181,7 @@ class SqlIdMapTest extends TestSqlIdMap implements \Iterator {
   /**
    * {@inheritdoc}
    */
-  protected function getFieldSchema(array $id_definition) {
+  protected function getFieldSchema(array $id_definition): array {
     if (!isset($id_definition['type'])) {
       return [];
     }

@@ -40,7 +40,7 @@ class TestCoverageTest extends KernelTestBase {
 
     $this->installConfig('system');
     $all_modules = \Drupal::service('extension.list.module')->getList();
-    $stable_core_modules = array_filter($all_modules, function ($module) {
+    $stable_core_modules = array_filter($all_modules, function ($module): bool {
       // Filter out contrib, hidden, testing, experimental, and deprecated
       // modules. We also don't need to enable modules that are already enabled.
       return $module->origin === 'core'
@@ -58,7 +58,7 @@ class TestCoverageTest extends KernelTestBase {
 
     // Entity types marked as "internal" are not exposed by JSON:API and hence
     // also don't need test coverage.
-    $this->definitions = array_filter($this->definitions, function (EntityTypeInterface $entity_type) {
+    $this->definitions = array_filter($this->definitions, function (EntityTypeInterface $entity_type): bool {
       return !$entity_type->isInternal();
     });
   }

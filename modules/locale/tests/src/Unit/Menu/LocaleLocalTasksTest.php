@@ -28,7 +28,7 @@ class LocaleLocalTasksTest extends LocalTaskIntegrationTestBase {
    * Checks locale listing local tasks.
    */
   #[DataProvider('getLocalePageRoutes')]
-  public function testLocalePageLocalTasks($route): void {
+  public function testLocalePageLocalTasks(string $route): void {
     $tasks = [
       0 => ['locale.translate_page', 'locale.translate_import', 'locale.translate_export', 'locale.settings'],
     ];
@@ -38,7 +38,7 @@ class LocaleLocalTasksTest extends LocalTaskIntegrationTestBase {
   /**
    * Provides a list of routes to test.
    */
-  public static function getLocalePageRoutes() {
+  public static function getLocalePageRoutes(): array {
     return [
       ['locale.translate_page'],
       ['locale.translate_import'],

@@ -67,7 +67,7 @@ abstract class CacheTestBase extends BrowserTestBase {
    * @param string|null $bin
    *   The bin the cache item was stored in.
    */
-  protected function assertCacheExists($message, $var = NULL, $cid = NULL, $bin = NULL) {
+  protected function assertCacheExists(string $message, $var = NULL, $cid = NULL, $bin = NULL) {
     if ($bin == NULL) {
       $bin = $this->defaultBin;
     }
@@ -91,7 +91,7 @@ abstract class CacheTestBase extends BrowserTestBase {
    * @param string|null $bin
    *   The bin the cache item was stored in.
    */
-  public function assertCacheRemoved($message, $cid = NULL, $bin = NULL) {
+  public function assertCacheRemoved(string $message, $cid = NULL, $bin = NULL): void {
     if ($bin == NULL) {
       $bin = $this->defaultBin;
     }

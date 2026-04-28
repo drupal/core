@@ -34,7 +34,7 @@ class TextItemBaseTest extends KernelTestBase {
    * @legacy-covers ::generateSampleValue
    */
   #[DataProvider('providerTextFieldSampleValue')]
-  public function testTextFieldSampleValue($max_length): void {
+  public function testTextFieldSampleValue(int $max_length): void {
     // Create a text field.
     $field_definition = BaseFieldDefinition::create('text')
       ->setTargetEntityTypeId('foo');
@@ -50,7 +50,7 @@ class TextItemBaseTest extends KernelTestBase {
   /**
    * Data provider for testTextFieldSampleValue.
    */
-  public static function providerTextFieldSampleValue() {
+  public static function providerTextFieldSampleValue(): array {
     return [
       [
         1,

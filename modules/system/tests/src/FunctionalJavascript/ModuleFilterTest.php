@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\system\FunctionalJavascript;
 
+use Behat\Mink\Element\NodeElement;
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -102,7 +103,7 @@ class ModuleFilterTest extends WebDriverTestBase {
    *   An array of node elements.
    */
   protected function filterVisibleElements(array $elements): array {
-    $elements = array_filter($elements, function ($element) {
+    $elements = array_filter($elements, function (NodeElement $element) {
       return $element->isVisible();
     });
     return $elements;

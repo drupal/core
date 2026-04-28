@@ -319,7 +319,7 @@ class DependencyFieldItem {
   /**
    * Gets the dependencies for this field item.
    */
-  public static function calculateDependencies(FieldDefinitionInterface $definition) {
+  public static function calculateDependencies(FieldDefinitionInterface $definition): array {
     return ['module' => ['test_module3']];
   }
 

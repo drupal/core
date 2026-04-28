@@ -172,7 +172,7 @@ class ViewsModerationStateFilterTest extends ViewTestBase {
    * Tests the moderation state filter when the configured workflow is changed.
    */
   #[DataProvider('providerTestWorkflowChanges')]
-  public function testWorkflowChanges($view_id): void {
+  public function testWorkflowChanges(string $view_id): void {
     // First, apply the Editorial workflow to both of our content types.
     $this->drupalGet('admin/config/workflow/workflows/manage/editorial/type/node');
     $this->submitForm([
@@ -269,7 +269,7 @@ class ViewsModerationStateFilterTest extends ViewTestBase {
    * @return string[]
    *   An array of view IDs.
    */
-  public static function providerTestWorkflowChanges() {
+  public static function providerTestWorkflowChanges(): array {
     return [
       'view on base table, filter on base table' => [
         'test_content_moderation_state_filter_base_table',

@@ -8,6 +8,7 @@ use Drupal\serialization\EntityResolver\ChainEntityResolver;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -141,7 +142,7 @@ class ChainEntityResolverTest extends UnitTestCase {
    * @return \Drupal\serialization\EntityResolver\EntityResolverInterface|\PHPUnit\Framework\MockObject\MockObject
    *   The mocked entity resolver.
    */
-  protected function createEntityResolverMock($return = NULL, $called = TRUE) {
+  protected function createEntityResolverMock($return = NULL, $called = TRUE): MockObject {
     $mock = $this->createMock('Drupal\serialization\EntityResolver\EntityResolverInterface');
 
     if ($called) {

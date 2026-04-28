@@ -29,7 +29,7 @@ class QueryParameterTest extends UnitTestCase {
    * Tests the getArgument() method.
    */
   #[DataProvider('providerGetArgument')]
-  public function testGetArgument($options, Request $request, $expected): void {
+  public function testGetArgument(?array $options, Request $request, $expected): void {
     $view = new ViewExecutable(
       $this->createStub(ViewEntityInterface::class),
       $this->createStub(AccountInterface::class),
@@ -54,7 +54,7 @@ class QueryParameterTest extends UnitTestCase {
    *   - second entry: the request object to test with.
    *   - third entry: the expected default argument value.
    */
-  public static function providerGetArgument() {
+  public static function providerGetArgument(): array {
     $data = [];
 
     $data[] = [

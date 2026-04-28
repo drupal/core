@@ -10,6 +10,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Prophecy\Prophecy\ObjectProphecy;
 
 /**
  * Tests the MySQL install tasks.
@@ -20,10 +21,8 @@ class InstallTasksTest extends UnitTestCase {
 
   /**
    * A connection object prophecy.
-   *
-   * @var \Drupal\mysql\Driver\Database\mysql\Connection|\Prophecy\Prophecy\ObjectProphecy
    */
-  private $connection;
+  private ObjectProphecy|Connection $connection;
 
   /**
    * {@inheritdoc}
@@ -48,10 +47,8 @@ class InstallTasksTest extends UnitTestCase {
 
       /**
        * The database connection.
-       *
-       * @var \Drupal\Core\Database\Connection
        */
-      private $connection;
+      private Connection $connection;
 
       public function __construct(Connection $connection) {
         $this->connection = $connection;
@@ -60,7 +57,7 @@ class InstallTasksTest extends UnitTestCase {
       /**
        * {@inheritdoc}
        */
-      protected function isConnectionActive() {
+      protected function isConnectionActive(): bool {
         return TRUE;
       }
 
@@ -93,14 +90,14 @@ class InstallTasksTest extends UnitTestCase {
       /**
        * {@inheritdoc}
        */
-      protected function isConnectionActive() {
+      protected function isConnectionActive(): bool {
         return FALSE;
       }
 
       /**
        * {@inheritdoc}
        */
-      protected function getConnection() {
+      protected function getConnection(): null {
         return NULL;
       }
 

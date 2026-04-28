@@ -118,7 +118,7 @@ class InlineBlockTest extends InlineBlockTestBase {
    * Tests adding a new entity block and then not saving the layout.
    */
   #[DataProvider('layoutNoSaveProvider')]
-  public function testNoLayoutSave($operation, $no_save_button_text, $confirm_button_text): void {
+  public function testNoLayoutSave(string $operation, string $no_save_button_text, string $confirm_button_text): void {
     $this->drupalLogin($this->drupalCreateUser([
       'access contextual links',
       'configure any layout',
@@ -189,7 +189,7 @@ class InlineBlockTest extends InlineBlockTestBase {
   /**
    * Provides test data for ::testNoLayoutSave().
    */
-  public static function layoutNoSaveProvider() {
+  public static function layoutNoSaveProvider(): array {
     return [
       'discard_changes' => [
         'discard_changes',
@@ -547,7 +547,7 @@ class InlineBlockTest extends InlineBlockTestBase {
       ->setOverridable()
       ->save();
 
-    $assert = function ($permissions, $expected) {
+    $assert = function ($permissions, $expected): void {
       $assert_session = $this->assertSession();
       $page = $this->getSession()->getPage();
 
@@ -591,7 +591,7 @@ class InlineBlockTest extends InlineBlockTestBase {
     $this->drupalGet(static::FIELD_UI_PREFIX . '/display/default/layout');
     $this->addInlineBlockToLayout('The block label', 'The body value');
 
-    $assert = function ($permissions, $expected) {
+    $assert = function ($permissions, $expected): void {
       $assert_session = $this->assertSession();
 
       $this->drupalLogin($this->drupalCreateUser($permissions));

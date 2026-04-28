@@ -77,14 +77,14 @@ class BlockLocalTasksTest extends LocalTaskIntegrationTestBase {
    * Tests the block admin display local tasks.
    */
   #[DataProvider('providerTestBlockAdminDisplay')]
-  public function testBlockAdminDisplay($route, $expected): void {
+  public function testBlockAdminDisplay(string $route, array $expected): void {
     $this->assertLocalTasks($route, $expected);
   }
 
   /**
    * Provides a list of routes to test.
    */
-  public static function providerTestBlockAdminDisplay() {
+  public static function providerTestBlockAdminDisplay(): array {
     return [
       [
         'block.admin_display',

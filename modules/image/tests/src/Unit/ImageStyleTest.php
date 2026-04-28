@@ -259,7 +259,7 @@ class ImageStyleTest extends UnitTestCase {
   /**
    * Mock function for ImageStyle::fileDefaultScheme().
    */
-  public function fileDefaultScheme() {
+  public function fileDefaultScheme(): string {
     return 'public';
   }
 

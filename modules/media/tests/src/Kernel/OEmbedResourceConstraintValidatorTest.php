@@ -108,7 +108,7 @@ class OEmbedResourceConstraintValidatorTest extends KernelTestBase {
    * @return object
    *   The mock field value to validate.
    */
-  protected function getValue(Media $media) {
+  protected function getValue(Media $media): object {
     return new class ($media) {
 
       /**

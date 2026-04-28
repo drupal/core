@@ -77,7 +77,7 @@ class NavigationUserBlockTest extends WebDriverTestBase {
     $this->drupalGet($test_page_url);
 
     // Wait for the default 'My Account' text to be replaced.
-    $this->getSession()->getPage()->waitFor(10, function (Element $page) {
+    $this->getSession()->getPage()->waitFor(10, function (Element $page): bool {
       return $page->find('css', '[aria-controls*="navigation-link--navigationuser-linksuserwrapper"] > .toolbar-button__label')->getText() !== 'My Account';
     });
     // We should see the users name in the navigation menu.
@@ -89,7 +89,7 @@ class NavigationUserBlockTest extends WebDriverTestBase {
     $this->drupalLogin($this->adminUser);
     $this->drupalGet($test_page_url);
     // Wait for the default 'My Account' text to be replaced.
-    $this->getSession()->getPage()->waitFor(10, function (Element $page) {
+    $this->getSession()->getPage()->waitFor(10, function (Element $page): bool {
       return $page->find('css', '[aria-controls*="navigation-link--navigationuser-linksuserwrapper"] > .toolbar-button__label')->getText() !== 'My Account';
     });
     // We should see the users name in the navigation menu.
@@ -101,7 +101,7 @@ class NavigationUserBlockTest extends WebDriverTestBase {
     $this->drupalGet('user/' . $this->adminUser->id() . '/edit');
     $this->submitForm(['name' => $new_username], 'Save');
     // Wait for the default 'My Account' text to be replaced.
-    $this->getSession()->getPage()->waitFor(10, function (Element $page) {
+    $this->getSession()->getPage()->waitFor(10, function (Element $page): bool {
       return $page->find('css', '[aria-controls*="navigation-link--navigationuser-linksuserwrapper"] > .toolbar-button__label')->getText() !== 'My Account';
     });
     // We should see the users name in the navigation menu.

@@ -183,7 +183,7 @@ class ContentModerationStateTest extends KernelTestBase {
   /**
    * Test cases for basic moderation test.
    */
-  public static function basicModerationTestCases() {
+  public static function basicModerationTestCases(): array {
     return [
       'Nodes' => [
         'node',
@@ -506,7 +506,7 @@ class ContentModerationStateTest extends KernelTestBase {
    * Tests that entities with special languages can be moderated.
    */
   #[DataProvider('moderationWithSpecialLanguagesTestCases')]
-  public function testModerationWithSpecialLanguages($original_language, $updated_language): void {
+  public function testModerationWithSpecialLanguages(string $original_language, string $updated_language): void {
     $workflow = $this->createEditorialWorkflow();
     $this->addEntityTypeAndBundleToWorkflow($workflow, $this->revEntityTypeId, $this->revEntityTypeId);
 
@@ -528,7 +528,7 @@ class ContentModerationStateTest extends KernelTestBase {
   /**
    * Test cases for ::testModerationWithSpecialLanguages().
    */
-  public static function moderationWithSpecialLanguagesTestCases() {
+  public static function moderationWithSpecialLanguagesTestCases(): array {
     return [
       'Not specified to not specified' => [
         LanguageInterface::LANGCODE_NOT_SPECIFIED,

@@ -346,7 +346,7 @@ class FieldTest extends UnitTestCase {
    *   The sort order.
    */
   #[DataProvider('providerSortOrders')]
-  public function testClickSortWithOutConfiguredColumn($order): void {
+  public function testClickSortWithOutConfiguredColumn(string $order): void {
     $definition = [
       'entity_type' => 'test_entity',
       'field_name' => 'title',
@@ -368,7 +368,7 @@ class FieldTest extends UnitTestCase {
    *   The sort order.
    */
   #[DataProvider('providerSortOrders')]
-  public function testClickSortWithBaseField($order): void {
+  public function testClickSortWithBaseField(string $order): void {
     $this->entityFieldManager = $this->createMock(EntityFieldManagerInterface::class);
     $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
     $definition = [
@@ -429,7 +429,7 @@ class FieldTest extends UnitTestCase {
    *   The sort order.
    */
   #[DataProvider('providerSortOrders')]
-  public function testClickSortWithConfiguredField($order): void {
+  public function testClickSortWithConfiguredField(string $order): void {
     $this->entityFieldManager = $this->createMock(EntityFieldManagerInterface::class);
     $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
     $definition = [
@@ -654,7 +654,7 @@ class FieldTest extends UnitTestCase {
   /**
    * Provides test data for testPrepareItemsByDelta().
    */
-  public static function providerTestPrepareItemsByDelta() {
+  public static function providerTestPrepareItemsByDelta(): array {
     $data = [];
 
     // Let's display all values.
@@ -724,7 +724,7 @@ class FieldTest extends UnitTestCase {
    * @return array
    *   An array of sort orders.
    */
-  public static function providerSortOrders() {
+  public static function providerSortOrders(): array {
     return [
       ['asc'],
       ['desc'],
@@ -741,7 +741,7 @@ class FieldTest extends UnitTestCase {
    * @param array $definition
    *   An array with entity type definition data.
    */
-  protected function setupLanguageRenderer(EntityField $handler, $definition): void {
+  protected function setupLanguageRenderer(EntityField $handler, array $definition): void {
     $display_handler = $this->createStub(DisplayPluginBase::class);
     $display_handler
       ->method('getOption')

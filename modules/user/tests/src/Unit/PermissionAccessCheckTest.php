@@ -59,7 +59,7 @@ class PermissionAccessCheckTest extends UnitTestCase {
    * @return array
    *   An array of test data.
    */
-  public static function providerTestAccess() {
+  public static function providerTestAccess(): array {
     return [
       [[], FALSE],
       [['_permission' => 'allowed'], TRUE, ['user.permissions']],
@@ -84,7 +84,7 @@ class PermissionAccessCheckTest extends UnitTestCase {
    * Tests the access check method.
    */
   #[DataProvider('providerTestAccess')]
-  public function testAccess($requirements, $access, array $contexts = [], $message = ''): void {
+  public function testAccess(array $requirements, bool $access, array $contexts = [], string $message = ''): void {
     $access_result = AccessResult::allowedIf($access)->addCacheContexts($contexts);
     if (!empty($message)) {
       $access_result->setReason($message);

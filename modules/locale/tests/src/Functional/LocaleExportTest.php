@@ -146,7 +146,7 @@ class LocaleExportTest extends BrowserTestBase {
   /**
    * Helper function that returns a proper .po file.
    */
-  public function getPoFile() {
+  public function getPoFile(): string {
     return <<< EOF
 msgid ""
 msgstr ""
@@ -164,7 +164,7 @@ EOF;
   /**
    * Returns a .po file that will be marked as customized.
    */
-  public function getCustomPoFile() {
+  public function getCustomPoFile(): string {
     return <<< EOF
 msgid ""
 msgstr ""
@@ -185,7 +185,7 @@ EOF;
    * @return string
    *   A .po file fragment with an untranslated string.
    */
-  public function getUntranslatedString() {
+  public function getUntranslatedString(): string {
     return <<< EOF
 msgid "February"
 msgstr ""

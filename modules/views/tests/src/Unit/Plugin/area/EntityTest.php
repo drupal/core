@@ -166,7 +166,7 @@ class EntityTest extends UnitTestCase {
    * @return array
    *   An array of test data.
    */
-  public static function providerTestTokens() {
+  public static function providerTestTokens(): array {
     return [
       ['{{ raw_arguments.test1 }}', 5],
       ['{{ arguments.test2 }}', 6],
@@ -221,7 +221,7 @@ class EntityTest extends UnitTestCase {
    * @legacy-covers ::init
    */
   #[DataProvider('providerTestTokens')]
-  public function testRenderWithIdAndToken($token, $id): void {
+  public function testRenderWithIdAndToken(string $token, int $id): void {
     $this->entityStorage = $this->createMock(EntityStorageInterface::class);
     $this->entityViewBuilder = $this->createMock(EntityViewBuilderInterface::class);
     $this->setupEntityTypeManager();
@@ -300,7 +300,7 @@ class EntityTest extends UnitTestCase {
    * Tests calculate dependencies with placeholder.
    */
   #[DataProvider('providerTestTokens')]
-  public function testCalculateDependenciesWithPlaceholder($token, $id): void {
+  public function testCalculateDependenciesWithPlaceholder(string $token, int $id): void {
     $this->setupEntityTypeManager();
 
     $options = [

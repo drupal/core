@@ -51,7 +51,7 @@ class SqliteDateSqlTest extends UnitTestCase {
    * Tests date formatting replacement.
    */
   #[DataProvider('providerTestGetDateFormat')]
-  public function testGetDateFormat($field, $format, $expected): void {
+  public function testGetDateFormat(string $field, string $format, string $expected): void {
     $date_sql = new SqliteDateSql($this->database);
 
     $this->assertEquals($expected, $date_sql->getDateFormat($field, $format));
@@ -60,7 +60,7 @@ class SqliteDateSqlTest extends UnitTestCase {
   /**
    * Provider for date formatting test.
    */
-  public static function providerTestGetDateFormat() {
+  public static function providerTestGetDateFormat(): array {
     return [
       [
         'foo.field',

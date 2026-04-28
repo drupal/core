@@ -189,7 +189,7 @@ abstract class ConfigTranslationUiTestBase extends BrowserTestBase {
   /**
    * Returns a .po file with a given number of plural forms.
    */
-  public function getPoFile($plurals) {
+  public function getPoFile(int $plurals) {
     $po_file = [];
 
     $po_file[1] = <<< EOF

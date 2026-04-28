@@ -41,7 +41,7 @@ class InstallTranslationFilePatternTest extends KernelTestBase {
  * Tests files pattern valid.
  */
   #[DataProvider('providerValidTranslationFiles')]
-  public function testFilesPatternValid($langcode, $filename): void {
+  public function testFilesPatternValid(string $langcode, string $filename): void {
     $pattern = $this->filePatternMethod->invoke($this->fileTranslation, $langcode);
     $this->assertNotEmpty(preg_match($pattern, $filename));
   }
@@ -50,7 +50,7 @@ class InstallTranslationFilePatternTest extends KernelTestBase {
    * @return array
    *   Array of valid translation files.
    */
-  public static function providerValidTranslationFiles() {
+  public static function providerValidTranslationFiles(): array {
     return [
       ['hu', 'drupal-8.0.0-alpha1.hu.po'],
       ['ta', 'drupal-8.10.10-beta12.ta.po'],
@@ -62,7 +62,7 @@ class InstallTranslationFilePatternTest extends KernelTestBase {
  * Tests files pattern invalid.
  */
   #[DataProvider('providerInvalidTranslationFiles')]
-  public function testFilesPatternInvalid($langcode, $filename): void {
+  public function testFilesPatternInvalid(string $langcode, string $filename): void {
     $pattern = $this->filePatternMethod->invoke($this->fileTranslation, $langcode);
     $this->assertEmpty(preg_match($pattern, $filename));
   }
@@ -71,7 +71,7 @@ class InstallTranslationFilePatternTest extends KernelTestBase {
    * @return array
    *   Array of invalid translation files.
    */
-  public static function providerInvalidTranslationFiles() {
+  public static function providerInvalidTranslationFiles(): array {
     return [
       ['hu', 'drupal-alpha1-*-hu.po'],
       ['ta', 'drupal-beta12.ta'],
