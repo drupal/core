@@ -63,3 +63,15 @@ function system_removed_post_updates(): array {
     'system_post_update_delete_rss_config' => '12.0.0',
   ];
 }
+
+/**
+ * Migrate to new compress setting.
+ */
+function system_post_update_migrate_compress_setting(): void {
+  $performanceConfig = \Drupal::configFactory()->getEditable('system.performance');
+  $performanceConfig->set('css.compress', (bool) $performanceConfig->get('css.gzip'));
+  $performanceConfig->set('js.compress', (bool) $performanceConfig->get('js.gzip'));
+  $performanceConfig->clear('css.gzip');
+  $performanceConfig->clear('js.gzip');
+  $performanceConfig->save();
+}
