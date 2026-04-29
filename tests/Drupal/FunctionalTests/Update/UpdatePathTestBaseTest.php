@@ -29,7 +29,6 @@ class UpdatePathTestBaseTest extends UpdatePathTestBase {
     $this->databaseDumpFiles[] = __DIR__ . '/../../../../modules/system/tests/fixtures/update/drupal-8.update-test-schema-enabled.php';
     $this->databaseDumpFiles[] = __DIR__ . '/../../../../modules/system/tests/fixtures/update/drupal-8.update-test-semver-update-n-enabled.php';
     $this->databaseDumpFiles[] = __DIR__ . '/../../../../modules/system/tests/fixtures/update/install-mysqli.php';
-    $this->databaseDumpFiles[] = $this->root . '/core/modules/system/tests/fixtures/update/install-search-help.php';
   }
 
   /**
@@ -184,7 +183,7 @@ class UpdatePathTestBaseTest extends UpdatePathTestBase {
    * Tests that setup is done correctly.
    */
   public function testSetup(): void {
-    $this->assertCount(5, $this->databaseDumpFiles);
+    $this->assertCount(4, $this->databaseDumpFiles);
     $this->assertSame(1, Settings::get('entity_update_batch_size'));
   }
 
