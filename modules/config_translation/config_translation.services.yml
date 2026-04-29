@@ -21,10 +21,4 @@ services:
 
   plugin.manager.config_translation.mapper:
     class: Drupal\config_translation\ConfigMapperManager
-    arguments:
-      - '@cache.discovery'
-      - '@language_manager'
-      - '@module_handler'
-      - '@config.typed'
-      - '@theme_handler'
   Drupal\config_translation\ConfigMapperManagerInterface: '@plugin.manager.config_translation.mapper'

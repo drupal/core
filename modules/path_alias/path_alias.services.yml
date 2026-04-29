@@ -12,7 +12,6 @@ services:
       - { name: path_processor_outbound, priority: 300 }
   path_alias.manager:
     class: Drupal\path_alias\AliasManager
-    arguments: ['@path_alias.repository', '@path_alias.prefix_list', '@language_manager', '@cache.data', '@datetime.time']
   Drupal\path_alias\AliasManagerInterface: '@path_alias.manager'
   path_alias.repository:
     class: Drupal\path_alias\AliasRepository

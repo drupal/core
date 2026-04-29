@@ -8,6 +8,7 @@ use Drupal\Core\Routing\RoutingEvents;
 use Drupal\rest\Plugin\Type\ResourcePluginManager;
 use Drupal\rest\RestResourceConfigInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -17,40 +18,20 @@ use Symfony\Component\Routing\RouteCollection;
 class ResourceRoutes implements EventSubscriberInterface {
 
   /**
-   * The plugin manager for REST plugins.
-   *
-   * @var \Drupal\rest\Plugin\Type\ResourcePluginManager
-   */
-  protected $manager;
-
-  /**
    * The REST resource config storage.
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface
    */
   protected $resourceConfigStorage;
 
-  /**
-   * A logger instance.
-   *
-   * @var \Psr\Log\LoggerInterface
-   */
-  protected $logger;
-
-  /**
-   * Constructs a RouteSubscriber object.
-   *
-   * @param \Drupal\rest\Plugin\Type\ResourcePluginManager $manager
-   *   The resource plugin manager.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Psr\Log\LoggerInterface $logger
-   *   A logger instance.
-   */
-  public function __construct(ResourcePluginManager $manager, EntityTypeManagerInterface $entity_type_manager, LoggerInterface $logger) {
-    $this->manager = $manager;
+  public function __construct(
+    #[Autowire(service: 'plugin.manager.rest')]
+    protected ResourcePluginManager $manager,
+    EntityTypeManagerInterface $entity_type_manager,
+    #[Autowire(service: 'logger.channel.rest')]
+    protected LoggerInterface $logger,
+  ) {
     $this->resourceConfigStorage = $entity_type_manager->getStorage('rest_resource_config');
-    $this->logger = $logger;
   }
 
   /**

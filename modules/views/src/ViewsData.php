@@ -7,6 +7,7 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Class to manage and lazy load cached views data.
@@ -24,13 +25,6 @@ class ViewsData {
    * @var string
    */
   protected $baseCid = 'views_data';
-
-  /**
-   * The cache backend to use.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface
-   */
-  protected $cacheBackend;
 
   /**
    * Table data storage.
@@ -70,34 +64,12 @@ class ViewsData {
    */
   protected $langcode;
 
-  /**
-   * Stores a module manager to invoke hooks.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
-   */
-  protected $moduleHandler;
-
-  /**
-   * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
-   * Constructs this ViewsData object.
-   *
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cache_backend
-   *   The cache backend to use.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *   The module handler class to use for invoking hooks.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
-   *   The language manager.
-   */
-  public function __construct(CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler, LanguageManagerInterface $language_manager) {
-    $this->cacheBackend = $cache_backend;
-    $this->moduleHandler = $module_handler;
-    $this->languageManager = $language_manager;
+  public function __construct(
+    #[Autowire(service: 'cache.default')]
+    protected CacheBackendInterface $cacheBackend,
+    protected ModuleHandlerInterface $moduleHandler,
+    protected LanguageManagerInterface $languageManager,
+  ) {
     $this->langcode = $this->languageManager->getCurrentLanguage()->getId();
   }
 

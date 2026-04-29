@@ -15,33 +15,13 @@ use Drupal\Core\Plugin\Discovery\ContainerDerivativeDiscoveryDecorator;
 use Drupal\Core\Plugin\Factory\ContainerFactory;
 use Drupal\Core\TypedData\TraversableTypedDataInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
  * Manages plugins for configuration translation mappers.
  */
 class ConfigMapperManager extends DefaultPluginManager implements ConfigMapperManagerInterface {
-
-  /**
-   * The typed config manager.
-   *
-   * @var \Drupal\Core\Config\TypedConfigManagerInterface
-   */
-  protected $typedConfigManager;
-
-  /**
-   * The theme handler.
-   *
-   * @var \Drupal\Core\Extension\ThemeHandlerInterface
-   */
-  protected $themeHandler;
-
-  /**
-   * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected LanguageManagerInterface $languageManager;
 
   /**
    * {@inheritdoc}
@@ -53,33 +33,22 @@ class ConfigMapperManager extends DefaultPluginManager implements ConfigMapperMa
     'class' => '\Drupal\config_translation\ConfigNamesMapper',
   ];
 
-  /**
-   * Constructs a ConfigMapperManager.
-   *
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cache_backend
-   *   The cache backend.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
-   *   The language manager.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *   The module handler.
-   * @param \Drupal\Core\Config\TypedConfigManagerInterface $typed_config_manager
-   *   The typed config manager.
-   * @param \Drupal\Core\Extension\ThemeHandlerInterface $theme_handler
-   *   The theme handler.
-   */
-  public function __construct(CacheBackendInterface $cache_backend, LanguageManagerInterface $language_manager, ModuleHandlerInterface $module_handler, TypedConfigManagerInterface $typed_config_manager, ThemeHandlerInterface $theme_handler) {
-    $this->typedConfigManager = $typed_config_manager;
-    $this->languageManager = $language_manager;
-
+  public function __construct(
+    #[Autowire(service: 'cache.discovery')]
+    CacheBackendInterface $cache_backend,
+    protected LanguageManagerInterface $languageManager,
+    ModuleHandlerInterface $module_handler,
+    protected TypedConfigManagerInterface $typedConfigManager,
+    protected ThemeHandlerInterface $themeHandler,
+  ) {
     $this->factory = new ContainerFactory($this, '\Drupal\config_translation\ConfigMapperInterface');
 
     // Let others alter definitions with hook_config_translation_info_alter().
     $this->moduleHandler = $module_handler;
-    $this->themeHandler = $theme_handler;
 
     $this->alterInfo('config_translation_info');
     // Config translation only uses an info hook discovery, cache by language.
-    $cache_key = 'config_translation_info_plugins:' . $language_manager->getCurrentLanguage()->getId();
+    $cache_key = 'config_translation_info_plugins:' . $this->languageManager->getCurrentLanguage()->getId();
     $this->setCacheBackend($cache_backend, $cache_key);
   }
 

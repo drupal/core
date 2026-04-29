@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Routing\CurrentRouteMatch;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Helper service to detect entity routes.
@@ -27,19 +28,11 @@ class EntityRouteHelper {
    */
   protected array $contentEntityPaths;
 
-  /**
-   * EntityRouteHelper constructor.
-   *
-   * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
-   *   The route match.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   *   The entity type manager.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cacheBackend
-   *   The cache backend.
-   */
   public function __construct(
+    #[Autowire(service: 'current_route_match')]
     protected CurrentRouteMatch $routeMatch,
     protected EntityTypeManagerInterface $entityTypeManager,
+    #[Autowire(service: 'cache.discovery')]
     protected CacheBackendInterface $cacheBackend,
   ) {
   }

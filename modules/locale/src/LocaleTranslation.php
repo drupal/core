@@ -10,6 +10,7 @@ use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\StringTranslation\Translator\TranslatorInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -25,20 +26,6 @@ class LocaleTranslation implements TranslatorInterface, DestructableInterface {
   }
 
   /**
-   * Storage for strings.
-   *
-   * @var \Drupal\locale\StringStorageInterface
-   */
-  protected $storage;
-
-  /**
-   * The configuration factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
-
-  /**
    * Cached translations.
    *
    * @var array
@@ -48,64 +35,22 @@ class LocaleTranslation implements TranslatorInterface, DestructableInterface {
   protected $translations = [];
 
   /**
-   * The cache backend that should be used.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface
-   */
-  protected $cache;
-
-  /**
-   * The lock backend that should be used.
-   *
-   * @var \Drupal\Core\Lock\LockBackendInterface
-   */
-  protected $lock;
-
-  /**
    * The translate english configuration value.
    *
    * @var bool
    */
   protected $translateEnglish;
 
-  /**
-   * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
-   * The request stack.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected $requestStack;
-
-  /**
-   * Constructs a translator using a string storage.
-   *
-   * @param \Drupal\locale\StringStorageInterface $storage
-   *   Storage to use when looking for new translations.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cache
-   *   The cache backend.
-   * @param \Drupal\Core\Lock\LockBackendInterface $lock
-   *   The lock backend.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The config factory.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
-   *   The language manager.
-   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
-   *   The request stack.
-   */
-  public function __construct(StringStorageInterface $storage, CacheBackendInterface $cache, LockBackendInterface $lock, ConfigFactoryInterface $config_factory, LanguageManagerInterface $language_manager, RequestStack $request_stack) {
-    $this->storage = $storage;
-    $this->cache = $cache;
-    $this->lock = $lock;
-    $this->configFactory = $config_factory;
-    $this->languageManager = $language_manager;
-    $this->requestStack = $request_stack;
-  }
+  public function __construct(
+    protected StringStorageInterface $storage,
+    #[Autowire(service: 'cache.default')]
+    protected CacheBackendInterface $cache,
+    #[Autowire(service: 'lock')]
+    protected LockBackendInterface $lock,
+    protected ConfigFactoryInterface $configFactory,
+    protected LanguageManagerInterface $languageManager,
+    protected RequestStack $requestStack,
+  ) {}
 
   /**
    * {@inheritdoc}

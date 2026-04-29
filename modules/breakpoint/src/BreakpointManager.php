@@ -13,6 +13,7 @@ use Drupal\Core\Plugin\Discovery\YamlDiscovery;
 use Drupal\Core\Plugin\Factory\ContainerFactory;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Defines a breakpoint plugin manager to deal with breakpoints.
@@ -68,13 +69,6 @@ class BreakpointManager extends DefaultPluginManager implements BreakpointManage
   ];
 
   /**
-   * The theme handler.
-   *
-   * @var \Drupal\Core\Extension\ThemeHandlerInterface
-   */
-  protected $themeHandler;
-
-  /**
    * Static cache of breakpoints keyed by group.
    *
    * @var array
@@ -88,24 +82,16 @@ class BreakpointManager extends DefaultPluginManager implements BreakpointManage
    */
   protected $instances = [];
 
-  /**
-   * Constructs a new BreakpointManager instance.
-   *
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *   The module handler.
-   * @param \Drupal\Core\Extension\ThemeHandlerInterface $theme_handler
-   *   The theme handler.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cache_backend
-   *   The cache backend.
-   * @param \Drupal\Core\StringTranslation\TranslationInterface $string_translation
-   *   The string translation service.
-   * @param \Drupal\Core\Extension\ModuleExtensionList $module_extension_list
-   *   The module extension list.
-   */
-  public function __construct(ModuleHandlerInterface $module_handler, ThemeHandlerInterface $theme_handler, CacheBackendInterface $cache_backend, TranslationInterface $string_translation, ModuleExtensionList $module_extension_list) {
+  public function __construct(
+    ModuleHandlerInterface $module_handler,
+    protected ThemeHandlerInterface $themeHandler,
+    #[Autowire(service: 'cache.discovery')]
+    CacheBackendInterface $cache_backend,
+    TranslationInterface $string_translation,
+    ModuleExtensionList $module_extension_list,
+  ) {
     $this->factory = new ContainerFactory($this);
     $this->moduleHandler = $module_handler;
-    $this->themeHandler = $theme_handler;
     $this->moduleExtensionList = $module_extension_list;
     $this->setStringTranslation($string_translation);
     $this->alterInfo('breakpoints');

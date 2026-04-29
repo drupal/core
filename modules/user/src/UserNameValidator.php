@@ -6,6 +6,7 @@ namespace Drupal\user;
 
 use Drupal\Core\Validation\BasicRecursiveValidatorFactory;
 use Drupal\Core\Validation\ConstraintManager;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
@@ -18,6 +19,7 @@ class UserNameValidator {
 
   public function __construct(
     protected readonly BasicRecursiveValidatorFactory $validatorFactory,
+    #[Autowire(service: 'validation.constraint')]
     protected readonly ConstraintManager $constraintManager,
   ) {}
 

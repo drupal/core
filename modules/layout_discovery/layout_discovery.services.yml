@@ -4,9 +4,9 @@ parameters:
 services:
   _defaults:
     autoconfigure: true
+    autowire: true
   plugin.manager.core.layout:
     class: Drupal\Core\Layout\LayoutPluginManager
-    arguments: ['@container.namespaces', '@cache.discovery', '@module_handler', '@theme_handler']
   Drupal\Core\Layout\LayoutPluginManagerInterface: '@plugin.manager.core.layout'
   layout.icon_builder:
     class: Drupal\Core\Layout\Icon\SvgIconBuilder

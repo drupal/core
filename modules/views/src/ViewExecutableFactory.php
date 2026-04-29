@@ -5,6 +5,7 @@ namespace Drupal\views;
 use Drupal\Core\Routing\RouteProviderInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\views\Plugin\ViewsPluginManager;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -12,25 +13,12 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class ViewExecutableFactory {
 
-  /**
-   * Constructs a new ViewExecutableFactory.
-   *
-   * @param \Drupal\Core\Session\AccountInterface $user
-   *   The current user.
-   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-   *   The request stack.
-   * @param \Drupal\views\ViewsData $viewsData
-   *   The views data.
-   * @param \Drupal\Core\Routing\RouteProviderInterface $routeProvider
-   *   The route provider.
-   * @param \Drupal\views\Plugin\ViewsPluginManager $displayPluginManager
-   *   The display plugin manager.
-   */
   public function __construct(
     protected AccountInterface $user,
     protected RequestStack $requestStack,
     protected ViewsData $viewsData,
     protected RouteProviderInterface $routeProvider,
+    #[Autowire(service: 'plugin.manager.views.display')]
     protected ViewsPluginManager $displayPluginManager,
   ) {
   }

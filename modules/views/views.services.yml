@@ -89,7 +89,6 @@ services:
     arguments: [wizard, '@container.namespaces', '@cache.discovery', '@module_handler']
   views.views_data:
     class: Drupal\views\ViewsData
-    arguments: ['@cache.default', '@module_handler', '@language_manager']
     tags:
       - { name: backend_overridable }
   Drupal\views\ViewsData: '@views.views_data'
@@ -101,7 +100,6 @@ services:
   Drupal\views\ViewsDataHelper: '@views.views_data_helper'
   views.executable:
     class: Drupal\views\ViewExecutableFactory
-    arguments: ['@current_user', '@request_stack', '@views.views_data', '@router.route_provider', '@plugin.manager.views.display']
   Drupal\views\ViewExecutableFactory: '@views.executable'
   views.analyzer:
     class: Drupal\views\Analyzer
@@ -113,7 +111,6 @@ services:
   Drupal\views\ExposedFormCache: '@views.exposed_form_cache'
   views.entity_schema_subscriber:
     class: Drupal\views\EventSubscriber\ViewsEntitySchemaSubscriber
-    arguments: ['@entity_type.manager', '@logger.channel.default']
   views.date_sql:
     class: Drupal\views\Plugin\views\query\MysqlDateSql
     tags:

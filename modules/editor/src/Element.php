@@ -11,6 +11,7 @@ use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\filter\FilterFormatInterface;
 use Drupal\filter\Plugin\FilterInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Defines a service for Text Editor's render elements.
@@ -18,6 +19,7 @@ use Drupal\filter\Plugin\FilterInterface;
 class Element implements TrustedCallbackInterface {
 
   public function __construct(
+    #[Autowire(service: 'plugin.manager.editor')]
     protected PluginManagerInterface $pluginManager,
     protected ?ModuleHandlerInterface $moduleHandler = NULL,
   ) {

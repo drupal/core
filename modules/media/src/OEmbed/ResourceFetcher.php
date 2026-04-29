@@ -7,6 +7,7 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Client\ClientExceptionInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 // cspell:ignore nocdata
 
@@ -15,22 +16,10 @@ use Psr\Http\Client\ClientExceptionInterface;
  */
 class ResourceFetcher implements ResourceFetcherInterface {
 
-  /**
-   * Constructs a ResourceFetcher object.
-   *
-   * @param \GuzzleHttp\ClientInterface $httpClient
-   *   The HTTP client.
-   * @param \Drupal\media\OEmbed\ProviderRepositoryInterface $providers
-   *   The oEmbed provider repository service.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cacheBackend
-   *   The cache backend.
-   * @param int $timeout
-   *   The length of time to wait for the request before the request
-   *   should time out.
-   */
   public function __construct(
     protected ClientInterface $httpClient,
     protected ProviderRepositoryInterface $providers,
+    #[Autowire(service: 'cache.default')]
     protected CacheBackendInterface $cacheBackend,
     protected int $timeout = 5,
   ) {

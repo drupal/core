@@ -10,6 +10,7 @@ use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
 use Drupal\views\ViewEntityInterface;
 use Drupal\views\Views;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -70,38 +71,17 @@ class ViewsEntitySchemaSubscriber implements EntityTypeListenerInterface, EventS
   const REVISION_DATA_TABLE_REMOVAL = 9;
 
   /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The default logger service.
-   *
-   * @var \Psr\Log\LoggerInterface
-   */
-  protected $logger;
-
-  /**
    * Array of views that need to be saved, indexed by view name.
    *
    * @var \Drupal\views\ViewEntityInterface[]
    */
   protected $viewsToSave = [];
 
-  /**
-   * Constructs a ViewsEntitySchemaSubscriber.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Psr\Log\LoggerInterface $logger
-   *   A logger instance.
-   */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, LoggerInterface $logger) {
-    $this->entityTypeManager = $entity_type_manager;
-    $this->logger = $logger;
-  }
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    #[Autowire(service: 'logger.channel.default')]
+    protected LoggerInterface $logger,
+  ) {}
 
   /**
    * {@inheritdoc}

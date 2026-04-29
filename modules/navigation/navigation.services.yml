@@ -14,12 +14,6 @@ services:
 
   navigation.entity_route_helper:
     class: Drupal\navigation\EntityRouteHelper
-    arguments:
-      [
-        '@current_route_match',
-        '@entity_type.manager',
-        '@cache.discovery',
-      ]
   Drupal\navigation\EntityRouteHelper: '@navigation.entity_route_helper'
 
   plugin.manager.top_bar_item:
@@ -27,5 +21,4 @@ services:
     parent: default_plugin_manager
   Drupal\navigation\TopBarItemManagerInterface: '@plugin.manager.top_bar_item'
 
-  Drupal\navigation\Menu\NavigationMenuLinkTreeManipulators:
-    autowire: true
+  Drupal\navigation\Menu\NavigationMenuLinkTreeManipulators: ~

@@ -15,12 +15,10 @@ services:
       - { name: access_check, applies_to: _access_system_update }
   access_check.admin_menu_block_page:
     class: Drupal\system\Access\SystemAdminMenuBlockAccessCheck
-    arguments: ['@menu.link_tree', '@router', '@plugin.manager.menu.link']
     tags:
       - { name: access_check, applies_to: _access_admin_menu_block_page }
   access_check.admin_overview_page:
     class: Drupal\system\Access\SystemAdminMenuBlockAccessCheck
-    arguments: ['@menu.link_tree', '@router', '@plugin.manager.menu.link' ]
     tags:
       - { name: access_check, applies_to: _access_admin_overview_page }
   system.manager:
@@ -28,7 +26,6 @@ services:
   Drupal\system\SystemManager: '@system.manager'
   system.breadcrumb.default:
     class: Drupal\system\PathBasedBreadcrumbBuilder
-    arguments: ['@router.request_context', '@access_manager', '@router', '@path_processor_manager', '@config.factory',  '@title_resolver', '@current_user', '@path.current', '@path.matcher']
     tags:
       - { name: breadcrumb_builder, priority: 0 }
   path_processor.files:
@@ -47,7 +44,6 @@ services:
       - { name: theme_negotiator, priority: 100 }
   Drupal\system\Theme\SystemAdminThemePreprocess:
     class: Drupal\system\Theme\SystemAdminThemePreprocess
-    autowire: true
   system.config_subscriber:
     class: Drupal\system\SystemConfigSubscriber
   system.config_cache_tag:
@@ -61,7 +57,6 @@ services:
     arguments: ['system']
   system.sa_fetcher:
     class: Drupal\system\SecurityAdvisories\SecurityAdvisoriesFetcher
-    arguments: ['@config.factory', '@keyvalue.expirable', '@http_client', '@extension.list.module', '@extension.list.theme', '@extension.list.profile', '@logger.channel.system', '@settings']
   Drupal\system\SecurityAdvisories\SecurityAdvisoriesFetcher: '@system.sa_fetcher'
   system.advisories_config_subscriber:
     class: Drupal\system\EventSubscriber\AdvisoriesConfigSubscriber

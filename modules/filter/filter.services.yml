@@ -12,7 +12,6 @@ services:
 
   filter.uninstall_validator:
     class: Drupal\filter\FilterUninstallValidator
-    arguments: ['@plugin.manager.filter', '@entity_type.manager', '@string_translation']
 
   Drupal\filter\FilterFormatRepositoryInterface:
     class: Drupal\filter\FilterFormatRepository

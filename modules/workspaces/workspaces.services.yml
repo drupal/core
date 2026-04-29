@@ -7,19 +7,15 @@ services:
     autowire: true
   workspaces.manager:
     class: Drupal\workspaces\WorkspaceManager
-    autowire: true
   Drupal\workspaces\WorkspaceManagerInterface: '@workspaces.manager'
   workspaces.information:
     class: Drupal\workspaces\WorkspaceInformation
-    autowire: true
   Drupal\workspaces\WorkspaceInformationInterface: '@workspaces.information'
   workspaces.operation_factory:
     class: Drupal\workspaces\WorkspaceOperationFactory
-    autowire: true
   Drupal\workspaces\WorkspaceOperationFactory: '@workspaces.operation_factory'
   workspaces.tracker:
     class: Drupal\workspaces\WorkspaceTracker
-    autowire: true
     tags:
       - { name: backend_overridable }
   Drupal\workspaces\WorkspaceTrackerInterface: '@workspaces.tracker'
@@ -28,14 +24,11 @@ services:
     arguments: ['@entity_type.manager', '@cache.default']
   Drupal\workspaces\WorkspaceRepositoryInterface: '@workspaces.repository'
 
-  Drupal\workspaces\Provider\WorkspaceProviderCollector:
-    autowire: true
-  Drupal\workspaces\Provider\DefaultWorkspaceProvider:
-    autowire: true
+  Drupal\workspaces\Provider\WorkspaceProviderCollector: ~
+  Drupal\workspaces\Provider\DefaultWorkspaceProvider: ~
 
   workspaces.negotiator.session:
     class: Drupal\workspaces\Negotiator\SessionWorkspaceNegotiator
-    autowire: true
     tags:
       - { name: workspace_negotiator, priority: 50 }
   workspaces.negotiator.query_parameter:
@@ -98,5 +91,4 @@ services:
   Drupal\workspaces\WorkspacesCron:
     decorates: cron
     decoration_priority: -100
-    autowire: true
     public: false

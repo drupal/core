@@ -15,6 +15,7 @@ use Drupal\Core\Layout\Attribute\Layout;
 use Drupal\Core\Plugin\FilteredPluginManagerTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\layout_discovery\Hook\LayoutDiscoveryThemeHooks;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Provides a plugin manager for layouts.
@@ -23,29 +24,15 @@ class LayoutPluginManager extends DefaultPluginManager implements LayoutPluginMa
 
   use FilteredPluginManagerTrait;
 
-  /**
-   * The theme handler.
-   *
-   * @var \Drupal\Core\Extension\ThemeHandlerInterface
-   */
-  protected $themeHandler;
-
-  /**
-   * LayoutPluginManager constructor.
-   *
-   * @param \Traversable $namespaces
-   *   An object that implements \Traversable which contains the root paths
-   *   keyed by the corresponding namespace to look for plugin implementations.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cache_backend
-   *   Cache backend instance to use.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *   The module handler to invoke the alter hook with.
-   * @param \Drupal\Core\Extension\ThemeHandlerInterface $theme_handler
-   *   The theme handler to invoke the alter hook with.
-   */
-  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler, ThemeHandlerInterface $theme_handler) {
+  public function __construct(
+    #[Autowire(service: 'container.namespaces')]
+    \Traversable $namespaces,
+    #[Autowire(service: 'cache.discovery')]
+    CacheBackendInterface $cache_backend,
+    ModuleHandlerInterface $module_handler,
+    protected ThemeHandlerInterface $themeHandler,
+  ) {
     parent::__construct('Plugin/Layout', $namespaces, $module_handler, LayoutInterface::class, Layout::class, 'Drupal\Core\Layout\Annotation\Layout');
-    $this->themeHandler = $theme_handler;
 
     $type = $this->getType();
     $this->setCacheBackend($cache_backend, $type);

@@ -12,7 +12,6 @@ services:
       $entityTypeManager: '@entity_type.manager'
   element.editor:
     class: Drupal\editor\Element
-    arguments: ['@plugin.manager.editor', '@module_handler']
   Drupal\editor\Element: '@element.editor'
   editor.config_translation_mapper_subscriber:
     class: Drupal\editor\EventSubscriber\EditorConfigTranslationSubscriber

@@ -7,6 +7,7 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Utility\FiberResumeType;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * The default alias manager implementation.
@@ -43,6 +44,7 @@ class AliasManager implements AliasManagerInterface {
     protected AliasRepositoryInterface $pathAliasRepository,
     protected AliasPrefixListInterface $pathPrefixes,
     protected LanguageManagerInterface $languageManager,
+    #[Autowire(service: 'cache.data')]
     protected CacheBackendInterface $cache,
     protected TimeInterface $time,
   ) {

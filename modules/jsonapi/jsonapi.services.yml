@@ -43,11 +43,6 @@ services:
       - { name: jsonapi_normalizer }
   serializer.normalizer.resource_object.jsonapi:
     class: Drupal\jsonapi\Normalizer\ResourceObjectNormalizer
-    arguments:
-      - '@jsonapi.normalization_cacher'
-      - '@event_dispatcher'
-      - '@entity_field.manager'
-      - '@entity_type.manager'
     tags:
       - { name: jsonapi_normalizer }
   jsonapi.normalization_cacher:
@@ -81,7 +76,6 @@ services:
       - { name: jsonapi_encoder, format: 'api_json' }
   jsonapi.resource_type.repository:
     class: Drupal\jsonapi\ResourceType\ResourceTypeRepository
-    arguments: ['@entity_type.manager', '@entity_type.bundle.info', '@entity_field.manager', '@cache.jsonapi_resource_types', '@event_dispatcher']
   Drupal\jsonapi\ResourceType\ResourceTypeRepositoryInterface: '@jsonapi.resource_type.repository'
   jsonapi.route_enhancer:
     class: Drupal\jsonapi\Routing\RouteEnhancer
@@ -155,7 +149,6 @@ services:
   jsonapi.entity_access_checker:
     class: Drupal\jsonapi\Access\EntityAccessChecker
     public: false
-    arguments: ['@jsonapi.resource_type.repository', '@router.no_access_checks', '@current_user', '@entity.repository']
     calls:
       # This is a temporary measure. JSON:API should not need to be aware of the Content Moderation module.
       - [setLatestRevisionCheck, ['@?access_check.latest_revision']] # This is only injected when the service is available.
@@ -175,19 +168,6 @@ services:
   # Controller.
   jsonapi.entity_resource:
     class: Drupal\jsonapi\Controller\EntityResource
-    arguments:
-      - '@entity_type.manager'
-      - '@entity_field.manager'
-      - '@jsonapi.resource_type.repository'
-      - '@renderer'
-      - '@entity.repository'
-      - '@jsonapi.include_resolver'
-      - '@jsonapi.entity_access_checker'
-      - '@jsonapi.field_resolver'
-      - '@jsonapi.serializer'
-      - '@datetime.time'
-      - '@current_user'
-      - '@event_dispatcher'
   Drupal\jsonapi\Controller\EntityResource: '@jsonapi.entity_resource'
   jsonapi.file_upload:
     class: Drupal\jsonapi\Controller\FileUpload
@@ -198,7 +178,6 @@ services:
     class: Drupal\jsonapi\EventSubscriber\JsonApiRequestValidator
   jsonapi.resource_response.subscriber:
     class: Drupal\jsonapi\EventSubscriber\ResourceResponseSubscriber
-    arguments: ['@jsonapi.serializer']
   jsonapi.maintenance_mode_subscriber:
     class: Drupal\jsonapi\EventSubscriber\JsonapiMaintenanceModeSubscriber
 

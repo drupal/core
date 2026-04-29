@@ -21,6 +21,7 @@ use Drupal\jsonapi\ResourceType\ResourceType;
 use Drupal\jsonapi\ResourceType\ResourceTypeField;
 use Drupal\jsonapi\Serializer\Serializer;
 use Drupal\serialization\Normalizer\SchematicNormalizerTrait;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -36,46 +37,13 @@ class ResourceObjectNormalizer extends NormalizerBase {
 
   use SchematicNormalizerTrait;
 
-  /**
-   * The entity normalization cacher.
-   *
-   * @var \Drupal\jsonapi\EventSubscriber\ResourceObjectNormalizationCacher
-   */
-  protected $cacher;
-
-  /**
-   * @var mixed|\Symfony\Component\EventDispatcher\EventDispatcherInterface
-   */
-  private EventDispatcherInterface $eventDispatcher;
-
-  /**
-   * @var mixed|\Drupal\Core\Entity\EntityFieldManagerInterface
-   */
-  private EntityFieldManagerInterface $entityFieldManager;
-
-  /**
-   * @var mixed|\Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  private EntityTypeManagerInterface $entityTypeManager;
-
-  /**
-   * Constructs a ResourceObjectNormalizer object.
-   *
-   * @param \Drupal\jsonapi\EventSubscriber\ResourceObjectNormalizationCacher $cacher
-   *   The entity normalization cacher.
-   * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $event_dispatcher
-   *   The event dispatcher.
-   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
-   *   The entity field manager.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   */
-  public function __construct(ResourceObjectNormalizationCacher $cacher, EventDispatcherInterface $event_dispatcher, EntityFieldManagerInterface $entity_field_manager, EntityTypeManagerInterface $entity_type_manager) {
-    $this->cacher = $cacher;
-    $this->eventDispatcher = $event_dispatcher;
-    $this->entityFieldManager = $entity_field_manager;
-    $this->entityTypeManager = $entity_type_manager;
-  }
+  public function __construct(
+    #[Autowire(service: 'jsonapi.normalization_cacher')]
+    protected ResourceObjectNormalizationCacher $cacher,
+    private EventDispatcherInterface $eventDispatcher,
+    private EntityFieldManagerInterface $entityFieldManager,
+    private EntityTypeManagerInterface $entityTypeManager,
+  ) {}
 
   /**
    * {@inheritdoc}

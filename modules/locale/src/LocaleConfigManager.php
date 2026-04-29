@@ -11,6 +11,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\TraversableTypedDataInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\language\ConfigurableLanguageManagerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Manages configuration supported in part by interface translation.
@@ -34,46 +35,11 @@ use Drupal\language\ConfigurableLanguageManagerInterface;
 class LocaleConfigManager {
 
   /**
-   * The storage instance for reading configuration data.
-   *
-   * @var \Drupal\Core\Config\StorageInterface
-   */
-  protected $configStorage;
-
-  /**
-   * The string storage for reading and writing translations.
-   *
-   * @var \Drupal\locale\StringStorageInterface
-   */
-  protected $localeStorage;
-
-  /**
    * Array with preloaded string translations.
    *
    * @var array
    */
   protected $translations;
-
-  /**
-   * The configuration factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
-
-  /**
-   * The language manager.
-   *
-   * @var \Drupal\language\ConfigurableLanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
-   * The typed config manager.
-   *
-   * @var \Drupal\Core\Config\TypedConfigManagerInterface
-   */
-  protected $typedConfigManager;
 
   /**
    * Whether or not configuration translations are being updated from locale.
@@ -84,47 +50,17 @@ class LocaleConfigManager {
    */
   protected $isUpdatingFromLocale = FALSE;
 
-  /**
-   * The locale default config storage instance.
-   *
-   * @var \Drupal\locale\LocaleDefaultConfigStorage
-   */
-  protected $defaultConfigStorage;
-
-  /**
-   * The configuration manager.
-   *
-   * @var \Drupal\Core\Config\ConfigManagerInterface
-   */
-  protected $configManager;
-
-  /**
-   * Creates a new typed configuration manager.
-   *
-   * @param \Drupal\Core\Config\StorageInterface $config_storage
-   *   The storage object to use for reading configuration data.
-   * @param \Drupal\locale\StringStorageInterface $locale_storage
-   *   The locale storage to use for reading string translations.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The configuration factory.
-   * @param \Drupal\Core\Config\TypedConfigManagerInterface $typed_config
-   *   The typed configuration manager.
-   * @param \Drupal\language\ConfigurableLanguageManagerInterface $language_manager
-   *   The language manager.
-   * @param \Drupal\locale\LocaleDefaultConfigStorage $default_config_storage
-   *   The locale default configuration storage.
-   * @param \Drupal\Core\Config\ConfigManagerInterface $config_manager
-   *   The configuration manager.
-   */
-  public function __construct(StorageInterface $config_storage, StringStorageInterface $locale_storage, ConfigFactoryInterface $config_factory, TypedConfigManagerInterface $typed_config, ConfigurableLanguageManagerInterface $language_manager, LocaleDefaultConfigStorage $default_config_storage, ConfigManagerInterface $config_manager) {
-    $this->configStorage = $config_storage;
-    $this->localeStorage = $locale_storage;
-    $this->configFactory = $config_factory;
-    $this->typedConfigManager = $typed_config;
-    $this->languageManager = $language_manager;
-    $this->defaultConfigStorage = $default_config_storage;
-    $this->configManager = $config_manager;
-  }
+  public function __construct(
+    #[Autowire(service: 'config.storage')]
+    protected StorageInterface $configStorage,
+    protected StringStorageInterface $localeStorage,
+    protected ConfigFactoryInterface $configFactory,
+    protected TypedConfigManagerInterface $typedConfigManager,
+    #[Autowire(service: 'language_manager')]
+    protected ConfigurableLanguageManagerInterface $languageManager,
+    protected LocaleDefaultConfigStorage $defaultConfigStorage,
+    protected ConfigManagerInterface $configManager,
+  ) {}
 
   /**
    * Gets array of translated strings for Locale translatable configuration.

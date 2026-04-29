@@ -15,6 +15,7 @@ use Drupal\jsonapi\JsonApiResource\LabelOnlyResourceObject;
 use Drupal\jsonapi\JsonApiResource\ResourceObject;
 use Drupal\jsonapi\JsonApiSpec;
 use Drupal\jsonapi\ResourceType\ResourceTypeRepositoryInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -33,34 +34,6 @@ use Symfony\Component\Routing\RouterInterface;
 class EntityAccessChecker {
 
   /**
-   * The JSON:API resource type repository.
-   *
-   * @var \Drupal\jsonapi\ResourceType\ResourceTypeRepositoryInterface
-   */
-  protected $resourceTypeRepository;
-
-  /**
-   * The router.
-   *
-   * @var \Symfony\Component\Routing\RouterInterface
-   */
-  protected $router;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $currentUser;
-
-  /**
-   * The entity repository.
-   *
-   * @var \Drupal\Core\Entity\EntityRepositoryInterface
-   */
-  protected $entityRepository;
-
-  /**
    * The latest revision check service.
    *
    * This will be NULL unless the content_moderation module is installed. This
@@ -71,23 +44,13 @@ class EntityAccessChecker {
    */
   protected $latestRevisionCheck = NULL;
 
-  /**
-   * EntityAccessChecker constructor.
-   *
-   * @param \Drupal\jsonapi\ResourceType\ResourceTypeRepositoryInterface $resource_type_repository
-   *   The JSON:API resource type repository.
-   * @param \Symfony\Component\Routing\RouterInterface $router
-   *   The router.
-   * @param \Drupal\Core\Session\AccountInterface $account
-   *   The current user.
-   * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
-   *   The entity repository.
-   */
-  public function __construct(ResourceTypeRepositoryInterface $resource_type_repository, RouterInterface $router, AccountInterface $account, EntityRepositoryInterface $entity_repository) {
-    $this->resourceTypeRepository = $resource_type_repository;
-    $this->router = $router;
-    $this->currentUser = $account;
-    $this->entityRepository = $entity_repository;
+  public function __construct(
+    protected ResourceTypeRepositoryInterface $resourceTypeRepository,
+    #[Autowire(service: 'router.no_access_checks')]
+    protected RouterInterface $router,
+    protected AccountInterface $currentUser,
+    protected EntityRepositoryInterface $entityRepository,
+  ) {
   }
 
   /**

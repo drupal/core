@@ -19,6 +19,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -36,60 +37,11 @@ class PathBasedBreadcrumbBuilder implements BreadcrumbBuilderInterface {
   use StringTranslationTrait;
 
   /**
-   * The router request context.
-   *
-   * @var \Drupal\Core\Routing\RequestContext
-   */
-  protected $context;
-
-  /**
-   * The access check service.
-   *
-   * @var \Drupal\Core\Access\AccessManagerInterface
-   */
-  protected $accessManager;
-
-  /**
-   * The dynamic router service.
-   *
-   * @var \Symfony\Component\Routing\Matcher\RequestMatcherInterface
-   */
-  protected $router;
-
-  /**
-   * The inbound path processor.
-   *
-   * @var \Drupal\Core\PathProcessor\InboundPathProcessorInterface
-   */
-  protected $pathProcessor;
-
-  /**
    * Site config object.
    *
    * @var \Drupal\Core\Config\Config
    */
   protected $config;
-
-  /**
-   * The title resolver.
-   *
-   * @var \Drupal\Core\Controller\TitleResolverInterface
-   */
-  protected $titleResolver;
-
-  /**
-   * The current user object.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $currentUser;
-
-  /**
-   * The current path service.
-   *
-   * @var \Drupal\Core\Path\CurrentPathStack
-   */
-  protected $currentPath;
 
   /**
    * The patch matcher service.
@@ -98,37 +50,19 @@ class PathBasedBreadcrumbBuilder implements BreadcrumbBuilderInterface {
    */
   protected $pathMatcher;
 
-  /**
-   * Constructs the PathBasedBreadcrumbBuilder.
-   *
-   * @param \Drupal\Core\Routing\RequestContext $context
-   *   The router request context.
-   * @param \Drupal\Core\Access\AccessManagerInterface $access_manager
-   *   The access check service.
-   * @param \Symfony\Component\Routing\Matcher\RequestMatcherInterface $router
-   *   The dynamic router service.
-   * @param \Drupal\Core\PathProcessor\InboundPathProcessorInterface $path_processor
-   *   The inbound path processor.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The config factory service.
-   * @param \Drupal\Core\Controller\TitleResolverInterface $title_resolver
-   *   The title resolver service.
-   * @param \Drupal\Core\Session\AccountInterface $current_user
-   *   The current user object.
-   * @param \Drupal\Core\Path\CurrentPathStack $current_path
-   *   The current path.
-   * @param \Drupal\Core\Path\PathMatcherInterface $path_matcher
-   *   The path matcher service.
-   */
-  public function __construct(RequestContext $context, AccessManagerInterface $access_manager, RequestMatcherInterface $router, InboundPathProcessorInterface $path_processor, ConfigFactoryInterface $config_factory, TitleResolverInterface $title_resolver, AccountInterface $current_user, CurrentPathStack $current_path, ?PathMatcherInterface $path_matcher = NULL) {
-    $this->context = $context;
-    $this->accessManager = $access_manager;
-    $this->router = $router;
-    $this->pathProcessor = $path_processor;
+  public function __construct(
+    protected RequestContext $context,
+    protected AccessManagerInterface $accessManager,
+    #[Autowire(service: 'router')]
+    protected RequestMatcherInterface $router,
+    protected InboundPathProcessorInterface $pathProcessor,
+    ConfigFactoryInterface $config_factory,
+    protected TitleResolverInterface $titleResolver,
+    protected AccountInterface $currentUser,
+    protected CurrentPathStack $currentPath,
+    ?PathMatcherInterface $path_matcher = NULL,
+  ) {
     $this->config = $config_factory->get('system.site');
-    $this->titleResolver = $title_resolver;
-    $this->currentUser = $current_user;
-    $this->currentPath = $current_path;
     $this->pathMatcher = $path_matcher ?: \Drupal::service('path.matcher');
   }
 

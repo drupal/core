@@ -9,6 +9,7 @@ use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\language\Plugin\LanguageNegotiation\LanguageNegotiationUI;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -16,41 +17,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class LanguageNegotiator implements LanguageNegotiatorInterface {
   use LoggerChannelTrait;
-
-  /**
-   * The language negotiation method plugin manager.
-   *
-   * @var \Drupal\Component\Plugin\PluginManagerInterface
-   */
-  protected $negotiatorManager;
-
-  /**
-   * The language manager.
-   *
-   * @var \Drupal\language\ConfigurableLanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
-   * The configuration factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
-
-  /**
-   * The settings instance.
-   *
-   * @var \Drupal\Core\Site\Settings
-   */
-  protected $settings;
-
-  /**
-   * The request stack object.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected $requestStack;
 
   /**
    * The current active user.
@@ -73,27 +39,15 @@ class LanguageNegotiator implements LanguageNegotiatorInterface {
    */
   protected $negotiatedLanguages = [];
 
-  /**
-   * Constructs a new LanguageNegotiator object.
-   *
-   * @param \Drupal\language\ConfigurableLanguageManagerInterface $language_manager
-   *   The language manager.
-   * @param \Drupal\Component\Plugin\PluginManagerInterface $negotiator_manager
-   *   The language negotiation methods plugin manager.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The configuration factory.
-   * @param \Drupal\Core\Site\Settings $settings
-   *   The settings instance.
-   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-   *   The request stack service.
-   */
-  public function __construct(ConfigurableLanguageManagerInterface $language_manager, PluginManagerInterface $negotiator_manager, ConfigFactoryInterface $config_factory, Settings $settings, RequestStack $requestStack) {
-    $this->languageManager = $language_manager;
-    $this->negotiatorManager = $negotiator_manager;
-    $this->configFactory = $config_factory;
-    $this->settings = $settings;
-    $this->requestStack = $requestStack;
-  }
+  public function __construct(
+    #[Autowire(service: 'language_manager')]
+    protected ConfigurableLanguageManagerInterface $languageManager,
+    #[Autowire(service: 'plugin.manager.language_negotiation_method')]
+    protected PluginManagerInterface $negotiatorManager,
+    protected ConfigFactoryInterface $configFactory,
+    protected Settings $settings,
+    protected RequestStack $requestStack,
+  ) {}
 
   /**
    * Initializes the injected language manager with the negotiator.

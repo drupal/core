@@ -17,6 +17,7 @@ use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Installer\InstallerKernel;
 use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\TypedData\DataReferenceTargetDefinition;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Exception\PreconditionFailedHttpException;
 
@@ -45,41 +46,6 @@ class ResourceTypeRepository implements ResourceTypeRepositoryInterface {
   use LoggerChannelTrait;
 
   /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The bundle manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
-   */
-  protected $entityTypeBundleInfo;
-
-  /**
-   * The entity field manager.
-   *
-   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
-   */
-  protected $entityFieldManager;
-
-  /**
-   * The cache backend.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface
-   */
-  protected $cache;
-
-  /**
-   * The event dispatcher.
-   *
-   * @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface
-   */
-  protected $eventDispatcher;
-
-  /**
    * Cache tags used for caching the repository.
    *
    * @var string[]
@@ -94,27 +60,14 @@ class ResourceTypeRepository implements ResourceTypeRepositoryInterface {
     'entity_types',
   ];
 
-  /**
-   * Instantiates a ResourceTypeRepository object.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_bundle_info
-   *   The entity type bundle info service.
-   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
-   *   The entity field manager.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cache
-   *   The cache backend.
-   * @param \Symfony\Contracts\EventDispatcher\EventDispatcherInterface $dispatcher
-   *   The event dispatcher.
-   */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfoInterface $entity_bundle_info, EntityFieldManagerInterface $entity_field_manager, CacheBackendInterface $cache, EventDispatcherInterface $dispatcher) {
-    $this->entityTypeManager = $entity_type_manager;
-    $this->entityTypeBundleInfo = $entity_bundle_info;
-    $this->entityFieldManager = $entity_field_manager;
-    $this->cache = $cache;
-    $this->eventDispatcher = $dispatcher;
-  }
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected EntityTypeBundleInfoInterface $entityTypeBundleInfo,
+    protected EntityFieldManagerInterface $entityFieldManager,
+    #[Autowire(service: 'cache.jsonapi_resource_types')]
+    protected CacheBackendInterface $cache,
+    protected EventDispatcherInterface $eventDispatcher,
+  ) {}
 
   /**
    * {@inheritdoc}

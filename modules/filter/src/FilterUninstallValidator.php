@@ -7,6 +7,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleUninstallValidatorInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Prevents uninstallation of modules providing used filter plugins.
@@ -16,31 +17,18 @@ class FilterUninstallValidator implements ModuleUninstallValidatorInterface {
   use StringTranslationTrait;
 
   /**
-   * The filter plugin manager.
-   *
-   * @var \Drupal\Component\Plugin\PluginManagerInterface
-   */
-  protected $filterManager;
-
-  /**
    * The filter entity storage.
    *
    * @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface
    */
   protected $filterStorage;
 
-  /**
-   * Constructs a new FilterUninstallValidator.
-   *
-   * @param \Drupal\Component\Plugin\PluginManagerInterface $filter_manager
-   *   The filter plugin manager.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Drupal\Core\StringTranslation\TranslationInterface $string_translation
-   *   The string translation service.
-   */
-  public function __construct(PluginManagerInterface $filter_manager, EntityTypeManagerInterface $entity_type_manager, TranslationInterface $string_translation) {
-    $this->filterManager = $filter_manager;
+  public function __construct(
+    #[Autowire(service: 'plugin.manager.filter')]
+    protected PluginManagerInterface $filterManager,
+    EntityTypeManagerInterface $entity_type_manager,
+    TranslationInterface $string_translation,
+  ) {
     $this->filterStorage = $entity_type_manager->getStorage('filter_format');
     $this->stringTranslation = $string_translation;
   }

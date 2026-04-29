@@ -9,6 +9,7 @@ use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\rest\ResourceResponseInterface;
 use Drupal\serialization\Normalizer\CacheableNormalizerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -21,42 +22,13 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class ResourceResponseSubscriber implements EventSubscriberInterface {
 
-  /**
-   * The serializer.
-   *
-   * @var \Symfony\Component\Serializer\SerializerInterface
-   */
-  protected $serializer;
-
-  /**
-   * The renderer.
-   *
-   * @var \Drupal\Core\Render\RendererInterface
-   */
-  protected $renderer;
-
-  /**
-   * The current route match.
-   *
-   * @var \Drupal\Core\Routing\RouteMatchInterface
-   */
-  protected $routeMatch;
-
-  /**
-   * Constructs a ResourceResponseSubscriber object.
-   *
-   * @param \Symfony\Component\Serializer\SerializerInterface $serializer
-   *   The serializer.
-   * @param \Drupal\Core\Render\RendererInterface $renderer
-   *   The renderer.
-   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
-   *   The current route match.
-   */
-  public function __construct(SerializerInterface $serializer, RendererInterface $renderer, RouteMatchInterface $route_match) {
-    $this->serializer = $serializer;
-    $this->renderer = $renderer;
-    $this->routeMatch = $route_match;
-  }
+  public function __construct(
+    #[Autowire(service: 'serializer')]
+    protected SerializerInterface $serializer,
+    protected RendererInterface $renderer,
+    #[Autowire(service: 'current_route_match')]
+    protected RouteMatchInterface $routeMatch,
+  ) {}
 
   /**
    * Serializes ResourceResponse responses' data, and removes that data.
