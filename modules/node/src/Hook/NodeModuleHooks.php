@@ -6,7 +6,6 @@ namespace Drupal\node\Hook;
 
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
-use Drupal\node\NodeAccessRebuild;
 
 /**
  * Module hook implementations for node.
@@ -14,8 +13,7 @@ use Drupal\node\NodeAccessRebuild;
 class NodeModuleHooks {
 
   public function __construct(
-    protected readonly ModuleHandlerInterface $moduleHandler,
-    protected readonly NodeAccessRebuild $nodeAccessRebuild,
+    private readonly ModuleHandlerInterface $moduleHandler,
   ) {
 
   }
@@ -27,8 +25,8 @@ class NodeModuleHooks {
   public function modulesInstalled(array $modules): void {
     // Check if any of the newly enabled modules require the node_access table
     // to be rebuilt.
-    if (!$this->nodeAccessRebuild->needsRebuild() && $this->moduleHandler->hasImplementations('node_grants', $modules)) {
-      $this->nodeAccessRebuild->setNeedsRebuild();
+    if (!node_access_needs_rebuild() && $this->moduleHandler->hasImplementations('node_grants', $modules)) {
+      node_access_needs_rebuild(TRUE);
     }
   }
 
@@ -45,14 +43,14 @@ class NodeModuleHooks {
       // check whether a hook implementation function exists and do not invoke
       // it. Node access also needs to be rebuilt if language module is disabled
       // to remove any language-specific grants.
-      if (!$this->nodeAccessRebuild->needsRebuild() && ($this->moduleHandler->hasImplementations('node_grants', $module) || $module == 'language')) {
-        $this->nodeAccessRebuild->setNeedsRebuild();
+      if (!node_access_needs_rebuild() && ($this->moduleHandler->hasImplementations('node_grants', $module) || $module == 'language')) {
+        node_access_needs_rebuild(TRUE);
       }
     }
     // If there remains no more node_access module, rebuilding will be
     // straightforward, we can do it right now.
-    if ($this->nodeAccessRebuild->needsRebuild() && !$this->moduleHandler->hasImplementations('node_grants')) {
-      $this->nodeAccessRebuild->rebuild();
+    if (node_access_needs_rebuild() && !$this->moduleHandler->hasImplementations('node_grants')) {
+      node_access_rebuild();
     }
   }
 

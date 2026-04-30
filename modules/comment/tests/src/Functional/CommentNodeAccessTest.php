@@ -6,7 +6,6 @@ namespace Drupal\Tests\comment\Functional;
 
 use Drupal\comment\CommentManagerInterface;
 use Drupal\comment\CommentPreviewMode;
-use Drupal\node\NodeAccessRebuild;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
@@ -36,7 +35,7 @@ class CommentNodeAccessTest extends CommentTestBase {
   protected function setUp(): void {
     parent::setUp();
 
-    \Drupal::service(NodeAccessRebuild::class)->rebuild();
+    node_access_rebuild();
 
     // Re-create user.
     $this->webUser = $this->drupalCreateUser([

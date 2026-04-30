@@ -6,7 +6,6 @@ namespace Drupal\Tests\node\Functional;
 
 use Drupal\node\Entity\NodeType;
 use Drupal\Tests\node\Traits\NodeAccessTrait;
-use Drupal\node\NodeAccessRebuild;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
@@ -104,7 +103,7 @@ class NodeAccessRebuildNodeGrantsTest extends NodeTestBase {
 
     // Test an anonymous node access rebuild from code.
     $this->drupalLogout();
-    \Drupal::service(NodeAccessRebuild::class)->rebuild();
+    node_access_rebuild();
     foreach ($nodes as $node) {
       $this->assertTrue($grant_storage->access($node, 'view', $this->webUser)->isAllowed(), 'After rebuilding node access the grant storage returns allowed for the node author.');
       $this->assertFalse($grant_storage->access($node, 'view', $this->adminUser)->isForbidden(), 'After rebuilding node access the grant storage returns forbidden for the admin user.');

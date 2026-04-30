@@ -11,7 +11,6 @@ use Drupal\entity_test\Entity\EntityTestMulRevPub;
 use Drupal\form_test\Form\FormTestAlterForm;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\language\Entity\ConfigurableLanguage;
-use Drupal\node\NodeAccessRebuild;
 use Drupal\Tests\field\Traits\EntityReferenceFieldCreationTrait;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
@@ -1187,7 +1186,7 @@ class WorkspaceIntegrationTest extends KernelTestBase {
   public function testNodeAccessDifferringRevisionIdsOnTarget(): void {
     $this->initializeWorkspacesModule();
     \Drupal::service('module_installer')->install(['node_access_test']);
-    \Drupal::service(NodeAccessRebuild::class)->rebuild();
+    node_access_rebuild();
 
     // Edit node 1 in 'stage'.
     $this->switchToWorkspace('stage');

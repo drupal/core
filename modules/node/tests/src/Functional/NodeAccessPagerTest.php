@@ -9,7 +9,6 @@ use Drupal\comment\Entity\Comment;
 use Drupal\comment\Tests\CommentTestTrait;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\user\Entity\User;
-use Drupal\node\NodeAccessRebuild;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
@@ -45,7 +44,7 @@ class NodeAccessPagerTest extends BrowserTestBase {
   protected function setUp(): void {
     parent::setUp();
 
-    \Drupal::service(NodeAccessRebuild::class)->rebuild();
+    node_access_rebuild();
     $this->drupalCreateContentType(['type' => 'page', 'name' => 'Basic page']);
     $this->addDefaultCommentField('node', 'page');
     $this->webUser = $this->drupalCreateUser([

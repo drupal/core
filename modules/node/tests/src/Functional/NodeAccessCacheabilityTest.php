@@ -6,7 +6,6 @@ namespace Drupal\Tests\node\Functional;
 
 use Drupal\Core\Url;
 use Drupal\Tests\system\Functional\Cache\AssertPageCacheContextsAndTagsTrait;
-use Drupal\node\NodeAccessRebuild;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
@@ -40,7 +39,7 @@ class NodeAccessCacheabilityTest extends NodeTestBase {
   protected function setUp(): void {
     parent::setUp();
 
-    \Drupal::service(NodeAccessRebuild::class)->rebuild();
+    node_access_rebuild();
 
     // Create some content.
     $this->drupalCreateNode();

@@ -7,7 +7,6 @@ namespace Drupal\Tests\node\Functional\Views;
 use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
 use Drupal\Tests\node\Traits\NodeAccessTrait;
-use Drupal\node\NodeAccessRebuild;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
@@ -107,7 +106,7 @@ class StatusExtraTest extends NodeTestBase {
     \Drupal::service('module_installer')->install(['node_access_test']);
     NodeType::create(['type' => 'page', 'name' => 'page'])->save();
     $this->addPrivateField(NodeType::load('page'));
-    \Drupal::service(NodeAccessRebuild::class)->rebuild();
+    node_access_rebuild();
     $node_published_private = $this->drupalCreateNode(['uid' => $admin_user->id(), 'private' => ['value' => 1]]);
     $node_unpublished_private = $this->drupalCreateNode([
       'uid' => $admin_user->id(),

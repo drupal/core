@@ -8,7 +8,6 @@ use Drupal\Core\Database\Database;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\node\NodeAccessRebuild;
 use Drupal\language\Entity\ConfigurableLanguage;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -77,7 +76,7 @@ class NodeAccessLanguageAwareTest extends NodeAccessTestBase {
     ])->save();
 
     // After enabling a node access module, the access table has to be rebuild.
-    \Drupal::service(NodeAccessRebuild::class)->rebuild();
+    node_access_rebuild();
 
     // Create a normal authenticated user.
     $this->webUser = $this->drupalCreateUser(['access content']);

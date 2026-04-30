@@ -12,7 +12,6 @@ use Drupal\node\Entity\NodeType;
 use Drupal\system\Entity\Menu;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\content_translation\Traits\ContentTranslationTestTrait;
-use Drupal\node\NodeAccessRebuild;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
@@ -393,7 +392,7 @@ class MenuUiNodeTest extends BrowserTestBase {
    */
   public function testMenuNodeWithGrantsFormWidget(): void {
     \Drupal::service('module_installer')->install(['node_access_test']);
-    \Drupal::service(NodeAccessRebuild::class)->rebuild();
+    node_access_rebuild();
     $this->assertTrue(\Drupal::moduleHandler()->hasImplementations('node_grants'));
 
     $admin_user = $this->drupalCreateUser([

@@ -10,7 +10,6 @@ use Drupal\node\Entity\NodeType;
 use Drupal\Tests\node\Traits\NodeAccessTrait;
 use Drupal\user\UserInterface;
 use Drupal\views\Tests\ViewTestData;
-use Drupal\node\NodeAccessRebuild;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
@@ -147,7 +146,7 @@ class NodeAccessJoinTest extends NodeTestBase {
       ])
       ->save();
 
-    \Drupal::service(NodeAccessRebuild::class)->rebuild();
+    node_access_rebuild();
     \Drupal::state()->set('node_access_test.private', TRUE);
   }
 

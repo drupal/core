@@ -6,7 +6,6 @@ namespace Drupal\Tests\content_moderation\Functional;
 
 use Drupal\node\Entity\NodeType;
 use Drupal\Tests\node\Traits\NodeAccessTrait;
-use Drupal\node\NodeAccessRebuild;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
@@ -70,7 +69,7 @@ class NodeAccessTest extends ModerationStateTestBase {
 
     // Rebuild permissions because hook_node_grants() is implemented by the
     // node_access_test_empty module.
-    \Drupal::service(NodeAccessRebuild::class)->rebuild();
+    node_access_rebuild();
   }
 
   /**

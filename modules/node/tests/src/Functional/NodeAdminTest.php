@@ -10,7 +10,6 @@ use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
 use Drupal\Tests\node\Traits\NodeAccessTrait;
 use Drupal\user\RoleInterface;
-use Drupal\node\NodeAccessRebuild;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
@@ -259,7 +258,7 @@ class NodeAdminTest extends NodeTestBase {
   public function testContentAdminPageWithLimitedContentViewer(): void {
     \Drupal::service('module_installer')->install(['node_access_test']);
     $this->addPrivateField(NodeType::load('page'));
-    \Drupal::service(NodeAccessRebuild::class)->rebuild();
+    node_access_rebuild();
 
     $role_id = $this->drupalCreateRole([
       'access content overview',
