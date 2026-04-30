@@ -31,9 +31,9 @@ class HelpSearchHelpUpgradeTest extends UpdatePathTestBase {
   }
 
   /**
-   * Tests help_update_12000() and help_post_update_search_help_dependencies().
+   * Tests system_update_11400() and help_post_update_search_help_dependencies().
    *
-   * @see help_update_12000()
+   * @see system_update_11400()
    * @see help_post_update_search_help_dependencies()
    */
   public function testSearchHelpInstall(): void {

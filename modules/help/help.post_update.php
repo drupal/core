@@ -19,7 +19,7 @@ function help_removed_post_updates(): array {
 /**
  * Update config entity dependencies to the Search Help module, if necessary.
  *
- * @see system_update_12002()
+ * @see system_update_11400()
  */
 function help_post_update_search_help_dependencies(): void {
   if (\Drupal::moduleHandler()->moduleExists('search')) {
