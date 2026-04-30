@@ -65,7 +65,7 @@ class ViewsData {
   protected $langcode;
 
   public function __construct(
-    #[Autowire(service: 'cache.default')]
+    #[Autowire(service: 'cache.discovery')]
     protected CacheBackendInterface $cacheBackend,
     protected ModuleHandlerInterface $moduleHandler,
     protected LanguageManagerInterface $languageManager,
