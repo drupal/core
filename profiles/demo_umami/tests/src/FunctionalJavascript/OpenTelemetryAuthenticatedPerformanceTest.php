@@ -127,25 +127,25 @@ class OpenTelemetryAuthenticatedPerformanceTest extends PerformanceTestBase {
 
     $expected = [
       'QueryCount' => 263,
-      'CacheGetCount' => 257,
+      'CacheGetCount' => 253,
       'CacheGetCountByBin' => [
         'config' => 62,
         'bootstrap' => 16,
         'discovery' => 75,
-        'data' => 19,
+        'data' => 20,
         'entity' => 24,
         'dynamic_page_cache' => 1,
         'default' => 20,
-        'render' => 18,
+        'render' => 13,
         'menu' => 22,
       ],
-      'CacheSetCount' => 256,
+      'CacheSetCount' => 257,
       'CacheDeleteCount' => 0,
       'CacheTagInvalidationCount' => 0,
       'CacheTagLookupQueryCount' => 28,
       'ScriptCount' => 4,
       'ScriptBytes' => 200400,
-      'StylesheetCount' => 6,
+      'StylesheetCount' => 7,
       'StylesheetBytes' => 79412,
     ];
     $this->assertMetrics($expected, $performance_data);

@@ -56,7 +56,7 @@ class OpenTelemetryNodePagePerformanceTest extends PerformanceTestBase {
 
     $expected = [
       'QueryCount' => 199,
-      'CacheGetCount' => 223,
+      'CacheGetCount' => 218,
       'CacheSetCount' => 222,
       'CacheDeleteCount' => 0,
       'CacheTagLookupQueryCount' => 23,
@@ -119,11 +119,11 @@ class OpenTelemetryNodePagePerformanceTest extends PerformanceTestBase {
 
     $expected = [
       'QueryCount' => 70,
-      'CacheGetCount' => 167,
+      'CacheGetCount' => 162,
       'CacheSetCount' => 58,
       'CacheDeleteCount' => 0,
       'CacheTagInvalidationCount' => 0,
-      'CacheTagLookupQueryCount' => 19,
+      'CacheTagLookupQueryCount' => 18,
       'ScriptCount' => 1,
       'ScriptBytes' => 12000,
       'StylesheetCount' => 2,
@@ -216,7 +216,7 @@ class OpenTelemetryNodePagePerformanceTest extends PerformanceTestBase {
 
     $expected = [
       'QueryCount' => 56,
-      'CacheGetCount' => 163,
+      'CacheGetCount' => 158,
       'CacheGetCountByBin' => [
         'page' => 1,
         'config' => 34,
@@ -225,13 +225,13 @@ class OpenTelemetryNodePagePerformanceTest extends PerformanceTestBase {
         'data' => 7,
         'entity' => 21,
         'dynamic_page_cache' => 1,
-        'render' => 17,
+        'render' => 12,
         'default' => 3,
       ],
       'CacheSetCount' => 41,
       'CacheDeleteCount' => 0,
       'CacheTagInvalidationCount' => 0,
-      'CacheTagLookupQueryCount' => 19,
+      'CacheTagLookupQueryCount' => 18,
       'CacheTagGroupedLookups' => [
         [
           'entity_types',
@@ -275,17 +275,15 @@ class OpenTelemetryNodePagePerformanceTest extends PerformanceTestBase {
           'taxonomy_term:31',
         ],
         [
-          'config:block_list',
-          'config:system.site',
-        ],
-        [
           'block_content:1',
           'block_content:2',
+          'config:block_list',
           'config:configurable_language_list',
         ],
         ['config:system.menu.footer'],
         [
           'config:system.menu.account',
+          'config:system.site',
           'block_content_view',
           'config:image.style.medium_8_7',
           'file:37',
