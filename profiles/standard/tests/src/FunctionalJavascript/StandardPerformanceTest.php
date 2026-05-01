@@ -135,12 +135,12 @@ class StandardPerformanceTest extends PerformanceTestBase {
         'page' => 1,
         'config' => 20,
         'data' => 4,
-        'discovery' => 43,
+        'discovery' => 39,
         'bootstrap' => 10,
         'dynamic_page_cache' => 1,
         'render' => 11,
+        'default' => 5,
         'entity' => 2,
-        'default' => 1,
         'menu' => 3,
       ],
       'CacheSetCount' => 43,
@@ -177,6 +177,10 @@ class StandardPerformanceTest extends PerformanceTestBase {
     ];
     $this->assertMetrics($expected, $performance_data);
     $expected_default_cache_cids = [
+      'views_data:node_field_data:en',
+      'views_data:en',
+      'views_data:views:en',
+      'views_data:node:en',
       'theme_registry:stark',
     ];
     $this->assertSame($expected_default_cache_cids, $performance_data->getCacheOperations()['get']['default']);
@@ -306,10 +310,11 @@ class StandardPerformanceTest extends PerformanceTestBase {
         'page' => 1,
         'config' => 11,
         'data' => 4,
-        'discovery' => 24,
+        'discovery' => 21,
         'bootstrap' => 8,
         'dynamic_page_cache' => 2,
         'render' => 12,
+        'default' => 3,
         'entity' => 1,
         'menu' => 1,
       ],
@@ -357,6 +362,12 @@ class StandardPerformanceTest extends PerformanceTestBase {
       'StylesheetBytes' => 1300,
     ];
     $this->assertMetrics($expected, $performance_data);
+    $expected_default_cache_cids = [
+      'views_data:node_field_data:en',
+      'views_data:views:en',
+      'views_data:node:en',
+    ];
+    $this->assertSame($expected_default_cache_cids, $performance_data->getCacheOperations()['get']['default']);
   }
 
   /**
