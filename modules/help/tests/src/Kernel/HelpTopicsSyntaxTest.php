@@ -28,6 +28,7 @@ use Twig\NodeVisitor\NodeVisitorInterface;
  * Verifies that all core Help topics can be rendered and comply with standards.
  */
 #[Group('help')]
+#[Group('#slow')]
 #[RunTestsInSeparateProcesses]
 class HelpTopicsSyntaxTest extends KernelTestBase implements NodeVisitorInterface {
 
