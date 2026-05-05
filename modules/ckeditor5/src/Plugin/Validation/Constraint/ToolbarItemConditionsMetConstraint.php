@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class ToolbarItemConditionsMetConstraint extends SymfonyConstraint {
 
   public function __construct(
-    mixed $options = NULL,
     public $imageUploadStatusRequiredMessage = 'The %toolbar_item toolbar item requires image uploads to be enabled.',
     public $filterRequiredMessage = 'The %toolbar_item toolbar item requires the %filter filter to be enabled.',
     public $singleMissingRequiredPluginMessage = 'The %toolbar_item toolbar item requires the %plugin plugin to be enabled.',
@@ -28,7 +27,7 @@ class ToolbarItemConditionsMetConstraint extends SymfonyConstraint {
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

@@ -18,25 +18,27 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class ConfigExistsConstraint extends SymfonyConstraint {
 
   /**
-   * Optional prefix, to be specified when this contains a config entity ID.
+   * Constructs a ConfigExistsConstraint object.
    *
-   * Every config entity type can have multiple instances, all with unique IDs
-   * but the same config prefix. When config refers to a config entity,
-   * typically only the ID is stored, not the prefix.
-   *
-   * @var string
+   * @param string $prefix
+   *   Optional prefix, to be specified when this contains a config entity ID.
+   *   Every config entity type can have multiple instances, all with unique IDs
+   *   but the same config prefix. When config refers to a config entity,
+   *   typically only the ID is stored, not the prefix.
+   * @param string $message
+   *   The error message if the config does not exist.
+   * @param array|null $groups
+   *   The groups that the constraint belongs to.
+   * @param mixed|null $payload
+   *   Domain-specific data attached to a constraint.
    */
-  public string $prefix = '';
-
   public function __construct(
-    mixed $options = NULL,
-    ?string $prefix = NULL,
+    public string $prefix = '',
     public string $message = "The '@name' config does not exist.",
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
-    $this->prefix = $prefix ?? $this->prefix;
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

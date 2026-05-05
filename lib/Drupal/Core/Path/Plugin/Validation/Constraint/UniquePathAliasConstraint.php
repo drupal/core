@@ -16,13 +16,12 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class UniquePathAliasConstraint extends SymfonyConstraint {
 
   public function __construct(
-    mixed $options = NULL,
     public $message = 'The alias %alias is already in use in this language.',
     public $differentCapitalizationMessage = 'The alias %alias could not be added because it is already in use in this language with different capitalization: %stored_alias.',
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

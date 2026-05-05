@@ -25,23 +25,21 @@ class ComplexDataConstraint extends SymfonyConstraint {
   public $properties;
 
   public function __construct(
-    mixed $options = NULL,
     ?array $properties = NULL,
     ?array $groups = NULL,
     mixed $payload = NULL,
     ...$otherProperties,
   ) {
-    // Allow skipping the 'properties' key in the options.
-    if (is_array($options)) {
-      if (!array_key_exists('properties', $options)) {
-        $options = ['properties' => $options];
+    if ($properties === NULL) {
+      if (!empty($otherProperties)) {
+        $properties = $otherProperties;
+      }
+      else {
+        throw new \InvalidArgumentException('Properties must be passed to ComplexData constraint');
       }
     }
-    elseif ($properties === NULL && !empty($otherProperties)) {
-      $properties = $otherProperties;
-    }
-    parent::__construct($options, $groups, $payload);
-    $this->properties = $properties ?? $this->properties;
+    parent::__construct(groups: $groups, payload: $payload);
+    $this->properties = $properties;
     $constraint_manager = \Drupal::service('validation.constraint');
 
     // Instantiate constraint objects for array definitions.
@@ -52,20 +50,6 @@ class ComplexDataConstraint extends SymfonyConstraint {
         }
       }
     }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getDefaultOption(): ?string {
-    return 'properties';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getRequiredOptions(): array {
-    return ['properties'];
   }
 
 }

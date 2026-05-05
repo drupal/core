@@ -18,36 +18,13 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 )]
 class ImmutablePropertiesConstraint extends SymfonyConstraint {
 
-  /**
-   * The names of the immutable properties.
-   *
-   * @var string[]
-   */
-  public array $properties = [];
-
   public function __construct(
-    mixed $options = NULL,
-    ?array $properties = NULL,
+    public array $properties,
     public string $message = "The '@name' property cannot be changed.",
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
-    $this->properties = $properties ?? $this->properties;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getDefaultOption(): ?string {
-    return 'properties';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getRequiredOptions(): array {
-    return ['properties'];
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

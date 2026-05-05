@@ -18,12 +18,11 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class ReferenceAccessConstraint extends SymfonyConstraint {
 
   public function __construct(
-    mixed $options = NULL,
     public $message = 'You do not have access to the referenced entity (%type: %id).',
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

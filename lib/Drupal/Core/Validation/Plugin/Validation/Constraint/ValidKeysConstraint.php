@@ -22,15 +22,28 @@ use Symfony\Component\Validator\Exception\InvalidArgumentException;
 class ValidKeysConstraint extends SymfonyConstraint {
 
   /**
-   * Keys which are allowed in the validated array, or `<infer>` to auto-detect.
+   * Constructs a ValidKeysConstraint object.
    *
-   * @var array|string
+   * @param array|string $allowedKeys
+   *   Keys which are allowed in the validated array, or `<infer>` to
+   *   auto-detect.
+   * @param string $invalidKeyMessage
+   *   Error message for an invalid key.
+   * @param string $dynamicInvalidKeyMessage
+   *   Error message for a dynamically invalid key.
+   * @param string $missingRequiredKeyMessage
+   *   Error message for a missing required key.
+   * @param string $dynamicMissingRequiredKeyMessage
+   *   Error message for a missing dynamic required key.
+   * @param string $indexedArrayMessage
+   *   Error message if the array is numerically indexed.
+   * @param array|null $groups
+   *   The groups that the constraint belongs to.
+   * @param mixed|null $payload
+   *   Domain-specific data attached to a constraint.
    */
-  public array|string $allowedKeys;
-
   public function __construct(
-    mixed $options = NULL,
-    array|string|null $allowedKeys = NULL,
+    public array|string $allowedKeys,
     public string $invalidKeyMessage = "'@key' is not a supported key.",
     public string $dynamicInvalidKeyMessage = "'@key' is an unknown key because @dynamic_type_property_path is @dynamic_type_property_value (see config schema type @resolved_dynamic_type).",
     public string $missingRequiredKeyMessage = "'@key' is a required key.",
@@ -39,22 +52,7 @@ class ValidKeysConstraint extends SymfonyConstraint {
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
-    $this->allowedKeys = $allowedKeys ?? $this->allowedKeys;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getDefaultOption(): ?string {
-    return 'allowedKeys';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getRequiredOptions(): array {
-    return ['allowedKeys'];
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
   /**

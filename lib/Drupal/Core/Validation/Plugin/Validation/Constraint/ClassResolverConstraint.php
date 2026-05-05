@@ -28,38 +28,14 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 )]
 class ClassResolverConstraint extends SymfonyConstraint {
 
-  /**
-   * Class or service.
-   *
-   * @var array
-   */
-  public string $classOrService;
-
-  /**
-   * Method to call.
-   *
-   * @var string
-   */
-  public string $method;
-
   public function __construct(
-    mixed $options = NULL,
-    ?string $classOrService = NULL,
-    ?string $method = NULL,
+    public string $classOrService,
+    public string $method,
     public string $message = "Calling '@method' method with value '@value' on '@classOrService' evaluated as invalid.",
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
-    $this->classOrService = $classOrService ?? $this->classOrService;
-    $this->method = $method ?? $this->method;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getRequiredOptions(): array {
-    return ['classOrService', 'method'];
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

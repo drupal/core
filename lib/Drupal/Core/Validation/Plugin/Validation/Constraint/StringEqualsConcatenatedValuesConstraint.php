@@ -20,12 +20,9 @@ class StringEqualsConcatenatedValuesConstraint extends SymfonyConstraint {
   /**
    * Constructs a StringEqualsConcatenatedValuesConstraint object.
    *
-   * @param array|null $options
-   *   The options (as associative array) or the value for the default option
-   *   (any other type)
-   * @param string|null $separator
+   * @param string $separator
    *   The separator separating the values.
-   * @param array|null $values
+   * @param array $values
    *   The mappings to values to concatenate together.
    * @param array|null $reservedCharacters
    *   Reserved characters — if any — that are to be substituted in each value.
@@ -39,23 +36,15 @@ class StringEqualsConcatenatedValuesConstraint extends SymfonyConstraint {
    *   Domain-specific data attached to a constraint.
    */
   public function __construct(
-    ?array $options = NULL,
-    public ?string $separator = NULL,
-    public ?array $values = NULL,
+    public string $separator,
+    public array $values,
     public ?array $reservedCharacters = [],
     public ?string $reservedCharactersSubstitute = NULL,
     public string $message = "Expected '@expected_string', not '@value'. Format: '@expected_format'.",
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getRequiredOptions(): array {
-    return ['separator', 'values'];
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

@@ -16,12 +16,11 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class DeletedWorkspaceConstraint extends SymfonyConstraint {
 
   public function __construct(
-    mixed $options = NULL,
     public $message = 'A workspace with this ID has been deleted but data still exists for it.',
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

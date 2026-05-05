@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class StyleSensibleElementConstraint extends SymfonyConstraint {
 
   public function __construct(
-    mixed $options = NULL,
     public $nonHtml5TagMessage = 'A style can only be specified for an HTML 5 tag. <code>@tag</code> is not an HTML5 tag.',
     public $conflictingEnabledPluginMessage = 'A style must only specify classes not supported by other plugins. The <code>@classes</code> classes on <code>@tag</code> are already supported by the enabled %plugin plugin.',
     public $conflictingDisabledPluginMessage = 'A style must only specify classes not supported by other plugins. The <code>@classes</code> classes on <code>@tag</code> are supported by the %plugin plugin. Remove this style and enable that plugin instead.',
@@ -28,7 +27,7 @@ class StyleSensibleElementConstraint extends SymfonyConstraint {
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

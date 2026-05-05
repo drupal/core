@@ -17,13 +17,12 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class EntityUntranslatableFieldsConstraint extends SymfonyConstraint {
 
   public function __construct(
-    mixed $options = NULL,
     public $defaultRevisionMessage = 'Non-translatable fields can only be changed when updating the current revision.',
     public $defaultTranslationMessage = 'Non-translatable fields can only be changed when updating the original language.',
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class UserNameConstraint extends SymfonyConstraint {
 
   public function __construct(
-    mixed $options = NULL,
     public $emptyMessage = 'You must enter a username.',
     public $spaceBeginMessage = 'The username cannot begin with a space.',
     public $spaceEndMessage = 'The username cannot end with a space.',
@@ -26,7 +25,7 @@ class UserNameConstraint extends SymfonyConstraint {
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

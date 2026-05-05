@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class FundamentalCompatibilityConstraint extends SymfonyConstraint {
 
   public function __construct(
-    mixed $options = NULL,
     public $noMarkupFiltersMessage = 'CKEditor 5 only works with HTML-based text formats. The "%filter_label" (%filter_plugin_id) filter implies this text format is not HTML anymore.',
     public $nonAllowedElementsMessage = 'CKEditor 5 needs at least the &lt;p&gt; and &lt;br&gt; tags to be allowed to be able to function. They are not allowed by the "%filter_label" (%filter_plugin_id) filter.',
     public $notSupportedElementsMessage = 'The current CKEditor 5 build requires the following elements and attributes: <br><code>@list</code><br>The following elements are not supported: <br><code>@diff</code>',
@@ -29,7 +28,7 @@ class FundamentalCompatibilityConstraint extends SymfonyConstraint {
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

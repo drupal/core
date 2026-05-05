@@ -20,28 +20,24 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class ToolbarItemDependencyConstraint extends SymfonyConstraint {
 
   /**
-   * The toolbar item that this validation constraint requires to be enabled.
+   * Constructs a ToolbarItemDependencyConstraint.
    *
-   * @var null|string
+   * @param string $toolbarItem
+   *   The toolbar item that this validation constraint requires to be enabled.
+   * @param string $message
+   *   The error message.
+   * @param array|null $groups
+   *   The groups that the constraint belongs to.
+   * @param mixed|null $payload
+   *   Domain-specific data attached to a constraint.
    */
-  public $toolbarItem = NULL;
-
   public function __construct(
-    mixed $options = NULL,
-    ?string $toolbarItem = NULL,
+    public string $toolbarItem,
     public $message = 'Depends on %toolbar_item, which is not enabled.',
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
-    $this->toolbarItem = $toolbarItem ?? $this->toolbarItem;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getRequiredOptions(): array {
-    return ['toolbarItem'];
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

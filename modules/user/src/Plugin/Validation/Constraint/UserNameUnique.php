@@ -16,13 +16,12 @@ use Drupal\Core\Validation\Plugin\Validation\Constraint\UniqueFieldConstraint;
 class UserNameUnique extends UniqueFieldConstraint {
 
   public function __construct(
-    mixed $options = NULL,
-    ?bool $caseSensitive = NULL,
+    bool $caseSensitive = FALSE,
     $message = 'The username %value is already taken.',
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $caseSensitive, $message, $groups, $payload);
+    parent::__construct($caseSensitive, $message, $groups, $payload);
   }
 
 }

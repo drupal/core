@@ -66,18 +66,4 @@ class PluginExistsConstraint extends SymfonyConstraint implements ContainerFacto
     return new static($container->get($plugin_manager_id), ...$configuration);
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getDefaultOption(): ?string {
-    return 'manager';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getRequiredOptions(): array {
-    return ['manager'];
-  }
-
 }

@@ -17,12 +17,11 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class EntityWorkspaceConflictConstraint extends SymfonyConstraint {
 
   public function __construct(
-    mixed $options = NULL,
     public $message = 'The content is being edited in the @label workspace. As a result, your changes cannot be saved.',
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

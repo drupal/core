@@ -16,13 +16,12 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class SerializedConstraint extends SymfonyConstraint {
 
   public function __construct(
-    mixed $options = NULL,
     public string $message = 'This value should be a serialized object.',
     public string $wrongTypeMessage = 'This value should be a string, "{type}" given.',
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

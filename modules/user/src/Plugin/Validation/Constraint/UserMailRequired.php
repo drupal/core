@@ -12,6 +12,11 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
  * The user mail field is NOT required if account originally had no mail set
  * and the user performing the edit has 'administer users' permission.
  * This allows users without email address to be edited and deleted.
+ *
+ * @property string $message
+ *   Violation message. Use the same message as FormValidator. Note that the
+ *   name argument is not sanitized so that translators only have one string to
+ *   translate. The name is sanitized in self::validate().
  */
 #[Constraint(
   id: 'UserMailRequired',
@@ -19,24 +24,12 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 )]
 class UserMailRequired extends SymfonyConstraint {
 
-  /**
-   * Violation message. Use the same message as FormValidator.
-   *
-   * Note that the name argument is not sanitized so that translators only have
-   * one string to translate. The name is sanitized in self::validate().
-   *
-   * @var string
-   */
-  public $message = '@name field is required.';
-
   public function __construct(
-    mixed $options = NULL,
-    ?string $message = NULL,
+    public string $message = '@name field is required.',
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
-    $this->message = $message ?? $this->message;
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

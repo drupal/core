@@ -17,14 +17,12 @@ use Drupal\Core\Validation\Plugin\Validation\Constraint\UniqueFieldValueValidato
 class FileUriUnique extends UniqueFieldConstraint {
 
   public function __construct(
-    mixed $options = NULL,
-    ?bool $caseSensitive = NULL,
+    bool $caseSensitive = TRUE,
     $message = 'The file %value already exists. Enter a unique file URI.',
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    $this->caseSensitive = $caseSensitive ?? TRUE;
-    parent::__construct($options, $caseSensitive, $message, $groups, $payload);
+    parent::__construct($caseSensitive, $message, $groups, $payload);
 
   }
 

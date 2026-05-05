@@ -20,12 +20,11 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class ToolbarItemConstraint extends SymfonyConstraint {
 
   public function __construct(
-    mixed $options = NULL,
     public $message = 'The provided toolbar item %toolbar_item is not valid.',
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {
-    parent::__construct($options, $groups, $payload);
+    parent::__construct(groups: $groups, payload: $payload);
   }
 
 }

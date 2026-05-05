@@ -24,7 +24,6 @@ class RangeConstraint extends Range {
    * {@inheritdoc}
    */
   public function __construct(
-    ?array $options = NULL,
     ?string $notInRangeMessage = NULL,
     ?string $minMessage = NULL,
     ?string $maxMessage = NULL,
@@ -40,7 +39,7 @@ class RangeConstraint extends Range {
     $this->notInRangeMessage = 'This value should be between %min and %max.';
     $this->minMessage = 'This value should be %limit or more.';
     $this->maxMessage = 'This value should be %limit or less.';
-    parent::__construct($options, $notInRangeMessage, $minMessage, $maxMessage, $invalidMessage, $invalidDateTimeMessage, $min, $minPropertyPath, $max, $maxPropertyPath, $groups, $payload);
+    parent::__construct(NULL, $notInRangeMessage, $minMessage, $maxMessage, $invalidMessage, $invalidDateTimeMessage, $min, $minPropertyPath, $max, $maxPropertyPath, $groups, $payload);
   }
 
 }
