@@ -14,7 +14,6 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\TestWith;
 
 /**
@@ -320,32 +319,6 @@ class EntityTypeTest extends UnitTestCase {
       $this->assertInstanceOf(EntityTypeInterface::class, $entity_type);
     }
 
-  }
-
-  /**
-   * Tests get original class unchanged.
-   */
-  #[IgnoreDeprecations]
-  public function testGetOriginalClassUnchanged(): void {
-    $this->expectUserDeprecationMessage('The "getOriginalClass" method is deprecated in drupal:11.4.0 and will be removed in drupal:12.0.0. Use getDecoratedClasses() instead. See https://www.drupal.org/node/3557464');
-    $class = $this->randomMachineName();
-    $entity_type = $this->setUpEntityType(['class' => $class]);
-    $this->assertEquals($class, $entity_type->getOriginalClass());
-  }
-
-  /**
-   * Tests get original class changed.
-   *
-   * @legacy-covers ::setClass
-   * @legacy-covers ::getOriginalClass
-   */
-  #[IgnoreDeprecations]
-  public function testGetOriginalClassChanged(): void {
-    $this->expectUserDeprecationMessage('The "getOriginalClass" method is deprecated in drupal:11.4.0 and will be removed in drupal:12.0.0. Use getDecoratedClasses() instead. See https://www.drupal.org/node/3557464');
-    $class = $this->randomMachineName();
-    $entity_type = $this->setUpEntityType(['class' => $class]);
-    $entity_type->setClass($this->randomMachineName());
-    $this->assertEquals($class, $entity_type->getOriginalClass());
   }
 
   /**

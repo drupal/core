@@ -473,14 +473,6 @@ class EntityType extends PluginDefinition implements EntityTypeInterface {
   /**
    * {@inheritdoc}
    */
-  public function getOriginalClass() {
-    @trigger_error('The "getOriginalClass" method is deprecated in drupal:11.4.0 and will be removed in drupal:12.0.0. Use getDecoratedClasses() instead. See https://www.drupal.org/node/3557464', E_USER_DEPRECATED);
-    return $this->originalClass ?: $this->class;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getDecoratedClasses(): array {
     return $this->decoratedClasses;
   }
