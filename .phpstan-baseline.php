@@ -9968,12 +9968,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/lib/Drupal/Core/Test/PerformanceTestRecorder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$array of function uksort contains unresolvable type\\.$#',
-	'identifier' => 'argument.unresolvableType',
-	'count' => 1,
-	'path' => __DIR__ . '/lib/Drupal/Core/Test/PhpUnitTestDiscovery.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Parameter \\#2 \\$class_loader of class Drupal\\\\Core\\\\DrupalKernel constructor expects Composer\\\\Autoload\\\\ClassLoader, null given\\.$#',
 	'identifier' => 'argument.type',
 	'count' => 1,
