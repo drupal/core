@@ -54,3 +54,10 @@ function views_removed_post_updates(): array {
     'views_post_update_add_date_default_arguments' => '12.0.0',
   ];
 }
+
+/**
+ * Clear cache to apply non-sortable counter field change.
+ */
+function views_post_update_counter_field_not_sortable(): void {
+  // Empty update to trigger a cache rebuild so updated Views data is applied.
+}
