@@ -17,3 +17,4 @@ services:
   logger.channel.update:
     parent: logger.channel_base
     arguments: [ 'update' ]
+  Drupal\update\MailHandler: ~
