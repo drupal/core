@@ -79,7 +79,10 @@ class ParamConverterManagerTest extends UnitTestCase {
       ->method('applies')
       ->with($this->anything(), 'id', $this->anything())
       ->willReturn(TRUE);
-    $manager = new ParamConverterManager(new ServiceLocator(['applied' => fn(): ParamConverterInterface&MockObject => $converter]));
+    $manager = new ParamConverterManager(new ServiceLocator([
+      'applied' => fn(): ParamConverterInterface&MockObject => $converter,
+      'predefined' => fn(): ParamConverterInterface&MockObject => $converter,
+    ]));
 
     $route = new Route($path);
     if ($parameters) {
