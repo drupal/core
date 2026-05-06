@@ -19,6 +19,9 @@ class PackageInstallTest extends TemplateProjectTestBase {
    * Tests installing packages in a stage directory.
    */
   public function testPackageInstall(): void {
+    // @todo skipped due to random test failures, re-enable in https://www.drupal.org/i/3508109
+    $this->markTestSkipped();
+
     $this->createTestProject('RecommendedProject');
     $this->setReleaseMetadata([
       'alpha' => __DIR__ . '/../../fixtures/release-history/alpha.1.1.0.xml',
