@@ -75,7 +75,7 @@ function getFile(filePath) {
  */
 function processFile(filePath) {
   const moduleRegex = / * @module \b(.*)\b/
-  const exportsRegex = /export(?: default)?(?: class| function) \b(\w+)\b/g
+  const exportsRegex = /export(?: declare)? (?:class|function|interface|const|type|enum) \b(\w+)\b/g
 
   const fileData = getFile(filePath);
   const module = moduleRegex.exec(fileData)
@@ -86,7 +86,7 @@ function processFile(filePath) {
   return false;
 }
 
-const definitions = globSync('./ckeditor5*/src/**/*.+(js|jsdoc)', globOptions).sort().map(processFile);
+const definitions = globSync('./ckeditor5*/dist/**/*.d.ts', globOptions).sort().map(processFile);
 // Filter definitions that do not match any regex.
 const existingDefinitions = definitions.filter((e) => !!e);
 
