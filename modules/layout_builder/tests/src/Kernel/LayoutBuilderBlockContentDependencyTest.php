@@ -27,13 +27,11 @@ class LayoutBuilderBlockContentDependencyTest extends KernelTestBase {
    * 2. block plugins are discovered
    * 3. block_content is installed,
    * a fatal error can occur, because the trait was missing before block_content
-   * is installed and gets aliased to an empty trait. When the installation of
-   * the block_content module installs the BlockContent entity type, the empty
-   * trait is missing the methods that need to be implemented from the
-   * interface.
+   * is installed. Plugin discovery catches the error and skips the plugin.
+   * When block_content is installed later, the plugin can be discovered
+   * normally.
    *
    * @see \Drupal\Component\Plugin\Discovery\AttributeClassDiscovery
-   * @see \Drupal\Component\Discovery\MissingClassDetectionClassLoader
    */
   public function testInstallLayoutBuilderAndBlockContent(): void {
     $this->assertFalse(\Drupal::moduleHandler()->moduleExists('block_content'));

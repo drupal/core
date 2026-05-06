@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\Tests\Component\Plugin\Attribute;
 
 use Composer\Autoload\ClassLoader;
-use Drupal\Component\Discovery\MissingClassDetectionClassLoader;
 use Drupal\Component\FileCache\FileCacheFactory;
 use Drupal\Component\Plugin\Discovery\AttributeClassDiscovery;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -19,7 +18,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(AttributeClassDiscovery::class)]
 #[Group('Attribute')]
 #[RunTestsInSeparateProcesses]
-#[CoversClass(MissingClassDetectionClassLoader::class)]
 class AttributeClassDiscoveryCachedTest extends TestCase {
 
   /**
@@ -132,6 +130,9 @@ class AttributeClassDiscoveryCachedTest extends TestCase {
       $this->assertNull($file_cache->get($non_discoverable_file_path));
     }
 
+    // Even when the missing trait's namespace is added to the plugin
+    // namespaces, the plugin with the missing trait is still not discovered
+    // because PHP cannot load a class that uses a non-existent trait.
     $discovery = new AttributeClassDiscovery([
       'com\example' => [$discovery_path],
       'Drupal\a_module_that_does_not_exist' => [$discovery_path],
@@ -141,19 +142,10 @@ class AttributeClassDiscoveryCachedTest extends TestCase {
         'id' => 'discovery_test_1',
         'class' => 'com\example\PluginNamespace\AttributeDiscoveryTest1',
       ],
-      'discovery_test_missing_trait' => [
-        'id' => 'discovery_test_missing_trait',
-        'class' => 'com\example\PluginNamespace\AttributeDiscoveryTestMissingTrait',
-        'title' => 'Discovery test plugin missing trait',
-        'dependencies' => [
-          'trait' => ['Drupal\a_module_that_does_not_exist\Plugin\CustomTrait'],
-        ],
-      ],
     ], $discovery->getDefinitions());
 
     // The plugins that extend a missing class, implement a missing interface,
-    // and use a missing trait should not be cached. This is the case even for
-    // the plugin that was just discovered.
+    // and use a missing trait should not be cached.
     foreach ($non_discoverable_file_paths as $non_discoverable_file_path) {
       $this->assertTrue(file_exists($non_discoverable_file_path));
       $this->assertNull($file_cache->get($non_discoverable_file_path));
