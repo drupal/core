@@ -9,6 +9,30 @@ namespace Drupal\Core\Extension;
  * occurred when using the serialize method.
  *
  * @see https://bugs.php.net/bug.php?id=66052
+ * @todo https://www.drupal.org/project/drupal/issues/3292759
+ *
+ * @property string $origin
+ *   The scan directory relative to the Drupal root.
+ * @property array<string, \Drupal\Core\Extension\Dependency> $required_by
+ *   Direct and indirect module dependents. See
+ *   ModuleHandler::buildModuleDependencies().
+ * @property array<string, \Drupal\Core\Extension\Dependency> $requires
+ *   Direct and indirect module dependencies. See
+ *   ModuleHandler::buildModuleDependencies().
+ * @property int $schema_version
+ *   The current schema version for the module.
+ *   -1 for uninstalled modules and the last removed or last run update hook
+ *   for installed modules.
+ * @property int $sort
+ *   The dependency graph weight.
+ * @property int $status
+ *   Installation status (1 if installed, 0 otherwise).
+ * @property string $subpath
+ *   The extension directory relative to the scan directory.
+ * @property int $weight
+ *   The module weight. This controls plugin discovery order and default hook
+ *   execution order. Modules and profiles are 0 by default, the active profile
+ *   is 1000.
  */
 #[\AllowDynamicProperties]
 class Extension {

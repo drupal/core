@@ -17,6 +17,52 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   and dynamic properties with methods.
  *
  * @final
+ *
+ * @property string $base_theme
+ *   Immediate parent base theme machine name.
+ * @property array<string, string|null> $base_themes
+ *   All base theme ancestors' names keyed by machine name.
+ *   A NULL entry marks a missing base theme or a cycle.
+ * @property string $engine
+ *   Theme engine machine name.
+ * @property bool $incompatible_base
+ *   Whether a base theme is missing or the base theme chain contains a cycle.
+ * @property bool $incompatible_engine
+ *   Whether the specified theme engine could not be found.
+ * @property bool $incompatible_module
+ *   Whether a required module is missing, is incompatible with Drupal core,
+ *   or fails the required version constraint.
+ * @property bool $incompatible_php
+ *   Whether the theme requires a newer PHP version.
+ * @property bool $incompatible_region
+ *   Whether the theme lacks the required 'content' region.
+ * @property bool $insufficient_module_permissions
+ *   Whether a compatible module dependency is disabled and the current user
+ *   lacks the 'administer modules' permission.
+ * @property bool $is_admin
+ *   Whether this theme is used for administration pages.
+ * @property bool $is_default
+ *   Whether this is the site's default theme.
+ * @property array $libraries
+ *   Libraries listed in the theme info file.
+ * @property array<string, \Drupal\Core\Extension\Dependency> $module_dependencies
+ *   Module dependencies keyed by machine name.
+ * @property array<string, string> $module_dependencies_disabled
+ *   Disabled, compatible module dependencies' names keyed by machine name.
+ * @property array<string, \Drupal\Core\StringTranslation\TranslatableMarkup> $module_dependencies_list
+ *   Module dependency labels with status messages, keyed by machine name.
+ * @property list<\Drupal\Component\Render\MarkupInterface> $notes
+ *   Notes on the theme's role and lifecycle.
+ * @property list<array<string, mixed>> $operations
+ *   Available operation links.
+ * @property string $owner
+ *   Root base theme's engine file path.
+ * @property string $prefix
+ *   Root base theme's engine machine name.
+ * @property array<string, mixed>|null $screenshot
+ *   Screenshot array, or NULL if no screenshot is found.
+ * @property array<string, string> $sub_themes
+ *   Direct and indirect sub-themes' names keyed by machine name.
  */
 class Theme extends Extension {
 

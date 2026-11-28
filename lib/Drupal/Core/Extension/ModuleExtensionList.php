@@ -16,6 +16,8 @@ use Drupal\Core\Update\UpdateHookRegistry;
  *   internal implementations including constructor signature and protected
  *   properties / methods will not change over time. This will be reviewed after
  *   https://www.drupal.org/project/drupal/issues/2940481
+ *
+ * @extends \Drupal\Core\Extension\ExtensionList<\Drupal\Core\Extension\Extension>
  */
 class ModuleExtensionList extends ExtensionList {
 

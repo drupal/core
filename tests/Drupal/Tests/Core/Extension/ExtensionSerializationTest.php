@@ -78,9 +78,9 @@ class ExtensionSerializationTest extends UnitTestCase {
     \Drupal::setContainer($container);
     $extension = new Extension($container->getParameter('app.root'), 'module', 'core/modules/system/system.info.yml', 'system.module');
     // Assign a public property dynamically.
-    $extension->test = 'foo';
+    $extension->origin = 'foo';
     $extension = unserialize(serialize($extension));
-    $this->assertSame('foo', $extension->test);
+    $this->assertSame('foo', $extension->origin);
   }
 
 }

@@ -17,6 +17,8 @@ use Drupal\Core\State\StateInterface;
  *   internal implementations including constructor signature and protected
  *   properties / methods will not change over time. This will be reviewed after
  *   https://www.drupal.org/project/drupal/issues/2940481
+ *
+ * @template TExtension of \Drupal\Core\Extension\Extension
  */
 abstract class ExtensionList {
 
@@ -30,7 +32,7 @@ abstract class ExtensionList {
   /**
    * The cached extensions.
    *
-   * @var \Drupal\Core\Extension\Extension[]|null
+   * @var TExtension[]|null
    */
   protected $extensions;
 
@@ -198,7 +200,7 @@ abstract class ExtensionList {
    * @param string $extension_name
    *   The machine name of the extension.
    *
-   * @return \Drupal\Core\Extension\Extension
+   * @return TExtension
    *   A processed extension object for the extension with the specified machine
    *   name.
    *
@@ -220,7 +222,7 @@ abstract class ExtensionList {
    * @param bool $skip_cache
    *   Whether to skip the extension list cache.
    *
-   * @return \Drupal\Core\Extension\Extension[]
+   * @return TExtension[]
    *   Processed extension objects, keyed by machine name.
    */
   public function getList(bool $skip_cache = FALSE) {
@@ -259,7 +261,7 @@ abstract class ExtensionList {
   /**
    * Builds the list of extensions.
    *
-   * @return \Drupal\Core\Extension\Extension[]
+   * @return TExtension[]
    *   Processed extension objects, keyed by machine name.
    *
    * @throws \Drupal\Core\Extension\InfoParserException
@@ -289,10 +291,11 @@ abstract class ExtensionList {
    * @param \Drupal\Core\Extension\Extension $extension
    *   The extension.
    *
-   * @return \Drupal\Core\Extension\Extension
+   * @return TExtension
    *   Either the unchanged Extension object or a subclass of Extension.
    */
   protected function subClassExtension(Extension $extension): Extension {
+    /** @var TExtension $extension */
     return $extension;
   }
 

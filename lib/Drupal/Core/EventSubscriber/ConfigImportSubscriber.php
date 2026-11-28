@@ -22,7 +22,7 @@ class ConfigImportSubscriber extends ConfigImportValidateEventSubscriberBase {
   /**
    * Theme data.
    *
-   * @var \Drupal\Core\Extension\Extension[]
+   * @var \Drupal\Core\Extension\Theme[]
    */
   protected $themeData;
 
@@ -343,7 +343,7 @@ class ConfigImportSubscriber extends ConfigImportValidateEventSubscriberBase {
   /**
    * Gets theme data.
    *
-   * @return \Drupal\Core\Extension\Extension[]
+   * @return \Drupal\Core\Extension\Theme[]
    *   Processed extension objects, keyed by machine name.
    */
   protected function getThemeData() {

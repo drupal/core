@@ -355,6 +355,8 @@ class ExtensionListTest extends UnitTestCase {
 
 /**
  * Stub class for testing ExtensionList.
+ *
+ * @extends \Drupal\Core\Extension\ExtensionList<\Drupal\Core\Extension\Extension>
  */
 class TestExtension extends ExtensionList {
 
