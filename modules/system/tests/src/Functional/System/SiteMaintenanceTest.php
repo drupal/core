@@ -78,7 +78,7 @@ class SiteMaintenanceTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('Visitors will only see the maintenance mode message. Only users with the "Use the site in maintenance mode" permission will be able to access the site. Authorized users can log in directly via the user login page.');
     $this->assertSession()->linkExists('permission');
     $this->assertSession()->linkByHrefExists(Url::fromRoute('user.admin_permissions')->toString());
-    $this->assertSession()->linkExists('user login');
+    $this->assertSession()->linkExists('user login page');
     $this->assertSession()->linkByHrefExists(Url::fromRoute('user.login')->toString());
 
     $this->drupalGet(Url::fromRoute('user.page'));
